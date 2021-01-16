@@ -2,7 +2,7 @@
 exports.up = function(knex) {
     return knex.schema.createTable('comment', function(table){
         table.increments('id_comment')
-        table.string('comment', 50).unique().notNullable()
+        table.string('comment', 50).notNullable()
 
         table.integer('id_user').unsigned()
         table.foreign('id_user').references('user.id_user')
