@@ -1,8 +1,8 @@
 
 exports.up = function(knex) {
-    return knex.schema.createTable('dicipline', function(table){
-        table.increments('id_dicipline')
-        table.string('name_dicipline', 50).unique().notNullable()
+    return knex.schema.createTable('comment_answer', function(table){
+        table.increments('id_comment_answer')
+        table.string('name_comment_answer', 50).unique().notNullable()
 
         table.integer('id_subject_niv_1').unsigned()
         table.foreign('id_subject_niv_1').references('subject_niv_2.id_subject_niv_1')
@@ -12,4 +12,4 @@ exports.up = function(knex) {
     })
 };
 
-exports.down = knex => knex.schema.dropTable('dicipline')
+exports.down = knex => knex.schema.dropTable('comment_answer')

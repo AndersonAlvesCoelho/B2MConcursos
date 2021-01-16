@@ -9,4 +9,4 @@ exports.up = function(knex) {
     })
 };
 
-exports.down = knex => knex.schema.dropTable('office_niv_1')
+exports.down = knex => knex.schema.dropTable('subject_niv_1')
