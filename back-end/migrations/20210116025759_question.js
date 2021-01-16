@@ -29,4 +29,4 @@ exports.up = function(knex) {
     })
 };
 
-exports.down = knex => knex.schema.dropTable('comment_answer')
+exports.down = knex => knex.schema.dropTable('question')
