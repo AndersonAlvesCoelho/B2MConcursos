@@ -1,8 +1,24 @@
 
 exports.up = function(knex) {
-  
+    return knex.schema.createTable('question', function(table){
+        table.increments('id_question')
+        table.string('name_comment_answer', 50).unique().notNullable()
+
+        table.integer('id_bank').unsigned()
+        table.foreign('id_bank').references('bank.id_bank')
+
+        table.integer('id_office_niv_1').unsigned()
+        table.foreign('id_office_niv_1').references('office_niv_1.id_office_niv_1')
+
+        table.integer('id_institution').unsigned()
+        table.foreign('id_institution').references('institution.id_institution')
+
+        table.integer('id_dicipline').unsigned()
+        table.foreign('id_dicipline').references('dicipline.id_dicipline')
+
+        table.timestamp('created_at').defaultTo(knex.fn.now())
+        table.timestamp('updated_at').defaultTo(knex.fn.now())
+    })
 };
 
-exports.down = function(knex) {
-  
-};
+exports.down = knex => knex.schema.dropTable('comment_answer')
