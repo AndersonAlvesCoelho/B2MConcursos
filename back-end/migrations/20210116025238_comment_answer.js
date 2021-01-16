@@ -4,8 +4,8 @@ exports.up = function(knex) {
         table.increments('id_comment_answer')
         table.string('name_comment_answer', 50).unique().notNullable()
 
-        table.integer('id_subject_niv_1').unsigned()
-        table.foreign('id_subject_niv_1').references('subject_niv_2.id_subject_niv_1')
+        table.integer('id_comment').unsigned()
+        table.foreign('id_comment').references('comment.id_comment')
 
         table.timestamp('created_at').defaultTo(knex.fn.now())
         table.timestamp('updated_at').defaultTo(knex.fn.now())
