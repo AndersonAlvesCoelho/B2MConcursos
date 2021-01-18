@@ -1,0 +1,16 @@
+.dropdown-content {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.line {
+  border-top: 1px solid #000000;
+}
+
+#rdts2-0_button {
+  color: #000;
+}
+
+#rdts2-0_tag {
+  background: #fff;
+}
