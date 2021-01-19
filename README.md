@@ -44,6 +44,15 @@
     npm i ou yarn
     #Por fim, iniciar a api
     npm dev ou yarn dev
+    
+    
+     #MIGRATIONS
+    #roda todas as migrations pendentes
+    npx knex migrate:latest 
+    
+    #reverte todas as tabelas criadas
+    npx npx knex migrate:rollback --all
+
 ```
 > Pronto, seu backend já está inicializado. Você pode ver os dados da migration pela [url](http://localhost:3333/orphanages) ou pelo [insomnia](https://insomnia.rest/download/)
 > http://localhost:3333/
