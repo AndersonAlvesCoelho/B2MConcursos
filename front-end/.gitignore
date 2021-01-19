@@ -17,7 +17,11 @@
 .env.development.local
 .env.test.local
 .env.production.local
+<<<<<<< HEAD
 .eslintcache
+=======
+front-end/.eslintcache
+>>>>>>> e9a57727dffbb55f39928e5cd9341f54903e68f0
 
 npm-debug.log*
 yarn-debug.log*
