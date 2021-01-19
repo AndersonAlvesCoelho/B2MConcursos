@@ -11,7 +11,6 @@ function Questions() {
 
     const [viewFilter, setViewFilter] = useState({
         banca: '',
-
     });
 
     const onChange = (currentNode, selectedNodes) => {
@@ -25,6 +24,7 @@ function Questions() {
     //     // Atualiza o titulo do documento usando a API do browser
     //     document.title = `Você clicou ${count} vezes`;
     // })
+    
 
     return (
         <div>
