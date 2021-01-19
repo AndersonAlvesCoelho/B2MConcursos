@@ -1,7 +1,8 @@
 [
     {
       "label": "VP Accounting",
-      "tagClassName": "special",
+      "name": "Bancada",
+      "checked": false,
       "children": [
         {
           "label": "iWay",
@@ -50,6 +51,7 @@
         },
         {
           "label": "Utilization Review",
+      "name": "Bancada",
           "children": [
             {
               "label": "University of Minnesota - Twin Cities Campus"
@@ -89,6 +91,7 @@
     },
     {
       "label": "Database Administrator III",
+      "name": "Bancada",
       "children": [
         {
           "label": "TFS",

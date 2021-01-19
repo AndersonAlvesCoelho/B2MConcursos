@@ -1,4 +1,4 @@
-import React, { useeffect } from 'react';
+import React, { useState } from 'react';
 import DropdownTreeSelect from 'react-dropdown-tree-select'
 import 'react-dropdown-tree-select/dist/styles.css'
 import { Jumbotron, Container, Row, Col } from 'react-bootstrap';
@@ -9,11 +9,16 @@ import './index.css';
 
 function Questions() {
 
+    const [viewFilter, setViewFilter] = useState({
+        banca: '',
+
+    });
+
     const onChange = (currentNode, selectedNodes) => {
-        console.log('onChange::', currentNode, selectedNodes)
-    }
-    const onAction = (node, action) => {
-        console.log('onAction::', action, node)
+        if (currentNode.name === 'Bancada') {
+            setViewFilter(viewFilter.banca = currentNode.label)
+        }
+        console.log('viewFilter ', viewFilter);
     }
 
     // useEffect(() => {
@@ -45,11 +50,11 @@ function Questions() {
                         <DropdownTreeSelect
                             data={dataSelect}
                             onChange={onChange} // Retorna a option selecionado 
-                            onAction={onAction}
+                            // onAction={onAction}
                             // onNodeToggle={onNodeToggle} // Retorna a props com estado de open/close da option selecionado
                             className="ScrollStyle"
                             texts={{ placeholder: 'Banca', inlineSearchPlaceholder: 'Pesquisar' }}
-                            data={{ label: 'Hi' }}
+                        // mode="simpleSelect"
                         />
                     </Col>
                 </Row>
