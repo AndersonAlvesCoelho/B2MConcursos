@@ -54,5 +54,5 @@
     npx npx knex migrate:rollback --all
 
 ```
-> Pronto, seu backend já está inicializado. Você pode ver os dados da migration pela [url](http://localhost:3333/orphanages) ou pelo [insomnia](https://insomnia.rest/download/)
+> Pronto, seu backend já está inicializado. Você pode ver os dados da migration pela [url](http://localhost:3333/) ou pelo [insomnia](https://insomnia.rest/download/)
 > http://localhost:3333/
