@@ -9,22 +9,15 @@ import './index.css';
 
 function Questions() {
 
-    const [viewFilter, setViewFilter] = useState({
-        banca: '',
-    });
+    const [viewFilter, setViewFilter] = useState([]);
 
     const onChange = (currentNode, selectedNodes) => {
         if (currentNode.name === 'Bancada') {
-            setViewFilter(viewFilter.banca = currentNode.label)
+            const aux = selectedNodes.map((e) => { return e.label })
+            viewFilter['banca'] = aux;
+            setViewFilter(viewFilter);
         }
-        console.log('viewFilter ', viewFilter);
     }
-
-    // useEffect(() => {
-    //     // Atualiza o titulo do documento usando a API do browser
-    //     document.title = `Você clicou ${count} vezes`;
-    // })
-    
 
     return (
         <div>
@@ -38,6 +31,12 @@ function Questions() {
             <Container style={{ backgroundColor: '#f8f9fa' }}>
                 <Row className="mt-5">
                     <Col >
+
+                    {/* {viewFilter.map((e) => {
+                        return (
+                            <p>{e}</p>
+                        )
+                    })} */}
                         <hr className="line" />
                     </Col>
                 </Row>

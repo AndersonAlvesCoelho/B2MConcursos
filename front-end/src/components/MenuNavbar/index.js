@@ -4,8 +4,6 @@ import { FaFacebook, FaYoutube, FaInstagram, FaTwitter } from "react-icons/fa";
 
 import logoQuest from '../../assets/img/logo-quest.png';
 import './index.css';
-// import colors from '../../constants/colors';
-
 
 function MenuNavbar() {
     return (
@@ -31,7 +29,7 @@ function MenuNavbar() {
                     <div className="icons-content">
                         <FaFacebook size={20} />
                     </div>
-                    <div className="icons-content">
+                    <div className="icons-content" >
                         <FaYoutube size={20} />
                     </div>
                     <div className="icons-content">
