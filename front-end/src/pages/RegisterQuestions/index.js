@@ -3,10 +3,10 @@ import MenuNavbar from '../../components/MenuNavbar/index';
 
 function RegisterQuestions() {
     return (
-        <di>
+        <div>
             <MenuNavbar />
             <h1>Cadastrar questões</h1>
-        </di>
+        </div>
     );
 }
 
