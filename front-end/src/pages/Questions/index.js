@@ -1,23 +1,25 @@
 import React, { useState } from 'react';
 import DropdownTreeSelect from 'react-dropdown-tree-select'
 import 'react-dropdown-tree-select/dist/styles.css'
-import { Jumbotron, Container, Row, Col } from 'react-bootstrap';
-
+import { Jumbotron, Container, Row, Col, ListGroup, Badge, Button } from 'react-bootstrap';
+import { FaFacebook, FaYoutube, FaInstagram, FaTwitter } from "react-icons/fa";
 import MenuNavbar from '../../components/MenuNavbar/index';
 import dataSelect from '../../services/example/dataSelect.json';
 import './index.css';
 
 function Questions() {
 
-    const [viewFilter, setViewFilter] = useState([]);
+    const [filterBanca, setFilterBanca] = useState({
+        banca: [],
+    });
 
-    const onChange = (currentNode, selectedNodes) => {
-        if (currentNode.name === 'Bancada') {
-            const aux = selectedNodes.map((e) => { return e.label })
-            viewFilter['banca'] = aux;
-            setViewFilter(viewFilter);
-        }
+    const onChange = (_, value) => {
+        var bancaAux = value.map((e) => e.label);
+        filterBanca.banca = bancaAux;
+        setFilterBanca(filterBanca);
     }
+
+    console.log(filterBanca);
 
     return (
         <div>
@@ -31,12 +33,20 @@ function Questions() {
             <Container style={{ backgroundColor: '#f8f9fa' }}>
                 <Row className="mt-5">
                     <Col >
+                        {filterBanca.banca.length !== 0 ? (<>
+                            <ListGroup horizontal>
+                                <p> Filtrar por:</p>
+                                {filterBanca.banca && filterBanca.banca.map((banca) => {
+                                    return (<>
+                                        <Button variant="primary" className="mx-1">
+                                            {banca} <Badge variant="light"> <FaTwitter size={20} /></Badge>
+                                        </Button>
+                                    </>)
+                                })}
 
-                    {/* {viewFilter.map((e) => {
-                        return (
-                            <p>{e}</p>
-                        )
-                    })} */}
+                            </ListGroup>
+                        </>) : null}
+
                         <hr className="line" />
                     </Col>
                 </Row>

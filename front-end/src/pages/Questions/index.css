@@ -1,4 +1,8 @@
+@import url('../../global.css');
 
+.filter{
+  background: var(--info);
+}
 
 .dropdown-content {
   max-height: 400px;
