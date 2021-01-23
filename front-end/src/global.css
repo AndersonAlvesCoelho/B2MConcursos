@@ -6,9 +6,14 @@
   --warning: #ffc107;
   --info: #17a2b8;
   --light: #f8f9fa;
-  --dark: #000000;
+  --black: #000000;
   --darkGray: #4d4d4d;
   --white: #ffffff;
+
+  --cold: #bbe1fa;
+  --winter: #3282b8;
+  --blue: #0f4c75;
+  --dark: #1b262c;
 }
 body {
   margin: 0;

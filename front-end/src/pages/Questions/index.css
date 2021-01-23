@@ -1,18 +1,70 @@
+@import url("../../global.css");
 
-
-.dropdown-content {
-  max-height: 400px;
-  overflow-y: auto;
+.filter-line {
+  border-top: 1px solid var(--dark);
 }
 
-.line {
-  border-top: 1px solid #000000;
+.filter-conatiner {
+  background: var(--light);
+  border-radius: 5px;
 }
 
-#rdts2-0_button {
-  color: #000;
+.filter-titulo {
+  color: var(--dark) ;
+  font-size: 20px;
+  font-weight: bold;
+}
+.filter-titulo-default{
+  color: var(--secondary) ;
+  font-size: 15px;
 }
 
-#rdts2-0_tag {
-  background: #fff;
+.filter-campo {
+  width: 100%;
+}
+.filter-grupo {
+  background: var(--dark);
+  color: var(--white);
+  border-radius: 5px;
+}
+
+.filter-label {
+  background: var(--white) !important;
+  color: var(--dark) !important;
+}
+
+
+.filter-btn {
+  width: 150px;
+  color: var(--black) !important;
+  background-color: var(--winter) !important;
+  border-color: var(--winter) !important;
+}
+
+.filter-btn-outline {
+  width: 150px;
+
+  color: var(--dablackrk) !important;
+  background-color: transparent !important;
+  border-color: transparent !important;
+}
+
+.filter-btn-outline:hover {
+  width: 150px;
+
+  color: var(--black) !important;
+  background-color: var(--winter) !important;
+  border-color: var(--winter) !important;
+}
+
+.filter-icon-outline {
+  color: var(--black) !important;
+}
+.filter-icon-outline:hover {
+  color: var(--dark) !important;
+}
+
+.conatiner-question {
+  background: var(--darkGray);
+  border-radius: 5px;
 }
