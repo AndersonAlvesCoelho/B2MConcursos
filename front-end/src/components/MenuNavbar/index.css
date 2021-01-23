@@ -1,0 +1,8 @@
+@import url('../../global.css');
+
+.icons-content {
+  padding: 1px;
+  margin-right: 10px;
+  color: var(--info);
+}
+

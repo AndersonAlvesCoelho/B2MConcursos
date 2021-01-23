@@ -1,5 +1,4 @@
 // Update with your config settings.
-
 module.exports = {
 
   development: {
@@ -7,7 +6,7 @@ module.exports = {
     connection: {
       database: 'b2mconcursos',
       user: 'postgres',
-      password: '123123'
+      password: '16798577'
     }
   },
 
