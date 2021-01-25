@@ -2,5 +2,6 @@ back-end/node_modules
 back-end/package-lock.json
 front-end/node_modules
 front-end/.eslintcache
+front-end/debug.log
 .idea
 .gradle
