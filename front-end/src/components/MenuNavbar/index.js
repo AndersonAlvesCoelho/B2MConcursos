@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
+import { Navbar, Nav } from 'react-bootstrap';
 import { FaFacebook, FaYoutube, FaInstagram, FaTwitter } from "react-icons/fa";
 
 import logoQuest from '../../assets/img/logo-quest.png';
@@ -7,7 +7,7 @@ import './index.css';
 
 function MenuNavbar() {
     return (
-        <Navbar bg="light" expand="lg">
+        <Navbar className="menu-container" expand="lg">
             <Navbar.Brand href="/">
                 <img
                     src={logoQuest}
@@ -20,9 +20,8 @@ function MenuNavbar() {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                    <Nav.Link href="/questoes">Questões</Nav.Link>
-                    <Nav.Link href="/cadastrar-questoes">Registrar questão</Nav.Link>
-                   
+                    <Nav.Link className="menu-link-text" href="/questoes">Questões</Nav.Link>
+                    <Nav.Link className="menu-link-text" href="/cadastrar-questoes">Registrar questão</Nav.Link>
                 </Nav>
 
                 <Nav >

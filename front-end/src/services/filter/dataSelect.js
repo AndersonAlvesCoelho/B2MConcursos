@@ -1,15 +1,15 @@
 export const bankData = [
-    { title: 'FCC', value: '0-0' },
-    { title: 'CESPE', value: '0-1' },
-    { title: 'FGV', value: '0-2' },
-    { title: 'Cesgranrio', value: '0-3' },
-    { title: 'FGV', value: '0-4' },
-    { title: 'Esaf', value: '0-5' },
-    { title: 'Vunesp', value: '0-6' },
-    { title: 'INSTITUTO', value: '0-7' },
-    { title: 'IADES', value: '0-8' },
-    { title: 'CONSULPAM', value: '0-9' },
-    { title: 'outros', value: '0-10' },
+    { title: 'FCC', value: '0-0', key:'0-0' },
+    { title: 'CESPE', value: '0-1', key:'0-1' },
+    { title: 'FGV', value: '0-2', key:'0-2' },
+    { title: 'Cesgranrio', value: '0-3', key:'0-3' },
+    { title: 'FGV', value: '0-4', key:'0-4' },
+    { title: 'Esaf', value: '0-5', key:'0-5' },
+    { title: 'Vunesp', value: '0-6', key:'0-6' },
+    { title: 'INSTITUTO', value: '0-7', key:'0-7' },
+    { title: 'IADES', value: '0-8', key:'0-8' },
+    { title: 'CONSULPAM', value: '0-9', key:'0-9' },
+    { title: 'outros', value: '0-10', key:'0-10' },
 ]
 
 export const institutionData = [
@@ -110,18 +110,18 @@ export const diciplineData = [
         title: 'Educação', key: '0-0', value: '0-0', children: [
             {
                 title: 'Child Node3',
-                value: '0-1-0',
-                key: '0-1-0',
+                value: '0-0-0',
+                key: '0-0-0',
             },
             {
                 title: 'Child Node4',
-                value: '0-1-1',
-                key: '0-1-1',
+                value: '0-0-1',
+                key: '0-0-1',
             },
             {
                 title: 'Child Node5',
-                value: '0-1-2',
-                key: '0-1-2',
+                value: '0-0-2',
+                key: '0-0-2',
             },
         ],
     },
@@ -148,18 +148,18 @@ export const diciplineData = [
         title: 'História', key: '0-2', value: '0-2', children: [
             {
                 title: 'Child Node3',
-                value: '0-1-0',
-                key: '0-1-0',
+                value: '0-2-0',
+                key: '0-2-0',
             },
             {
                 title: 'Child Node4',
-                value: '0-1-1',
-                key: '0-1-1',
+                value: '0-2-1',
+                key: '0-2-1',
             },
             {
                 title: 'Child Node5',
-                value: '0-1-2',
-                key: '0-1-2',
+                value: '0-2-2',
+                key: '0-2-2',
             },
         ],
     },
@@ -167,18 +167,18 @@ export const diciplineData = [
         title: 'Matemática', key: '0-3', value: '0-3', children: [
             {
                 title: 'Child Node3',
-                value: '0-1-0',
-                key: '0-1-0',
+                value: '0-3-0',
+                key: '0-3-0',
             },
             {
                 title: 'Child Node4',
-                value: '0-1-1',
-                key: '0-1-1',
+                value: '0-3-1',
+                key: '0-3-1',
             },
             {
                 title: 'Child Node5',
-                value: '0-1-2',
-                key: '0-1-2',
+                value: '0-3-2',
+                key: '0-3-2',
             },
         ],
     },
@@ -186,18 +186,18 @@ export const diciplineData = [
         title: 'Química', key: '0-4', value: '0-4', children: [
             {
                 title: 'Child Node3',
-                value: '0-1-0',
-                key: '0-1-0',
+                value: '0-4-0',
+                key: '0-4-0',
             },
             {
                 title: 'Child Node4',
-                value: '0-1-1',
-                key: '0-1-1',
+                value: '0-4-1',
+                key: '0-4-1',
             },
             {
                 title: 'Child Node5',
-                value: '0-1-2',
-                key: '0-1-2',
+                value: '0-4-2',
+                key: '0-4-2',
             },
         ],
     },
@@ -205,18 +205,18 @@ export const diciplineData = [
         title: 'Sociologia', key: '0-5', value: '0-5', children: [
             {
                 title: 'Child Node3',
-                value: '0-1-0',
-                key: '0-1-0',
+                value: '0-5-0',
+                key: '0-5-0',
             },
             {
                 title: 'Child Node4',
-                value: '0-1-1',
-                key: '0-1-1',
+                value: '0-5-1',
+                key: '0-5-1',
             },
             {
                 title: 'Child Node5',
-                value: '0-1-2',
-                key: '0-1-2',
+                value: '0-5-2',
+                key: '0-5-2',
             },
         ],
     },

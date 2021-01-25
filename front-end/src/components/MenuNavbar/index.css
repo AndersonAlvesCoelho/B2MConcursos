@@ -1,8 +1,21 @@
 @import url('../../global.css');
 
+.menu-container{
+  background-color: var(--winter);
+  box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.30);
+}
+.menu-link-text{
+  font-size: 18px;
+  color: var(--black) !important;
+}
+
+.menu-link-text:hover{
+  font-size: 18px;
+  color: var(--dark) !important;
+}
 .icons-content {
   padding: 1px;
   margin-right: 10px;
-  color: var(--info);
+  color: var(--black);
 }
 
