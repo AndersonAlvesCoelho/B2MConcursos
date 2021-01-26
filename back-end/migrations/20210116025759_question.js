@@ -3,7 +3,8 @@ exports.up = function(knex) {
     return knex.schema.createTable('question', function(table){
         table.increments('id_question')
         table.string('name_comment_answer', 50).unique().notNullable()
-        table.date('date')
+        table.text('enunciated').notNullable()
+        table.string('year', 4)
         table.text('issue_resolution')
 
         table.integer('id_bank').unsigned()

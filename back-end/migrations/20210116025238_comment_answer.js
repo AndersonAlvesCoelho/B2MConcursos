@@ -7,6 +7,9 @@ exports.up = function(knex) {
         table.integer('id_comment').unsigned()
         table.foreign('id_comment').references('comment.id_comment')
 
+        table.integer('id_user').unsigned()
+        table.foreign('id_user').references('user.id_user')
+
         table.timestamp('created_at').defaultTo(knex.fn.now())
         table.timestamp('updated_at').defaultTo(knex.fn.now())
     })
