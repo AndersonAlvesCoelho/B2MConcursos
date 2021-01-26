@@ -22,10 +22,10 @@ methods.timestamp = function() {
 
         // var pdfData = pattern.exec(data.text)
 
-        var linhas = data.text.split("\n");
-        var pdfData = linhas.join();
+        var linhas = data.text.split("\n")
+        var pdfData = linhas.join()
         // elements.join()
-        console.log(pattern.exec(pdfData))
+        return pattern.exec(pdfData)
 
         // linhas.forEach(function(linha, i) {
         //     // pdfData.concat(linha);
