@@ -1,15 +1,15 @@
 export const bankData = [
-    { title: 'FCC', value: '0-0', key:'0-0' },
-    { title: 'CESPE', value: '0-1', key:'0-1' },
-    { title: 'FGV', value: '0-2', key:'0-2' },
-    { title: 'Cesgranrio', value: '0-3', key:'0-3' },
-    { title: 'FGV', value: '0-4', key:'0-4' },
-    { title: 'Esaf', value: '0-5', key:'0-5' },
-    { title: 'Vunesp', value: '0-6', key:'0-6' },
-    { title: 'INSTITUTO', value: '0-7', key:'0-7' },
-    { title: 'IADES', value: '0-8', key:'0-8' },
-    { title: 'CONSULPAM', value: '0-9', key:'0-9' },
-    { title: 'outros', value: '0-10', key:'0-10' },
+    { title: 'FCC', value: '0-0', key: '0-0' },
+    { title: 'CESPE', value: '0-1', key: '0-1' },
+    { title: 'FGV', value: '0-2', key: '0-2' },
+    { title: 'Cesgranrio', value: '0-3', key: '0-3' },
+    { title: 'FGV', value: '0-4', key: '0-4' },
+    { title: 'Esaf', value: '0-5', key: '0-5' },
+    { title: 'Vunesp', value: '0-6', key: '0-6' },
+    { title: 'INSTITUTO', value: '0-7', key: '0-7' },
+    { title: 'IADES', value: '0-8', key: '0-8' },
+    { title: 'CONSULPAM', value: '0-9', key: '0-9' },
+    { title: 'outros', value: '0-10', key: '0-10' },
 ]
 
 export const institutionData = [
@@ -222,6 +222,81 @@ export const diciplineData = [
     },
 ];
 
+
+export const questionData = [
+    {
+        // id_question: '25012021',
+        name_discipline: [
+            {
+                /*Matéria*/ name_discipline: 'Nome da matéria',
+                /*Assunto 01*/ name_subject: [
+
+                    {
+                    /*Assunto*/ name_subject: 'Registros públicos',
+                    },
+                    {
+                    /*Assunto*/ name_subject: 'Conhecimentos gerais',
+                    }
+
+                ]
+            }
+        ],
+        /*Banca*/ name_bank: 'Consuplan',
+        /*Ano*/ year: '2019',
+        /*Órgão*/ name_institution: 'TJMG - Tribunal de Justiça do Estado de Minas Gerais',
+        /*Enunciado*/ enunciated: 'De acordo com o Provimento nº 260/CGJ/2013, são requisitos indispensáveis à escritura pública que implique alienação, a qualquer título, de imóvel rural ou de direito a ele relativo, assim como sua oneração, EXCETO:',
+
+            /*Alternativa*/ nome_alternative: [
+            {
+                alternative: 'a) Observância da descrição georreferenciada, nos termos da legislação específica',
+                /*Resposta*/  answer: false,
+            },
+            {
+                alternative: 'b) Apresentação do Documento de Informação e Apuração do ITR – DIAT, ressalvadas as hipóteses de isenção ou imunidade previstas em lei.',
+                        /*Resposta*/  answer: false,
+            },
+            {
+                alternative: 'c) Apresentação do Recibo de Inscrição do Imóvel Rural no Cadastro Ambiental Rural – CAR, emitido por órgão nacional competente, desde que a reserva legal não esteja averbada na matrícula imobiliária',
+                        /*Resposta*/  answer: false,
+            },
+            {
+                alternative: 'd) Apresentação de certidão negativa de débito para com o INSS da pessoa jurídica alienante e da pessoa física alienante, caso esta última seja empregadora ou, se a pessoa física não for empregadora, declaração expressa nesse sentido sob sua responsabilidade civil e criminal.',
+
+                /*Resposta*/  answer: true,
+            },
+        ],
+
+        commit: [
+            {
+                /*Nome do usuario*/ name_user: 'Anderson Alves',
+                /*Comentario*/ commit: 'Evidentemente, a adoção de políticas descentralizadoras cumpre um papel essencial na formulação dos níveis de motivação departamental.',
+
+            },
+            {
+                /*Nome do usuario*/ name_user: 'João lima',
+                /*Comentario*/ commit: 'Pensando mais a longo prazo, a determinação clara de objetivos acarreta um processo de reformulação e modernização das posturas dos órgãos dirigentes com relação às suas atribuições.',
+                answer: [
+                    {
+                        /*Nome do usuario*/ name_user: 'Anderson Alves',
+                        /*Resposta do comentario*/ answer: 'Todas estas questões, devidamente ponderadas, levantam dúvidas sobre se a consulta aos diversos militantes aponta para a melhoria dos procedimentos normalmente adotados.',
+                    },
+                    {
+                        /*Nome do usuario*/ name_user: 'João lima',
+                        /*Resposta do comentario*/ answer: 'O cuidado em identificar pontos críticos na expansão dos mercados mundiais nos obriga à análise do processo de comunicação como um todo.',
+                    },
+                ]
+            }
+        ],
+
+        issue_resolution: [
+            {
+                /*Nome do professor*/ name_user: 'Prof. Augusto Cesar',
+                /*Comentario do professor*/ issue_resolution: 'Do mesmo modo, o fenômeno da Internet auxilia a preparação e a composição do levantamento das variáveis envolvidas.',
+            }
+        ],
+
+    }
+]
 
 
 

@@ -2,16 +2,15 @@ import React, { useState } from 'react';
 import { Jumbotron, Container, Row, Col, ButtonToolbar, ButtonGroup, Button, Badge, ListGroup } from 'react-bootstrap';
 import { FaRegTimesCircle, FaRegSave, FaBookmark, FaRocketchat } from "react-icons/fa";
 import { TreeSelect, Input, Radio } from 'antd';
-import { bankData, institutionData, officeData, yearData, diciplineData } from '../../services/filter/dataSelect';
-import 'antd/dist/antd.css';
+import { bankData, institutionData, officeData, yearData, diciplineData, questionData } from '../../services/filter/dataSelect';
 
 import MenuNavbar from '../../components/MenuNavbar/index';
 import './index.css';
 import logoQuest from '../../assets/img/logo-quest.png';
+import Alternative from './Alternative/alternative';
 
 const { SHOW_PARENT } = TreeSelect;
 const { Search } = Input;
-
 
 function Questions() {
 
@@ -37,12 +36,27 @@ function Questions() {
         <div>
             <MenuNavbar />
 
-            <Jumbotron  className="conatiner-banner">
+            <Jumbotron className="conatiner-banner">
                 <Container >
                     <h1>Questões de Concurso</h1>
                     <p>Resolva centenas de milhares de questões de provas anteriores de concursos, OAB, CFC, ENEM e Vestibulares. Bateu dúvida? Confira os comentários dos professores!</p>
                 </Container>
             </Jumbotron>
+            <Container className="question-conatiner my-3">
+
+                {questionData.length !== 0 && questionData.map((data, key) =>
+                (
+                    <div key={key}>
+                        <Alternative data={data} index={key} />
+                        <hr className="filter-line" />
+                    </div>
+                )
+                )}
+
+
+            </Container>
+
+
 
             <Container className="filter-conatiner" >
                 <Row >
@@ -132,6 +146,7 @@ function Questions() {
                 <Row >
                     <span className="filter-titer mx-1 ml-2">Filtrar por:</span>
                 </Row >
+
                 <Row >
 
                     <Col className="mt-3" xs={6} md={4}>
@@ -142,7 +157,6 @@ function Questions() {
                             onSearch={(value) => setQuestionSearch(value)}
                             enterButton
                         />
-
                     </Col>
 
                     <Col className="mt-3" xs={6} md={4}>
@@ -245,103 +259,6 @@ function Questions() {
                             </ButtonGroup>
                         </ButtonToolbar>
                     </Col>
-
-                </Row>
-            </Container>
-
-            <Container className="question-conatiner my-3">
-                <Row className="mt-3 ">
-                    <Col sm={12} className="question-titer">
-                        <span className="question-number mr-1" >Nº 1</span>
-                        <Badge className="question-codigo mr-1" >
-                            <img
-                                src={logoQuest}
-                                className="d-inline-block align-top question-img"
-                            /> - 1667231</Badge>
-                        <span className="question-dicipline">Português: </span>
-                        <span className="question-subject">Interpretação de Textos</span>
-                        <span> - </span>
-                        <span className="question-subject">Noções Gerais de Compreensão e Interpretação de Texto</span>
-                    </Col>
-
-                    <Col sm={12} className="my-1">
-                        <span className="question-info mr-1" >Ano:</span><span className="mr-1">2019</span>
-                        <span className="question-info mr-1" >Banca:</span> <span className="mr-1">ADM&TEC</span>
-                        <span className="question-info mr-1" >Órgão:</span><span className="mr-1">Prefeitura de Colônia Leopoldina - AL </span>
-                        <span className="question-info mr-1" >Prova:</span><span className="mr-1">ADM&TEC - 2019 - Prefeitura de Colônia Leopoldina - AL - Analista de Controle Interno </span>
-                        <hr className="filter-line" />
-                    </Col>
-
-                    <Col sm={12}>
-                        <b>De acordo com o Provimento nº 260/CGJ/2013, são requisitos indispensáveis à escritura pública que implique alienação, a qualquer título, de imóvel rural ou de direito a ele relativo, assim como sua oneração, EXCETO: </b>
-                    </Col>
-
-                    <Col sm={12}>
-                        <ListGroup variant="flush">
-                            <Radio.Group >
-                                <ListGroup.Item ><Radio className="question-alternative" value={1}>Neste sentido, a complexidade dos estudos efetuados deve passar por modificações independentemente dos procedimentos normalmente adotados.Neste sentido, a complexidade dos estudos efetuados deve passar por modificações independentemente dos procedimentos normalmente adotados.</Radio></ListGroup.Item>
-                                <ListGroup.Item><Radio className="question-alternative" value={2}>Neste sentido, a complexidade dos estudos efetuados deve passar por modificações independentemente dos procedimentos normalmente adotados.Neste sentido, a complexidade dos estudos efetuados deve passar por modificações independentemente dos procedimentos normalmente adotados.</Radio></ListGroup.Item>
-                                <ListGroup.Item><Radio className="question-alternative" value={3}>Neste sentido, a complexidade dos estudos efetuados deve passar por modificações independentemente dos procedimentos normalmente adotados.Neste sentido, a complexidade dos estudos efetuados deve passar por modificações independentemente dos procedimentos normalmente adotados.</Radio></ListGroup.Item>
-                                <ListGroup.Item><Radio className="question-alternative" value={4}>Neste sentido, a complexidade dos estudos efetuados deve passar por modificações independentemente dos procedimentos normalmente adotados.Neste sentido, a complexidade dos estudos efetuados deve passar por modificações independentemente dos procedimentos normalmente adotados.</Radio></ListGroup.Item>
-                            </Radio.Group>
-                        </ListGroup>
-                    </Col>
-
-                    <Col sm={12} className="my-2">
-                        <Button className="question-btn" >Visualizar resposta</Button>
-                    </Col>
-
-                    <Col sm={12} className="my-2 " >
-                        <ListGroup className="float-right" horizontal >
-                            <ListGroup.Item><FaBookmark size={25} className="filter-icon-outline" />Resposta do professor</ListGroup.Item>
-                            <ListGroup.Item><FaRocketchat size={25} className="filter-icon-outline" />Comentarios</ListGroup.Item>
-                        </ListGroup>
-                    </Col>
-                </Row>
-
-                <hr className="filter-line" />
-
-                <Row className="mt-3 ">
-                    <Col sm={12} className="question-titer">
-                        <span className="question-number mr-1" >Nº 1</span>
-                        <Badge className="question-codigo mr-1" >
-                            <img
-                                src={logoQuest}
-                                className="d-inline-block align-top question-img"
-                            /> - 1667231</Badge>
-                        <span className="question-dicipline">Português: </span>
-                        <span className="question-subject">Interpretação de Textos</span>
-                        <span> - </span>
-                        <span className="question-subject">Noções Gerais de Compreensão e Interpretação de Texto</span>
-                    </Col>
-
-                    <Col sm={12} className="my-1">
-                        <span className="question-info mr-1" >Ano:</span><span className="mr-1">2019</span>
-                        <span className="question-info mr-1" >Banca:</span> <span className="mr-1">ADM&TEC</span>
-                        <span className="question-info mr-1" >Órgão:</span><span className="mr-1">Prefeitura de Colônia Leopoldina - AL </span>
-                        <span className="question-info mr-1" >Prova:</span><span className="mr-1">ADM&TEC - 2019 - Prefeitura de Colônia Leopoldina - AL - Analista de Controle Interno </span>
-                        <hr className="filter-line" />
-                    </Col>
-
-                    <Col sm={12}>
-                        <b>De acordo com o Provimento nº 260/CGJ/2013, são requisitos indispensáveis à escritura pública que implique alienação, a qualquer título, de imóvel rural ou de direito a ele relativo, assim como sua oneração, EXCETO: </b>
-                    </Col>
-
-                    <Col sm={12}>
-                        <ListGroup variant="flush">
-                            <Radio.Group >
-                                <ListGroup.Item ><Radio className="question-alternative" value={1}>Neste sentido, a complexidade dos estudos efetuados deve passar por modificações independentemente dos procedimentos normalmente adotados.Neste sentido, a complexidade dos estudos efetuados deve passar por modificações independentemente dos procedimentos normalmente adotados.</Radio></ListGroup.Item>
-                                <ListGroup.Item><Radio className="question-alternative" value={2}>Neste sentido, a complexidade dos estudos efetuados deve passar por modificações independentemente dos procedimentos normalmente adotados.Neste sentido, a complexidade dos estudos efetuados deve passar por modificações independentemente dos procedimentos normalmente adotados.</Radio></ListGroup.Item>
-                                <ListGroup.Item><Radio className="question-alternative" value={3}>Neste sentido, a complexidade dos estudos efetuados deve passar por modificações independentemente dos procedimentos normalmente adotados.Neste sentido, a complexidade dos estudos efetuados deve passar por modificações independentemente dos procedimentos normalmente adotados.</Radio></ListGroup.Item>
-                                <ListGroup.Item><Radio className="question-alternative" value={4}>Neste sentido, a complexidade dos estudos efetuados deve passar por modificações independentemente dos procedimentos normalmente adotados.Neste sentido, a complexidade dos estudos efetuados deve passar por modificações independentemente dos procedimentos normalmente adotados.</Radio></ListGroup.Item>
-                            </Radio.Group>
-                        </ListGroup>
-                    </Col>
-
-                    <Col sm={12} className="my-2">
-                        <Button className="question-btn">Visualizar resposta</Button>
-                    </Col>
-
 
                 </Row>
             </Container>
