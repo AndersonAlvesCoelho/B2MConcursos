@@ -1,6 +1,8 @@
 ## Estrutura de arquivos Back End
 
 - .env | Arquivo de constantes.
+-  **migrations** | Diretorio que contem todos os comandos DDL 
+-  **seeds** | Diretorio que contem todos os comandos SQL
 - **src**
    - config.js | Arquivo de configuração de porta da url
    - routes.js | Arquivo de definição de navegação do app.
