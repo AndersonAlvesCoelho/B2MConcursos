@@ -23,7 +23,7 @@ app.use((error, req, res, next) => {
     res.json({ error: error.message })
 });
 
-app.listen(PORT, () => console.log("Hello serve"));
+app.listen(PORT, HOST);
 
 
 // const express = require('express')

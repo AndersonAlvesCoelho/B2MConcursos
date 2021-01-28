@@ -1,18 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import { Jumbotron, Container, Row, Col, ButtonToolbar, ButtonGroup, Button, Badge, ListGroup } from 'react-bootstrap';
-import { FaRegTimesCircle, FaRegSave, FaBookmark, FaRocketchat } from "react-icons/fa";
+// import { FaRegTimesCircle, FaRegSave, FaBookmark, FaRocketchat } from "react-icons/fa";
 import { TreeSelect, Input, Radio } from 'antd';
 import { bankData, institutionData, officeData, yearData, diciplineData, questionData } from '../../services/filter/dataSelect';
 
 import MenuNavbar from '../../components/MenuNavbar/index';
 import './index.css';
-import logoQuest from '../../assets/img/logo-quest.png';
+// import logoQuest from '../../assets/img/logo-quest.png';
 import Alternative from './Alternative/alternative';
+import * as bankActions from '../../actions/bank.actions';
 
 const { SHOW_PARENT } = TreeSelect;
 const { Search } = Input;
 
-function Questions() {
+function Questions(props) {
+
+    console.log('props ', props);
+    //   const { getAllOgs, listOgInProfileValuation } = props;
+    const [data, setData] = useState();
+
+    useEffect(() => {
+        props.getBank();
+    }, []);
 
 
     const [questionSearch, setQuestionSearch] = useState();
@@ -33,6 +43,7 @@ function Questions() {
     const [diciplineLabel, setDiciplineLabel] = useState([]);
 
     return (
+
         <div>
             <MenuNavbar />
 
@@ -284,4 +295,14 @@ function Questions() {
     );
 }
 
-export default Questions;
+const mapStateToProps = (state) => ({
+    loading: state.bank.loading,
+    bank: state.bank.bank,
+    message: state.bank.message,
+});
+
+const mapDispatchToProps = {
+    getBank: bankActions.getBank,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Questions);

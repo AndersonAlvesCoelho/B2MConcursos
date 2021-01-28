@@ -17,7 +17,6 @@ function Alternative({ data, index }) {
             e.answer && setAnswer(index + 1);
         })
     }
-    console.log(data.nome_alternative);
 
     return (
         <Row className="mt-3 ">
