@@ -17,11 +17,10 @@ const { Search } = Input;
 function Questions(props) {
 
     console.log('props ', props);
-    //   const { getAllOgs, listOgInProfileValuation } = props;
-    const [data, setData] = useState();
+    const { getBank, loading, bank, message } = props;
 
     useEffect(() => {
-        props.getBank();
+        getBank();
     }, []);
 
 
@@ -53,20 +52,6 @@ function Questions(props) {
                     <p>Resolva centenas de milhares de questões de provas anteriores de concursos, OAB, CFC, ENEM e Vestibulares. Bateu dúvida? Confira os comentários dos professores!</p>
                 </Container>
             </Jumbotron>
-            <Container className="question-conatiner my-3">
-
-                {questionData.length !== 0 && questionData.map((data, key) =>
-                (
-                    <div key={key}>
-                        <Alternative data={data} index={key} />
-                        <hr className="filter-line" />
-                    </div>
-                )
-                )}
-
-
-            </Container>
-
 
 
             <Container className="filter-conatiner" >
@@ -172,18 +157,16 @@ function Questions(props) {
 
                     <Col className="mt-3" xs={6} md={4}>
                         <TreeSelect
-                            treeData={bankData}
+                            treeData={bank}
                             value={bankValue}
                             onChange={(value, label) => { setBankValue(value); setBankLabel(label); }}
                             treeCheckable={true}
                             placeholder="Banca..."
-                            // bordered={false}
-                            // style=''
                             className="filter-field"
                             showCheckedStrategy={SHOW_PARENT}
                             maxTagCount='responsive'
                             allowClear={true}
-                            loading={!bankData}
+                            loading={loading}
                         />
 
                     </Col>
@@ -273,6 +256,23 @@ function Questions(props) {
 
                 </Row>
             </Container>
+
+
+            <Container className="question-conatiner my-3">
+
+                {questionData.length !== 0 && questionData.map((data, key) =>
+                (
+                    <div key={key}>
+                        <Alternative data={data} index={key} />
+                        <hr className="filter-line" />
+                    </div>
+                )
+                )}
+
+
+            </Container>
+
+
 
 
             <h1 className="mt-5">Hello Word</h1>

@@ -4,7 +4,7 @@ import {
   GET_BANK_FAILURE,
 } from '../constants/bank.constants';
 
-import { api } from '../services/api';
+import api from '../services/api';
 
 //GET BANK
 export const getBank = () => (dispatch) => {
@@ -13,7 +13,14 @@ export const getBank = () => (dispatch) => {
     .then((res) => {
       const { data } = res;
 
-      dispatch({ type: GET_BANK_SUCCESS, data });
+      const formatData = data.map((bank, index) => ({
+        title: bank.name_bank,
+        value: `0-${index}`,
+        key: `0-${index}`,
+      }));
+
+
+      dispatch({ type: GET_BANK_SUCCESS, formatData });
     })
     .catch((error) => {
       const { response: err } = error;

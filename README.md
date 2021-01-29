@@ -13,15 +13,16 @@
 <h3><img height="20" src="https://image.flaticon.com/icons/png/512/18/18436.png"> B2MConcursos 1.0</h3>
 </div>
 
-
-
 ## 💡 Sobre o Projeto
+
 ...
 
 ### Requerimentos
+
 - [Node.js](https://nodejs.org/en/download/) ou [Yarn](https://classic.yarnpkg.com/en/docs/getting-started)
 
 ## 💻 Iniciar o projeto
+
 #### 🔖 Front-end
 
 ```bash
@@ -36,7 +37,8 @@
     yarn start ou npm start
 ```
 
-####  📦 Backend
+#### 📦 Backend
+
 ```bash
     #Acesse um diretório do back-end
     cd B2MConcursos\back-end
@@ -44,15 +46,22 @@
     npm i ou yarn
     #Por fim, iniciar a api
     npm dev ou yarn dev
-    
-    
-     #MIGRATIONS
+
+
+    #MIGRATIONS
     #roda todas as migrations pendentes
-    npx knex migrate:latest 
-    
+    npx knex migrate:latest
+
     #reverte todas as tabelas criadas
     npx npx knex migrate:rollback --all
 
+    #SEEDS
+    #roda todas as seeds pedentes
+    knex seed:run
+
+    #rodar somente uma seed específica
+
 ```
+
 > Pronto, seu backend já está inicializado. Você pode ver os dados da migration pela [url](http://localhost:3333/) ou pelo [insomnia](https://insomnia.rest/download/)
 > http://localhost:3333/
