@@ -1,14 +1,12 @@
-
-exports.seed = function (knex) {
+exports.seed = function(knex) {
   // Deletes ALL existing entries
   return knex('office_niv_3').del()
     .then(function () {
       // Inserts seed entries
-      return knex('table_name').insert([
-        { name_office: 'Direito', id_office_niv_3: null },
-        { name_office: 'Psicologia', id_office_niv_3: null },
-        { name_office: 'Serviço social', id_office_niv_3: null },
-
+      return knex('office_niv_3').insert([
+        {id_office_niv_3: 1, name_office: 'Bacharel em direito', id_office_niv_2: 19},
+        {id_office_niv_3: 2, name_office: 'curso superior completo', id_office_niv_2: 20},
+        
       ]);
     });
 };
