@@ -4,7 +4,7 @@ module.exports = {
 
     async index(req, res) {
         try {
-            const results = await knexBase('bank')
+            const results = await knexBase('bank').select(['name_bank'])
 
             return res.json(results);
         } catch (error) {
