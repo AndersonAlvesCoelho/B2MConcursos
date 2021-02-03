@@ -5,8 +5,6 @@ module.exports = {
     async index(req, res) {
         try {
 
-           
-
             const result01 = await knexBase('office_niv_1')
                 .select('id_office_niv_1', 'name_office as name_1')
                 .orderBy('id_office_niv_1');
