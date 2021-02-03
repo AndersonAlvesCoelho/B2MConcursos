@@ -10,14 +10,12 @@ exports.up = function(knex) {
         table.integer('id_bank').unsigned()
         table.foreign('id_bank').references('bank.id_bank')
 
-        table.integer('id_office_niv_1').unsigned()
-        table.foreign('id_office_niv_1').references('office_niv_1.id_office_niv_1')
+        table.string('office_tab_value', 50).notNullable()
 
         table.integer('id_institution').unsigned()
         table.foreign('id_institution').references('institution.id_institution')
 
-        table.integer('id_dicipline').unsigned()
-        table.foreign('id_dicipline').references('dicipline.id_dicipline')
+        table.string('discipline_tab_value', 50).notNullable()
 
         table.integer('id_user').unsigned()
         table.foreign('id_user').references('user.id_user')

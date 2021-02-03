@@ -4,8 +4,8 @@ exports.up = function(knex) {
         table.increments('id_subject_niv_3')
         table.string('name_subject', 50).unique().notNullable()
 
-        table.integer('id_subject_niv_4').unsigned()
-        table.foreign('id_subject_niv_4').references('subject_niv_4.id_subject_niv_4')
+        table.integer('id_subject_niv_2').unsigned()
+        table.foreign('id_subject_niv_2').references('subject_niv_2.id_subject_niv_2')
     })
 };
 

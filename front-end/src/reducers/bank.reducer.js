@@ -4,13 +4,13 @@ import {
   GET_BANK_FAILURE,
 } from '../constants/bank.constants';
 
-const initialState = {
+const initialBank = {
   loading: false,
   bank: [],
   message: '',
 };
 
-export default function askingQuestionsReducer(state = initialState, action) {
+export default function Reducer(state = initialBank, action) {
   switch (action.type) {
 
 

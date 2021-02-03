@@ -1,20 +1,31 @@
 import React, { useState } from 'react';
 import { Row, Col, Button, ListGroup } from 'react-bootstrap';
-import { FaBookmark, FaRocketchat } from "react-icons/fa";
-import { Radio } from 'antd';
+import { FaBookmark, FaComments, FaCheckCircle, FaInfoCircle } from "react-icons/fa";
+import { Radio, Tabs, Avatar, Card } from 'antd';
+
+const TabPane = Tabs.TabPane;
 
 function Alternative({ data, index }) {
 
-    const [answer, setAnswer] = useState();
+    const [answer, setAnswer] = useState([]);
     const [alternative, setAlternative] = useState();
 
 
     const keyAnswer = () => {
-        setAnswer(true);
         data.nome_alternative.map((e, index) => {
-            e.answer && setAnswer(index + 1);
+            if (e.answer) {
+                setAnswer({
+                    check: true,
+                    answer: index + 1,
+                    hitMessage: 'Alternativa correta, parabéns!!',
+                    errorMessage: 'Você errou!',
+                })
+            }
         })
     }
+
+    console.log(data.issue_resolution);
+    console.log(data.issue_resolution);
 
     return (
         <Row className="mt-3 ">
@@ -31,7 +42,7 @@ function Alternative({ data, index }) {
                                 , </span>
                         </span>
                     ))}
-            </Col>data.name_discipline[0].name_subject.length
+            </Col>
 
             <Col sm={12} className="my-1">
                 <span className="alternative-info mr-1" >Ano:</span><span className="mr-1">{data.year}</span>
@@ -46,18 +57,20 @@ function Alternative({ data, index }) {
             </Col>
 
             <Col sm={12}>
-
                 <ListGroup variant="flush">
                     <Radio.Group onChange={(e) => setAlternative(e.target.value)} value={alternative} >
                         {data.nome_alternative.map((e, index) => (
                             <div key={index}>
                                 <ListGroup.Item
-                                    style={{ background: answer === e.answer && 'var(--success)' }}
+                                    style={{ background: e.answer === answer.check && 'var(--success)' }}
                                 >
                                     <Radio
                                         className="alternative-alternative"
-                                        value={index + 1}>
-                                        {e.alternative}
+                                        value={index + 1}
+                                        disabled={answer.answer}
+                                    >
+                                        {/* {e.alternative} */}
+                                        {!answer.answer ? e.alternative : (<b>{e.alternative}</b>)}
                                     </Radio>
                                 </ListGroup.Item>
                             </div>
@@ -66,18 +79,29 @@ function Alternative({ data, index }) {
                 </ListGroup>
             </Col>
 
-            <Col sm={12} className="my-2">
-                <Button className="alternative-btn" disabled={!alternative} onClick={() => keyAnswer()} >Visualizar resposta</Button>
-                <span className="alternative-subject ml-5">
-                    { }
-                </span>
+            <Col sm={12} className="my-2 ">
+                <ListGroup className="float-right">
+                    <span className="mb-1">
+                        {answer.length !== 0 ?
+                            answer.answer === alternative ?
+                                (<><FaCheckCircle size={25} className="alternative-hit-icon-outline mx-1" /> {answer.hitMessage} </>) :
+                                (<><FaInfoCircle size={25} className="alternative-error-icon-outline mx-1" /> {answer.errorMessage} </>)
+                            : null}
+                    </span>
+                    <Button className="alternative-btn" disabled={!alternative} onClick={() => keyAnswer()} >Visualizar Resposta</Button>
+                </ListGroup>
             </Col>
 
             <Col sm={12} className="my-2">
-                <ListGroup className="float-right" horizontal >
-                    <ListGroup.Item><FaBookmark size={25} className="filter-icon-outline" />Resposta do professor</ListGroup.Item>
-                    <ListGroup.Item><FaRocketchat size={25} className="filter-icon-outline" />Comentarios</ListGroup.Item>
-                </ListGroup>
+                <Tabs defaultActiveKey="0">
+                    <TabPane tab={<span><FaBookmark size={25} className="alternative-icon-outline" /> Resposta do professor</span>} disabled={!alternative} key="1">
+
+                        <Card title={data.issue_resolution[0].name_user} extra={<Avatar shape="square" size="large" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}>
+                            <p>{data.issue_resolution[0].issue_resolution}</p>
+                        </Card>
+                    </TabPane>
+                    <TabPane tab={<span><FaComments size={25} className="alternative-icon-outline" /> Comentarios</span>} key="2">Tab 2</TabPane>
+                </Tabs>
             </Col>
         </Row >
 
