@@ -4,10 +4,10 @@ import MenuNavbar from '../components/MenuNavbar/index';
 
 function Home() {
     return (
-        <di>
+        <div>
             <MenuNavbar />
             <h1>Hello Word</h1>
-        </di>
+        </div>
     );
 }
 

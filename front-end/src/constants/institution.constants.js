@@ -1,0 +1,7 @@
+const prefix = 'institution/';
+
+//CONSTANTS GET INSTITUTION
+export const GET_INSTITUTION_REQUEST = `${prefix}GET_INSTITUTION_REQUEST`;
+export const GET_INSTITUTION_SUCCESS = `${prefix}GET_INSTITUTION_SUCCESS`;
+export const GET_INSTITUTION_FAILURE = `${prefix}GET_INSTITUTION_FAILURE`;
+

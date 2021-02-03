@@ -111,4 +111,25 @@
   border-color: var(--winter) !important;
 }
 
+.alternative-icon-outline {
+  color: var(--dark) !important;
+}
+.alternative-icon-outline:hover {
+  color: var(--black) !important;
+}
+
+.alternative-hit-icon-outline {
+  color: var(--success) !important;
+}
+.alternative-hit-icon-outline:hover {
+  color: #006400 !important;
+}
+
+.alternative-error-icon-outline {
+  color: var(--danger) !important;
+}
+.alternative-error-icon-outline:hover {
+  color: #8B0000 !important;
+}
+
 

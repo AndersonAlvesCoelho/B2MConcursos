@@ -7,18 +7,32 @@ import { FaFilter } from "react-icons/fa";
 
 
 import * as bankActions from '../../actions/bank.actions';
+import * as institutionActions from '../../actions/institution.actions';
+import * as officeActions from '../../actions/office.actions';
 
 const { SHOW_PARENT } = TreeSelect;
 const { Search } = Input;
 
 function FilterFixed(props) {
 
-    console.log('props ', props);
-    const { getBank, loading, bank, message } = props;
+    const {
+        getBank,
+        getInstitution,
+        getOffice,
+        loadingBank,
+        loadingInstitution,
+        loadingOffice,
+        bank,
+        institution,
+        office,
+    } = props;
 
     useEffect(() => {
         getBank();
+        getInstitution();
+        getOffice();
     }, []);
+
     const [open, setOpen] = useState(false);
     const [open2, setOpen2] = useState(false);
 
@@ -79,14 +93,14 @@ function FilterFixed(props) {
                                         showCheckedStrategy={SHOW_PARENT}
                                         maxTagCount='responsive'
                                         allowClear={true}
-                                        loading={loading}
+                                        loading={loadingBank}
                                     />
 
                                 </Col>
 
                                 <Col className="mt-3" xs={6} md={4}>
                                     <TreeSelect
-                                        treeData={institutionData}
+                                        treeData={institution}
                                         value={institutionValue}
                                         onChange={(value, label) => { setInstitutionValue(value); setInstitutionLabel(label) }}
                                         treeCheckable={true}
@@ -95,13 +109,14 @@ function FilterFixed(props) {
                                         showCheckedStrategy={SHOW_PARENT}
                                         maxTagCount='responsive'
                                         allowClear={true}
-                                        loading={!institutionData}
+                                        loading={loadingInstitution}
                                     />
                                 </Col>
+                                
 
                                 <Col className="mt-3 " xs={6} md={4}>
                                     <TreeSelect
-                                        treeData={officeData}
+                                        treeData={office}
                                         value={officeValue}
                                         onChange={(value, label) => { setOfficeValue(value); setOfficeLabel(label) }}
                                         treeCheckable={true}
@@ -110,7 +125,7 @@ function FilterFixed(props) {
                                         showCheckedStrategy={SHOW_PARENT}
                                         maxTagCount='responsive'
                                         allowClear={true}
-                                        loading={!officeData}
+                                        loading={loadingOffice}
                                     />
                                 </Col>
 
@@ -174,13 +189,20 @@ function FilterFixed(props) {
 }
 
 const mapStateToProps = (state) => ({
-    loading: state.bank.loading,
+    loadingBank: state.bank.loading,
     bank: state.bank.bank,
-    message: state.bank.message,
+    
+    loadingInstitution: state.institution.loading,
+    institution: state.institution.institution,
+
+    loadingOffice: state.office.loading,
+    office: state.office.office,
 });
 
 const mapDispatchToProps = {
     getBank: bankActions.getBank,
+    getInstitution: institutionActions.getInstitution,
+    getOffice: officeActions.getOffice,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FilterFixed);
