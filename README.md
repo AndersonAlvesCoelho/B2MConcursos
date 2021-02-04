@@ -50,17 +50,17 @@
 
     #MIGRATIONS
     #roda todas as migrations pendentes
-    knex migrate:latest
+    npx knex migrate:latest
 
     #reverte todas as tabelas criadas
-    knex migrate:rollback --all
+    npx knex migrate:rollback --all
 
     #SEEDS
     #roda todas as seeds pedentes
-    knex seed:run
-
+    npx knex seed:run
+    
     #rodar somente uma seed específica
-    knex seed:run --specific=seed-filename.js
+    npx knex seed:run --specific=seed-filename.js
 
 ```
 

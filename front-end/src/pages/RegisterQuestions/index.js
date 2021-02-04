@@ -4,7 +4,6 @@ import {Button, Col, Container, Row} from "react-bootstrap";
 import { Input } from 'antd';
 import api from '../../services/api';
 
-
 const RegisterQuestions = (props) => {
 
     const [enunciated, setEnunciated] = useState();
