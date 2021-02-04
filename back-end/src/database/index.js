@@ -14,6 +14,11 @@ const modelsDbB2mconcursos = [
     BankController,
     InstitutionController,
     OfficeController,
+
+    OfficeNiv01Controller,
+    OfficeNiv02Controller,
+    OfficeNiv03Controller,
+    OfficeNiv04Controller,
 ];
 
 class Database {
