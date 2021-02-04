@@ -16,8 +16,8 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "knex": "^0.21.15",
     "pdf-parse": "^1.1.1",
-    "pg": "^8.5.1"
+    "pg": "^8.5.1",
+    "sequelize": "^6.5.0"
   }
 }
