@@ -5,3 +5,4 @@ front-end/.eslintcache
 front-end/debug.log
 .idea
 .gradle
+.back-end/.env
