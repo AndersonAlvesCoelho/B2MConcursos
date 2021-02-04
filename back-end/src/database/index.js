@@ -2,22 +2,24 @@ import { Sequelize } from "sequelize";
 import dbConfig from "../config/database";
 
 //BD b2mconcursos
-import BankController from "../models/BankController";
-import OfficeController from "../models/OfficeController";
-import Institution from "../models/Institution";
+import BankController from "../models/bankController";
+import InstitutionController from "../models/institutionController";
+
+import OfficeNiv01Controller from "../models/office/officeNiv01Controller";
+import OfficeNiv02Controller from "../models/office/officeNiv02Controller";
+import OfficeNiv03Controller from "../models/office/officeNiv03Controller";
+import OfficeNiv04Controller from "../models/office/officeNiv04Controller";
 
 const modelsDbB2mconcursos = [
     BankController,
+    InstitutionController,
     OfficeController,
-    Institution,
 ];
-
 
 class Database {
     constructor() {
         this.init();
     }
-
     init() {
         // models para o banco b2mconcursos
         const dbB2mconcursos = new Sequelize(dbConfig["b2mconcursos"]);
@@ -29,5 +31,4 @@ class Database {
             });
     }
 }
-
 export default new Database();
