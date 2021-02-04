@@ -1,9 +1,10 @@
 const express = require("express");
-const routes = express.Router();
 
 const BankController = require('./controllers/bankController');
 const OfficeController = require('./controllers/officeController');
 const Institution = require('./controllers/institutionController');
+
+const routes = express.Router();
 
 const apiVersionV1 = "/v1";
 

@@ -1,6 +1,33 @@
-const knexfile = require('../../knexfile')
-const knex = require('knex')(knexfile.development)
+import { Sequelize } from "sequelize";
+import dbConfig from "../config/database";
 
-module.exports = knex
+//BD b2mconcursos
+import BankController from "../models/BankController";
+import OfficeController from "../models/OfficeController";
+import Institution from "../models/Institution";
+
+const modelsDbB2mconcursos = [
+    BankController,
+    OfficeController,
+    Institution,
+];
 
 
+class Database {
+    constructor() {
+        this.init();
+    }
+
+    init() {
+        // models para o banco b2mconcursos
+        const dbB2mconcursos = new Sequelize(dbConfig["b2mconcursos"]);
+        modelsDbB2mconcursos
+            .map((model) => model.init(dbB2mconcursos))
+            .map((model) => {
+                if (model.associate) model.associate(dbB2mconcursos.models);
+                return model;
+            });
+    }
+}
+
+export default new Database();
