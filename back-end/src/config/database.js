@@ -1,6 +1,6 @@
 module.exports = {
   b2mconcursos: {
-
+    dialect: "postgres",
     host: process.env.DB_HOST_TERMOMETRO,
     database: process.env.DB_NAME_TERMOMETRO,
     username: process.env.DB_USER_TERMOMETRO,
