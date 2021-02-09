@@ -1,20 +1,15 @@
 import React from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
-import { FaFacebook, FaYoutube, FaInstagram, FaTwitter } from "react-icons/fa";
+import { FaFacebook, FaYoutube, FaInstagram, FaTwitter, FaQuestionCircle } from "react-icons/fa";
 
-import logoQuest from '../../assets/img/logo-quest.png';
+// import logoQuest from '../../assets/img/logo-quest.png';
 import './index.css';
 
 function MenuNavbar() {
     return (
         <Navbar className="menu-container" expand="lg">
-            <Navbar.Brand href="/">
-                <img
-                    src={logoQuest}
-                    width="30"
-                    height="30"
-                    className="d-inline-block align-top"
-                />{''}
+            <Navbar.Brand href="/" className="menu-link-text">
+                <FaQuestionCircle size={35} className="mr-1" />{''}
                 B2MConcursos
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />

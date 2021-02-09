@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Jumbotron, Container, Row, Col, ButtonToolbar, ButtonGroup, Button, ListGroup, Tab, Collapse } from 'react-bootstrap';
-import { TreeSelect, Input } from 'antd';
-import { bankData, institutionData, officeData, yearData, diciplineData, questionData } from '../../services/filter/dataSelect';
-import { FaFilter } from "react-icons/fa";
+import { Row, Col, } from 'react-bootstrap';
+import { yearData, diciplineData } from '../../services/filter/dataSelect';
+
+import { Drawer, TreeSelect, Input, Menu, Select, Button, Form } from 'antd';
 
 
 import * as bankActions from '../../actions/bank.actions';
@@ -25,6 +25,8 @@ function FilterFixed(props) {
         bank,
         institution,
         office,
+        visible,
+        onClose
     } = props;
 
     useEffect(() => {
@@ -33,8 +35,10 @@ function FilterFixed(props) {
         getOffice();
     }, []);
 
-    const [open, setOpen] = useState(false);
-    const [open2, setOpen2] = useState(false);
+
+
+    // const [open, setOpen] = useState(false);
+    // const [open2, setOpen2] = useState(false);
 
     const [questionSearch, setQuestionSearch] = useState();
 
@@ -54,144 +58,165 @@ function FilterFixed(props) {
     const [diciplineLabel, setDiciplineLabel] = useState([]);
 
     return (
-        <Container fluid>
-            <Row className="filter-conatiner">
-                <Col md="1" >
-                    <ListGroup variant="flush" className="filter align-items-center">
-                        <ListGroup.Item className="filter-icon">
-                            <FaFilter className="filter-icon-outline" onClick={() => setOpen(!open)} size={30} />
-                        </ListGroup.Item>
-                    </ListGroup>
-                </Col>
-
-                <Col >
-                    <Collapse className="filter-card mr-5" in={open} >
-                        <div>
-                            <Row className="my-1 mx-1" >
-                                <Col className="mt-3" sm={12}>
-                                    <span className="filter-titer mx-1 ml-2">Filtrar por:</span>
-                                </Col>
-
-                                <Col className="mt-3" xs={6} md={4}>
-                                    <Search
-                                        placeholder="Pesquisar por enunciado.."
-                                        allowClear
-                                        className="filter-select"
-                                        onSearch={(value) => setQuestionSearch(value)}
-                                        enterButton
-                                    />
-                                </Col>
-
-                                <Col className="mt-3" xs={6} md={4}>
-                                    <TreeSelect
-                                        treeData={bank}
-                                        value={bankValue}
-                                        onChange={(value, label) => { setBankValue(value); setBankLabel(label); }}
-                                        treeCheckable={true}
-                                        placeholder="Banca..."
-                                        className="filter-field"
-                                        showCheckedStrategy={SHOW_PARENT}
-                                        maxTagCount='responsive'
-                                        allowClear={true}
-                                        loading={loadingBank}
-                                    />
-
-                                </Col>
-
-                                <Col className="mt-3" xs={6} md={4}>
-                                    <TreeSelect
-                                        treeData={institution}
-                                        value={institutionValue}
-                                        onChange={(value, label) => { setInstitutionValue(value); setInstitutionLabel(label) }}
-                                        treeCheckable={true}
-                                        placeholder="Orgão..."
-                                        className="filter-field"
-                                        showCheckedStrategy={SHOW_PARENT}
-                                        maxTagCount='responsive'
-                                        allowClear={true}
-                                        loading={loadingInstitution}
-                                    />
-                                </Col>
-                                
-
-                                <Col className="mt-3 " xs={6} md={4}>
-                                    <TreeSelect
-                                        treeData={office}
-                                        value={officeValue}
-                                        onChange={(value, label) => { setOfficeValue(value); setOfficeLabel(label) }}
-                                        treeCheckable={true}
-                                        placeholder="Cargo..."
-                                        className="filter-field"
-                                        showCheckedStrategy={SHOW_PARENT}
-                                        maxTagCount='responsive'
-                                        allowClear={true}
-                                        loading={loadingOffice}
-                                    />
-                                </Col>
-
-                                <Col className="mt-3 " xs={6} md={4}>
-                                    <TreeSelect
-                                        treeData={yearData}
-                                        value={yearValue}
-                                        onChange={(value, label) => { setYearValue(value); setYearLabel(label) }}
-                                        treeCheckable={true}
-                                        placeholder="Ano..."
-                                        className="filter-field"
-                                        showCheckedStrategy={SHOW_PARENT}
-                                        maxTagCount='responsive'
-                                        allowClear={true}
-                                        loading={!yearData}
-                                    />
-                                </Col>
-
-                                <Col className="mt-3 mb-3" xs={6} md={4}>
-                                    <TreeSelect
-                                        treeData={diciplineData}
-                                        value={diciplineValue}
-                                        onChange={(value, label) => { setDiciplineValue(value); setDiciplineLabel(label) }}
-                                        treeCheckable={true}
-                                        placeholder="Matéria & Assunto..."
-                                        className="filter-field"
-                                        showCheckedStrategy={SHOW_PARENT}
-                                        maxTagCount='responsive'
-                                        allowClear={true}
-                                        loading={!diciplineData}
-                                    />
-                                </Col>
-                            </Row>
-
-                            <Row >
-                                <Col >
-                                    <ButtonToolbar className="my-3 float-right">
-                                        <ButtonGroup className="mx-1 my-1">
-                                            <Button
-                                                className="filter-btn"
-                                                variant="info"
-                                                disabled={questionSearch ||
-                                                    bankLabel.length !== 0 ||
-                                                    institutionLabel.length !== 0 ||
-                                                    officeLabel.length !== 0 ||
-                                                    yearLabel.length !== 0 ||
-                                                    diciplineLabel.length !== 0
-                                                    ? false : true}
-                                            >Filtrar</Button>
-                                        </ButtonGroup>
-                                    </ButtonToolbar>
-                                </Col>
-                            </Row>
-                        </div>
-
-                    </Collapse>
-                </Col>
-            </Row>
-        </Container>
+        <>
+            <Drawer
+                title="Filtrar por: "
+                placement="right"
+                width={720}
+                closable={false}
+                onClose={onClose}
+                visible={visible}
+                bodyStyle={{ paddingBottom: 80 }}
+                footer={
+                    <div
+                        style={{
+                            textAlign: 'right',
+                        }}
+                    >
+                        <Button className="filter-btn" onClick={onClose} style={{ marginRight: 8 }}>Cancel</Button>
+                        <Button
+                            className="filter-btn"
+                            variant="info"
+                            onClick={onClose}
+                            disabled={questionSearch ||
+                                bankLabel.length !== 0 ||
+                                institutionLabel.length !== 0 ||
+                                officeLabel.length !== 0 ||
+                                yearLabel.length !== 0 ||
+                                diciplineLabel.length !== 0
+                                ? false : true}
+                        >
+                            Filtrar
+                        </Button>
+                    </div>
+                }
+            >
+                <Form layout="vertical" hideRequiredMark>
+                    <Row>
+                        <Col>
+                            <Form.Item
+                                name="pesquisar"
+                                label="Pesquisar por enunciado"
+                            >
+                                <Search
+                                    placeholder="Pesquisar.."
+                                    allowClear
+                                    className="filter-select"
+                                    onSearch={(value) => setQuestionSearch(value)}
+                                    enterButton
+                                />
+                            </Form.Item>
+                        </Col>
+                        <Col>
+                            <Form.Item
+                                name="banca"
+                                label="Banca"
+                            >
+                                <TreeSelect
+                                    treeData={bank}
+                                    value={bankValue}
+                                    onChange={(value, label) => { setBankValue(value); setBankLabel(label); }}
+                                    treeCheckable={true}
+                                    placeholder="Banca..."
+                                    className="filter-field"
+                                    showCheckedStrategy={SHOW_PARENT}
+                                    maxTagCount='responsive'
+                                    allowClear={true}
+                                    loading={loadingBank}
+                                />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <Form.Item
+                                name="orgao"
+                                label="Orgão"
+                            >
+                                <TreeSelect
+                                    treeData={institution}
+                                    value={institutionValue}
+                                    onChange={(value, label) => { setInstitutionValue(value); setInstitutionLabel(label) }}
+                                    treeCheckable={true}
+                                    placeholder="Orgão..."
+                                    className="filter-field"
+                                    showCheckedStrategy={SHOW_PARENT}
+                                    maxTagCount='responsive'
+                                    allowClear={true}
+                                    loading={loadingInstitution}
+                                />
+                            </Form.Item>
+                        </Col>
+                        <Col>
+                            <Form.Item
+                                name="cargo"
+                                label="Cargo"
+                            >
+                                <TreeSelect
+                                    treeData={office}
+                                    value={officeValue}
+                                    onChange={(value, label) => { setOfficeValue(value); setOfficeLabel(label) }}
+                                    treeCheckable={true}
+                                    placeholder="Cargo..."
+                                    className="filter-field"
+                                    showCheckedStrategy={SHOW_PARENT}
+                                    maxTagCount='responsive'
+                                    allowClear={true}
+                                    loading={loadingOffice}
+                                />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <Form.Item
+                                name="ano"
+                                label="Ano"
+                            >
+                                <TreeSelect
+                                    treeData={yearData}
+                                    value={yearValue}
+                                    onChange={(value, label) => { setYearValue(value); setYearLabel(label) }}
+                                    treeCheckable={true}
+                                    placeholder="Ano..."
+                                    className="filter-field"
+                                    showCheckedStrategy={SHOW_PARENT}
+                                    maxTagCount='responsive'
+                                    allowClear={true}
+                                    loading={!yearData}
+                                />
+                            </Form.Item>
+                        </Col>
+                        <Col>
+                            <Form.Item
+                                name="assunto"
+                                label="Matéria & Assunto"
+                            >
+                                <TreeSelect
+                                    treeData={diciplineData}
+                                    value={diciplineValue}
+                                    onChange={(value, label) => { setDiciplineValue(value); setDiciplineLabel(label) }}
+                                    treeCheckable={true}
+                                    placeholder="Matéria & Assunto..."
+                                    className="filter-field"
+                                    showCheckedStrategy={SHOW_PARENT}
+                                    maxTagCount='responsive'
+                                    allowClear={true}
+                                    loading={!diciplineData}
+                                />
+                            </Form.Item>
+                        </Col>
+                    </Row>
+                </Form>
+            </Drawer>
+        </>
     );
 }
 
 const mapStateToProps = (state) => ({
     loadingBank: state.bank.loading,
     bank: state.bank.bank,
-    
+
     loadingInstitution: state.institution.loading,
     institution: state.institution.institution,
 
