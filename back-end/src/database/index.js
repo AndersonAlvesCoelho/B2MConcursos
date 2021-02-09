@@ -2,10 +2,10 @@ import { Sequelize } from "sequelize";
 import dbConfig from "../config/database";
 
 //BD b2mconcursos
-import BankController from "../models/bankController";
+import Bank from "../models/Bank";
 
-const modelsDbB2mconcursos = [
-    BankController,
+const modelsDbB2mConcursos = [
+    Bank,
 ];
 
 class Database {
@@ -14,11 +14,11 @@ class Database {
     }
     init() {
         // models para o banco b2mconcursos
-        const dbB2mconcursos = new Sequelize(dbConfig["b2mconcursos"]);
-        modelsDbB2mconcursos
-            .map((model) => model.init(dbB2mconcursos))
+        const dbB2mConcursos = new Sequelize(dbConfig["b2mconcursos"]);
+        modelsDbB2mConcursos
+            .map((model) => model.init(dbB2mConcursos))
             .map((model) => {
-                if (model.associate) model.associate(dbB2mconcursos.models);
+                if (model.associate) model.associate(dbB2mConcursos.models);
                 return model;
             });
     }

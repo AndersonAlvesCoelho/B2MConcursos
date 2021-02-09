@@ -1,4 +1,5 @@
 SELECT * FROM information_schema.tables WHERE table_schema='public';
+SELECT * FROM bank;
 
 SELECT * FROM office_niv_1;
 SELECT * FROM office_niv_2;
