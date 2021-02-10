@@ -1,72 +1,43 @@
-const knexBase = require("../database");
+import OfficeNiv01Controller from "../models/office/OfficeNiv01";
 
-module.exports = {
+class OfficeController {
 
+    // retorna dados sobre o termômetro
     async index(req, res) {
         try {
+            const data = await OfficeNiv01Controller.findAll({
+                attributes: { exclude: ['createdAt', 'updatedAt'] },
 
-            const result01 = await knexBase('office_niv_1')
-                .select('id_office_niv_1', 'name_office as name_1')
-                .orderBy('id_office_niv_1');
+                include: {
+                    // Tabela about_topic se relaciona com tabela Languages
+                    association: "office_niv_2",
+                    // attributes: [['id', 'id_topic'], 'title', 'text_topic'],
+                    attributes: { exclude: ['createdAt', 'updatedAt'] },
+                    // attributes: { exclude: ['id_languages'] },
 
-            const result02 = await knexBase('office_niv_2')
-                .select('id_office_niv_2', 'id_office_niv_1', 'name_office as name_2')
-                .orderBy('id_office_niv_2');
+                    // Tabela about_topic_caption se relaciona com tabela about_topic
+                    include: {
+                        association: "office_niv_3",
+                        // attributes: { exclude: ['id', 'id_about_topic'] },
+                        attributes: { exclude: ['createdAt', 'updatedAt'] },
 
-            const result03 = await knexBase('office_niv_3')
-                .select('id_office_niv_3', 'id_office_niv_2', 'name_office as name_3')
-                .orderBy('id_office_niv_3');
+                        // Tabela about_caption_item se relaciona com tabela about_topic_caption
+                        include: {
+                            association: "office_niv_4",
+                            // attributes: { exclude: ['id', 'id_about_topic_caption'] },
+                            attributes: { exclude: ['createdAt', 'updatedAt'] },
+                        },
+                    },
+                },
 
-            const result04 = await knexBase('office_niv_4')
-                .select('id_office_niv_4', 'id_office_niv_3', 'name_office as name_4')
-                .orderBy('id_office_niv_4');
-
-            const formatOffice = result01.map((office1, x) => ({
-                office_01: office1.name_1,
-                value: `0-${x}`,
-                key: `0-${x}`,
-                children: [
-                    result02.map((office2, y) => {
-                        if (office2.name_2) {
-                            if (result01[x].id_office_niv_1 === office2.id_office_niv_1) {
-                                return ({
-                                    office_02: office2.name_2,
-                                    value: `0-${x}-${y}`,
-                                    key: `0-${x}-${y}`,
-                                    children: [
-                                        result03.map((office3, z) => {
-                                            if (result02[y].id_office_niv_2 === office3.id_office_niv_2) {
-                                                return ({
-                                                    office_03: office3.name_3,
-                                                    value: `0-${x}-${y}-${z}`,
-                                                    key: `0-${x}-${y}-${z}`,
-                                                    children: [
-                                                        result04.map((office4, w) => {
-                                                            if (result03[z].id_office_niv_3 === office4.id_office_niv_3) {
-                                                                return ({
-                                                                    office_04: office4.name_4,
-                                                                    value: `0-${z}-${y}-${z}-${w}`,
-                                                                    key: `0-${x}-${y}-${z}-${w}`,
-                                                                })
-                                                            }
-                                                        })
-                                                    ]
-                                                })
-                                            }
-                                        })
-                                    ]
-                                })
-                            }
-                        }
-                    }),
-                ]
-            }))
-
-            return res.json(formatOffice);
+                order: [['id_office_niv_1'],],
+                // attributes: ['id', 'logo_version', 'logo_content_type', 'name', 'updated_at']
+            });
+            return res.json(data);
         } catch (error) {
-            // res.status(400).json({ message: `Erro ao retornar os dados. ${error}` });
-            next(error);
+            res.status(400).json({ message: `Erro ao retornar os dados. ${error}` });
         }
     }
 }
 
+export default new OfficeController();

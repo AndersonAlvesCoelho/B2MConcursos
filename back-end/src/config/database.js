@@ -1,5 +1,5 @@
 module.exports = {
-  b2mconcursos: {
+  development: {
     dialect: "postgres",
     host: 'localhost',
     database: 'b2mconcursos',

@@ -1,14 +1,14 @@
 import { Model, DataTypes } from "sequelize";
 
-class BankController extends Model {
+class OfficeNiv04 extends Model {
     static init(sequelize) {
         super.init(
             {
-                id_bank: {
+                id_office_niv_4: {
                     type: DataTypes.INTEGER,
                     primaryKey: true,
                 },
-                name_bank: {
+                name_office: {
                     type: DataTypes.STRING,
                 },
             },
@@ -16,13 +16,11 @@ class BankController extends Model {
                 sequelize,
                 schema: "public",
                 freezeTableName: true, // mantém o nome da tabela singular
-                tableName: "bank", // nome da tabela
+                tableName: "office_niv_4", // nome da tabela
                 timestamps: true,
             }
         );
-
         return this;
     }
 }
-
-export default BankController;
+export default OfficeNiv04;
