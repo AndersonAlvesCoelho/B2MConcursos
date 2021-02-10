@@ -1,8 +1,8 @@
-const express = require("express");
+import express from "express";
 
-const BankController = require('./controllers/bankController');
-const OfficeController = require('./controllers/officeController');
-const Institution = require('./controllers/institutionController');
+import BankController from './controllers/bankController';
+import OfficeController from './controllers/officeController';
+import Institution from './controllers/institutionController';
 
 const routes = express.Router();
 
