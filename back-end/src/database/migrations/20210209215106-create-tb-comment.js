@@ -26,7 +26,6 @@ module.exports = {
           onUpdate: 'CASCADE',
           onDelete: 'CASCADE',
         },
-
         id_question: {
           type: Sequelize.INTEGER,
           allowNull: false,
