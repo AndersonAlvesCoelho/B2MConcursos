@@ -1,34 +1,35 @@
 import { Model, DataTypes } from "sequelize";
 
-class BankController extends Model {
+class SubjectNiv06 extends Model {
     static init(sequelize) {
         super.init(
             {
-                id_bank: {
+                id_subject_niv_6: {
                     type: DataTypes.INTEGER,
                     primaryKey: true,
                 },
-                name_bank: {
+                name_subject: {
                     type: DataTypes.STRING,
-                },
-                created_at: {
-                    type: DataTypes.DATE,
-                },
-                updated_at: {
-                    type: DataTypes.DATE,
                 },
             },
             {
                 sequelize,
                 schema: "public",
                 freezeTableName: true, // mantém o nome da tabela singular
-                tableName: "bank", // nome da tabela
+                tableName: "subject_niv_6", // nome da tabela
                 timestamps: true,
             }
         );
-
         return this;
+    }
+
+    static associate(models) {
+        this.hasMany(models.SubjectNiv07, {
+            foreignKey: "id_subject_niv_6",
+            as: "subject_niv_7",
+        });
     }
 }
 
-export default BankController;
+
+export default SubjectNiv06;

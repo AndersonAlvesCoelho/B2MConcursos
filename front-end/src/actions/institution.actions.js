@@ -18,7 +18,7 @@ import {
           value: `0-${index}`,
           key: `0-${index}`,
         }));
-  
+        
         dispatch({ type: GET_INSTITUTION_SUCCESS, formatData });
       })
       .catch((error) => {

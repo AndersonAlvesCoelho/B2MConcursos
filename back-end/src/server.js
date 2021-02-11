@@ -1,3 +1,4 @@
+require("dotenv/config");
 import express from "express";
 import cors from "cors";
 import routes from "./routes";
@@ -17,16 +18,3 @@ app.use(routes);
 app.listen(PORT, HOST);
 
 
-// //notFound
-// app.use((req, res, next) => {
-//     const error = new Error('Not found');
-//     error.status = 404;
-//     next(error);
-
-// })
-
-// // catch all,
-// app.use((error, req, res, next) => {
-//     res.status(error.status || 500);
-//     res.json({ error: error.message })
-// });

@@ -1,16 +1,18 @@
-const knexBase = require("../database");
+import Bank from "../models/Bank";
 
-module.exports = {
+class BankController {
 
-    async index(req, res) {
-        try {
-            const results = await knexBase('bank').select(['name_bank'])
-
-            return res.json(results);
-        } catch (error) {
-            // res.status(400).json({ message: `Erro ao retornar os dados. ${error}` });
-            next(error);
-        }
+  // retorna municipio por geocodes
+  async index(req, res) {
+    try {
+      const data = await Bank.findAll({
+        attributes: { exclude: ['id_bank', 'createdAt', 'updatedAt'] },
+      });
+      return res.json(data) ;
+    } catch (error) {
+      res.status(400).json({ message: `Erro ao retornar os dados. ${error}` });
     }
+  }
 }
 
+export default new BankController();

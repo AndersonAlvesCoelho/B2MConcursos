@@ -1,14 +1,14 @@
 import { Model, DataTypes } from "sequelize";
 
-class InstitutionController extends Model {
+class SubjectNiv03 extends Model {
     static init(sequelize) {
         super.init(
             {
-                id_office_niv_1: {
+                id_subject_niv_3: {
                     type: DataTypes.INTEGER,
                     primaryKey: true,
                 },
-                name_office: {
+                name_subject: {
                     type: DataTypes.STRING,
                 },
             },
@@ -16,13 +16,20 @@ class InstitutionController extends Model {
                 sequelize,
                 schema: "public",
                 freezeTableName: true, // mantém o nome da tabela singular
-                tableName: "office_niv_1", // nome da tabela
+                tableName: "subject_niv_3", // nome da tabela
                 timestamps: true,
             }
         );
-
         return this;
+    }
+
+    static associate(models) {
+        this.hasMany(models.SubjectNiv04, {
+            foreignKey: "id_subject_niv_3",
+            as: "subject_niv_4",
+        });
     }
 }
 
-export default InstitutionController;
+
+export default SubjectNiv03;

@@ -48,19 +48,31 @@
     npm dev ou yarn dev
 
 
-    #MIGRATIONS
+    ##Criar banco de dados
+    yarn or npx sequelize-cli db:create
+
+    ##MIGRATIONS
     #roda todas as migrations pendentes
-    npx knex migrate:latest
+    yarn or npx sequelize-cli db:migrate
 
-    #reverte todas as tabelas criadas
-    npx knex migrate:rollback --all
+    #reverter a migração mais recente
+    yarn or npx  sequelize-cli db:migrate:undo
 
-    #SEEDS
-    #roda todas as seeds pedentes
-    npx knex seed:run
+    #reverte todas as migração criadas
+    yarn or npx  sequelize-cli db:migrate:undo:all
+
+
+    ##SEEDS
+    #reverter a seed mais recente
+    yarn or npx sequelize-cli db:seed:undo
+
+    #rodar todas as seeds pedentes
+    yarn or npx sequelize-cli db:seed:all
+    #reverter todas as seeds pedentes
+    yarn or npx sequelize-cli db:seed:undo:all
     
     #rodar somente uma seed específica
-    npx knex seed:run --specific=seed-filename.js
+    yarn or npx sequelize-cli db:seed:undo --seed name-of-seed-as-in-data
 
 ```
 

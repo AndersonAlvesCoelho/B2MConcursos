@@ -1,16 +1,18 @@
-const knexBase = require("../database");
+import Institution from "../models/Institution";
 
-module.exports = {
+class InstitutionController {
 
-    async index(req, res) {
-        try {
-            const results = await knexBase('institution').select(['name_institution'])
-
-            return res.json(results);
-        } catch (error) {
-            // res.status(400).json({ message: `Erro ao retornar os dados. ${error}` });
-            next(error);
-        }
+  // retorna municipio por geocodes
+  async index(req, res) {
+    try {
+      const data = await Institution.findAll({
+        attributes: { exclude: ['id_institution', 'createdAt', 'updatedAt'] },
+      });
+      return res.json(data) ;
+    } catch (error) {
+      res.status(400).json({ message: `Erro ao retornar os dados. ${error}` });
     }
+  }
 }
 
+export default new InstitutionController();

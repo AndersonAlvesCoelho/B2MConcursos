@@ -13,32 +13,41 @@ export const getOffice = () => (dispatch) => {
     .then((res) => {
       const { data } = res;
 
-      // let auxOffice01 = [];
-      // let auxOffice02 = [];
-      // let auxOffice03 = [];
-      // let auxOffice04 = [];
+      // Formatando data para ficar compativel com o select tree do ant
+      const formatData = data.map((office01, x) => ({
+        title: office01.name_office,
+        value: `0-${x}`,
+        key: `0-${x}`,
+        children: office01.office_niv_2.map((office02, y) => {
+          {
+            return ({
+              title: office02.name_office,
+              value: `0-${x}-${y}`,
+              key: `0-${x}-${y}`,
+              children: office02.office_niv_3.map((office03, z) => {
+                {
+                  return ({
+                    title: office03.name_office,
+                    value: `0-${x}-${y}-${z}`,
+                    key: `0-${x}-${y}-${z}`,
+                    children: office03.office_niv_4.map((office04, w) => {
+                      {
+                        return ({
+                          title: office04.name_office,
+                          value: `0-${x}-${y}-${w}`,
+                          key: `0-${x}-${y}-${w}`,
+                        })
+                      }
+                    })
+                  })
+                }
+              })
+            })
+          }
+        })
+      }));
 
-
-      // console.log('data ', data);
-      // data.map((office1, x) => {
-      //   auxOffice01.push(office1);
-      //   auxOffice02.push(office1.children[0].map((office2) => {
-      //     console.log(office2);
-      //   }))
-
-      // })
-
-      // auxOffice02.map((office2, y) => {
-      //   console.log(office2)
-      // })
-
-      // console.log(auxOffice01);
-      // console.log(auxOffice02);
-      // console.log(auxOffice03);
-      // console.log(auxOffice04);
-
-
-      dispatch({ type: GET_OFFICE_SUCCESS, data });
+      dispatch({ type: GET_OFFICE_SUCCESS, formatData });
     })
     .catch((error) => {
       const { response: err } = error;

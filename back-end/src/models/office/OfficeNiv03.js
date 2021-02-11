@@ -1,34 +1,35 @@
 import { Model, DataTypes } from "sequelize";
 
-class InstitutionController extends Model {
+class OfficeNiv03 extends Model {
     static init(sequelize) {
         super.init(
             {
-                id_institution: {
+                id_office_niv_3: {
                     type: DataTypes.INTEGER,
                     primaryKey: true,
                 },
-                name_institution: {
+                name_office: {
                     type: DataTypes.STRING,
-                },
-                created_at: {
-                    type: DataTypes.DATE,
-                },
-                updated_at: {
-                    type: DataTypes.DATE,
                 },
             },
             {
                 sequelize,
                 schema: "public",
                 freezeTableName: true, // mantém o nome da tabela singular
-                tableName: "institution", // nome da tabela
+                tableName: "office_niv_3", // nome da tabela
                 timestamps: true,
             }
         );
 
         return this;
     }
+
+    static associate(models) {
+        this.hasMany(models.OfficeNiv04, {
+            foreignKey: "id_office_niv_3",
+            as: "office_niv_4",
+        });
+    }
 }
 
-export default InstitutionController;
+export default OfficeNiv03;

@@ -5,7 +5,7 @@ import { Menu, Pagination, Affix } from 'antd';
 import { FaFilter } from "react-icons/fa";
 
 import './index.css';
-import { questionData } from '../../services/filter/dataSelect';
+import { questionData, officeData } from '../../services/filter/dataSelect';
 import MenuNavbar from '../../components/MenuNavbar/index';
 import Alternative from '../../components/Alternative/index';
 import FilterFixed from '../../components/FilterFixed/index';
@@ -30,8 +30,6 @@ function Questions() {
     function onShowSizeChange(page) {
         setData(questionData.slice(page, dataSize + page));
     }
-
-    console.log(data);
 
     return (
         <>
@@ -64,8 +62,10 @@ function Questions() {
             </Divider>
 
             {/* Lista de questões baseado  */}
-            {data.length !== 0 && data.map((e, key) =>
-                <Alternative data={e} index={key} />
+            {data.length !== 0 && data.map((e, x) =>
+            <div key={x}>
+                <Alternative data={e} index={x} />
+            </div>
             )}
         </>
     );

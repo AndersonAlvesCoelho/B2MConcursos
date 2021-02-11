@@ -19,7 +19,7 @@ import {
   
       case GET_INSTITUTION_SUCCESS: {
         const { formatData } = action;
-        return { ...state, bank: formatData, loading: false, };
+        return { ...state, institution: formatData, loading: false, };
       }
       case GET_INSTITUTION_FAILURE:
         return { ...state, loading: false };
