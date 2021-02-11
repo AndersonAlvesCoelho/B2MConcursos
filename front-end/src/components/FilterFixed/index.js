@@ -9,6 +9,7 @@ import { Drawer, TreeSelect, Input, Button, Form } from 'antd';
 import * as bankActions from '../../actions/bank.actions';
 import * as institutionActions from '../../actions/institution.actions';
 import * as officeActions from '../../actions/office.actions';
+import * as diciplineActions from '../../actions/dicipline.actions';
 
 const { SHOW_PARENT } = TreeSelect;
 const { Search } = Input;
@@ -20,16 +21,19 @@ function FilterFixed(props) {
         getBank,
         getInstitution,
         getOffice,
+        getDicipline,
 
         // estado true or false data empty
         loadingBank,
         loadingInstitution,
         loadingOffice,
+        loadingDicipline,
 
         // estado data actions
         bank,
         institution,
         office,
+        dicipline,
 
         visible,
         onClose
@@ -39,6 +43,7 @@ function FilterFixed(props) {
         getBank();
         getInstitution();
         getOffice();
+        getDicipline();
     }, []);
 
 
@@ -98,7 +103,7 @@ function FilterFixed(props) {
             >
                 <Form layout="vertical" hideRequiredMark>
                     <Row>
-                        <Col>
+                        <Col md="12">
                             <Form.Item
                                 name="pesquisar"
                                 label="Pesquisar por enunciado"
@@ -112,7 +117,7 @@ function FilterFixed(props) {
                                 />
                             </Form.Item>
                         </Col>
-                        <Col>
+                        <Col md="12">
                             <Form.Item
                                 name="banca"
                                 label="Banca"
@@ -131,9 +136,7 @@ function FilterFixed(props) {
                                 />
                             </Form.Item>
                         </Col>
-                    </Row>
-                    <Row>
-                        <Col>
+                        <Col md="12">
                             <Form.Item
                                 name="orgao"
                                 label="Orgão"
@@ -152,7 +155,7 @@ function FilterFixed(props) {
                                 />
                             </Form.Item>
                         </Col>
-                        <Col>
+                        <Col md="12">
                             <Form.Item
                                 name="cargo"
                                 label="Cargo"
@@ -171,9 +174,7 @@ function FilterFixed(props) {
                                 />
                             </Form.Item>
                         </Col>
-                    </Row>
-                    <Row>
-                        <Col>
+                        <Col md="12">
                             <Form.Item
                                 name="ano"
                                 label="Ano"
@@ -192,13 +193,13 @@ function FilterFixed(props) {
                                 />
                             </Form.Item>
                         </Col>
-                        <Col>
+                        <Col md="12">
                             <Form.Item
                                 name="assunto"
                                 label="Matéria & Assunto"
                             >
                                 <TreeSelect
-                                    treeData={diciplineData}
+                                    treeData={dicipline}
                                     value={diciplineValue}
                                     onChange={(value, label) => { setDiciplineValue(value); setDiciplineLabel(label) }}
                                     treeCheckable={true}
@@ -207,7 +208,7 @@ function FilterFixed(props) {
                                     showCheckedStrategy={SHOW_PARENT}
                                     maxTagCount='responsive'
                                     allowClear={true}
-                                    loading={!diciplineData}
+                                    loading={loadingDicipline}
                                 />
                             </Form.Item>
                         </Col>
@@ -227,12 +228,17 @@ const mapStateToProps = (state) => ({
 
     loadingOffice: state.office.loading,
     office: state.office.office,
+
+    loadingDicipline: state.dicipline.loading,
+    dicipline: state.dicipline.dicipline,
+
 });
 
 const mapDispatchToProps = {
     getBank: bankActions.getBank,
     getInstitution: institutionActions.getInstitution,
     getOffice: officeActions.getOffice,
+    getDicipline: diciplineActions.getDicipline,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(FilterFixed);

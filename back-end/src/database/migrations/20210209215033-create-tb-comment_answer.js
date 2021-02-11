@@ -12,8 +12,8 @@ module.exports = {
           autoIncrement: true,
           allowNull: false
         },
-        name_comment_answer: {
-          type: Sequelize.STRING,
+        answer: {
+          type: Sequelize.TEXT,
           allowNull: false
         },
         id_user: {

@@ -13,7 +13,7 @@ module.exports = {
           allowNull: false
         },
         comment: {
-          type: Sequelize.STRING,
+          type: Sequelize.TEXT,
           allowNull: false
         },
         id_user: {
@@ -22,6 +22,17 @@ module.exports = {
           references: {
             model: 'user', // name of Target model
             key: 'id_user', // key in Target model that we're referencing
+          },
+          onUpdate: 'CASCADE',
+          onDelete: 'CASCADE',
+        },
+
+        id_question: {
+          type: Sequelize.INTEGER,
+          allowNull: false,
+          references: {
+            model: 'question', // name of Target model
+            key: 'id_question', // key in Target model that we're referencing
           },
           onUpdate: 'CASCADE',
           onDelete: 'CASCADE',

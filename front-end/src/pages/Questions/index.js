@@ -31,7 +31,6 @@ function Questions() {
         setData(questionData.slice(page, dataSize + page));
     }
 
-    console.log('officeData ', officeData);
     return (
         <>
             {/* Navbar */}

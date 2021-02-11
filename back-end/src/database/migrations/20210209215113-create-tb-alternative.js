@@ -13,14 +13,13 @@ module.exports = {
           allowNull: false
         },
         name_alternative: {
-          type: Sequelize.STRING,
+          type: Sequelize.TEXT,
           allowNull: false
         },
         answer: {
-          type: Sequelize.STRING,
+          type: Sequelize.BOOLEAN,
           allowNull: false
         },
-
         id_question: {
           type: Sequelize.INTEGER,
           allowNull: false,
