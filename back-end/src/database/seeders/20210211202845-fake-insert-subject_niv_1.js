@@ -24,7 +24,7 @@ module.exports = {
       { id_subject_niv_1: 19, id_dicipline: 9, name_subject: "Organização de Eventos", created_at: new Date(), updated_at: new Date() },
       { id_subject_niv_1: 20, id_dicipline: 10, name_subject: "Pedagogia", created_at: new Date(), updated_at: new Date() },
       { id_subject_niv_1: 21, id_dicipline: 10, name_subject: "Português", created_at: new Date(), updated_at: new Date() },
-      { id_subject_niv_1: 22, id_dicipline: 11, name_subject: "Princípios e Atribuições Institucionais da Defensoriacreated_at: new Date(), updated_at: new Date() ", },
+      { id_subject_niv_1: 22, id_dicipline: 11, name_subject: "Princípios e Atribuições Institucionais da Defensoria", created_at: new Date(), updated_at: new Date() },
       { id_subject_niv_1: 23, id_dicipline: 12, name_subject: "Psicologia", created_at: new Date(), updated_at: new Date() },
       { id_subject_niv_1: 24, id_dicipline: 12, name_subject: "Psiquiatria", created_at: new Date(), updated_at: new Date() },
       { id_subject_niv_1: 25, id_dicipline: 12, name_subject: "Química e Engenharia Química", created_at: new Date(), updated_at: new Date() },
@@ -35,7 +35,7 @@ module.exports = {
       { id_subject_niv_1: 30, id_dicipline: 15, name_subject: "Russo (Língua Russa)", created_at: new Date(), updated_at: new Date() },
       { id_subject_niv_1: 31, id_dicipline: 15, name_subject: "Secretariado", created_at: new Date(), updated_at: new Date() },
       { id_subject_niv_1: 32, id_dicipline: 15, name_subject: "Segurança e Saúde no Trabalho (SST)", created_at: new Date(), updated_at: new Date() },
-      { id_subject_niv_1: 33, id_dicipline: 15, name_subject: "Segurança Privada e Transportescreated_at: new Date(), updated_at: new Date() ", },
+      { id_subject_niv_1: 33, id_dicipline: 15, name_subject: "Segurança Privada e Transportes", created_at: new Date(), updated_at: new Date() },
       { id_subject_niv_1: 34, id_dicipline: 15, name_subject: "Segurança Pública e Legislação Policial", created_at: new Date(), updated_at: new Date() },
     ], {});
   },

@@ -24,7 +24,7 @@ module.exports = {
       { id_subject_niv_6: 19, id_subject_niv_5: 9, name_subject: "Organização de Eventos", created_at: new Date(), updated_at: new Date() },
       { id_subject_niv_6: 20, id_subject_niv_5: 10, name_subject: "Pedagogia", created_at: new Date(), updated_at: new Date() },
       { id_subject_niv_6: 21, id_subject_niv_5: 10, name_subject: "Português", created_at: new Date(), updated_at: new Date() },
-      { id_subject_niv_6: 22, id_subject_niv_5: 11, name_subject: "Princípios e Atribuições Institucionais da Defensoriacreated_at: new Date(), updated_at: new Date() ", },
+      { id_subject_niv_6: 22, id_subject_niv_5: 11, name_subject: "Princípios e Atribuições Institucionais da Defensoria", created_at: new Date(), updated_at: new Date() },
       { id_subject_niv_6: 23, id_subject_niv_5: 12, name_subject: "Psicologia", created_at: new Date(), updated_at: new Date() },
       { id_subject_niv_6: 24, id_subject_niv_5: 12, name_subject: "Psiquiatria", created_at: new Date(), updated_at: new Date() },
       { id_subject_niv_6: 25, id_subject_niv_5: 12, name_subject: "Química e Engenharia Química", created_at: new Date(), updated_at: new Date() },
@@ -35,7 +35,7 @@ module.exports = {
       { id_subject_niv_6: 30, id_subject_niv_5: 15, name_subject: "Russo (Língua Russa)", created_at: new Date(), updated_at: new Date() },
       { id_subject_niv_6: 31, id_subject_niv_5: 15, name_subject: "Secretariado", created_at: new Date(), updated_at: new Date() },
       { id_subject_niv_6: 32, id_subject_niv_5: 15, name_subject: "Segurança e Saúde no Trabalho (SST)", created_at: new Date(), updated_at: new Date() },
-      { id_subject_niv_6: 33, id_subject_niv_5: 15, name_subject: "Segurança Privada e Transportescreated_at: new Date(), updated_at: new Date() ", },
+      { id_subject_niv_6: 33, id_subject_niv_5: 15, name_subject: "Segurança Privada e Transportes", created_at: new Date(), updated_at: new Date() },
       { id_subject_niv_6: 34, id_subject_niv_5: 15, name_subject: "Segurança Pública e Legislação Policial", created_at: new Date(), updated_at: new Date() },
     ], {});
   },

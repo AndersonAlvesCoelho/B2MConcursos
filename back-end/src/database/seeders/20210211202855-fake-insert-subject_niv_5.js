@@ -3,8 +3,6 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert('subject_niv_5', [
-      { id_subject_niv_5: 1, name_dicipline: 'Lero lero', id_subject_niv_4: 1, created_at: new Date(), updated_at: new Date() },
-
       { id_subject_niv_5: 1, id_subject_niv_4: 1, name_subject: "Bancos - Atendimento", created_at: new Date(), updated_at: new Date() },
       { id_subject_niv_5: 2, id_subject_niv_4: 4, name_subject: "Vendas", created_at: new Date(), updated_at: new Date() },
       { id_subject_niv_5: 3, id_subject_niv_4: 6, name_subject: "Direito Penal", created_at: new Date(), updated_at: new Date() },
