@@ -48,32 +48,33 @@
     npm dev ou yarn dev
 
 
-    #MIGRATIONS
-    #Criar banco de dados
+    ##Criar banco de dados
     yarn or npx sequelize-cli db:create
-    
+
+    ##MIGRATIONS
     #roda todas as migrations pendentes
     yarn or npx sequelize-cli db:migrate
 
     #reverter a migração mais recente
     yarn or npx  sequelize-cli db:migrate:undo
 
-    #reverte todas as tabelas criadas
+    #reverte todas as migração criadas
     yarn or npx  sequelize-cli db:migrate:undo:all
 
 
-    #SEEDS
-    #rodar a seed mais recente
+    ##SEEDS
+    #reverter a seed mais recente
     yarn or npx sequelize-cli db:seed:undo
-    
+
     #rodar todas as seeds pedentes
     yarn or npx sequelize-cli db:seed:all
+    #reverter todas as seeds pedentes
+    yarn or npx sequelize-cli db:seed:undo:all
     
     #rodar somente uma seed específica
     yarn or npx sequelize-cli db:seed:undo --seed name-of-seed-as-in-data
 
 ```
-
 
 > Pronto, seu backend já está inicializado. Você pode ver os dados da migration pela [url](http://localhost:3333/) ou pelo [insomnia](https://insomnia.rest/download/)
 > http://localhost:3333/

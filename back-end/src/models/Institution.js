@@ -1,14 +1,14 @@
 import { Model, DataTypes } from "sequelize";
 
-class Bank extends Model {
+class Institution extends Model {
     static init(sequelize) {
         super.init(
             {
-                id_bank: {
+                id_institution: {
                     type: DataTypes.INTEGER,
                     primaryKey: true,
                 },
-                name_bank: {
+                name_institution: {
                     type: DataTypes.STRING,
                 },
             },
@@ -16,7 +16,7 @@ class Bank extends Model {
                 sequelize,
                 schema: "public",
                 freezeTableName: true, // mantém o nome da tabela singular
-                tableName: "bank", // nome da tabela
+                tableName: "institution", // nome da tabela
                 timestamps: true,
             }
         );
@@ -25,4 +25,4 @@ class Bank extends Model {
     }
 }
 
-export default Bank;
+export default Institution;

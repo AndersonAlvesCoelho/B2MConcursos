@@ -1,14 +1,14 @@
 import { Model, DataTypes } from "sequelize";
 
-class Bank extends Model {
+class Dicipline extends Model {
     static init(sequelize) {
         super.init(
             {
-                id_bank: {
+                id_dicipline: {
                     type: DataTypes.INTEGER,
                     primaryKey: true,
                 },
-                name_bank: {
+                name_dicipline: {
                     type: DataTypes.STRING,
                 },
             },
@@ -16,13 +16,19 @@ class Bank extends Model {
                 sequelize,
                 schema: "public",
                 freezeTableName: true, // mantém o nome da tabela singular
-                tableName: "bank", // nome da tabela
+                tableName: "dicipline", // nome da tabela
                 timestamps: true,
             }
         );
-
         return this;
+    }
+
+    static associate(models) {
+        this.hasMany(models.SubjectNiv01, {
+            foreignKey: "id_dicipline",
+            as: "subject_niv_1",
+        });
     }
 }
 
-export default Bank;
+export default Dicipline;

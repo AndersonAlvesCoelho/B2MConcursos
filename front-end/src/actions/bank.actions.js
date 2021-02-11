@@ -12,7 +12,8 @@ export const getBank = () => (dispatch) => {
   api.get('/bank')
     .then((res) => {
       const { data } = res;
-
+      
+      // Formatando data para ficar compativel com o select tree do ant
       const formatData = data.map((bank, index) => ({
         title: bank.name_bank,
         value: `0-${index}`,

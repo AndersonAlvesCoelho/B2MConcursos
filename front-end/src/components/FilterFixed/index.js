@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Row, Col, } from 'react-bootstrap';
 import { yearData, diciplineData } from '../../services/filter/dataSelect';
 
-import { Drawer, TreeSelect, Input, Menu, Select, Button, Form } from 'antd';
+import { Drawer, TreeSelect, Input, Button, Form } from 'antd';
 
 
 import * as bankActions from '../../actions/bank.actions';
@@ -16,15 +16,21 @@ const { Search } = Input;
 function FilterFixed(props) {
 
     const {
+        // actions function get
         getBank,
         getInstitution,
         getOffice,
+
+        // estado true or false data empty
         loadingBank,
         loadingInstitution,
         loadingOffice,
+
+        // estado data actions
         bank,
         institution,
         office,
+
         visible,
         onClose
     } = props;
@@ -34,7 +40,6 @@ function FilterFixed(props) {
         getInstitution();
         getOffice();
     }, []);
-
 
 
     // const [open, setOpen] = useState(false);
