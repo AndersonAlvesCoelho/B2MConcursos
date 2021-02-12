@@ -12,22 +12,20 @@ module.exports = {
           autoIncrement: true,
           allowNull: false
         },
+        office_coordinate:{
+          type: Sequelize.STRING,
+          allowNull: false
+        },
+        discipline_coordinate:{
+          type: Sequelize.STRING,
+          allowNull: false
+        },
         id_bank: {
           type: Sequelize.INTEGER,
           allowNull: false,
           references: {
             model: 'bank', // name of Target model
             key: 'id_bank', // key in Target model that we're referencing
-          },
-          onUpdate: 'CASCADE',
-          onDelete: 'CASCADE',
-        },
-        id_office_niv_1: {
-          type: Sequelize.INTEGER,
-          allowNull: false,
-          references: {
-            model: 'office_niv_1', // name of Target model
-            key: 'id_office_niv_1', // key in Target model that we're referencing
           },
           onUpdate: 'CASCADE',
           onDelete: 'CASCADE',
@@ -45,16 +43,6 @@ module.exports = {
         year: {
           type: Sequelize.INTEGER,
           allowNull: false
-        },
-        id_dicipline: {
-          type: Sequelize.INTEGER,
-          allowNull: false,
-          references: {
-            model: 'dicipline', // name of Target model
-            key: 'id_dicipline', // key in Target model that we're referencing
-          },
-          onUpdate: 'CASCADE',
-          onDelete: 'CASCADE',
         },
         issue_resolution: {
           type: Sequelize.TEXT,
