@@ -14,7 +14,7 @@ class OfficeController {
                     include: {
                         association: "office_niv_3",
                         attributes: { exclude: ['id_office_niv_3', 'id_office_niv_2', 'createdAt', 'updatedAt'] },
-
+                        
                         include: {
                             association: "office_niv_4",
                             attributes: { exclude: ['id_office_niv_4', 'id_office_niv_3', 'createdAt', 'updatedAt'] },
