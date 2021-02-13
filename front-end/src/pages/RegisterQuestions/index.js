@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useRef, useState} from 'react';
 import MenuNavbar from '../../components/MenuNavbar/index';
 import {Button, Col, Container, Row} from "react-bootstrap";
 import { Input } from 'antd';
@@ -16,6 +16,35 @@ const RegisterQuestions = (props) => {
     const [alternativeB, setAlternativeB] = useState();
     const [alternativeC, setAlternativeC] = useState();
     const [alternativeD, setAlternativeD] = useState();
+
+    const [file, setFile] = useState(''); // storing the uploaded file
+    // storing the recived file from backend
+    const [data, getFile] = useState({ name: "", path: "" });
+    const [progress, setProgess] = useState(0); // progess bar
+    const el = useRef(); // accesing input element
+
+    const handleChange = (e) => {
+        setProgess(0)
+        const file = e.target.files[0]; // accesing file
+        console.log(file);
+        setFile(file); // storing file
+    }
+
+    const uploadFile = () => {
+        const formData = new FormData();        formData.append('file', file); // appending file
+        // axios.post('http://localhost:4500/upload', formData, {
+        //     onUploadProgress: (ProgressEvent) => {
+        //         let progress = Math.round(
+        //             ProgressEvent.loaded / ProgressEvent.total * 100) + '%';
+        //         setProgess(progress);
+        //     }
+        // }).then(res => {
+        //     console.log(res);
+        //     getFile({ name: res.data.name,
+        //         path: 'http://localhost:4500' + res.data.path
+        //     })
+        // }).catch(err => console.log(err))
+}
 
     const sendPDF = () => {
         // api.get('/pdfFile')
@@ -44,6 +73,20 @@ const RegisterQuestions = (props) => {
                 <Row >
                     <span className="filter-titer mx-1 ml-2">Cadastro de questões:</span>
                 </Row >
+
+                <div>
+                    <div className="file-upload">
+                        <input type="file" ref={el} onChange={handleChange} />                <div className="progessBar" style={{ width: progress }}>
+                        {progress}
+                    </div>
+                        <button onClick={uploadFile} className="upbutton">                   Upload
+                        </button>
+                        <hr />
+                        {/* displaying received image*/}
+                        {data.path && <img src={data.path} alt={data.name} />}
+                    </div>
+                </div>
+
                 <Button
                     onClick={sendPDF}
                     className="filter-btn"
@@ -57,7 +100,7 @@ const RegisterQuestions = (props) => {
                             allowClear
                             className="filter-select"
                             enterButton
-    value={year}
+                            value={year}
                         />
                     </Col>
 
@@ -67,7 +110,7 @@ const RegisterQuestions = (props) => {
                             allowClear
                             className="filter-select"
                             enterButton
-    value={bank}
+                            value={bank}
                         />
                     </Col>
 
@@ -78,7 +121,7 @@ const RegisterQuestions = (props) => {
                             allowClear
                             className="filter-select"
                             enterButton
-    value={prove}
+                            value={prove}
                         />
                     </Col>
 
@@ -88,7 +131,7 @@ const RegisterQuestions = (props) => {
                             allowClear
                             className="filter-select"
                             enterButton
-    value={institute}
+                            value={institute}
                         />
                     </Col>
                 </Row>
@@ -124,7 +167,7 @@ const RegisterQuestions = (props) => {
                             allowClear
                             className="filter-select"
                             enterButton
-    value={alternativeB}
+                            value={alternativeB}
                         />
                     </Col>
                 </Row>
@@ -136,7 +179,7 @@ const RegisterQuestions = (props) => {
                             allowClear
                             className="filter-select"
                             enterButton
-    value={alternativeC}
+                            value={alternativeC}
                         />
                     </Col>
                 </Row>
@@ -149,7 +192,7 @@ const RegisterQuestions = (props) => {
                             allowClear
                             className="filter-select"
                             enterButton
-    value={alternativeD}
+                            value={alternativeD}
                         />
                     </Col>
                 </Row>

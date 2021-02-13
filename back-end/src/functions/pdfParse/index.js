@@ -8,6 +8,5 @@ const pdffile = fs.readFileSync('TJ MG teste.pdf')
 pdfparse(pdffile).then(function (data){
     console.log(data.numpages)
 
-
     console.log(data.info)
 })
