@@ -5,6 +5,8 @@ import OfficeController from './controllers/officeController';
 import InstitutionController from './controllers/institutionController';
 import DiciplineController from './controllers/diciplineController';
 
+import RegisterQuestions from "./controllers/diciplineController";
+
 const routes = express.Router();
 
 const apiVersionV1 = "/v1";
@@ -14,5 +16,8 @@ routes.get(`${apiVersionV1}/bank`, BankController.index);
 routes.get(`${apiVersionV1}/office`, OfficeController.index);
 routes.get(`${apiVersionV1}/institution`, InstitutionController.index);
 routes.get(`${apiVersionV1}/dicipline`, DiciplineController.index);
-    
+
+// --- ROTAS QUE PRECISAM DE AUTENTICACAO ---
+routes.get(`${apiVersionV1}/registerQuestions`, RegisterQuestions.index);
+
 module.exports = routes;

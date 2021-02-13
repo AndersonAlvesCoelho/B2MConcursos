@@ -6,7 +6,23 @@ import {
 
 import api from '../services/api';
 
-//GET OFFICE
-export const getOffice = () => (dispatch) => {
+export const uploadFile = (formData) => (dispatch) => {
+    dispatch({ type: UPLOAD_PDF_REQUEST });
+    api.post('/registerQuestions', formData)
+        .then((res) => {
+            const { data } = res;
 
+            const formatData = data.map((institution, index) => ({
+                title: institution.name_institution,
+                value: `0-${index}`,
+                key: `0-${index}`,
+            }));
+
+            dispatch({ type: UPLOAD_PDF_SUCCESS, formatData });
+        })
+        .catch((error) => {
+            const { response: err } = error;
+            const message = err && err.data ? err.data.message : 'Erro desconhecido';
+            dispatch({ type: UPLOAD_PDF_FAILURE, message });
+        });
 }
