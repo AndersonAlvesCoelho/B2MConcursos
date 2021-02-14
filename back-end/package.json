@@ -4,8 +4,8 @@
   "description": "B2MConcursos",
   "main": "src/server.js",
   "scripts": {
-    "dev": "SET NODE_ENV=development & nodemon src/server.js",
-    "build": "babel src -s -D -d dist --presets env",
+     "dev": "SET NODE_ENV=development & nodemon src/server.js",
+    "build": "sucrase ./src -d ./dist --transforms imports,jsx,flow",
     "start": "pm2-runtime ./dist/server.js"
   },
   "keywords": [],

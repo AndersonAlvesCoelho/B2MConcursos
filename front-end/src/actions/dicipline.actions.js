@@ -9,7 +9,7 @@ import api from '../services/api';
 //GET DICIPLINE
 export const getDicipline = () => (dispatch) => {
   dispatch({ type: GET_DICIPLINE_REQUEST });
-  api.get('/dicipline')
+  api.get('/subjects')
     .then((res) => {
       const { data } = res;
 

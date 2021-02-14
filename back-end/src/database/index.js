@@ -19,16 +19,21 @@ import SubjectNiv05 from '../models/subject/SubjectNiv05';
 import SubjectNiv06 from '../models/subject/SubjectNiv06';
 import SubjectNiv07 from '../models/subject/SubjectNiv07';
 
-// tabelas do banco de dados
-const modelsDbB2mConcursos = [
-    Bank,
-    Institution,
+import Office from "../models/Office";
+import DisciplineSubject from "../models/DisciplineSubject";
+import Question from "../models/Question";
+import Alternative from "../models/Alternative";
+import User from "../models/User";
+import Comment from "../models/Comment";
+import CommentAnswer from "../models/CommentAnswer";
 
+// tabelas do banco de dados
+const modelsDbB2mConcursos = [    
     OfficeNiv01,
     OfficeNiv02,
     OfficeNiv03,
     OfficeNiv04,
-
+    
     Dicipline,
     SubjectNiv01,
     SubjectNiv02,
@@ -37,6 +42,16 @@ const modelsDbB2mConcursos = [
     SubjectNiv05,
     SubjectNiv06,
     SubjectNiv07,
+    
+    Bank,
+    Institution,
+    Office,
+    DisciplineSubject,
+    Question,
+    Alternative,
+    User,
+    Comment,
+    CommentAnswer,
 ];
 
 class Database {

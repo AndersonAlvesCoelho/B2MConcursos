@@ -9,7 +9,7 @@ import api from '../services/api';
 //GET OFFICE
 export const getOffice = () => (dispatch) => {
   dispatch({ type: GET_OFFICE_REQUEST });
-  api.get('/office')
+  api.get('/offices')
     .then((res) => {
       const { data } = res;
 

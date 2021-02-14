@@ -12,13 +12,27 @@ module.exports = {
           autoIncrement: true,
           allowNull: false
         },
-        office_coordinate:{
-          type: Sequelize.STRING,
-          allowNull: false
+
+        id_office: {
+          type: Sequelize.INTEGER,
+          allowNull: false,
+          references: {
+            model: 'office', // name of Target model
+            key: 'id_office', // key in Target model that we're referencing
+          },
+          onUpdate: 'CASCADE',
+          onDelete: 'CASCADE',
         },
-        discipline_coordinate:{
-          type: Sequelize.STRING,
-          allowNull: false
+
+        id_discipline_subject: {
+          type: Sequelize.INTEGER,
+          allowNull: false,
+          references: {
+            model: 'discipline_subject', // name of Target model
+            key: 'id_discipline_subject', // key in Target model that we're referencing
+          },
+          onUpdate: 'CASCADE',
+          onDelete: 'CASCADE',
         },
         id_bank: {
           type: Sequelize.INTEGER,

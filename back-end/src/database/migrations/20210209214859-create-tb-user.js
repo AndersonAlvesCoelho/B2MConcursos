@@ -21,7 +21,7 @@ module.exports = {
           allowNull: false
         },
         nivel: {
-          type: Sequelize.STRING,
+          type: Sequelize.INTEGER,
           allowNull: false
         },
         // Timestamps

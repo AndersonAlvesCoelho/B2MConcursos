@@ -3,13 +3,35 @@ import { Model, DataTypes } from "sequelize";
 class Question extends Model {
     static init(sequelize) {
         super.init(
+
             {
-                id_dicipline: {
+                id_question: {
                     type: DataTypes.INTEGER,
                     primaryKey: true,
                 },
-                name_dicipline: {
-                    type: DataTypes.STRING,
+                id_office: {
+                    type: DataTypes.INTEGER,
+                },
+                id_discipline_subject: {
+                    type: DataTypes.INTEGER,
+                },
+                year: {
+                    type: DataTypes.INTEGER,
+                },
+                issue_resolution: {
+                    type: DataTypes.TEXT,
+                },
+                enunciated: {
+                    type: DataTypes.TEXT,
+                },
+                id_bank: {
+                    type: DataTypes.INTEGER,
+                },
+                id_institution: {
+                    type: DataTypes.INTEGER,
+                },
+                id_user: {
+                    type: DataTypes.INTEGER,
                 },
             },
             {
@@ -18,15 +40,40 @@ class Question extends Model {
                 freezeTableName: true, // mantém o nome da tabela singular
                 tableName: "question", // nome da tabela
                 timestamps: true,
-            }
+            },
         );
         return this;
     }
 
     static associate(models) {
-        this.hasMany(models.SubjectNiv01, {
-            foreignKey: "id_dicipline",
-            as: "subject_niv_1",
+        this.belongsTo(models.Office, {
+            foreignKey: "id_office",
+            as: "office",
+        });
+        this.belongsTo(models.DisciplineSubject, {
+            foreignKey: "id_discipline_subject",
+            as: "discipline_subject",
+        });
+        this.belongsTo(models.Bank, {
+            foreignKey: "id_bank",
+            as: "bank",
+        });
+        this.belongsTo(models.Institution, {
+            foreignKey: "id_institution",
+            as: "institution",
+        });
+        this.belongsTo(models.User, {
+            foreignKey: "id_user",
+            as: "user",
+        });
+        this.hasMany(models.Alternative, {
+            foreignKey: "id_question",
+            as: "alternative",
+        });
+
+        this.hasMany(models.Comment, {
+            foreignKey: "id_question",
+            as: "comment",
         });
     }
 }
