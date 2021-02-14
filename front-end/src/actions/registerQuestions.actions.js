@@ -8,7 +8,7 @@ import api from '../services/api';
 
 export const uploadFile = (formData) => (dispatch) => {
     dispatch({ type: UPLOAD_PDF_REQUEST });
-    api.post('/registerQuestions', formData)
+    api.post('/registerQuestions', { formData }, { headers: { 'Content-Type': 'multipart/form-data' } } )
         .then((res) => {
             const { data } = res;
 

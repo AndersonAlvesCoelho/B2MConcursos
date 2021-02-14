@@ -1,10 +1,16 @@
 import React, { useRef, useState} from 'react';
+import { connect } from 'react-redux';
 import MenuNavbar from '../../components/MenuNavbar/index';
 import {Button, Col, Container, Row} from "react-bootstrap";
 import { Input } from 'antd';
-import api from '../../services/api';
+import * as regusterQuestionsActions from '../../actions/registerQuestions.actions';
+
 
 const RegisterQuestions = (props) => {
+
+    const {
+        uploadFile
+    } = props
 
     const [enunciated, setEnunciated] = useState();
     const [year, setYear] = useState();
@@ -30,20 +36,15 @@ const RegisterQuestions = (props) => {
         setFile(file); // storing file
     }
 
-    const uploadFile = () => {
-        const formData = new FormData();        formData.append('file', file); // appending file
-        // axios.post('http://localhost:4500/upload', formData, {
-        //     onUploadProgress: (ProgressEvent) => {
-        //         let progress = Math.round(
-        //             ProgressEvent.loaded / ProgressEvent.total * 100) + '%';
-        //         setProgess(progress);
-        //     }
-        // }).then(res => {
-        //     console.log(res);
-        //     getFile({ name: res.data.name,
-        //         path: 'http://localhost:4500' + res.data.path
-        //     })
-        // }).catch(err => console.log(err))
+    const uploadFileFunction = () => {
+        const formData = new FormData();
+        formData.append('file', file); // appending file
+
+        // for (let i = 0; i < file.length; i++) {
+        //     formData.append(file[i].name, files[i])
+        // }
+
+        props.uploadFile(formData)
 }
 
     const sendPDF = () => {
@@ -79,7 +80,7 @@ const RegisterQuestions = (props) => {
                         <input type="file" ref={el} onChange={handleChange} />                <div className="progessBar" style={{ width: progress }}>
                         {progress}
                     </div>
-                        <button onClick={uploadFile} className="upbutton">                   Upload
+                        <button onClick={uploadFileFunction} className="upbutton">                   Upload
                         </button>
                         <hr />
                         {/* displaying received image*/}
@@ -206,4 +207,13 @@ const RegisterQuestions = (props) => {
     );
 }
 
-export default RegisterQuestions;
+const mapStateToProps = state => ({
+
+})
+
+
+const  mapDispatchToProps = {
+    uploadFile: regusterQuestionsActions.uploadFile,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterQuestions);
