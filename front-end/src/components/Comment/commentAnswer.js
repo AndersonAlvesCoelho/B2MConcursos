@@ -3,11 +3,11 @@ import { DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled } from '@ant-d
 import { Comment, Tooltip, Avatar } from 'antd';
 
 import './index.css';
-import NewCommit from './newCommit';
+import NewComment from './newComment';
 
-function CommitAnswer({ dataAnswer, numAmswer }) {
+function CommentAnswer({ dataAnswer, numAmswer }) {
 
-    const [openCommit, setOpenCommit] = useState(false);
+    const [openComment, setOpenComment] = useState(false);
     const [answerStatus, setAnswerStatus] = useState({
         likes: 0,
         dislikes: 0,
@@ -30,6 +30,7 @@ function CommitAnswer({ dataAnswer, numAmswer }) {
         })
     }
 
+
     //JSX icons add like, dislike e new answer
     const actionsAnswer = [
         <Tooltip key="comment-basic-like" title="Like">
@@ -44,32 +45,32 @@ function CommitAnswer({ dataAnswer, numAmswer }) {
                 <span className="comment-action">{answerStatus.dislikes}</span>
             </span>
         </Tooltip>,
-        <span key="comment-basic-reply-to" onClick={() => setOpenCommit(openCommit ? false : true)}>Responde</span>,
+        <span key="comment-basic-reply-to" onClick={() => setOpenComment(openComment ? false : true)}>Responde</span>,
     ];
 
     return (
         <Comment
             actions={actionsAnswer}
-            author={<a> {dataAnswer.name_user}</a>}
+            author={<a> {dataAnswer.user.login}</a>}
             avatar={
                 <Avatar
                     src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                    alt={dataAnswer.name_user}
+                    alt={dataAnswer.user.login}
                 />
             }
             content={
                 <p>{dataAnswer.answer}</p>
             }
             datetime={
-                <Tooltip title='2015-09-01'>
-                    <span>2015-09-01</span>
+                <Tooltip title={Date(dataAnswer.updatedAt)}>
+                    <span>{Date(dataAnswer.updatedAt)}</span>
                 </Tooltip>
             }
         >
-            {/* Component ADD new commit */}
-            <NewCommit cleaText={() => setOpenCommit(false)} newText={openCommit} index={numAmswer} type={'commit-answer'}/>
+            {/* Component ADD new Comment */}
+            <NewComment cleaText={() => setOpenComment(false)} newText={openComment} index={numAmswer} type={'comment-answer'}/>
         </Comment>
     );
 }
 
-export default CommitAnswer;
+export default CommentAnswer;

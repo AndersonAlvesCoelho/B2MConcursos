@@ -1,3 +1,4 @@
+import { Sequelize, Op } from "sequelize";
 import Question from "../models/Question";
 
 class QuestionController {
@@ -8,11 +9,16 @@ class QuestionController {
       const data = await Question.findAll({
         attributes: {
           exclude: [
+            // 'id_question',
+            'id_office',
+            'id_discipline_subject',
+            'id_bank',
+            'id_institution',
+            'id_user',
             'createdAt',
-            'updatedAt'
+            // 'updatedAt'
           ]
         },
-        where: {id_question: 2},
 
         include: [
           {
@@ -46,6 +52,7 @@ class QuestionController {
             //  A mesma coisa que acontece para os dados office aocntece para os dados de subject
             association: "discipline_subject",
             attributes: { exclude: ['id_dicipline', 'id_subject_niv_1', 'id_subject_niv_2', 'id_subject_niv_3', 'id_subject_niv_4', 'id_subject_niv_5', 'id_subject_niv_6', 'id_subject_niv_7', 'createdAt', 'updatedAt'] },
+
             include: [
               {
                 association: "dicipline",
@@ -81,13 +88,8 @@ class QuestionController {
               },
 
             ],
-          },
 
-          /* Rlacionamento simples
-          * id_question com id_bank
-          * id_question com id_institution
-          * id_question com id_user
-          */
+          },
           {
             association: "bank",
             attributes: { exclude: ['id_bank', 'createdAt', 'updatedAt'] },
@@ -98,7 +100,7 @@ class QuestionController {
           },
           {
             association: "user",
-            attributes: { exclude: ['id_user','password', 'createdAt', 'updatedAt'] },
+            attributes: { exclude: ['id_user', 'password', 'nivel', 'createdAt', 'updatedAt'] },
           },
           {
             association: "alternative",
@@ -106,18 +108,39 @@ class QuestionController {
           },
           {
             association: "comment",
-            attributes: { exclude: ['id_comment', 'id_user', 'id_question', 'createdAt', 'updatedAt'] },
+            attributes: { exclude: ['id_comment', 'id_user', 'id_question', 'createdAt'] },
             include: [
               {
                 association: "comment_answer",
-                attributes: { exclude: ['id_user', 'id_comment', 'createdAt', 'updatedAt'] },
+                attributes: { exclude: ['id_comment_answer', 'id_user', 'id_comment', 'createdAt'] },
+                include: [
+                  {
+                    association: "user",
+                    attributes: { exclude: ['id_user', 'password', 'nivel', 'createdAt', 'updatedAt'] },
+                  },
+                ],
+              },
+              {
+                association: "user",
+                attributes: { exclude: ['createdAt', 'updatedAt'] },
+                attributes: { exclude: ['id_user', 'password', 'nivel', 'createdAt', 'updatedAt'] },
               },
             ],
           },
         ],
 
-
+        offset: req.params.offset, limit: req.params.limit,
+        // order: [['updated_at']]
       });
+      return res.json(data);
+    } catch (error) {
+      res.status(400).json({ message: `Erro ao retornar os dados. ${error}` });
+    }
+  }
+
+  async qtdQuestions(req, res) {
+    try {
+      const data = await Question.count();
       return res.json(data);
     } catch (error) {
       res.status(400).json({ message: `Erro ao retornar os dados. ${error}` });

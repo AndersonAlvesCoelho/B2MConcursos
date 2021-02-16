@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, } from 'react-bootstrap';
-import { yearData, diciplineData } from '../../services/filter/dataSelect';
+import { yearData } from '../../services/filter/dataSelect';
 
 import { Drawer, TreeSelect, Input, Button, Form } from 'antd';
 

@@ -83,7 +83,6 @@ export const getDicipline = () => (dispatch) => {
         })
       }));
 
-      console.log('formatData ', formatData);
       dispatch({ type: GET_DICIPLINE_SUCCESS, formatData });
     })
     .catch((error) => {

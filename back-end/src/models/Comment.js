@@ -34,6 +34,10 @@ class Comment extends Model {
             foreignKey: "id_comment",
             as: "comment_answer",
         });
+        this.belongsTo(models.User, {
+            foreignKey: "id_user",
+            as: "user",
+        });
     }
 }
 
