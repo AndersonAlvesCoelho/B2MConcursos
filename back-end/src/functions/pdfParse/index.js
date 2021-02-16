@@ -6,36 +6,38 @@ export const regexPDF = (pdfFile) => {
     pdf(pdfFile).then(function (data){
 
         //regex
-        var AtoB = /A\)(.*?)B\)/g
-        var BtoC = /B\)(.*?)C\)/g
-        var DtoNext = /A\)(.*)B\)/g
+        const AtoB = new RegExp("A\\)(.*?)B\\)", "g")
+        const BtoC = new RegExp("B\\)(.*?)C\\)", "g")
+        const CtoD = new RegExp("C\\)(.*?)D\\)", "g")
 
         //transformando em uma única String
         var linhas = data.text.split("\n")
         var pdfData = linhas.join()
 
+        //catch questions
+        const questionsA = pdfData.match(AtoB);
+        const questionsB = pdfData.match(BtoC);
+        const questionsC = pdfData.match(CtoD);
+        var questionsD = [];
 
+        //catch question D (search everything between D) to number of question)
+        for(let i = 2 ; i < 4; i = i + 1) {
+            var DtoNext = new RegExp(`D\\)(.*?)${i}`, `g`)
+            var matchsD = pdfData.match(DtoNext);
+            questionsD.push(matchsD[0])
+        }
 
-        //TODO: descobrir uma forma melhor de pegar todas as ocorrências de um regex em uma string que não seja essa gambiarra
-        //gambiarra = excluir ocorrencias da variavel para que o app não pare de novo na mesma string
-       do{
+        const questionsInfo = [];
+        questionsInfo.push(questionsA, questionsB, questionsC, questionsD);
+        return questionsInfo
 
-           var questionsA = pdfData.match(AtoB);
-           var questionsB = pdfData.match(BtoC);
+        // const search = 'Atenção';
+        // const replaceWith = '';
 
-           const search = 'Atenção';
-           const replaceWith = '';
+        // const result = pdfData.split(search).join(replaceWith);
 
-           const result = pdfData.split(search).join(replaceWith);
+        // console.log(result)
 
-           console.log(result)
-       }while(result !== "")
-
-
-
-        console.log(pdfData)
-        console.log(questionsA)
-        console.log(questionsB)
         // console.log(data.numpages)
 
     })

@@ -12,11 +12,14 @@ export const uploadFile = (formData) => (dispatch) => {
         .then((res) => {
             const { data } = res;
 
-            const formatData = data.map((institution, index) => ({
-                title: institution.name_institution,
-                value: `0-${index}`,
-                key: `0-${index}`,
-            }));
+            console.log(data);
+            const formatData = data;
+
+            // const formatData = data.map((institution, index) => ({
+            //     title: institution.name_institution,
+            //     value: `0-${index}`,
+            //     key: `0-${index}`,
+            // }));
 
             dispatch({ type: UPLOAD_PDF_SUCCESS, formatData });
         })
