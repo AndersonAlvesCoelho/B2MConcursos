@@ -1,33 +1,42 @@
 const pdf = require('pdf-parse')
 
 export const regexPDF = (pdfFile) => {
-    var string = "A) Casa com a palavra exemplo. B) DSSD ";
-    // regex = /a\)/;
-    var regex = /(01)(.*)(A\))/;
-
-    const pattern = new RegExp(regex);
 
 
     pdf(pdfFile).then(function (data){
-        // var AlternativeA = new RegExp(/.*(?= a )/)
-        // var myArray = AlternativeA.exec("aacdbbdbsbz");
 
-        // console.log(data.numpages)
-        // var teste = String(data.text)
-        // console.log(typeof  data.text)
+        //regex
+        var AtoB = /A\)(.*?)B\)/g
+        var BtoC = /B\)(.*?)C\)/g
+        var DtoNext = /A\)(.*)B\)/g
 
-        // var pdfData = pattern.exec(data.text)
-
+        //transformando em uma única String
         var linhas = data.text.split("\n")
         var pdfData = linhas.join()
-        // elements.join()
-        return pattern.exec(pdfData)
 
-        // linhas.forEach(function(linha, i) {
-        //     // pdfData.concat(linha);
-        //     var res = `${pdfData} ${linha}`;
-        //     console.log(stringe)
-        // })
+
+
+        //TODO: descobrir uma forma melhor de pegar todas as ocorrências de um regex em uma string que não seja essa gambiarra
+        //gambiarra = excluir ocorrencias da variavel para que o app não pare de novo na mesma string
+       do{
+
+           var questionsA = pdfData.match(AtoB);
+           var questionsB = pdfData.match(BtoC);
+
+           const search = 'Atenção';
+           const replaceWith = '';
+
+           const result = pdfData.split(search).join(replaceWith);
+
+           console.log(result)
+       }while(result !== "")
+
+
+
+        console.log(pdfData)
+        console.log(questionsA)
+        console.log(questionsB)
+        // console.log(data.numpages)
 
     })
 };

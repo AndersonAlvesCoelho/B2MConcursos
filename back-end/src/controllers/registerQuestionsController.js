@@ -1,6 +1,6 @@
 import {regexPDF} from '../functions/pdfParse';
 const fs = require('fs')
-const pdfFile = fs.readFileSync('src/PDF/TG MG teste 1 questao.pdf')
+const pdfFile = fs.readFileSync('src/PDF/TJ MG.pdf')
 
 class RegisterQuestionsController {
 
@@ -8,7 +8,6 @@ class RegisterQuestionsController {
         try {
 
             return regexPDF(pdfFile)
-
 
             if (!req.files) {
                 return res.status(500).send({ msg: "file is not found" })
