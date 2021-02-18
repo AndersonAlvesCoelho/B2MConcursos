@@ -2,9 +2,9 @@ import {regexPDF} from '../functions/pdfParse';
 const fs = require('fs')
 const pdfFile = fs.readFileSync('src/PDF/TJ MG.pdf')
 
-class RegisterQuestionsController {
+class QuestionsController {
 
-    index(req, res) {
+    upload(req, res) {
         try {
             return regexPDF(pdfFile)
 
@@ -32,6 +32,14 @@ class RegisterQuestionsController {
             res.status(400).json({ message: `Erro ao retornar os dados. ${error}` })
         }
     }
+
+    register(req, res) {
+        try {
+
+        } catch (error) {
+            res.status(400).json({ message: `Erro ao retornar os dados. ${error}` })
+        }
+    }
 }
 
-export default new RegisterQuestionsController();
+export default new QuestionsController();
