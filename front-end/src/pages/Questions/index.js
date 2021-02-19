@@ -1,23 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import { Jumbotron, Container } from 'react-bootstrap';
 import { Divider } from 'antd';
-import { Menu, Pagination, Affix } from 'antd';
+import { Menu, Pagination, Affix, Spin } from 'antd';
 import { FaFilter } from "react-icons/fa";
 
 import './index.css';
-import { questionData, officeData } from '../../services/filter/dataSelect';
+import { questionData } from '../../services/filter/dataSelect';
 import MenuNavbar from '../../components/MenuNavbar/index';
 import Alternative from '../../components/Alternative/index';
 import FilterFixed from '../../components/FilterFixed/index';
 
+import * as questionActions from '../../actions/question.actions';
 
-const dataSize = 2;
-function Questions() {
+const viewSizeQuestion = 2;
+
+function Questions(props) {
 
     const [visible, setVisible] = useState(false);
     const [current, setCurrent] = useState();
 
-    const [data, setData] = useState(questionData.slice(0, dataSize));
+    const [offset, setOffset] = useState(0);
+    const [limit, setLimit] = useState(viewSizeQuestion);
 
     const showDrawer = () => {
         setVisible(true);
@@ -28,8 +32,25 @@ function Questions() {
     };
 
     function onShowSizeChange(page) {
-        setData(questionData.slice(page, dataSize + page));
+        console.log(page)
+        setOffset(page * viewSizeQuestion)
+        setLimit(viewSizeQuestion)
     }
+
+    const {
+        loadingQuestion,
+
+        question,
+        qtdQuestion,
+
+        getQuestion,
+        getQtdQuestion,
+    } = props;
+
+    useEffect(() => {
+        getQuestion(offset, limit);
+    }, [offset, limit]);
+    useEffect(() => getQtdQuestion(), []);
 
     return (
         <>
@@ -51,9 +72,9 @@ function Questions() {
 
                         <Pagination
                             defaultCurrent={1}
-                            total={questionData.length}
+                            total={qtdQuestion / viewSizeQuestion}
                             onChange={onShowSizeChange}
-                            defaultPageSize={dataSize}
+                            defaultPageSize={viewSizeQuestion}
                         />
                     </Menu>
 
@@ -62,14 +83,25 @@ function Questions() {
             </Divider>
 
             {/* Lista de questões baseado  */}
-            {data.length !== 0 && data.map((e, x) =>
-            <div key={x}>
-                <Alternative data={e} index={x} />
-            </div>
-            )}
+            {!loadingQuestion ? question.map((e, x) =>
+                <div key={x}>
+                    <Alternative data={e} indexQ={x} />
+                </div>
+            ) : <div className="spin"><Spin /></div>}
         </>
     );
 }
 
 
-export default Questions;
+const mapStateToProps = (state) => ({
+    loadingQuestion: state.question.loading,
+    question: state.question.question,
+    qtdQuestion: state.question.qtdQuestion,
+});
+
+const mapDispatchToProps = {
+    getQuestion: questionActions.getQuestion,
+    getQtdQuestion: questionActions.getQtdQuestion,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Questions);

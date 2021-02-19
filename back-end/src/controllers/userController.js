@@ -1,13 +1,11 @@
-import Bank from "../models/Bank";
+import User from "../models/User";
 
-class BankController {
+class UserController {
 
   // retorna municipio por geocodes
   async index(req, res) {
     try {
-      const data = await Bank.findAll({
-        attributes: { exclude: ['id_bank', 'created_at', 'updated_at'] },
-      });
+      const data = await User.findAll();
       return res.json(data) ;
     } catch (error) {
       res.status(400).json({ message: `Erro ao retornar os dados. ${error}` });
@@ -15,4 +13,4 @@ class BankController {
   }
 }
 
-export default new BankController();
+export default new UserController();

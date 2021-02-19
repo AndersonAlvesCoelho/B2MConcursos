@@ -23,9 +23,7 @@ import {
       }
       case GET_DICIPLINE_FAILURE:
         return { ...state, loading: false };
-  
-  
-  
+        
       default:
         return state;
     }

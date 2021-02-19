@@ -1,58 +1,81 @@
-import {DataTypes} from "sequelize";
-
-const { Model } = require('sequelize')
+import { Model, DataTypes } from "sequelize";
 
 class Question extends Model {
     static init(sequelize) {
-        super.init({
+        super.init(
+
+            {
                 id_question: {
                     type: DataTypes.INTEGER,
                     primaryKey: true,
                 },
-
-                year: {
-                    type: DataTypes.INTEGER(4),
+                id_office: {
+                    type: DataTypes.INTEGER,
                 },
-
+                id_discipline_subject: {
+                    type: DataTypes.INTEGER,
+                },
+                year: {
+                    type: DataTypes.INTEGER,
+                },
                 issue_resolution: {
                     type: DataTypes.TEXT,
                 },
-
                 enunciated: {
                     type: DataTypes.TEXT,
                 },
-        },
+                id_bank: {
+                    type: DataTypes.INTEGER,
+                },
+                id_institution: {
+                    type: DataTypes.INTEGER,
+                },
+                id_user: {
+                    type: DataTypes.INTEGER,
+                },
+            },
             {
                 sequelize,
                 schema: "public",
                 freezeTableName: true, // mantém o nome da tabela singular
-                tableName: "dicipline", // nome da tabela
+                tableName: "question", // nome da tabela
                 timestamps: true,
-            })
+            },
+        );
+        return this;
     }
 
     static associate(models) {
-        this.hasMany(models.Bank, {
+        this.belongsTo(models.Office, {
+            foreignKey: "id_office",
+            as: "office",
+        });
+        this.belongsTo(models.DisciplineSubject, {
+            foreignKey: "id_discipline_subject",
+            as: "discipline_subject",
+        });
+        this.belongsTo(models.Bank, {
             foreignKey: "id_bank",
             as: "bank",
         });
-
-        this.hasMany(models.office.OfficeNiv01, {
-            foreignKey: "id_office_niv_1",
-            as: "office_niv_1",
-        });
-
-        this.hasMany(models.Institution, {
+        this.belongsTo(models.Institution, {
             foreignKey: "id_institution",
             as: "institution",
         });
-
-        this.hasMany(models.Dicipline, {
-            foreignKey: "id_dicipline",
-            as: "dicipline",
+        this.belongsTo(models.User, {
+            foreignKey: "id_user",
+            as: "user",
+        });
+        this.hasMany(models.Alternative, {
+            foreignKey: "id_question",
+            as: "alternative",
         });
 
+        this.hasMany(models.Comment, {
+            foreignKey: "id_question",
+            as: "comment",
+        });
     }
 }
 
-module.exports = Question;
+export default Question;

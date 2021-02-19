@@ -9,7 +9,7 @@ import api from '../services/api';
 //GET BANK
 export const getBank = () => (dispatch) => {
   dispatch({ type: GET_BANK_REQUEST });
-  api.get('/bank')
+  api.get('/banks')
     .then((res) => {
       const { data } = res;
       

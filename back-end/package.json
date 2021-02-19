@@ -5,7 +5,7 @@
   "main": "src/server.js",
   "scripts": {
     "dev": "SET NODE_ENV=development & nodemon src/server.js",
-    "build": "babel src -s -D -d dist --presets env",
+    "build": "sucrase ./src -d ./dist --transforms imports,jsx,flow",
     "debug": "nodemon --inspect src/server.js",
     "start": "pm2-runtime ./dist/server.js"
   },
@@ -23,10 +23,9 @@
     "sequelize-cli": "^6.2.0"
   },
   "dependencies": {
-    "body-parser": "^1.19.0",
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "express-fileupload": "^1.2.1",
     "pdf-parse": "^1.1.1",
     "pg": "^8.5.1",
     "pg-hstore": "^2.3.3",

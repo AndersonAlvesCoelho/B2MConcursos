@@ -6,17 +6,17 @@ import { questionData } from '../../services/filter/dataSelect';
 
 const { TextArea } = Input;
 
-function NewCommit({ cleaText, newText, index, type }) {
+function NewComment({ cleaText, newText, index, type }) {
 
     const [loading, setLoading] = useState(false);
     const [value, setValue] = useState('');
 
-    // set value commit
+    // set value Comment
     function handleChange(e) {
         setValue(e.target.value);
     };
 
-    // Register new commit
+    // Register new Comment
     function handleSubmit() {
         if (!value) {
             return;
@@ -25,15 +25,15 @@ function NewCommit({ cleaText, newText, index, type }) {
 
         setTimeout(() => {
             setLoading(false);
-            //register in commit
-            if (type === 'commit-user') {
-                questionData[0].commit.push({
+            //register in Comment
+            if (type === 'comment-user') {
+                questionData[0].comment.push({
                     name_user: 'Lero lero',
-                    commit: value,
+                    comment: value,
                 })
             } else {
                 //register in answer
-                questionData[0].commit[index].answer.push({
+                questionData[0].comment[index].answer.push({
                     name_user: 'Lero lero',
                     answer: value,
                 })
@@ -61,4 +61,4 @@ function NewCommit({ cleaText, newText, index, type }) {
     );
 }
 
-export default NewCommit;
+export default NewComment;

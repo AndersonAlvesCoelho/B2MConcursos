@@ -12,22 +12,34 @@ module.exports = {
           autoIncrement: true,
           allowNull: false
         },
+
+        id_office: {
+          type: Sequelize.INTEGER,
+          allowNull: false,
+          references: {
+            model: 'office', // name of Target model
+            key: 'id_office', // key in Target model that we're referencing
+          },
+          onUpdate: 'CASCADE',
+          onDelete: 'CASCADE',
+        },
+
+        id_discipline_subject: {
+          type: Sequelize.INTEGER,
+          allowNull: false,
+          references: {
+            model: 'discipline_subject', // name of Target model
+            key: 'id_discipline_subject', // key in Target model that we're referencing
+          },
+          onUpdate: 'CASCADE',
+          onDelete: 'CASCADE',
+        },
         id_bank: {
           type: Sequelize.INTEGER,
           allowNull: false,
           references: {
             model: 'bank', // name of Target model
             key: 'id_bank', // key in Target model that we're referencing
-          },
-          onUpdate: 'CASCADE',
-          onDelete: 'CASCADE',
-        },
-        id_office_niv_1: {
-          type: Sequelize.INTEGER,
-          allowNull: false,
-          references: {
-            model: 'office_niv_1', // name of Target model
-            key: 'id_office_niv_1', // key in Target model that we're referencing
           },
           onUpdate: 'CASCADE',
           onDelete: 'CASCADE',
@@ -45,16 +57,6 @@ module.exports = {
         year: {
           type: Sequelize.INTEGER,
           allowNull: false
-        },
-        id_dicipline: {
-          type: Sequelize.INTEGER,
-          allowNull: false,
-          references: {
-            model: 'dicipline', // name of Target model
-            key: 'id_dicipline', // key in Target model that we're referencing
-          },
-          onUpdate: 'CASCADE',
-          onDelete: 'CASCADE',
         },
         issue_resolution: {
           type: Sequelize.TEXT,

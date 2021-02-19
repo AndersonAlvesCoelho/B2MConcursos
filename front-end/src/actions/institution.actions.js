@@ -9,7 +9,7 @@ import {
   //GET INSTITUTION
   export const getInstitution = () => (dispatch) => {
     dispatch({ type: GET_INSTITUTION_REQUEST });
-    api.get('/institution')
+    api.get('/institutions')
       .then((res) => {
         const { data } = res;
         

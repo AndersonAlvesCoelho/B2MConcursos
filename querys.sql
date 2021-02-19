@@ -23,3 +23,5 @@ SELECT * FROM subject_niv_4;
 SELECT * FROM subject_niv_5;
 SELECT * FROM subject_niv_6;
 SELECT * FROM subject_niv_7;
+
+SELECT * FROM comment_answer;
