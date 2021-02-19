@@ -3,8 +3,17 @@ import Question from "../models/Question";
 
 class QuestionController {
 
-  // retorna municipio por geocodes
   async index(req, res) {
+
+    const enunciated =  req.body.dataFilter.enunciated.length !== 0 ? req.body.dataFilter.enunciated : false;
+    const bank = req.body.dataFilter.length !== 0 && req.body.dataFilter.bank.length !== 0 ? req.body.dataFilter.bank : false;
+    const institution = req.body.dataFilter.length !== 0 && req.body.dataFilter.institution.length !== 0 ? req.body.dataFilter.institution : false;
+    const year = req.body.dataFilter.length !== 0 && req.body.dataFilter.year.length !== 0 ? req.body.dataFilter.year : false;
+    const office = req.body.dataFilter.length !== 0 && req.body.dataFilter.office.length !== 0 ? req.body.dataFilter.office : false;
+    const dicipline = req.body.dataFilter.length !== 0 && req.body.dataFilter.dicipline.length !== 0 ? req.body.dataFilter.dicipline : false;
+
+    console.log(req.body);
+
     try {
       const data = await Question.findAll({
         attributes: {
@@ -12,8 +21,8 @@ class QuestionController {
             // 'id_question',
             'id_office',
             'id_discipline_subject',
-            'id_bank',
-            'id_institution',
+            // 'id_bank',
+            // 'id_institution',
             'id_user',
             'createdAt',
             // 'updatedAt'
@@ -28,7 +37,8 @@ class QuestionController {
             * conforme os ids que contem na tabela office
             */
             association: "office",
-            attributes: { exclude: ['id_office_niv_1', 'id_office_niv_2', 'id_office_niv_3', 'id_office_niv_4', 'createdAt', 'updatedAt'] },
+            attributes: { exclude: ['createdAt', 'updatedAt'] },
+
             include: [
               {
                 association: "office_niv_1",
@@ -47,11 +57,14 @@ class QuestionController {
                 attributes: { exclude: ['id_office_niv_3', 'id_office_niv_4', 'createdAt', 'updatedAt'] },
               }
             ],
+
+
           },
           {
             //  A mesma coisa que acontece para os dados office aocntece para os dados de subject
             association: "discipline_subject",
-            attributes: { exclude: ['id_dicipline', 'id_subject_niv_1', 'id_subject_niv_2', 'id_subject_niv_3', 'id_subject_niv_4', 'id_subject_niv_5', 'id_subject_niv_6', 'id_subject_niv_7', 'createdAt', 'updatedAt'] },
+            // where: { [Op.or]: [{ id_dicipline: 7 }] },
+            attributes: { exclude: ['id_subject_niv_1', 'id_subject_niv_2', 'id_subject_niv_3', 'id_subject_niv_4', 'id_subject_niv_5', 'id_subject_niv_6', 'id_subject_niv_7', 'createdAt', 'updatedAt'] },
 
             include: [
               {
@@ -93,6 +106,7 @@ class QuestionController {
           {
             association: "bank",
             attributes: { exclude: ['id_bank', 'createdAt', 'updatedAt'] },
+
           },
           {
             association: "institution",
@@ -129,8 +143,23 @@ class QuestionController {
           },
         ],
 
-        offset: req.params.offset, limit: req.params.limit,
-        // order: [['updated_at']]
+        // offset: req.body.offset, limit: req.body.limit,
+        // where: {
+        //   bank,
+        //   //  [Op.or]: [{id_institution: 6}],
+        //   //  [Op.or]: [{year: 2010}],
+        //   // id_institution: { [Op.or]: req.body.institution },
+        //   // year: { [Op.or]: req.body.year },
+        //   // enunciated: { [Op.like]: `%${req.body.enunciated}%` },
+        // },
+
+        where: {
+          ...(enunciated && { enunciated: { [Op.like]: `%${enunciated}%` } }),
+          ...(bank && { id_bank: { [Op.in]: bank } }),
+          ...(institution && { id_institution: { [Op.in]: institution } }),
+          ...(year && { year: { [Op.in]: year } }),
+        },
+
       });
       return res.json(data);
     } catch (error) {

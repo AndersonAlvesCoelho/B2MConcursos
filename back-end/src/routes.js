@@ -16,7 +16,7 @@ routes.get(`${apiVersionV1}/banks`, BankController.index);
 routes.get(`${apiVersionV1}/offices`, OfficeController.index);
 routes.get(`${apiVersionV1}/institutions`, InstitutionController.index);
 routes.get(`${apiVersionV1}/subjects`, DiciplineController.index);
-routes.get(`${apiVersionV1}/questions/:offset/:limit`, QuestionController.index);
+routes.post(`${apiVersionV1}/questions`, QuestionController.index);
 routes.get(`${apiVersionV1}/qtdQuestions`, QuestionController.qtdQuestions);
 routes.get(`${apiVersionV1}/users`, UserController.index);
     

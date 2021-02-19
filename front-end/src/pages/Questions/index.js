@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Jumbotron, Container } from 'react-bootstrap';
 import { Divider } from 'antd';
-import { Menu, Pagination, Affix, Spin } from 'antd';
+import { Menu, Pagination, Affix, Spin, Empty } from 'antd';
 import { FaFilter } from "react-icons/fa";
 
 import './index.css';
-import { questionData } from '../../services/filter/dataSelect';
+// import { questionData } from '../../services/filter/dataSelect';
 import MenuNavbar from '../../components/MenuNavbar/index';
 import Alternative from '../../components/Alternative/index';
 import FilterFixed from '../../components/FilterFixed/index';
@@ -19,6 +19,7 @@ function Questions(props) {
 
     const [visible, setVisible] = useState(false);
     const [current, setCurrent] = useState();
+    const [dataFilter, setDataFilter] = useState([]);
 
     const [offset, setOffset] = useState(0);
     const [limit, setLimit] = useState(viewSizeQuestion);
@@ -48,8 +49,9 @@ function Questions(props) {
     } = props;
 
     useEffect(() => {
-        getQuestion(offset, limit);
-    }, [offset, limit]);
+        getQuestion({ offset, limit, dataFilter });
+    }, [offset, limit, dataFilter]);
+
     useEffect(() => getQtdQuestion(), []);
 
     return (
@@ -78,16 +80,20 @@ function Questions(props) {
                         />
                     </Menu>
 
-                    <FilterFixed visible={visible} onClose={onClose} />
+                    <FilterFixed visible={visible} onClose={onClose} changerFilter={(e) => setDataFilter(e)} />
                 </Affix>
             </Divider>
 
             {/* Lista de questões baseado  */}
-            {!loadingQuestion ? question.map((e, x) =>
-                <div key={x}>
-                    <Alternative data={e} indexQ={x} />
-                </div>
-            ) : <div className="spin"><Spin /></div>}
+            {question.length !== 0 ? (<>
+                {question.map((e, x) =>
+                    <div key={x}>
+                        <Alternative data={e} indexQ={x} />
+                    </div>
+                )}
+            </>) : (<>
+                {loadingQuestion ? <div className="center-component"><Spin /></div> : <div className="center-Component"><Empty /></div>}
+            </>)}
         </>
     );
 }

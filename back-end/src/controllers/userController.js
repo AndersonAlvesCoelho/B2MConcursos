@@ -2,7 +2,6 @@ import User from "../models/User";
 
 class UserController {
 
-  // retorna municipio por geocodes
   async index(req, res) {
     try {
       const data = await User.findAll();

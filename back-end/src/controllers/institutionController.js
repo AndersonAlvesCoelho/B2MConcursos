@@ -2,11 +2,10 @@ import Institution from "../models/Institution";
 
 class InstitutionController {
 
-  // retorna municipio por geocodes
   async index(req, res) {
     try {
       const data = await Institution.findAll({
-        attributes: { exclude: ['id_institution', 'createdAt', 'updatedAt'] },
+        attributes: { exclude: [ 'createdAt', 'updatedAt'] },
       });
       return res.json(data) ;
     } catch (error) {

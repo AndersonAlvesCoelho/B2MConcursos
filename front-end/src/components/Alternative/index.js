@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Button, ListGroup } from 'react-bootstrap';
-import { FaBookmark, FaComments, FaCheckCircle, FaInfoCircle } from "react-icons/fa";
-import { Radio, Tabs, Card, Avatar, Menu } from 'antd';
+import { FaBookmark, FaComments, FaCheckCircle, FaInfoCircle, FaWindowClose } from "react-icons/fa";
+import { Radio, Card, Avatar, Menu } from 'antd';
 
 import CommentUser from '../Comment/commentUser';
 
@@ -9,13 +9,13 @@ function Alternative({ data, indexQ }) {
 
     const [answer, setAnswer] = useState([]);
     const [alternative, setAlternative] = useState();
-    const [current, setCurrent] = useState('');
+    const [current, setCurrent] = useState('close');
 
     //verificar se a questão marcada está correta 
     const keyAnswer = () => {
         data.alternative.map((e, index) => {
             if (e.answer) {
-                setAnswer({
+                return setAnswer({
                     check: true,
                     answer: index + 1,
                     hitMessage: 'Alternativa correta, parabéns!!',
@@ -85,6 +85,7 @@ function Alternative({ data, indexQ }) {
                         <Menu onClick={(e) => setCurrent(e.key)} selectedKeys={[current]} mode="horizontal">
                             <Menu.Item key="teacher" disabled={!alternative} icon={<FaBookmark size={25} className="alternative-icon-outline" />}>Resposta do professor</Menu.Item>
                             <Menu.Item key="comment" icon={<FaComments size={25} className="alternative-icon-outline" />}>Comentarios</Menu.Item>
+                            <Menu.Item key="close" className="float-right" icon={<FaWindowClose size={25} className="alternative-icon-outline " />}></Menu.Item>
                         </Menu>
 
                         {current === "teacher" && (<>

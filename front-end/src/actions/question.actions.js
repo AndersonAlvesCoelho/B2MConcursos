@@ -10,9 +10,9 @@ import {
 import api from '../services/api';
 
 //GET QUESTION
-export const getQuestion = (offset, limit) => (dispatch) => {
+export const getQuestion = (filter) => (dispatch) => {
   dispatch({ type: GET_QUESTION_REQUEST });
-  api.get(`/questions/${offset}/${limit}`)
+  api.post('/questions', filter)
     .then((res) => {
       const { data } = res;
 

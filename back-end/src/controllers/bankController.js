@@ -2,11 +2,10 @@ import Bank from "../models/Bank";
 
 class BankController {
 
-  // retorna municipio por geocodes
   async index(req, res) {
     try {
       const data = await Bank.findAll({
-        attributes: { exclude: ['id_bank', 'createdAt', 'updatedAt'] },
+        attributes: { exclude: [ 'createdAt', 'updatedAt'] },
       });
       return res.json(data) ;
     } catch (error) {
