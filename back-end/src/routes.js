@@ -3,7 +3,7 @@ import express from "express";
 import BankController from './controllers/bankController';
 import OfficeController from './controllers/officeController';
 import InstitutionController from './controllers/institutionController';
-import DiciplineController from './controllers/DiciplineController';
+import DiciplineController from './controllers/diciplineController';
 import QuestionController from './controllers/questionController';
 import UserController from './controllers/userController';
 
@@ -19,5 +19,9 @@ routes.get(`${apiVersionV1}/subjects`, DiciplineController.index);
 routes.post(`${apiVersionV1}/questions`, QuestionController.index);
 routes.get(`${apiVersionV1}/qtdQuestions`, QuestionController.qtdQuestions);
 routes.get(`${apiVersionV1}/users`, UserController.index);
-    
+
+// --- ROTAS QUE NECESSITAM DE AUTENTICAÇÃO ---
+routes.post(`${apiVersionV1}/uploadQuestions`, QuestionController.upload);
+routes.post(`${apiVersionV1}/registerQuestions`, QuestionController.store);
+
 module.exports = routes;

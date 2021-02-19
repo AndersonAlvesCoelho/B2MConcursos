@@ -2,7 +2,7 @@ import {
     GET_DICIPLINE_REQUEST,
     GET_DICIPLINE_SUCCESS,
     GET_DICIPLINE_FAILURE,
-  } from '../constants/dicipline.constants';
+  } from '../constants';
   
   const initialDicipline = {
     loading: false,

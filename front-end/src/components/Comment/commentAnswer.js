@@ -62,8 +62,8 @@ function CommentAnswer({ dataAnswer, numAmswer }) {
                 <p>{dataAnswer.answer}</p>
             }
             datetime={
-                <Tooltip title={Date(dataAnswer.updatedAt)}>
-                    <span>{Date(dataAnswer.updatedAt)}</span>
+                <Tooltip title={Date(dataAnswer.updated_at)}>
+                    <span>{Date(dataAnswer.updated_at)}</span>
                 </Tooltip>
             }
         >
