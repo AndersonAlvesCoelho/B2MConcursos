@@ -9,7 +9,8 @@ import * as regusterQuestionsActions from '../../actions/registerQuestions.actio
 const RegisterQuestions = (props) => {
 
     const {
-        uploadFile
+        // uploadFile,
+        store
     } = props
 
     const [enunciated, setEnunciated] = useState();
@@ -25,16 +26,47 @@ const RegisterQuestions = (props) => {
 
     const [file, setFile] = useState(''); // storing the uploaded file
     // storing the recived file from backend
-    const [data, getFile] = useState({ name: "", path: "" });
+    // const [data, getFile] = useState({ name: "", path: "" });
     const [progress, setProgess] = useState(0); // progess bar
     const el = useRef(); // accesing input element
 
-    const handleChange = (e) => {
+
+    const handleChangeFile = (e) => {
         setProgess(0)
         const file = e.target.files[0]; // accesing file
         console.log(file);
         setFile(file); // storing file
     }
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+
+        const nameAlternative = [
+            alternativeA,
+            alternativeB,
+            alternativeC,
+            alternativeD
+        ]
+
+        // const answer = {
+        //     alternativeA,
+        //     alternativeB,
+        //     alternativeC,
+        //     alternativeD
+        // }
+
+        const data = {
+            enunciated,
+            year,
+            bank,
+            prove,
+            institute,
+
+            nameAlternative
+        }
+
+        store(data)
+    };
 
     const uploadFileFunction = () => {
         const formData = new FormData();
@@ -45,7 +77,7 @@ const RegisterQuestions = (props) => {
         // }
 
         props.uploadFile(formData)
-}
+    }
 
     const sendPDF = () => {
         // api.get('/pdfFile')
@@ -77,146 +109,162 @@ const RegisterQuestions = (props) => {
                     <span className="filter-titer mx-1 ml-2">Cadastro de questões:</span>
                 </Row >
 
-                <div>
+                <form onSubmit={handleSubmit}>
+
                     <div className="file-upload">
-                        <input type="file" ref={el} onChange={handleChange} />                <div className="progessBar" style={{ width: progress }}>
-                        {progress}
-                    </div>
+                        <input
+                            type="file" ref={el}
+                            onChange={handleChangeFile}
+                        />
+                        <div className="progessBar" style={{ width: progress }}>
+                            {progress}
+                        </div>
                         <button onClick={uploadFileFunction} className="upbutton">                   Upload
                         </button>
                         <hr />
                         {/* displaying received image*/}
-                        {data.path && <img src={data.path} alt={data.name} />}
+                        {/*{data.path && <img src={data.path} alt={data.name} />}*/}
                     </div>
-                </div>
 
-                <Button
-                    onClick={sendPDF}
-                    className="filter-btn"
-                    variant="info"
-                >Fazer upload do PDF
-                </Button>
+                    <Button
+                        onClick={sendPDF}
+                        className="filter-btn"
+                        variant="info"
+                    >Fazer upload do PDF
+                    </Button>
 
-                <Row >
-                    <Col className="mt-3" xs={2} md={2}>
-                        <Input
-                            placeholder="Ano"
-                            allowClear
-                            className="filter-select"
-                            enterButton
-                            value={year}
-                        />
-                    </Col>
+                    <Row >
+                        <Col className="mt-3" xs={2} md={2}>
+                            <Input
+                                onChange={(e) => setYear(e.target.value)}
+                                placeholder="Ano"
+                                allowClear
+                                className="filter-select"
+                                enterButton
+                                value={year}
+                            />
+                        </Col>
 
-                    <Col className="mt-3" xs={2} md={2}>
-                        <Input
-                            placeholder="Banca"
-                            allowClear
-                            className="filter-select"
-                            enterButton
-                            value={bank}
-                        />
-                    </Col>
-
-
-                    <Col className="mt-3" xs={4} md={2}>
-                        <Input
-                            placeholder="Prova"
-                            allowClear
-                            className="filter-select"
-                            enterButton
-                            value={prove}
-                        />
-                    </Col>
-
-                    <Col className="mt-3" xs={4} md={2}>
-                        <Input
-                            placeholder="Órgão"
-                            allowClear
-                            className="filter-select"
-                            enterButton
-                            value={institute}
-                        />
-                    </Col>
-                </Row>
-
-                <Row >
-                    <Col className="mt-3" xs={8} md={6}>
-                        <Input
-                            placeholder="Enunciado.."
-                            allowClear
-                            className="filter-select"
-                            enterButton
-                            value={enunciated}
-                        />
-                    </Col>
-                </Row>
-
-                <Row >
-                    <Col className="mt-3" xs={8} md={6}>
-                        <Input
-                            placeholder="Descrição da pergunta.."
-                            allowClear
-                            className="filter-select"
-                            enterButton
-                            value={alternativeA}
-                        />
-                    </Col>
-                </Row>
-
-                <Row>
-                    <Col className="mt-3" xs={8} md={6}>
-                        <Input
-                            placeholder="Descrição da pergunta.."
-                            allowClear
-                            className="filter-select"
-                            enterButton
-                            value={alternativeB}
-                        />
-                    </Col>
-                </Row>
-
-                <Row>
-                    <Col className="mt-3" xs={8} md={6}>
-                        <Input
-                            placeholder="Descrição da pergunta.."
-                            allowClear
-                            className="filter-select"
-                            enterButton
-                            value={alternativeC}
-                        />
-                    </Col>
-                </Row>
+                        <Col className="mt-3" xs={2} md={2}>
+                            <Input
+                                onChange={(e) => setBank(e.target.value)}
+                                placeholder="Banca"
+                                allowClear
+                                className="filter-select"
+                                enterButton
+                                value={bank}
+                            />
+                        </Col>
 
 
-                <Row>
-                    <Col className="mt-3" xs={8} md={6}>
-                        <Input
-                            placeholder="Descrição da pergunta.."
-                            allowClear
-                            className="filter-select"
-                            enterButton
-                            value={alternativeD}
-                        />
-                    </Col>
-                </Row>
+                        <Col className="mt-3" xs={4} md={2}>
+                            <Input
+                                onChange={(e) => setProve(e.target.value)}
+                                placeholder="Prova"
+                                allowClear
+                                className="filter-select"
+                                enterButton
+                                value={prove}
+                            />
+                        </Col>
 
-                <Button
-                    className="question-btn"
-                >Cadastrar questão</Button>
+                        <Col className="mt-3" xs={4} md={2}>
+                            <Input
+                                onChange={(e) => setInstitute(e.target.value)}
+                                placeholder="Órgão"
+                                allowClear
+                                className="filter-select"
+                                enterButton
+                                value={institute}
+                            />
+                        </Col>
+                    </Row>
+
+                    <Row >
+                        <Col className="mt-3" xs={8} md={6}>
+                            <Input
+                                onChange={(e) => setEnunciated(e.target.value)}
+                                placeholder="Enunciado.."
+                                allowClear
+                                className="filter-select"
+                                enterButton
+                                value={enunciated}
+                            />
+                        </Col>
+                    </Row>
+
+                    <Row >
+                        <Col className="mt-3" xs={8} md={6}>
+                            <Input
+                                onChange={(e) => setAlternativeA(e.target.value)}
+                                placeholder="Descrição da pergunta.."
+                                allowClear
+                                className="filter-select"
+                                enterButton
+                                value={alternativeA}
+                            />
+                        </Col>
+                    </Row>
+
+                    <Row>
+                        <Col className="mt-3" xs={8} md={6}>
+                            <Input
+                                onChange={(e) => setAlternativeB(e.target.value)}
+                                placeholder="Descrição da pergunta.."
+                                allowClear
+                                className="filter-select"
+                                enterButton
+                                value={alternativeB}
+                            />
+                        </Col>
+                    </Row>
+
+                    <Row>
+                        <Col className="mt-3" xs={8} md={6}>
+                            <Input
+                                onChange={(e) => setAlternativeC(e.target.value)}
+                                placeholder="Descrição da pergunta.."
+                                allowClear
+                                className="filter-select"
+                                enterButton
+                                value={alternativeC}
+                            />
+                        </Col>
+                    </Row>
+
+                    <Row>
+                        <Col className="mt-3" xs={8} md={6}>
+                            <Input
+                                name="alternativeD"
+                                onChange={(e) => setAlternativeD(e.target.value)}
+                                placeholder="Descrição da pergunta.."
+                                allowClear
+                                className="filter-select"
+                                enterButton
+                                value={alternativeD}
+                            />
+                        </Col>
+                    </Row>
+
+                    <Button
+                        className="question-btn"
+                        type="submit"
+                    >Cadastrar questão</Button>
+                </form>
 
             </Container>
         </div>
     );
 }
 
-const mapStateToProps = state => ({
-
-})
+// const mapStateToProps = state => ({
+//
+// })
 
 
 const  mapDispatchToProps = {
     uploadFile: regusterQuestionsActions.uploadFile,
+    store: regusterQuestionsActions.store,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterQuestions);
