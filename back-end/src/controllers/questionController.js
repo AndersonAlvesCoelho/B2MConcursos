@@ -1,7 +1,11 @@
-import { Sequelize, Op } from "sequelize";
+// import { Sequelize, Op } from "sequelize";
 import Question from "../models/Question"
 import {regexPDF} from "../functions/pdfParse"
-import Office from "../models/Office";
+// import Office from "../models/Office";
+import Alternative from "../models/Alternative";
+// import Institution from "../models/Institution";
+// import Bank from "../models/Bank";
+// import DisciplineSubject from "../models/DisciplineSubject";
 const fs = require('fs')
 const pdfFile = fs.readFileSync('src/PDF/TJ MG.pdf')
 
@@ -141,37 +145,142 @@ class QuestionController {
     }
   }
 
-  register(req, res) {
+
+
+  async store(req, res) {
     try {
-      console.log(req);
+      const {
+        // Office
+        // idOffice,
+        // idOfice1,
+        // idOfice2,
+        // idOfice3,
+        // idOfice4,
 
-       return Office.create({
-        id_office: req.body.id_office,
-        id_office_niv_1: req.body.id_office_niv_1,
-        id_office_niv_2: req.body.id_office_niv_2,
-        id_office_niv_3: req.body.id_office_niv_3,
-        id_office_niv_4: req.body.id_office_niv_4,
-      }).then(function (office) {
-        if (office) {
-          res.send(office);
+        // Discipline
+        // idDiscipline,
+        // idSubject1,
+        // idSubject2,
+        // idSubject3,
+        // idSubject4,
+        // idSubject5,
+        // idSubject6,
+        // idSubject7,
+
+        // bank
+        // idBank,
+        // nameBank,
+
+        //institution
+        // nameInstitution,
+
+        // Question
+        idQuestion,
+        idOffice,
+        idDisciplineSubject,
+        idBank,
+        idInstitution,
+        year,
+        issueResolution,
+        idUser,
+        enunciated,
+
+        // Alternative
+        idAlternative,
+        nameAlternative,
+        answer,
+
+      } = req.body
+
+      //  const office = await Office.create({
+      //   id_office: idOffice,
+      //   id_office_niv_1: idOfice1,
+      //   id_office_niv_2: idOfice2,
+      //   id_office_niv_3: idOfice3,
+      //   id_office_niv_4: idOfice4,
+      // }).then(function (result) {
+      //   if (result) {
+      //     res.send(result);
+      //   } else {
+      //     res.status(400).send('Erro ao inserir cargo');
+      //   }
+      // });
+
+      // const discipline = await DisciplineSubject.create({
+      //   id_dicipline_subject: idDisciplineSubject,
+      //   id_dicipline: idDiscipline,
+      //   id_subject_niv_1: idSubject1,
+      //   id_subject_niv_2: idSubject2,
+      //   id_subject_niv_3: idSubject3,
+      //   id_subject_niv_4: idSubject4,
+      //   id_subject_niv_5: idSubject5,
+      //   id_subject_niv_6: idSubject6,
+      //   id_subject_niv_7: idSubject7,
+      // }).then(function (result) {
+      //   if (result) {
+      //     res.send(result);
+      //   } else {
+      //     res.status(400).send('Erro ao inserir disciplina');
+      //   }
+      // })
+
+      // const bank = await Bank.create({
+      //   id_bank: idBank,
+      //   name_bank: nameBank,
+      // }).then(function (result) {
+      //   if (result) {
+      //     res.send(result);
+      //   } else {
+      //     res.status(400).send('Erro ao inserir banca');
+      //   }
+      // })
+
+      // const institution = await Institution.create({
+      //   id_institution: idInstitution,
+      //   name_institution: nameInstitution,
+      // }).then(function (result) {
+      //   if (result) {
+      //     res.send(result);
+      //   } else {
+      //     res.status(400).send('Erro ao inserir instituição');
+      //   }
+      // })
+
+
+      const question = await Question.create({
+        id_question: idQuestion,
+        id_office: idOffice,
+        id_discipline_subject: idDisciplineSubject,
+        id_bank: idBank,
+        id_institution: idInstitution,
+        year: year,
+        issue_resolution: issueResolution,
+        id_user: idUser,
+        enunciated: enunciated,
+      }).then(function (result) {
+        if (result) {
+          return result
         } else {
-          res.status(400).send('Erro ao inserir cargo');
+          res.status(400).send('Erro ao inserir instituição');
         }
-      });
+      })
 
+      for(let i = 0; i < nameAlternative.length; i++) {
+        await Alternative.create({
+          id_alternative: idAlternative[i],
+          name_alternative: nameAlternative[i],
+          answer: answer[i],
+          id_question: question.id_question,
+        }).then(function (result) {
+          if (result) {
+            res.send(result);
+          } else {
+            res.status(400).send('Erro ao inserir alternativas');
+          }
+        });
+      }
 
-    //   Question.create({
-    //     id: request.body.id,
-    //     name: request.body.name,
-    //     role: request.body.role,
-    //     email: request.body.email
-    //   }).then(function (users) {
-    //     if (users) {
-    //       response.send(users);
-    //     } else {
-    //       response.status(400).send('Error in insert new record');
-    //     }
-    //   });
+      return res.json(question)
     } catch (error) {
       res.status(400).json({ message: `Erro ao retornar os dados. ${error}` })
     }

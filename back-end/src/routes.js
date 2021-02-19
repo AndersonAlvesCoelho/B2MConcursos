@@ -22,6 +22,6 @@ routes.get(`${apiVersionV1}/users`, UserController.index);
 
 // --- ROTAS QUE NECESSITAM DE AUTENTICAÇÃO ---
 routes.post(`${apiVersionV1}/uploadQuestions`, QuestionController.upload);
-routes.post(`${apiVersionV1}/registerQuestions`, QuestionController.register);
+routes.post(`${apiVersionV1}/registerQuestions`, QuestionController.store);
 
 module.exports = routes;
