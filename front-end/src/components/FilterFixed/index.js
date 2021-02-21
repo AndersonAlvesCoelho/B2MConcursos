@@ -5,7 +5,6 @@ import { yearData } from '../../services/filter/dataSelect';
 
 import { Drawer, TreeSelect, Input, Button, Form } from 'antd';
 
-
 import * as bankActions from '../../actions/bank.actions';
 import * as institutionActions from '../../actions/institution.actions';
 import * as officeActions from '../../actions/office.actions';
@@ -35,6 +34,7 @@ function FilterFixed(props) {
         office,
         dicipline,
 
+        changerFilter,
         visible,
         onClose
     } = props;
@@ -46,9 +46,10 @@ function FilterFixed(props) {
         getDicipline();
     }, []);
 
+    function filter(values) {
+        return changerFilter(values);
+    }
 
-    // const [open, setOpen] = useState(false);
-    // const [open2, setOpen2] = useState(false);
 
     const [questionSearch, setQuestionSearch] = useState();
 
@@ -77,35 +78,13 @@ function FilterFixed(props) {
                 onClose={onClose}
                 visible={visible}
                 bodyStyle={{ paddingBottom: 80 }}
-                footer={
-                    <div
-                        style={{
-                            textAlign: 'right',
-                        }}
-                    >
-                        <Button className="filter-btn" onClick={onClose} style={{ marginRight: 8 }}>Cancel</Button>
-                        <Button
-                            className="filter-btn"
-                            variant="info"
-                            onClick={onClose}
-                            disabled={questionSearch ||
-                                bankLabel.length !== 0 ||
-                                institutionLabel.length !== 0 ||
-                                officeLabel.length !== 0 ||
-                                yearLabel.length !== 0 ||
-                                diciplineLabel.length !== 0
-                                ? false : true}
-                        >
-                            Filtrar
-                        </Button>
-                    </div>
-                }
+              
             >
-                <Form layout="vertical" hideRequiredMark>
+                <Form layout="vertical" requiredMark={false} onFinish={filter} >
                     <Row>
                         <Col md="12">
                             <Form.Item
-                                name="pesquisar"
+                                name="enunciated"
                                 label="Pesquisar por enunciado"
                             >
                                 <Search
@@ -119,7 +98,7 @@ function FilterFixed(props) {
                         </Col>
                         <Col md="12">
                             <Form.Item
-                                name="banca"
+                                name="bank"
                                 label="Banca"
                             >
                                 <TreeSelect
@@ -138,7 +117,7 @@ function FilterFixed(props) {
                         </Col>
                         <Col md="12">
                             <Form.Item
-                                name="orgao"
+                                name="institution"
                                 label="Orgão"
                             >
                                 <TreeSelect
@@ -157,7 +136,7 @@ function FilterFixed(props) {
                         </Col>
                         <Col md="12">
                             <Form.Item
-                                name="cargo"
+                                name="office"
                                 label="Cargo"
                             >
                                 <TreeSelect
@@ -176,7 +155,7 @@ function FilterFixed(props) {
                         </Col>
                         <Col md="12">
                             <Form.Item
-                                name="ano"
+                                name="year"
                                 label="Ano"
                             >
                                 <TreeSelect
@@ -195,7 +174,7 @@ function FilterFixed(props) {
                         </Col>
                         <Col md="12">
                             <Form.Item
-                                name="assunto"
+                                name="dicipline"
                                 label="Matéria & Assunto"
                             >
                                 <TreeSelect
@@ -213,6 +192,28 @@ function FilterFixed(props) {
                             </Form.Item>
                         </Col>
                     </Row>
+                    <div
+                        style={{
+                            textAlign: 'right',
+                        }}
+                    >
+                        <Button className="filter-btn" onClick={onClose} style={{ marginRight: 8 }}>Cancel</Button>
+                        <Button
+                            className="filter-btn"
+                            variant="info"
+                            onClick={onClose}
+                            htmlType="submit"
+                            disabled={questionSearch ||
+                                bankLabel.length !== 0 ||
+                                institutionLabel.length !== 0 ||
+                                officeLabel.length !== 0 ||
+                                yearLabel.length !== 0 ||
+                                diciplineLabel.length !== 0
+                                ? false : true}
+                        >
+                            Filtrar
+                        </Button>
+                    </div>
                 </Form>
             </Drawer>
         </>

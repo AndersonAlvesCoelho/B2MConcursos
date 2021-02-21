@@ -11,8 +11,17 @@ const pdfFile = fs.readFileSync('src/PDF/TJ MG.pdf')
 
 class QuestionController {
 
-  // retorna municipio por geocodes
   async index(req, res) {
+
+    const enunciated =  req.body.dataFilter.enunciated.length !== 0 ? req.body.dataFilter.enunciated : false;
+    const bank = req.body.dataFilter.length !== 0 && req.body.dataFilter.bank.length !== 0 ? req.body.dataFilter.bank : false;
+    const institution = req.body.dataFilter.length !== 0 && req.body.dataFilter.institution.length !== 0 ? req.body.dataFilter.institution : false;
+    const year = req.body.dataFilter.length !== 0 && req.body.dataFilter.year.length !== 0 ? req.body.dataFilter.year : false;
+    const office = req.body.dataFilter.length !== 0 && req.body.dataFilter.office.length !== 0 ? req.body.dataFilter.office : false;
+    const dicipline = req.body.dataFilter.length !== 0 && req.body.dataFilter.dicipline.length !== 0 ? req.body.dataFilter.dicipline : false;
+
+    console.log(req.body);
+
     try {
       const data = await Question.findAll({
         attributes: {
@@ -20,8 +29,8 @@ class QuestionController {
             // 'id_question',
             'id_office',
             'id_discipline_subject',
-            'id_bank',
-            'id_institution',
+            // 'id_bank',
+            // 'id_institution',
             'id_user',
             'created_at',
             // 'updated_at'
@@ -36,7 +45,12 @@ class QuestionController {
             * conforme os ids que contem na tabela office
             */
             association: "office",
+<<<<<<< HEAD
+            attributes: { exclude: ['createdAt', 'updatedAt'] },
+
+=======
             attributes: { exclude: ['id_office_niv_1', 'id_office_niv_2', 'id_office_niv_3', 'id_office_niv_4', 'created_at', 'updated_at'] },
+>>>>>>> dbc7435d2b36bc3f58f8366b7e5ddb7164e040d6
             include: [
               {
                 association: "office_niv_1",
@@ -55,11 +69,18 @@ class QuestionController {
                 attributes: { exclude: ['id_office_niv_3', 'id_office_niv_4', 'created_at', 'updated_at'] },
               }
             ],
+
+
           },
           {
             //  A mesma coisa que acontece para os dados office aocntece para os dados de subject
             association: "discipline_subject",
+<<<<<<< HEAD
+            // where: { [Op.or]: [{ id_dicipline: 7 }] },
+            attributes: { exclude: ['id_subject_niv_1', 'id_subject_niv_2', 'id_subject_niv_3', 'id_subject_niv_4', 'id_subject_niv_5', 'id_subject_niv_6', 'id_subject_niv_7', 'createdAt', 'updatedAt'] },
+=======
             attributes: { exclude: ['id_dicipline', 'id_subject_niv_1', 'id_subject_niv_2', 'id_subject_niv_3', 'id_subject_niv_4', 'id_subject_niv_5', 'id_subject_niv_6', 'id_subject_niv_7', 'created_at', 'updated_at'] },
+>>>>>>> dbc7435d2b36bc3f58f8366b7e5ddb7164e040d6
 
             include: [
               {
@@ -100,7 +121,12 @@ class QuestionController {
           },
           {
             association: "bank",
+<<<<<<< HEAD
+            attributes: { exclude: ['id_bank', 'createdAt', 'updatedAt'] },
+
+=======
             attributes: { exclude: ['id_bank', 'created_at', 'updated_at'] },
+>>>>>>> dbc7435d2b36bc3f58f8366b7e5ddb7164e040d6
           },
           {
             association: "institution",
@@ -136,8 +162,23 @@ class QuestionController {
           },
         ],
 
-        offset: req.params.offset, limit: req.params.limit,
-        // order: [['updated_at']]
+        // offset: req.body.offset, limit: req.body.limit,
+        // where: {
+        //   bank,
+        //   //  [Op.or]: [{id_institution: 6}],
+        //   //  [Op.or]: [{year: 2010}],
+        //   // id_institution: { [Op.or]: req.body.institution },
+        //   // year: { [Op.or]: req.body.year },
+        //   // enunciated: { [Op.like]: `%${req.body.enunciated}%` },
+        // },
+
+        where: {
+          ...(enunciated && { enunciated: { [Op.like]: `%${enunciated}%` } }),
+          ...(bank && { id_bank: { [Op.in]: bank } }),
+          ...(institution && { id_institution: { [Op.in]: institution } }),
+          ...(year && { year: { [Op.in]: year } }),
+        },
+
       });
       return res.json(data);
     } catch (error) {
