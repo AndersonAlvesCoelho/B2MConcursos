@@ -15,8 +15,8 @@ import {
         
         const formatData = data.map((institution, index) => ({
           title: institution.name_institution,
-          value: institution.id_institution,
-          key: `0-${index}`,
+          value: `0-${index}`,
+          id: institution.id_institution,
         }));
         
         dispatch({ type: GET_INSTITUTION_SUCCESS, formatData });

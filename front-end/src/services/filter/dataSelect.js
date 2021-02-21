@@ -1,3 +1,25 @@
+// Dado sendo ultilizado
+export const yearData = [
+    { title: 2001, value: '0-0' },
+    { title: 2002, value: '0-1' },
+    { title: 2003, value: '0-2' },
+    { title: 2004, value: '0-3' },
+    { title: 2005, value: '0-4' },
+    { title: 2006, value: '0-5' },
+    { title: 2007, value: '0-6' },
+    { title: 2008, value: '0-7' },
+    { title: 2009, value: '0-8' },
+    { title: 2010, value: '0-9' },
+    { title: 2011, value: '0-10' },
+    { title: 2012, value: '0-11' },
+    { title: 2013, value: '0-12' },
+    { title: 2014, value: '0-13' },
+    { title: 2015, value: '0-14' },
+    { title: 2016, value: '0-15' },
+    { title: 2017, value: '0-16' },
+    { title: 2018, value: '0-17' },
+]
+// Dado não sendo ultilizado
 export const bankData = [
     { title: 'FCC', value: '0-0', key: '0-0' },
     { title: 'CESPE', value: '0-1', key: '0-1' },
@@ -11,7 +33,7 @@ export const bankData = [
     { title: 'CONSULPAM', value: '0-9', key: '0-9' },
     { title: 'outros', value: '0-10', key: '0-10' },
 ]
-
+// Dado não sendo ultilizado
 export const institutionData = [
     { title: 'Marinha - Marinha do Brasil ', key: '0-0', value: '0-0' },
     { title: 'Aeronáutica - Força Aérea Brasileira ', key: '0-1', value: '0-1' },
@@ -46,7 +68,7 @@ export const institutionData = [
     { title: 'TJ PR - Tribunal de Justiça do Paraná', key: '0-30', value: '0-30' },
     { title: 'SES SP - Secretaria da Saúde de São Paul', key: '0-31', value: '0-31' },
 ]
-
+// Dado não sendo ultilizado
 export const officeData = [
     {
         title: 'Node1',
@@ -83,28 +105,7 @@ export const officeData = [
         ],
     }
 ]
-
-export const yearData = [
-    { title: '2001', key: '0-0', value: 2001 },
-    { title: '2002', key: '0-1', value: 2002 },
-    { title: '2003', key: '0-2', value: 2003 },
-    { title: '2004', key: '0-3', value: 2004 },
-    { title: '2005', key: '0-4', value: 2005 },
-    { title: '2006', key: '0-5', value: 2006 },
-    { title: '2007', key: '0-6', value: 2007 },
-    { title: '2008', key: '0-7', value: 2008 },
-    { title: '2009', key: '0-8', value: 2009 },
-    { title: '2010', key: '0-9', value: 2010 },
-    { title: '2011', key: '0-10', value: 2011 },
-    { title: '2012', key: '0-11', value: 2012 },
-    { title: '2013', key: '0-12', value: 2013 },
-    { title: '2014', key: '0-13', value: 2014 },
-    { title: '2015', key: '0-14', value: 2015 },
-    { title: '2016', key: '0-15', value: 2016 },
-    { title: '2017', key: '0-16', value: 2017 },
-    { title: '2018', key: '0-17', value: 2018 },
-]
-
+// Dado não sendo ultilizado
 export const diciplineData = [
     {
         title: 'Educação', key: '0-0', value: '0-0', children: [
@@ -221,8 +222,7 @@ export const diciplineData = [
         ],
     },
 ];
-
-
+// Dado não sendo ultilizado
 export const questionData = [
     {
         id_question: '01',

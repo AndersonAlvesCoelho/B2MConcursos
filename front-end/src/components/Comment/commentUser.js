@@ -32,8 +32,6 @@ function CommentUser({ dataComment, numComment }) {
         })
     }
 
-    console.log(dataComment);
-
     //JSX icons add like, dislike e new Comment
     const actionsComment = [
         <Tooltip key="comment-basic-like" title="Like">

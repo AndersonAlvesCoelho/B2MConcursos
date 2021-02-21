@@ -10,7 +10,7 @@ import OfficeNiv02 from "../models/office/OfficeNiv02";
 import OfficeNiv03 from "../models/office/OfficeNiv03";
 import OfficeNiv04 from "../models/office/OfficeNiv04";
 
-import Dicipline from "../models/Dicipline";
+import Dicipline from "../models/subject/Dicipline";
 import SubjectNiv01 from '../models/subject/SubjectNiv01';
 import SubjectNiv02 from '../models/subject/SubjectNiv02';
 import SubjectNiv03 from '../models/subject/SubjectNiv03';

@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, } from 'react-bootstrap';
-import { yearData } from '../../services/filter/dataSelect';
-
 import { Drawer, TreeSelect, Input, Button, Form } from 'antd';
+// functions helps : format data retorn id
+import { formataBank, formataInstitution, formataOffice, formataDicipline, formataYear } from '../../helpers/formatDataToQuery';
 
-import * as bankActions from '../../actions/bank.actions';
-import * as institutionActions from '../../actions/institution.actions';
-import * as officeActions from '../../actions/office.actions';
-import * as diciplineActions from '../../actions/dicipline.actions';
+import { yearData } from '../../services/filter/dataSelect'; // Data filter
+import * as bankActions from '../../actions/bank.actions'; // Data filter
+import * as institutionActions from '../../actions/institution.actions'; // Data filter
+import * as officeActions from '../../actions/office.actions'; // Data filter
+import * as diciplineActions from '../../actions/dicipline.actions'; // Data filter
 
 const { SHOW_PARENT } = TreeSelect;
 const { Search } = Input;
@@ -39,6 +40,15 @@ function FilterFixed(props) {
         onClose
     } = props;
 
+    // dados para guarda os valores selecionados nos campos
+    const [questionSearch, setQuestionSearch] = useState();
+    const [bankValue, setBankValue] = useState([]);
+    const [institutionValue, setInstitutionValue] = useState([]);
+    const [officeValue, setOfficeValue] = useState([]);
+    const [yearValue, setYearValue] = useState([]);
+    const [diciplineValue, setDiciplineValue] = useState([]);
+
+    // get action return dados filter
     useEffect(() => {
         getBank();
         getInstitution();
@@ -46,27 +56,17 @@ function FilterFixed(props) {
         getDicipline();
     }, []);
 
+    // filter formata dados ; return id dados
     function filter(values) {
-        return changerFilter(values);
+        const idBank = formataBank(values.bank, bank);
+        const idInstitution = formataInstitution(values.institution, institution);
+        const idOffice = formataOffice(values.office, office);
+        const year = formataYear(values.year, yearData);
+        const idDicipline = formataDicipline(values.dicipline, dicipline);
+
+        const data = { enunciated: values.enunciated, bank: idBank, institution: idInstitution, office: idOffice, year: year, dicipline: idDicipline };
+        return changerFilter(data);
     }
-
-
-    const [questionSearch, setQuestionSearch] = useState();
-
-    const [bankValue, setBankValue] = useState([]);
-    const [bankLabel, setBankLabel] = useState([]);
-
-    const [institutionValue, setInstitutionValue] = useState([]);
-    const [institutionLabel, setInstitutionLabel] = useState([]);
-
-    const [officeValue, setOfficeValue] = useState([]);
-    const [officeLabel, setOfficeLabel] = useState([]);
-
-    const [yearValue, setYearValue] = useState([]);
-    const [yearLabel, setYearLabel] = useState([]);
-
-    const [diciplineValue, setDiciplineValue] = useState([]);
-    const [diciplineLabel, setDiciplineLabel] = useState([]);
 
     return (
         <>
@@ -78,7 +78,7 @@ function FilterFixed(props) {
                 onClose={onClose}
                 visible={visible}
                 bodyStyle={{ paddingBottom: 80 }}
-              
+
             >
                 <Form layout="vertical" requiredMark={false} onFinish={filter} >
                     <Row>
@@ -87,15 +87,15 @@ function FilterFixed(props) {
                                 name="enunciated"
                                 label="Pesquisar por enunciado"
                             >
-                                <Search
-                                    placeholder="Pesquisar.."
+
+                                <Input
+                                    placeholder="Pesquisar..."
+                                    onChange={(value) => { setQuestionSearch(value) }}
                                     allowClear
-                                    className="filter-select"
-                                    onSearch={(value) => setQuestionSearch(value)}
-                                    enterButton
                                 />
                             </Form.Item>
                         </Col>
+
                         <Col md="12">
                             <Form.Item
                                 name="bank"
@@ -104,17 +104,18 @@ function FilterFixed(props) {
                                 <TreeSelect
                                     treeData={bank}
                                     value={bankValue}
-                                    onChange={(value, label) => { setBankValue(value); setBankLabel(label); }}
+                                    onChange={(value) => { setBankValue(value); }}
                                     treeCheckable={true}
                                     placeholder="Banca..."
                                     className="filter-field"
                                     showCheckedStrategy={SHOW_PARENT}
                                     maxTagCount='responsive'
-                                    allowClear={true}
+                                    allowClear
                                     loading={loadingBank}
                                 />
                             </Form.Item>
                         </Col>
+
                         <Col md="12">
                             <Form.Item
                                 name="institution"
@@ -123,17 +124,18 @@ function FilterFixed(props) {
                                 <TreeSelect
                                     treeData={institution}
                                     value={institutionValue}
-                                    onChange={(value, label) => { setInstitutionValue(value); setInstitutionLabel(label) }}
+                                    onChange={(value) => { setInstitutionValue(value) }}
                                     treeCheckable={true}
                                     placeholder="Orgão..."
                                     className="filter-field"
                                     showCheckedStrategy={SHOW_PARENT}
                                     maxTagCount='responsive'
-                                    allowClear={true}
+                                    allowClear
                                     loading={loadingInstitution}
                                 />
                             </Form.Item>
                         </Col>
+
                         <Col md="12">
                             <Form.Item
                                 name="office"
@@ -142,17 +144,18 @@ function FilterFixed(props) {
                                 <TreeSelect
                                     treeData={office}
                                     value={officeValue}
-                                    onChange={(value, label) => { setOfficeValue(value); setOfficeLabel(label) }}
+                                    onChange={(value) => { setOfficeValue(value) }}
                                     treeCheckable={true}
                                     placeholder="Cargo..."
                                     className="filter-field"
                                     showCheckedStrategy={SHOW_PARENT}
                                     maxTagCount='responsive'
-                                    allowClear={true}
+                                    allowClear
                                     loading={loadingOffice}
                                 />
                             </Form.Item>
                         </Col>
+
                         <Col md="12">
                             <Form.Item
                                 name="year"
@@ -161,17 +164,18 @@ function FilterFixed(props) {
                                 <TreeSelect
                                     treeData={yearData}
                                     value={yearValue}
-                                    onChange={(value, label) => { setYearValue(value); setYearLabel(label) }}
+                                    onChange={(value) => { setYearValue(value) }}
                                     treeCheckable={true}
                                     placeholder="Ano..."
                                     className="filter-field"
                                     showCheckedStrategy={SHOW_PARENT}
                                     maxTagCount='responsive'
-                                    allowClear={true}
+                                    allowClear
                                     loading={!yearData}
                                 />
                             </Form.Item>
                         </Col>
+
                         <Col md="12">
                             <Form.Item
                                 name="dicipline"
@@ -180,13 +184,13 @@ function FilterFixed(props) {
                                 <TreeSelect
                                     treeData={dicipline}
                                     value={diciplineValue}
-                                    onChange={(value, label) => { setDiciplineValue(value); setDiciplineLabel(label) }}
+                                    onChange={(value) => { setDiciplineValue(value) }}
                                     treeCheckable={true}
                                     placeholder="Matéria & Assunto..."
                                     className="filter-field"
                                     showCheckedStrategy={SHOW_PARENT}
                                     maxTagCount='responsive'
-                                    allowClear={true}
+                                    allowClear
                                     loading={loadingDicipline}
                                 />
                             </Form.Item>
@@ -204,11 +208,11 @@ function FilterFixed(props) {
                             onClick={onClose}
                             htmlType="submit"
                             disabled={questionSearch ||
-                                bankLabel.length !== 0 ||
-                                institutionLabel.length !== 0 ||
-                                officeLabel.length !== 0 ||
-                                yearLabel.length !== 0 ||
-                                diciplineLabel.length !== 0
+                                bankValue.length !== 0 ||
+                                institutionValue.length !== 0 ||
+                                officeValue.length !== 0 ||
+                                yearValue.length !== 0 ||
+                                diciplineValue.length !== 0
                                 ? false : true}
                         >
                             Filtrar

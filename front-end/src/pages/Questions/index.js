@@ -33,9 +33,9 @@ function Questions(props) {
     };
 
     function onShowSizeChange(page) {
-        console.log(page)
-        setOffset(page * viewSizeQuestion)
+        console.log((page - 1) * viewSizeQuestion)
         setLimit(viewSizeQuestion)
+        setOffset((page - 1) * viewSizeQuestion)
     }
 
     const {
@@ -49,7 +49,8 @@ function Questions(props) {
     } = props;
 
     useEffect(() => {
-        getQuestion({ offset, limit, dataFilter });
+        const data = dataFilter.length !== 0 ? dataFilter : false;
+        getQuestion({ offset, limit, data });
     }, [offset, limit, dataFilter]);
 
     useEffect(() => getQtdQuestion(), []);
@@ -74,7 +75,7 @@ function Questions(props) {
 
                         <Pagination
                             defaultCurrent={1}
-                            total={qtdQuestion / viewSizeQuestion}
+                            total={qtdQuestion}
                             onChange={onShowSizeChange}
                             defaultPageSize={viewSizeQuestion}
                         />

@@ -17,25 +17,25 @@ export const getDicipline = () => (dispatch) => {
       const formatData = data.map((dicipline, a) => ({
         title: dicipline.name_dicipline,
         value: `0-${a}`,
-        key: `0-${a}`,
+        id: dicipline.id_dicipline,
         children: dicipline.length !== 0 && dicipline.subject_niv_1.map((subject01, b) => {
           {
             return ({
               title: subject01.name_subject,
               value: `0-${a}-${b}`,
-              key: `0-${a}-${b}`,
+              id: subject01.id_subject_niv_1,
               children: subject01.length !== 0 && subject01.subject_niv_2.map((subject02, c) => {
                 {
                   return ({
                     title: subject02.name_subject,
                     value: `0-${a}-${b}-${c}`,
-                    key: `0-${a}-${b}-${c}`,
+                    id: subject02.id_subject_niv_2,
                     children: subject02.length !== 0 && subject02.subject_niv_3.map((subject03, d) => {
                       {
                         return ({
                           title: subject03.name_subject,
                           value: `0-${a}-${b}-${c}-${d}`,
-                          key: `0-${a}-${b}-${c}-${d}`,
+                          id: subject03.id_subject_niv_3,
                           // children: subject03.length !== 0 && subject03.subject_niv_4.map((subject04, e) => {
                           //   {
                           //     return ({

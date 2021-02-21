@@ -4,19 +4,19 @@ class OfficeController {
     async index(req, res) {
         try {
             const data = await OfficeNiv01.findAll({
-                attributes: { exclude: ['created_at', 'updated_at'] },
+                attributes: { exclude: ['createdAt', 'updatedAt'] },
 
                 include: {
                     association: "office_niv_2",
-                    attributes: { exclude: ['id_office_niv_1', 'created_at', 'updated_at'] },
+                    attributes: { exclude: ['id_office_niv_1', 'createdAt', 'updatedAt'] },
 
                     include: {
                         association: "office_niv_3",
-                        attributes: { exclude: ['id_office_niv_2', 'created_at', 'updated_at'] },
+                        attributes: { exclude: ['id_office_niv_2', 'createdAt', 'updatedAt'] },
 
                         include: {
                             association: "office_niv_4",
-                            attributes: { exclude: ['id_office_niv_3', 'created_at', 'updated_at'] },
+                            attributes: { exclude: ['id_office_niv_3', 'createdAt', 'updatedAt'] },
                         },
                     },
                 },
