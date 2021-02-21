@@ -45,12 +45,9 @@ class QuestionController {
             * conforme os ids que contem na tabela office
             */
             association: "office",
-<<<<<<< HEAD
-            attributes: { exclude: ['createdAt', 'updatedAt'] },
 
-=======
             attributes: { exclude: ['id_office_niv_1', 'id_office_niv_2', 'id_office_niv_3', 'id_office_niv_4', 'created_at', 'updated_at'] },
->>>>>>> dbc7435d2b36bc3f58f8366b7e5ddb7164e040d6
+
             include: [
               {
                 association: "office_niv_1",
@@ -75,12 +72,8 @@ class QuestionController {
           {
             //  A mesma coisa que acontece para os dados office aocntece para os dados de subject
             association: "discipline_subject",
-<<<<<<< HEAD
-            // where: { [Op.or]: [{ id_dicipline: 7 }] },
-            attributes: { exclude: ['id_subject_niv_1', 'id_subject_niv_2', 'id_subject_niv_3', 'id_subject_niv_4', 'id_subject_niv_5', 'id_subject_niv_6', 'id_subject_niv_7', 'createdAt', 'updatedAt'] },
-=======
+
             attributes: { exclude: ['id_dicipline', 'id_subject_niv_1', 'id_subject_niv_2', 'id_subject_niv_3', 'id_subject_niv_4', 'id_subject_niv_5', 'id_subject_niv_6', 'id_subject_niv_7', 'created_at', 'updated_at'] },
->>>>>>> dbc7435d2b36bc3f58f8366b7e5ddb7164e040d6
 
             include: [
               {
@@ -121,12 +114,9 @@ class QuestionController {
           },
           {
             association: "bank",
-<<<<<<< HEAD
-            attributes: { exclude: ['id_bank', 'createdAt', 'updatedAt'] },
 
-=======
             attributes: { exclude: ['id_bank', 'created_at', 'updated_at'] },
->>>>>>> dbc7435d2b36bc3f58f8366b7e5ddb7164e040d6
+
           },
           {
             association: "institution",
@@ -190,6 +180,7 @@ class QuestionController {
 
   async store(req, res) {
     try {
+      console.log(req.body)
       const {
         // Office
         // idOffice,
@@ -229,9 +220,11 @@ class QuestionController {
         // Alternative
         idAlternative,
         nameAlternative,
-        answer,
+        answer
+      } = req.body.formData
 
-      } = req.body
+
+      console.log(nameAlternative)
 
       //  const office = await Office.create({
       //   id_office: idOffice,

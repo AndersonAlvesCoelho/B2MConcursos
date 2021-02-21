@@ -14,6 +14,9 @@ const RegisterQuestions = (props) => {
     } = props
 
     const [enunciated, setEnunciated] = useState();
+    const [office, setOffice] = useState();
+    const [issueResolution , setIssueResolution] = useState();
+    const [discipline, setDiscipline] = useState();
     const [year, setYear] = useState();
     const [bank, setBank] = useState();
     const [prove, setProve] = useState();
@@ -30,6 +33,31 @@ const RegisterQuestions = (props) => {
     const [progress, setProgess] = useState(0); // progess bar
     const el = useRef(); // accesing input element
 
+    const [radioData, setRadioData] = useState([
+        {
+            radioName: 'radioA', selected: false
+        },
+        {
+            radioName: 'radioB', selected: false
+        },
+        {
+            radioName: 'radioC', selected: false
+        },
+        {
+            radioName: 'radioD', selected: false
+        },
+    ])
+
+    const changeRadio =  ({ target })  => {
+       const newRadioData = radioData.map((radio) => {
+            const checked = radio.radioName === target.value;
+                return {
+                    ...radio,
+                    selected: checked
+            }
+        })
+        setRadioData(newRadioData)
+    }
 
     const handleChangeFile = (e) => {
         setProgess(0)
@@ -62,7 +90,7 @@ const RegisterQuestions = (props) => {
             prove,
             institute,
 
-            nameAlternative
+            nameAlternative,
         }
 
         store(data)
@@ -178,6 +206,26 @@ const RegisterQuestions = (props) => {
                                 value={institute}
                             />
                         </Col>
+
+                        <Col className="mt-3" xs={2} md={2}>
+                            <Input
+                                onChange={(e) => setOffice(e.target.value)}
+                                placeholder="Cargo"
+                                allowClear
+                                className="filter-select"
+                                enterButton
+                                value={office}
+                            />
+                        </Col>
+
+                        <Input
+                            onChange={(e) => setDiscipline(e.target.value)}
+                            placeholder="Disciplina"
+                            allowClear
+                            className="filter-select"
+                            enterButton
+                            value={discipline}
+                        />
                     </Row>
 
                     <Row >
@@ -196,8 +244,35 @@ const RegisterQuestions = (props) => {
                     <Row >
                         <Col className="mt-3" xs={8} md={6}>
                             <Input
+                                onChange={(e) => setIssueResolution(e.target.value)}
+                                placeholder="Descrição da resposta .."
+                                allowClear
+                                className="filter-select"
+                                enterButton
+                                value={issueResolution}
+                            />
+                        </Col>
+                    </Row>
+
+                    <Row >
+                        {
+                            radioData.map((lo, idx) => {
+                                return <input
+                                    key={idx}
+                                    type="radio"
+                                    name="answer"
+                                    value={lo.radioName}
+                                    checked={!!lo.selected}
+                                    onChange={changeRadio}
+                                />
+
+                            })
+                        }
+
+                        <Col className="mt-3" xs={8} md={6}>
+                            <Input
                                 onChange={(e) => setAlternativeA(e.target.value)}
-                                placeholder="Descrição da pergunta.."
+                                placeholder="Descrição da pergunta A.."
                                 allowClear
                                 className="filter-select"
                                 enterButton
@@ -210,7 +285,7 @@ const RegisterQuestions = (props) => {
                         <Col className="mt-3" xs={8} md={6}>
                             <Input
                                 onChange={(e) => setAlternativeB(e.target.value)}
-                                placeholder="Descrição da pergunta.."
+                                placeholder="Descrição da pergunta B.."
                                 allowClear
                                 className="filter-select"
                                 enterButton
@@ -223,7 +298,7 @@ const RegisterQuestions = (props) => {
                         <Col className="mt-3" xs={8} md={6}>
                             <Input
                                 onChange={(e) => setAlternativeC(e.target.value)}
-                                placeholder="Descrição da pergunta.."
+                                placeholder="Descrição da pergunta C.."
                                 allowClear
                                 className="filter-select"
                                 enterButton
@@ -237,7 +312,7 @@ const RegisterQuestions = (props) => {
                             <Input
                                 name="alternativeD"
                                 onChange={(e) => setAlternativeD(e.target.value)}
-                                placeholder="Descrição da pergunta.."
+                                placeholder="Descrição da pergunta D.."
                                 allowClear
                                 className="filter-select"
                                 enterButton
@@ -257,9 +332,9 @@ const RegisterQuestions = (props) => {
     );
 }
 
-// const mapStateToProps = state => ({
-//
-// })
+const mapStateToProps = state => ({
+
+})
 
 
 const  mapDispatchToProps = {
