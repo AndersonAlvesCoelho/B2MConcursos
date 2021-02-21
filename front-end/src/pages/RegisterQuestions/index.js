@@ -13,20 +13,20 @@ const RegisterQuestions = (props) => {
         store
     } = props
 
-    const [enunciated, setEnunciated] = useState();
     const [office, setOffice] = useState();
-    const [issueResolution , setIssueResolution] = useState();
     const [discipline, setDiscipline] = useState();
-    const [year, setYear] = useState();
     const [bank, setBank] = useState();
-    const [prove, setProve] = useState();
     const [institute, setInstitute] = useState();
+    const [year, setYear] = useState();
+    const [issueResolution , setIssueResolution] = useState();
+    const [enunciated, setEnunciated] = useState();
 
     const [alternativeA, setAlternativeA] = useState();
     const [alternativeB, setAlternativeB] = useState();
     const [alternativeC, setAlternativeC] = useState();
     const [alternativeD, setAlternativeD] = useState();
 
+    const [prove, setProve] = useState();
     const [file, setFile] = useState(''); // storing the uploaded file
     // storing the recived file from backend
     // const [data, getFile] = useState({ name: "", path: "" });
@@ -76,21 +76,23 @@ const RegisterQuestions = (props) => {
             alternativeD
         ]
 
-        // const answer = {
-        //     alternativeA,
-        //     alternativeB,
-        //     alternativeC,
-        //     alternativeD
-        // }
+       const answer =  radioData.map((radio) => {
+          return radio.selected
+        })
 
         const data = {
-            enunciated,
-            year,
+            office,
+            discipline,
             bank,
-            prove,
             institute,
+            year,
+            issueResolution,
+            enunciated,
+
+            prove,
 
             nameAlternative,
+            answer
         }
 
         store(data)
