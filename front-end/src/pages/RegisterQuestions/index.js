@@ -27,6 +27,7 @@ const RegisterQuestions = (props) => {
     const [alternativeD, setAlternativeD] = useState();
 
     const [prove, setProve] = useState();
+
     const [file, setFile] = useState(''); // storing the uploaded file
     // storing the recived file from backend
     // const [data, getFile] = useState({ name: "", path: "" });
