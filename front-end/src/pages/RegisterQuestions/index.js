@@ -5,6 +5,17 @@ import {Button, Col, Container, Row} from "react-bootstrap";
 import { Input } from 'antd';
 import * as regusterQuestionsActions from '../../actions/registerQuestions.actions';
 
+import { Card } from 'antd';
+
+const answerStyleBox = {
+    float: 'left',
+    height: '150px',
+};
+
+const answerStyle = {
+    marginTop: '25px',
+};
+
 
 const RegisterQuestions = (props) => {
 
@@ -50,11 +61,11 @@ const RegisterQuestions = (props) => {
     ])
 
     const changeRadio =  ({ target })  => {
-       const newRadioData = radioData.map((radio) => {
+        const newRadioData = radioData.map((radio) => {
             const checked = radio.radioName === target.value;
-                return {
-                    ...radio,
-                    selected: checked
+            return {
+                ...radio,
+                selected: checked
             }
         })
         setRadioData(newRadioData)
@@ -77,8 +88,8 @@ const RegisterQuestions = (props) => {
             alternativeD
         ]
 
-       const answer =  radioData.map((radio) => {
-          return radio.selected
+        const answer =  radioData.map((radio) => {
+            return radio.selected
         })
 
         const data = {
@@ -164,170 +175,180 @@ const RegisterQuestions = (props) => {
                     >Fazer upload do PDF
                     </Button>
 
-                    <Row >
-                        <Col className="mt-3" xs={2} md={2}>
+                    <div id="general">
+
+                        <Row >
+                            <Col className="mt-3" xs={2} md={2}>
+                                <Input
+                                    onChange={(e) => setYear(e.target.value)}
+                                    placeholder="Ano"
+                                    allowClear
+                                    className="filter-select"
+                                    enterButton
+                                    value={year}
+                                />
+                            </Col>
+
+                            <Col className="mt-3" xs={2} md={2}>
+                                <Input
+                                    onChange={(e) => setBank(e.target.value)}
+                                    placeholder="Banca"
+                                    allowClear
+                                    className="filter-select"
+                                    enterButton
+                                    value={bank}
+                                />
+                            </Col>
+
+
+                            <Col className="mt-3" xs={4} md={2}>
+                                <Input
+                                    onChange={(e) => setProve(e.target.value)}
+                                    placeholder="Prova"
+                                    allowClear
+                                    className="filter-select"
+                                    enterButton
+                                    value={prove}
+                                />
+                            </Col>
+
+                            <Col className="mt-3" xs={4} md={2}>
+                                <Input
+                                    onChange={(e) => setInstitute(e.target.value)}
+                                    placeholder="Órgão"
+                                    allowClear
+                                    className="filter-select"
+                                    enterButton
+                                    value={institute}
+                                />
+                            </Col>
+
+                            <Col className="mt-3" xs={2} md={2}>
+                                <Input
+                                    onChange={(e) => setOffice(e.target.value)}
+                                    placeholder="Cargo"
+                                    allowClear
+                                    className="filter-select"
+                                    enterButton
+                                    value={office}
+                                />
+                            </Col>
+
                             <Input
-                                onChange={(e) => setYear(e.target.value)}
-                                placeholder="Ano"
+                                onChange={(e) => setDiscipline(e.target.value)}
+                                placeholder="Disciplina"
                                 allowClear
                                 className="filter-select"
                                 enterButton
-                                value={year}
+                                value={discipline}
                             />
-                        </Col>
+                        </Row>
 
-                        <Col className="mt-3" xs={2} md={2}>
-                            <Input
-                                onChange={(e) => setBank(e.target.value)}
-                                placeholder="Banca"
-                                allowClear
-                                className="filter-select"
-                                enterButton
-                                value={bank}
-                            />
-                        </Col>
+                        <Row >
+                            <Col className="mt-3" xs={8} md={6}>
+                                <Input
+                                    onChange={(e) => setEnunciated(e.target.value)}
+                                    placeholder="Enunciado.."
+                                    allowClear
+                                    className="filter-select"
+                                    enterButton
+                                    value={enunciated}
+                                />
+                            </Col>
+                        </Row>
 
+                        <Row >
+                            <Col className="mt-3" xs={8} md={6}>
+                                <Input
+                                    onChange={(e) => setIssueResolution(e.target.value)}
+                                    placeholder="Descrição da resposta .."
+                                    allowClear
+                                    className="filter-select"
+                                    enterButton
+                                    value={issueResolution}
+                                />
+                            </Col>
+                        </Row>
 
-                        <Col className="mt-3" xs={4} md={2}>
-                            <Input
-                                onChange={(e) => setProve(e.target.value)}
-                                placeholder="Prova"
-                                allowClear
-                                className="filter-select"
-                                enterButton
-                                value={prove}
-                            />
-                        </Col>
-
-                        <Col className="mt-3" xs={4} md={2}>
-                            <Input
-                                onChange={(e) => setInstitute(e.target.value)}
-                                placeholder="Órgão"
-                                allowClear
-                                className="filter-select"
-                                enterButton
-                                value={institute}
-                            />
-                        </Col>
-
-                        <Col className="mt-3" xs={2} md={2}>
-                            <Input
-                                onChange={(e) => setOffice(e.target.value)}
-                                placeholder="Cargo"
-                                allowClear
-                                className="filter-select"
-                                enterButton
-                                value={office}
-                            />
-                        </Col>
-
-                        <Input
-                            onChange={(e) => setDiscipline(e.target.value)}
-                            placeholder="Disciplina"
-                            allowClear
-                            className="filter-select"
-                            enterButton
-                            value={discipline}
-                        />
-                    </Row>
-
-                    <Row >
-                        <Col className="mt-3" xs={8} md={6}>
-                            <Input
-                                onChange={(e) => setEnunciated(e.target.value)}
-                                placeholder="Enunciado.."
-                                allowClear
-                                className="filter-select"
-                                enterButton
-                                value={enunciated}
-                            />
-                        </Col>
-                    </Row>
-
-                    <Row >
-                        <Col className="mt-3" xs={8} md={6}>
-                            <Input
-                                onChange={(e) => setIssueResolution(e.target.value)}
-                                placeholder="Descrição da resposta .."
-                                allowClear
-                                className="filter-select"
-                                enterButton
-                                value={issueResolution}
-                            />
-                        </Col>
-                    </Row>
-
-                    <Row >
+                        <div style={answerStyleBox}>
                         {
                             radioData.map((lo, idx) => {
-                                return <input
-                                    key={idx}
-                                    type="radio"
-                                    name="answer"
-                                    value={lo.radioName}
-                                    checked={!!lo.selected}
-                                    onChange={changeRadio}
-                                />
-
+                                return <>
+                                    <div style={answerStyle}>
+                                        <input
+                                            key={idx}
+                                            type="radio"
+                                            name="answer"
+                                            value={lo.radioName}
+                                            checked={!!lo.selected}
+                                            onChange={changeRadio}
+                                        />
+                                    </div>
+                                </>
                             })
                         }
+                        </div>
 
-                        <Col className="mt-3" xs={8} md={6}>
-                            <Input
-                                onChange={(e) => setAlternativeA(e.target.value)}
-                                placeholder="Descrição da pergunta A.."
-                                allowClear
-                                className="filter-select"
-                                enterButton
-                                value={alternativeA}
-                            />
-                        </Col>
-                    </Row>
+                        <Row >
+                            <Col className="mt-3" xs={8} md={6}>
+                                <Input
+                                    onChange={(e) => setAlternativeA(e.target.value)}
+                                    placeholder="Descrição da pergunta A.."
+                                    allowClear
+                                    className="filter-select"
+                                    enterButton
+                                    value={alternativeA}
+                                />
+                            </Col>
+                        </Row>
 
-                    <Row>
-                        <Col className="mt-3" xs={8} md={6}>
-                            <Input
-                                onChange={(e) => setAlternativeB(e.target.value)}
-                                placeholder="Descrição da pergunta B.."
-                                allowClear
-                                className="filter-select"
-                                enterButton
-                                value={alternativeB}
-                            />
-                        </Col>
-                    </Row>
+                        <Row>
+                            <Col className="mt-3" xs={8} md={6}>
+                                <Input
+                                    onChange={(e) => setAlternativeB(e.target.value)}
+                                    placeholder="Descrição da pergunta B.."
+                                    allowClear
+                                    className="filter-select"
+                                    enterButton
+                                    value={alternativeB}
+                                />
+                            </Col>
+                        </Row>
 
-                    <Row>
-                        <Col className="mt-3" xs={8} md={6}>
-                            <Input
-                                onChange={(e) => setAlternativeC(e.target.value)}
-                                placeholder="Descrição da pergunta C.."
-                                allowClear
-                                className="filter-select"
-                                enterButton
-                                value={alternativeC}
-                            />
-                        </Col>
-                    </Row>
+                        <Row>
+                            <Col className="mt-3" xs={8} md={6}>
+                                <Input
+                                    onChange={(e) => setAlternativeC(e.target.value)}
+                                    placeholder="Descrição da pergunta C.."
+                                    allowClear
+                                    className="filter-select"
+                                    enterButton
+                                    value={alternativeC}
+                                />
+                            </Col>
+                        </Row>
 
-                    <Row>
-                        <Col className="mt-3" xs={8} md={6}>
-                            <Input
-                                name="alternativeD"
-                                onChange={(e) => setAlternativeD(e.target.value)}
-                                placeholder="Descrição da pergunta D.."
-                                allowClear
-                                className="filter-select"
-                                enterButton
-                                value={alternativeD}
-                            />
-                        </Col>
-                    </Row>
+                        <Row>
+                            <Col className="mt-3" xs={8} md={6}>
+                                <Input
+                                    name="alternativeD"
+                                    onChange={(e) => setAlternativeD(e.target.value)}
+                                    placeholder="Descrição da pergunta D.."
+                                    allowClear
+                                    className="filter-select"
+                                    enterButton
+                                    value={alternativeD}
+                                />
+                            </Col>
+                        </Row>
 
-                    <Button
-                        className="question-btn"
-                        type="submit"
-                    >Cadastrar questão</Button>
+                        <Button
+                            className="question-btn"
+                            type="submit"
+                        >
+                            Cadastrar questão
+                        </Button>
+                    </div>
                 </form>
 
             </Container>
