@@ -7,6 +7,7 @@ class Office extends Model {
                 id_office: {
                     type: DataTypes.INTEGER,
                     primaryKey: true,
+                    autoIncrement: true
                 },
                 id_office_niv_1: {
                     type: DataTypes.INTEGER,

@@ -8,6 +8,7 @@ import * as bankActions from "../../actions/bank.actions";
 import * as institutionActions from "../../actions/institution.actions";
 import * as officeActions from "../../actions/office.actions";
 import * as diciplineActions from "../../actions/dicipline.actions";
+import {yearData} from "../../services/filter/dataSelect";
 
 
 const answerStyleBox = {
@@ -45,9 +46,6 @@ const RegisterQuestions = (props) => {
 
     // general info
     // const [office, setOffice] = useState();
-    const [discipline, setDiscipline] = useState();
-    const [institute, setInstitute] = useState();
-    const [year, setYear] = useState();
     const [prove, setProve] = useState();
     const [bankValue, setBankValue] = useState([]);
     const [institutionValue, setInstitutionValue] = useState([]);
@@ -118,7 +116,7 @@ const RegisterQuestions = (props) => {
     }
 
     const handleSubmit = (e) => {
-        e.preventDefault()
+        // e.preventDefault()
 
         const nameAlternative = [
             alternativeA,
@@ -132,16 +130,17 @@ const RegisterQuestions = (props) => {
         })
 
         const data = {
-            office,
-            discipline,
-            bank,
-            institute,
-            year,
+            // general info
+            bankValue,
+            institutionValue,
+            officeValue,
+            yearValue,
+            diciplineValue,
+
+            // questions info
             issueResolution,
             enunciated,
-
             prove,
-
             nameAlternative,
             answer
         }
@@ -225,33 +224,36 @@ const RegisterQuestions = (props) => {
                     </Steps>
                 </>
 
-                <Form layout="vertical" requiredMark={false} onSubmit={handleSubmit}>
+                <Form layout="vertical" requiredMark={false} onFinish={handleSubmit}>
 
                     {step === 0 && (
                         <div id="generalInfo">
 
                             <Row >
+                                {/*<Col className="mt-3" xs={6} md={6}>*/}
                                 <Col className="mt-3" xs={6} md={6}>
                                     <Form.Item
                                         name="year"
                                         label="Ano da prova"
                                     >
-                                        <Input
+                                        <TreeSelect
+                                            treeData={yearData}
+                                            value={yearValue}
                                             maxLength={4}
-                                            onChange={(e) => setYear(e.target.value)}
-                                            placeholder="Ano"
+                                            onChange={(value) => { setYearValue(value) }}
+                                            placeholder="Ano..."
+                                            className="filter-field"
+                                            showCheckedStrategy={SHOW_PARENT}
+                                            maxTagCount='responsive'
+                                            showSearch
+                                            treeNodeFilterProp='title'
                                             allowClear
-                                            className="filter-select"
-                                            enterButton
-                                            value={year}
+                                            loading={!yearData}
                                         />
                                     </Form.Item>
                                 </Col>
-                            </Row>
 
-                            <Row >
                                 <Col className="mt-3" xs={6} md={6}>
-
                                     <Form.Item
                                         name="bank"
                                         label="Banca"
@@ -259,7 +261,8 @@ const RegisterQuestions = (props) => {
                                         <TreeSelect
                                             treeData={bank}
                                             value={bankValue}
-                                            onChange={(value) => { setBankValue(value); }}
+                                            onChange={(value) => { setBankValue(value) }}
+
                                             placeholder="Banca..."
                                             className="filter-field"
                                             showCheckedStrategy={SHOW_PARENT}
@@ -271,10 +274,34 @@ const RegisterQuestions = (props) => {
                                         />
                                     </Form.Item>
 
+                                    {/*</Col>*/}
                                 </Col>
                             </Row>
 
                             <Row >
+                                <Col className="mt-3" xs={6} md={6}>
+                                    <Form.Item
+                                        name="office"
+                                        label="Cargo"
+                                    >
+                                        <TreeSelect
+                                            treeData={office}
+                                            value={officeValue}
+
+                                            onChange={(value) => { setOfficeValue(value) }}
+                                            treeCheckable={true}
+                                            placeholder="Cargo..."
+                                            className="filter-field"
+                                            showCheckedStrategy={SHOW_PARENT}
+                                            maxTagCount='responsive'
+                                            showSearch
+                                            treeNodeFilterProp='title'
+                                            allowClear
+                                            loading={loadingOffice}
+                                        />
+                                    </Form.Item>
+                                </Col>
+
                                 <Col className="mt-3" xs={6} md={6}>
                                     <Form.Item
                                         name="institution"
@@ -320,24 +347,22 @@ const RegisterQuestions = (props) => {
                                         />
                                     </Form.Item>
                                 </Col>
-                            </Row>
 
-                            <Row >
-                            <Col className="mt-3" xs={6} md={6}>
-                                <Form.Item
-                                    name="prove"
-                                    label="Prova"
-                                >
-                                    <Input
-                                        onChange={(e) => setProve(e.target.value)}
-                                        placeholder="Prova"
-                                        allowClear
-                                        className="filter-select"
-                                        enterButton
-                                        value={prove}
-                                    />
-                                </Form.Item>
-                            </Col>
+                                <Col className="mt-3" xs={6} md={6}>
+                                    <Form.Item
+                                        name="prove"
+                                        label="Prova"
+                                    >
+                                        <Input
+                                            onChange={(e) => setProve(e.target.value)}
+                                            placeholder="Prova"
+                                            allowClear
+                                            className="filter-select"
+                                            enterButton
+                                            value={prove}
+                                        />
+                                    </Form.Item>
+                                </Col>
                             </Row>
                         </div>
                     )}
@@ -450,9 +475,6 @@ const RegisterQuestions = (props) => {
                             </Button>
                         </Card>
                     )}
-
-
-
                 </Form>
 
             </Container>

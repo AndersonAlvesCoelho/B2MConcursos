@@ -7,6 +7,7 @@ class User extends Model {
                 id_user: {
                     type: DataTypes.INTEGER,
                     primaryKey: true,
+                    autoIncrement: true
                 },
                 login: {
                     type: DataTypes.STRING,

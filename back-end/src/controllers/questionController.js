@@ -29,6 +29,7 @@ class QuestionController {
       var dicipline02 = false;
       var dicipline03 = false;
 
+      console.log(req.body.data)
       //pegando dados para filtragem
       if (req.body.data) {
         if (req.body.data.enunciated) enunciated = req.body.data.enunciated;
@@ -249,38 +250,17 @@ class QuestionController {
   async store(req, res) {
     try {
       console.log(req.body)
+
       const {
-        // Office
-        // idOffice,
-        // idOfice1,
-        // idOfice2,
-        // idOfice3,
-        // idOfice4,
-
-        // Discipline
-        // idDiscipline,
-        // idSubject1,
-        // idSubject2,
-        // idSubject3,
-        // idSubject4,
-        // idSubject5,
-        // idSubject6,
-        // idSubject7,
-
-        // bank
-        // idBank,
-        // nameBank,
-
-        //institution
-        // nameInstitution,
+        //general info
+        bankValue,
+        institutionValue,
+        officeValue,
+        diciplineValue,
+        yearValue,
+        prove,
 
         // Question
-        idQuestion,
-        idOffice,
-        idDisciplineSubject,
-        idBank,
-        idInstitution,
-        year,
         issueResolution,
         idUser,
         enunciated,
@@ -289,8 +269,7 @@ class QuestionController {
         idAlternative,
         nameAlternative,
         answer
-      } = req.body.formData
-
+      } = req.body
 
       console.log(nameAlternative)
 
@@ -348,14 +327,14 @@ class QuestionController {
       //   }
       // })
 
+      console.log('question')
 
       const question = await Question.create({
-        id_question: idQuestion,
-        id_office: idOffice,
-        id_discipline_subject: idDisciplineSubject,
-        id_bank: idBank,
-        id_institution: idInstitution,
-        year: year,
+        id_office: officeValue,
+        id_discipline_subject: diciplineValue,
+        id_bank: bankValue,
+        id_institution: institutionValue,
+        year: yearValue,
         issue_resolution: issueResolution,
         id_user: idUser,
         enunciated: enunciated,
@@ -366,6 +345,8 @@ class QuestionController {
           res.status(400).send('Erro ao inserir instituição');
         }
       })
+
+
 
       for (let i = 0; i < nameAlternative.length; i++) {
         await Alternative.create({

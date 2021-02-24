@@ -7,6 +7,7 @@ class CommentAnswer extends Model {
                 id_comment_answer: {
                     type: DataTypes.INTEGER,
                     primaryKey: true,
+                    autoIncrement: true
                 },
                 answer: {
                     type: DataTypes.TEXT,

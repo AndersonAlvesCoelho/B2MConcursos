@@ -34,9 +34,9 @@ export const uploadFile = (formData) => (dispatch) => {
         });
 }
 
-export const store = (formData) => (dispatch) => {
+export const store = (formValues) => (dispatch) => {
     dispatch({ type: REGISTER_QUESTIONS_REQUEST });
-    api.post('/registerQuestions', { formData }  )
+    api.post('/registerQuestions',  formValues  )
         .then((res) => {
             const { data } = res;
 

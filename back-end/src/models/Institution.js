@@ -7,6 +7,7 @@ class Institution extends Model {
                 id_institution: {
                     type: DataTypes.INTEGER,
                     primaryKey: true,
+                    autoIncrement: true
                 },
                 name_institution: {
                     type: DataTypes.STRING,

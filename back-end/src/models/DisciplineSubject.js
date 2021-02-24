@@ -7,6 +7,7 @@ class DisciplineSubject extends Model {
                 id_discipline_subject: {
                     type: DataTypes.INTEGER,
                     primaryKey: true,
+                    autoIncrement: true
                 },
                 id_dicipline: {
                     type: DataTypes.INTEGER,

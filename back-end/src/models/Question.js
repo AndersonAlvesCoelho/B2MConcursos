@@ -8,6 +8,7 @@ class Question extends Model {
                 id_question: {
                     type: DataTypes.INTEGER,
                     primaryKey: true,
+                    autoIncrement: true
                 },
                 id_office: {
                     type: DataTypes.INTEGER,
