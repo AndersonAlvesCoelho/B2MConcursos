@@ -7,9 +7,9 @@ import { FaFilter } from "react-icons/fa";
 
 import './index.css';
 // import { questionData } from '../../services/filter/dataSelect';
-import MenuNavbar from '../../components/MenuNavbar/index';
-import Alternative from '../../components/Alternative/index';
-import FilterFixed from '../../components/FilterFixed/index';
+import MenuNavbar from '../../components/MenuNavbar';
+import Alternative from '../../components/Alternative';
+import FilterFixed from '../../components/FilterFixed';
 
 import * as questionActions from '../../actions/question.actions';
 
@@ -20,6 +20,7 @@ function Questions(props) {
     const [visible, setVisible] = useState(false);
     const [current, setCurrent] = useState();
     const [dataFilter, setDataFilter] = useState([]);
+    const [pagerCurrent, setPagerCurrent] = useState(1);
 
     const [offset, setOffset] = useState(0);
     const [limit, setLimit] = useState(viewSizeQuestion);
@@ -33,7 +34,7 @@ function Questions(props) {
     };
 
     function onShowSizeChange(page) {
-        console.log((page - 1) * viewSizeQuestion)
+        setPagerCurrent(page);
         setLimit(viewSizeQuestion)
         setOffset((page - 1) * viewSizeQuestion)
     }
@@ -48,12 +49,19 @@ function Questions(props) {
         getQtdQuestion,
     } = props;
 
+    //get data questions
     useEffect(() => {
-        const data = dataFilter.length !== 0 ? dataFilter : false;
+        let data = dataFilter.length !== 0 ? dataFilter : false;
         getQuestion({ offset, limit, data });
     }, [offset, limit, dataFilter]);
 
-    useEffect(() => getQtdQuestion(), []);
+    //get size data questions
+    useEffect(() => {
+        let data = dataFilter.length !== 0 ? dataFilter : false;
+        getQtdQuestion({ data });
+        setOffset(0);
+        setPagerCurrent(1);
+    }, [dataFilter]);
 
     return (
         <>
@@ -68,33 +76,36 @@ function Questions(props) {
             </Jumbotron>
 
             {/* Formulario para o filtro de questões */}
-            <Divider orientation="right">
+            <Divider  orientation="right">
                 <Affix offsetTop={10}>
                     <Menu onClick={(e) => setCurrent(e.key)} selectedKeys={[current]} mode="horizontal" mode="inline">
                         <Menu.Item key="mail" onClick={showDrawer} icon={<FaFilter />}>Filtrar</Menu.Item>
-
                         <Pagination
+                            current={pagerCurrent}
                             defaultCurrent={1}
                             total={qtdQuestion}
                             onChange={onShowSizeChange}
                             defaultPageSize={viewSizeQuestion}
+                            responsive={true}
                         />
                     </Menu>
 
-                    <FilterFixed visible={visible} onClose={onClose} changerFilter={(e) => setDataFilter(e)} />
+                    <FilterFixed visible={visible} onClose={onClose} changerFilter={(e) => { setDataFilter(e); }} />
                 </Affix>
             </Divider>
 
             {/* Lista de questões baseado  */}
-            {question.length !== 0 ? (<>
-                {question.map((e, x) =>
-                    <div key={x}>
-                        <Alternative data={e} indexQ={x} />
-                    </div>
-                )}
-            </>) : (<>
-                {loadingQuestion ? <div className="center-component"><Spin /></div> : <div className="center-Component"><Empty /></div>}
-            </>)}
+            {
+                question.length !== 0 ? (<>
+                    {question.map((e, x) =>
+                        <div key={x}>
+                            <Alternative data={e} indexQ={x} />
+                        </div>
+                    )}
+                </>) : (<>
+                    {loadingQuestion ? <div className="center-component"><Spin /></div> : <div className="center-Component"><Empty /></div>}
+                </>)
+            }
         </>
     );
 }

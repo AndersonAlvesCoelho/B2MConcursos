@@ -26,9 +26,9 @@ export const getQuestion = (filter) => (dispatch) => {
 };
 
 //GET TOTAL QTD_QUESTION
-export const getQtdQuestion = () => (dispatch) => {
+export const getQtdQuestion = (filter) => (dispatch) => {
   dispatch({ type: GET_QTD_QUESTION_REQUEST });
-  api.get(`/qtdQuestions`)
+  api.post('/qtdQuestions', filter)
     .then((res) => {
       const { data } = res;
 

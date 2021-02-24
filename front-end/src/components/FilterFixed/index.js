@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, } from 'react-bootstrap';
 import { Drawer, TreeSelect, Input, Button, Form } from 'antd';
-// functions helps : format data retorn id
-import { formataBank, formataInstitution, formataOffice, formataDicipline, formataYear } from '../../helpers/formatDataToQuery';
+import { FaFilter, FaUndo } from "react-icons/fa";
 
+import { formataBank, formataInstitution, formataOffice, formataDicipline, formataYear } from '../../helpers/formatDataToQuery';// functions helps : format data retorn id
 import { yearData } from '../../services/filter/dataSelect'; // Data filter
 import * as bankActions from '../../actions/bank.actions'; // Data filter
 import * as institutionActions from '../../actions/institution.actions'; // Data filter
@@ -12,7 +12,6 @@ import * as officeActions from '../../actions/office.actions'; // Data filter
 import * as diciplineActions from '../../actions/dicipline.actions'; // Data filter
 
 const { SHOW_PARENT } = TreeSelect;
-const { Search } = Input;
 
 function FilterFixed(props) {
 
@@ -40,8 +39,10 @@ function FilterFixed(props) {
         onClose
     } = props;
 
+
+
     // dados para guarda os valores selecionados nos campos
-    const [questionSearch, setQuestionSearch] = useState();
+    const [questionSearch, setQuestionSearch] = useState('');
     const [bankValue, setBankValue] = useState([]);
     const [institutionValue, setInstitutionValue] = useState([]);
     const [officeValue, setOfficeValue] = useState([]);
@@ -54,7 +55,7 @@ function FilterFixed(props) {
         getInstitution();
         getOffice();
         getDicipline();
-    }, []);
+    }, [getBank, getInstitution, getOffice, getDicipline]);
 
     // filter formata dados ; return id dados
     function filter(values) {
@@ -64,10 +65,15 @@ function FilterFixed(props) {
         const year = formataYear(values.year, yearData);
         const idDicipline = formataDicipline(values.dicipline, dicipline);
 
-        const data = { enunciated: values.enunciated, bank: idBank, institution: idInstitution, office: idOffice, year: year, dicipline: idDicipline };
+        let data = { enunciated: values.enunciated, bank: idBank, institution: idInstitution, office: idOffice, year: year, dicipline: idDicipline };
         return changerFilter(data);
     }
 
+    //precisa explicar ? kkk
+    //não foi feito do jeito que eu (anderson) gostaria
+    function clearFilter() {
+        window.location.reload();
+    }
     return (
         <>
             <Drawer
@@ -90,7 +96,7 @@ function FilterFixed(props) {
 
                                 <Input
                                     placeholder="Pesquisar..."
-                                    onChange={(value) => { setQuestionSearch(value) }}
+                                    onChange={(value) => { setQuestionSearch(value.nativeEvent.data ? true : false) }}
                                     allowClear
                                 />
                             </Form.Item>
@@ -111,6 +117,8 @@ function FilterFixed(props) {
                                     showCheckedStrategy={SHOW_PARENT}
                                     maxTagCount='responsive'
                                     allowClear
+                                    showSearch
+                                    treeNodeFilterProp='title'
                                     loading={loadingBank}
                                 />
                             </Form.Item>
@@ -124,12 +132,15 @@ function FilterFixed(props) {
                                 <TreeSelect
                                     treeData={institution}
                                     value={institutionValue}
+
                                     onChange={(value) => { setInstitutionValue(value) }}
                                     treeCheckable={true}
                                     placeholder="Orgão..."
                                     className="filter-field"
                                     showCheckedStrategy={SHOW_PARENT}
                                     maxTagCount='responsive'
+                                    showSearch
+                                    treeNodeFilterProp='title'
                                     allowClear
                                     loading={loadingInstitution}
                                 />
@@ -144,12 +155,15 @@ function FilterFixed(props) {
                                 <TreeSelect
                                     treeData={office}
                                     value={officeValue}
+
                                     onChange={(value) => { setOfficeValue(value) }}
                                     treeCheckable={true}
                                     placeholder="Cargo..."
                                     className="filter-field"
                                     showCheckedStrategy={SHOW_PARENT}
                                     maxTagCount='responsive'
+                                    showSearch
+                                    treeNodeFilterProp='title'
                                     allowClear
                                     loading={loadingOffice}
                                 />
@@ -164,12 +178,15 @@ function FilterFixed(props) {
                                 <TreeSelect
                                     treeData={yearData}
                                     value={yearValue}
+
                                     onChange={(value) => { setYearValue(value) }}
                                     treeCheckable={true}
                                     placeholder="Ano..."
                                     className="filter-field"
                                     showCheckedStrategy={SHOW_PARENT}
                                     maxTagCount='responsive'
+                                    showSearch
+                                    treeNodeFilterProp='title'
                                     allowClear
                                     loading={!yearData}
                                 />
@@ -184,12 +201,15 @@ function FilterFixed(props) {
                                 <TreeSelect
                                     treeData={dicipline}
                                     value={diciplineValue}
+
                                     onChange={(value) => { setDiciplineValue(value) }}
                                     treeCheckable={true}
                                     placeholder="Matéria & Assunto..."
                                     className="filter-field"
                                     showCheckedStrategy={SHOW_PARENT}
                                     maxTagCount='responsive'
+                                    showSearch
+                                    treeNodeFilterProp='title'
                                     allowClear
                                     loading={loadingDicipline}
                                 />
@@ -201,12 +221,7 @@ function FilterFixed(props) {
                             textAlign: 'right',
                         }}
                     >
-                        <Button className="filter-btn" onClick={onClose} style={{ marginRight: 8 }}>Cancel</Button>
-                        <Button
-                            className="filter-btn"
-                            variant="info"
-                            onClick={onClose}
-                            htmlType="submit"
+                        <Button className="B2M-btn mr-2" onClick={clearFilter}
                             disabled={questionSearch ||
                                 bankValue.length !== 0 ||
                                 institutionValue.length !== 0 ||
@@ -214,9 +229,16 @@ function FilterFixed(props) {
                                 yearValue.length !== 0 ||
                                 diciplineValue.length !== 0
                                 ? false : true}
-                        >
-                            Filtrar
-                        </Button>
+                        > <FaUndo className="mr-2" /> Limpar</Button>
+                        <Button className="B2M-btn B2M-btn-winter" onClick={onClose} htmlType="submit"
+                            disabled={questionSearch ||
+                                bankValue.length !== 0 ||
+                                institutionValue.length !== 0 ||
+                                officeValue.length !== 0 ||
+                                yearValue.length !== 0 ||
+                                diciplineValue.length !== 0
+                                ? false : true}
+                        > <FaFilter className="mr-2" />Filtrar</Button>
                     </div>
                 </Form>
             </Drawer>

@@ -92,7 +92,7 @@ const RegisterQuestions = (props) => {
 
                 <Button
                     onClick={sendPDF}
-                    className="filter-btn"
+                    className="B2M-btn B2M-btn-winter"
                     variant="info"
                 >Fazer upload do PDF
                 </Button>

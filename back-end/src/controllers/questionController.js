@@ -3,6 +3,7 @@ import Question from "../models/Question"
 import { regexPDF } from "../functions/pdfParse"
 // import Office from "../models/Office";
 import Alternative from "../models/Alternative";
+import { Console } from "console";
 const fs = require('fs');
 const pdfFile = fs.readFileSync('src/PDF/TJ MG.pdf');
 
@@ -18,17 +19,48 @@ class QuestionController {
       var institution = false;
       var year = false;
       var office = false;
+      var office01 = false;
+      var office02 = false;
+      var office03 = false;
+      var office04 = false;
       var dicipline = false;
+      var dicipline00 = false;
+      var dicipline01 = false;
+      var dicipline02 = false;
+      var dicipline03 = false;
+
       //pegando dados para filtragem 
       if (req.body.data) {
         if (req.body.data.enunciated) enunciated = req.body.data.enunciated;
         if (req.body.data.bank.length !== 0) bank = req.body.data.bank;
         if (req.body.data.institution.length !== 0) institution = req.body.data.institution;
         if (req.body.data.year.length !== 0) year = req.body.data.year;
-        // if (req.body.data.office.length !== 0) office = req.body.data.office;
-        // if (req.body.data.dicipline.length !== 0) dicipline = req.body.data.dicipline;
+        if (req.body.data.office.length !== 0) office = req.body.data.office;
+        if (req.body.data.dicipline.length !== 0) dicipline = req.body.data.dicipline;
       }
 
+      if (office) {
+        if (office[0].length !== 0) office01 = office[0];
+        if (office[1].length !== 0) office02 = office[1];
+        if (office[2].length !== 0) office03 = office[2];
+        if (office[3].length !== 0) office04 = office[3];
+      }
+
+      if (dicipline) {
+        if (dicipline[0].length !== 0) dicipline00 = dicipline[0];
+        if (dicipline[1].length !== 0) dicipline01 = dicipline[1];
+        if (dicipline[2].length !== 0) dicipline02 = dicipline[2];
+        if (dicipline[3].length !== 0) dicipline03 = dicipline[3];
+      }
+      console.log(dicipline00);
+      console.log(dicipline01);
+      console.log(dicipline02);
+      console.log(dicipline03);
+
+      console.log(dicipline00);
+      console.log(dicipline01);
+      console.log(dicipline02);
+      console.log(dicipline03);
       const data = await Question.findAll({
         attributes: {
           exclude: [
@@ -39,7 +71,7 @@ class QuestionController {
             // 'id_institution',
             'id_user',
             'createdAt',
-            // 'updated_at'
+            // 'updatedAt'
           ]
         },
 
@@ -51,106 +83,100 @@ class QuestionController {
             * conforme os ids que contem na tabela office
             */
             association: "office",
-            attributes: { exclude: ['createdAt', 'updatedAt'] },
+            attributes: { exclude: ['id_office', 'createdAt', 'updatedAt'] },
+            // where: {
+            //   // ...(office01 && { id_office_niv_1: { [Op.in]: office01 } }),
+            //   //   // ...(office02 && { id_office_niv_2: { [Op.in]: office02 } }),
+            //   //   // ...(office03 && { id_office_niv_3: { [Op.in]: office03 } }),
+            //   //   // ...(office04 && { id_office_niv_4: { [Op.in]: office04 } }),
 
+            //   id_office_niv_1: 1
+            // },
             include: [
               {
                 association: "office_niv_1",
-                attributes: { exclude: ['id_office_niv_1', 'created_at', 'updated_at'] },
+                attributes: { exclude: ['id_office_niv_1', 'createdAt', 'updatedAt'] },
               },
               {
                 association: "office_niv_2",
-                attributes: { exclude: ['id_office_niv_1', 'id_office_niv_2', 'created_at', 'updated_at'] },
+                attributes: { exclude: ['id_office_niv_1', 'id_office_niv_2', 'createdAt', 'updatedAt'] },
               },
               {
                 association: "office_niv_3",
-                attributes: { exclude: ['id_office_niv_2', 'id_office_niv_3', 'created_at', 'updated_at'] },
+                attributes: { exclude: ['id_office_niv_2', 'id_office_niv_3', 'createdAt', 'updatedAt'] },
               },
               {
                 association: "office_niv_4",
-                attributes: { exclude: ['id_office_niv_3', 'id_office_niv_4', 'created_at', 'updated_at'] },
+                attributes: { exclude: ['id_office_niv_3', 'id_office_niv_4', 'createdAt', 'updatedAt'] },
               }
             ],
-
 
           },
           {
             //  A mesma coisa que acontece para os dados office aocntece para os dados de subject
             association: "discipline_subject",
-            // where: { [Op.or]: [{ id_dicipline: 7 }] },
-            attributes: { exclude: ['id_subject_niv_1', 'id_subject_niv_2', 'id_subject_niv_3', 'id_subject_niv_4', 'id_subject_niv_5', 'id_subject_niv_6', 'id_subject_niv_7', 'createdAt', 'updatedAt'] },
+            attributes: { exclude: ['id_subject_niv_4', 'id_subject_niv_5', 'id_subject_niv_6', 'id_subject_niv_7', 'createdAt', 'updatedAt'] },
+
+            // where: {
+            //   ...(dicipline00 && { id_dicipline: { [Op.in]: dicipline00 } }),
+            //   ...(dicipline01 && { id_subject_niv_1: { [Op.in]: dicipline01 } }),
+            //   ...(dicipline02 && { id_subject_niv_2: { [Op.in]: dicipline02 } }),
+            //   ...(dicipline03 && { id_subject_niv_3: { [Op.in]: dicipline03 } }),
+            // },
 
             include: [
               {
                 association: "dicipline",
-                attributes: { exclude: ['id_dicipline', 'created_at', 'updated_at'] },
+                attributes: { exclude: ['id_dicipline', 'createdAt', 'updatedAt'] },
               },
               {
                 association: "subject_niv_1",
-                attributes: { exclude: ['id_dicipline', 'id_subject_niv_1', 'created_at', 'updated_at'] },
+                attributes: { exclude: ['id_dicipline', 'id_subject_niv_1', 'createdAt', 'updatedAt'] },
               },
               {
                 association: "subject_niv_2",
-                attributes: { exclude: ['id_subject_niv_1', 'id_subject_niv_2', 'created_at', 'updated_at'] },
+                attributes: { exclude: ['id_subject_niv_1', 'id_subject_niv_2', 'createdAt', 'updatedAt'] },
               },
               {
                 association: "subject_niv_3",
-                attributes: { exclude: ['id_subject_niv_2', 'id_subject_niv_3', 'created_at', 'updated_at'] },
-              },
-              {
-                association: "subject_niv_4",
-                attributes: { exclude: ['id_subject_niv_3', 'id_subject_niv_4', 'created_at', 'updated_at'] },
-              },
-              {
-                association: "subject_niv_5",
-                attributes: { exclude: ['id_subject_niv_4', 'id_subject_niv_5', 'created_at', 'updated_at'] },
-              },
-              {
-                association: "subject_niv_6",
-                attributes: { exclude: ['id_subject_niv_6', 'id_subject_niv_5', 'created_at', 'updated_at'] },
-              },
-              {
-                association: "subject_niv_7",
-                attributes: { exclude: ['created_at', 'updated_at'] },
+                attributes: { exclude: ['id_subject_niv_2', 'id_subject_niv_3', 'createdAt', 'updatedAt'] },
               },
 
             ],
-
           },
           {
             association: "bank",
             attributes: { exclude: ['id_bank', 'createdAt', 'updatedAt'] },
-
           },
           {
             association: "institution",
-            attributes: { exclude: ['id_institution', 'created_at', 'updated_at'] },
+            attributes: { exclude: ['id_institution', 'createdAt', 'updatedAt'] },
           },
           {
             association: "user",
-            attributes: { exclude: ['id_user', 'password', 'nivel', 'created_at', 'updated_at'] },
+            attributes: { exclude: ['id_user', 'password', 'nivel', 'createdAt', 'updatedAt'] },
           },
           {
             association: "alternative",
-            attributes: { exclude: ['id_alternative', 'id_question', 'created_at', 'updated_at'] },
+            attributes: { exclude: ['id_alternative', 'id_question', 'createdAt', 'updatedAt'] },
           },
           {
             association: "comment",
-            attributes: { exclude: ['id_comment', 'id_user', 'id_question', 'created_at'] },
+            attributes: { exclude: ['id_comment', 'id_user', 'id_question', 'createdAt'] },
             include: [
               {
                 association: "comment_answer",
-                attributes: { exclude: ['id_comment_answer', 'id_user', 'id_comment', 'created_at'] },
+                attributes: { exclude: ['id_comment_answer', 'id_user', 'id_comment', 'createdAt'] },
                 include: [
                   {
                     association: "user",
-                    attributes: { exclude: ['id_user', 'password', 'nivel', 'created_at', 'updated_at'] },
+                    attributes: { exclude: ['id_user', 'password', 'nivel', 'createdAt', 'updatedAt'] },
                   },
                 ],
               },
               {
                 association: "user",
-                attributes: { exclude: ['id_user', 'password', 'nivel', 'created_at', 'updated_at'] },
+                attributes: { exclude: ['id_user', 'password', 'nivel', 'createdAt', 'updatedAt'] },
               },
             ],
           },
@@ -167,6 +193,52 @@ class QuestionController {
 
         order: [['id_question']]
 
+      });
+      return res.json(data);
+    } catch (error) {
+      res.status(400).json({ message: `Erro ao retornar os dados. ${error}` });
+    }
+  }
+  // retornar somente a quantidade toda de registro na tabela question
+  async qtdQuestions(req, res) {
+
+    var enunciated = false;
+    var bank = false;
+    var institution = false;
+    var year = false;
+    var office = false;
+    var dicipline = false;
+
+    //pegando dados para filtragem 
+    if (req.body.data) {
+      if (req.body.data.enunciated) enunciated = req.body.data.enunciated;
+      if (req.body.data.bank.length !== 0) bank = req.body.data.bank;
+      if (req.body.data.institution.length !== 0) institution = req.body.data.institution;
+      if (req.body.data.year.length !== 0) year = req.body.data.year;
+      // if (req.body.data.office.length !== 0) office = req.body.data.office;
+      // if (req.body.data.dicipline.length !== 0) dicipline = req.body.data.dicipline;
+    }
+
+    try {
+      const data = await Question.count({
+        attributes: {
+          exclude: [
+            // 'id_question',
+            'id_office',
+            'id_discipline_subject',
+            // 'id_bank',
+            // 'id_institution',
+            'id_user',
+            'createdAt',
+            // 'updatedAt'
+          ]
+        },
+        where: {
+          ...(enunciated && { enunciated: { [Op.like]: `%${enunciated}%` } }),
+          ...(bank && { id_bank: { [Op.in]: bank } }),
+          ...(institution && { id_institution: { [Op.in]: institution } }),
+          ...(year && { year: { [Op.in]: year } }),
+        },
       });
       return res.json(data);
     } catch (error) {
@@ -342,15 +414,7 @@ class QuestionController {
     }
   }
 
-  // retornar somente a quantidade toda de registro na tabela question
-  async qtdQuestions(req, res) {
-    try {
-      const data = await Question.count();
-      return res.json(data);
-    } catch (error) {
-      res.status(400).json({ message: `Erro ao retornar os dados. ${error}` });
-    }
-  }
+
 }
 
 export default new QuestionController();

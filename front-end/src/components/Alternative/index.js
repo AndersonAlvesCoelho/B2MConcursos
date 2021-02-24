@@ -77,7 +77,7 @@ function Alternative({ data, indexQ }) {
                                         (<><FaInfoCircle size={25} className="alternative-error-icon-outline mx-1" /> {answer.errorMessage} </>)
                                     : null}
                             </span>
-                            <Button className="alternative-btn" disabled={!alternative || answer.answer} onClick={() => keyAnswer()} >Visualizar Resposta</Button>
+                            <Button className="B2M-btn B2M-btn-winter" disabled={!alternative || answer.answer} onClick={() => keyAnswer()} >Visualizar Resposta</Button>
                         </ListGroup>
                     </Col>
 
