@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navbar, Nav } from 'react-bootstrap';
+import { Navbar, Nav, Button } from 'react-bootstrap';
 import { FaFacebook, FaYoutube, FaInstagram, FaTwitter, FaQuestionCircle } from "react-icons/fa";
 
 // import logoQuest from '../../assets/img/logo-quest.png';
@@ -32,7 +32,6 @@ function MenuNavbar() {
                     <div className="icons-content">
                         <FaTwitter size={20} />
                     </div>
-
                 </Nav>
             </Navbar.Collapse>
         </Navbar>

@@ -1,28 +1,66 @@
-// import { Sequelize, Op } from "sequelize";
+import { Op } from "sequelize";
 import Question from "../models/Question"
-import {regexPDF} from "../functions/pdfParse"
+import { regexPDF } from "../functions/pdfParse"
 // import Office from "../models/Office";
 import Alternative from "../models/Alternative";
-// import Institution from "../models/Institution";
-// import Bank from "../models/Bank";
-// import DisciplineSubject from "../models/DisciplineSubject";
-const fs = require('fs')
-const pdfFile = fs.readFileSync('src/PDF/TJ MG.pdf')
+import { Console } from "console";
+const fs = require('fs');
+const pdfFile = fs.readFileSync('src/PDF/TJ MG.pdf');
+
 
 class QuestionController {
 
+  // Retornar o registro das questões
   async index(req, res) {
-
-    const enunciated =  req.body.dataFilter.enunciated.length !== 0 ? req.body.dataFilter.enunciated : false;
-    const bank = req.body.dataFilter.length !== 0 && req.body.dataFilter.bank.length !== 0 ? req.body.dataFilter.bank : false;
-    const institution = req.body.dataFilter.length !== 0 && req.body.dataFilter.institution.length !== 0 ? req.body.dataFilter.institution : false;
-    const year = req.body.dataFilter.length !== 0 && req.body.dataFilter.year.length !== 0 ? req.body.dataFilter.year : false;
-    const office = req.body.dataFilter.length !== 0 && req.body.dataFilter.office.length !== 0 ? req.body.dataFilter.office : false;
-    const dicipline = req.body.dataFilter.length !== 0 && req.body.dataFilter.dicipline.length !== 0 ? req.body.dataFilter.dicipline : false;
-
-    console.log(req.body);
-
     try {
+
+      var enunciated = false;
+      var bank = false;
+      var institution = false;
+      var year = false;
+      var office = false;
+      var office01 = false;
+      var office02 = false;
+      var office03 = false;
+      var office04 = false;
+      var dicipline = false;
+      var dicipline00 = false;
+      var dicipline01 = false;
+      var dicipline02 = false;
+      var dicipline03 = false;
+
+      //pegando dados para filtragem
+      if (req.body.data) {
+        if (req.body.data.enunciated) enunciated = req.body.data.enunciated;
+        if (req.body.data.bank.length !== 0) bank = req.body.data.bank;
+        if (req.body.data.institution.length !== 0) institution = req.body.data.institution;
+        if (req.body.data.year.length !== 0) year = req.body.data.year;
+        if (req.body.data.office.length !== 0) office = req.body.data.office;
+        if (req.body.data.dicipline.length !== 0) dicipline = req.body.data.dicipline;
+      }
+
+      if (office) {
+        if (office[0].length !== 0) office01 = office[0];
+        if (office[1].length !== 0) office02 = office[1];
+        if (office[2].length !== 0) office03 = office[2];
+        if (office[3].length !== 0) office04 = office[3];
+      }
+
+      if (dicipline) {
+        if (dicipline[0].length !== 0) dicipline00 = dicipline[0];
+        if (dicipline[1].length !== 0) dicipline01 = dicipline[1];
+        if (dicipline[2].length !== 0) dicipline02 = dicipline[2];
+        if (dicipline[3].length !== 0) dicipline03 = dicipline[3];
+      }
+      console.log(dicipline00);
+      console.log(dicipline01);
+      console.log(dicipline02);
+      console.log(dicipline03);
+
+      console.log(dicipline00);
+      console.log(dicipline01);
+      console.log(dicipline02);
+      console.log(dicipline03);
       const data = await Question.findAll({
         attributes: {
           exclude: [
@@ -45,9 +83,15 @@ class QuestionController {
             * conforme os ids que contem na tabela office
             */
             association: "office",
+            attributes: { exclude: ['id_office', 'created_at', 'updated_at'] },
+            // where: {
+            //   // ...(office01 && { id_office_niv_1: { [Op.in]: office01 } }),
+            //   //   // ...(office02 && { id_office_niv_2: { [Op.in]: office02 } }),
+            //   //   // ...(office03 && { id_office_niv_3: { [Op.in]: office03 } }),
+            //   //   // ...(office04 && { id_office_niv_4: { [Op.in]: office04 } }),
 
-            attributes: { exclude: ['id_office_niv_1', 'id_office_niv_2', 'id_office_niv_3', 'id_office_niv_4', 'created_at', 'updated_at'] },
-
+            //   id_office_niv_1: 1
+            // },
             include: [
               {
                 association: "office_niv_1",
@@ -67,13 +111,18 @@ class QuestionController {
               }
             ],
 
-
           },
           {
             //  A mesma coisa que acontece para os dados office aocntece para os dados de subject
             association: "discipline_subject",
+            attributes: { exclude: ['id_subject_niv_4', 'id_subject_niv_5', 'id_subject_niv_6', 'id_subject_niv_7', 'created_at', 'updated_at'] },
 
-            attributes: { exclude: ['id_dicipline', 'id_subject_niv_1', 'id_subject_niv_2', 'id_subject_niv_3', 'id_subject_niv_4', 'id_subject_niv_5', 'id_subject_niv_6', 'id_subject_niv_7', 'created_at', 'updated_at'] },
+            // where: {
+            //   ...(dicipline00 && { id_dicipline: { [Op.in]: dicipline00 } }),
+            //   ...(dicipline01 && { id_subject_niv_1: { [Op.in]: dicipline01 } }),
+            //   ...(dicipline02 && { id_subject_niv_2: { [Op.in]: dicipline02 } }),
+            //   ...(dicipline03 && { id_subject_niv_3: { [Op.in]: dicipline03 } }),
+            // },
 
             include: [
               {
@@ -92,31 +141,12 @@ class QuestionController {
                 association: "subject_niv_3",
                 attributes: { exclude: ['id_subject_niv_2', 'id_subject_niv_3', 'created_at', 'updated_at'] },
               },
-              {
-                association: "subject_niv_4",
-                attributes: { exclude: ['id_subject_niv_3', 'id_subject_niv_4', 'created_at', 'updated_at'] },
-              },
-              {
-                association: "subject_niv_5",
-                attributes: { exclude: ['id_subject_niv_4', 'id_subject_niv_5', 'created_at', 'updated_at'] },
-              },
-              {
-                association: "subject_niv_6",
-                attributes: { exclude: ['id_subject_niv_6', 'id_subject_niv_5', 'created_at', 'updated_at'] },
-              },
-              {
-                association: "subject_niv_7",
-                attributes: { exclude: ['created_at', 'updated_at'] },
-              },
 
             ],
-
           },
           {
             association: "bank",
-
             attributes: { exclude: ['id_bank', 'created_at', 'updated_at'] },
-
           },
           {
             association: "institution",
@@ -152,15 +182,7 @@ class QuestionController {
           },
         ],
 
-        // offset: req.body.offset, limit: req.body.limit,
-        // where: {
-        //   bank,
-        //   //  [Op.or]: [{id_institution: 6}],
-        //   //  [Op.or]: [{year: 2010}],
-        //   // id_institution: { [Op.or]: req.body.institution },
-        //   // year: { [Op.or]: req.body.year },
-        //   // enunciated: { [Op.like]: `%${req.body.enunciated}%` },
-        // },
+        offset: req.body.offset, limit: req.body.limit,
 
         where: {
           ...(enunciated && { enunciated: { [Op.like]: `%${enunciated}%` } }),
@@ -169,14 +191,60 @@ class QuestionController {
           ...(year && { year: { [Op.in]: year } }),
         },
 
+        order: [['id_question']]
+
       });
       return res.json(data);
     } catch (error) {
       res.status(400).json({ message: `Erro ao retornar os dados. ${error}` });
     }
   }
+  // retornar somente a quantidade toda de registro na tabela question
+  async qtdQuestions(req, res) {
 
+    var enunciated = false;
+    var bank = false;
+    var institution = false;
+    var year = false;
+    var office = false;
+    var dicipline = false;
 
+    //pegando dados para filtragem
+    if (req.body.data) {
+      if (req.body.data.enunciated) enunciated = req.body.data.enunciated;
+      if (req.body.data.bank.length !== 0) bank = req.body.data.bank;
+      if (req.body.data.institution.length !== 0) institution = req.body.data.institution;
+      if (req.body.data.year.length !== 0) year = req.body.data.year;
+      // if (req.body.data.office.length !== 0) office = req.body.data.office;
+      // if (req.body.data.dicipline.length !== 0) dicipline = req.body.data.dicipline;
+    }
+
+    try {
+      const data = await Question.count({
+        attributes: {
+          exclude: [
+            // 'id_question',
+            'id_office',
+            'id_discipline_subject',
+            // 'id_bank',
+            // 'id_institution',
+            'id_user',
+            'created_at',
+            // 'updated_at'
+          ]
+        },
+        where: {
+          ...(enunciated && { enunciated: { [Op.like]: `%${enunciated}%` } }),
+          ...(bank && { id_bank: { [Op.in]: bank } }),
+          ...(institution && { id_institution: { [Op.in]: institution } }),
+          ...(year && { year: { [Op.in]: year } }),
+        },
+      });
+      return res.json(data);
+    } catch (error) {
+      res.status(400).json({ message: `Erro ao retornar os dados. ${error}` });
+    }
+  }
 
   async store(req, res) {
     try {
@@ -299,7 +367,7 @@ class QuestionController {
         }
       })
 
-      for(let i = 0; i < nameAlternative.length; i++) {
+      for (let i = 0; i < nameAlternative.length; i++) {
         await Alternative.create({
           id_alternative: idAlternative[i],
           name_alternative: nameAlternative[i],
@@ -349,14 +417,7 @@ class QuestionController {
     }
   }
 
-  async qtdQuestions(req, res) {
-    try {
-      const data = await Question.count();
-      return res.json(data);
-    } catch (error) {
-      res.status(400).json({ message: `Erro ao retornar os dados. ${error}` });
-    }
-  }
+
 }
 
 export default new QuestionController();

@@ -5,8 +5,7 @@ class BankController {
   async index(req, res) {
     try {
       const data = await Bank.findAll({
-
-        attributes: { exclude: ['id_bank', 'created_at', 'updated_at'] },
+        attributes: { exclude: [ 'created_at', 'updated_at'] },
       });
       return res.json(data) ;
     } catch (error) {

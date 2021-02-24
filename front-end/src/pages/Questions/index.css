@@ -37,18 +37,7 @@
 .filter-field {
   width: 100%;
 }
-.filter-btn {
-  width: 150px;
-  color: var(--black) !important;
-  background-color: var(--winter) !important;
-  border-color: var(--winter) !important;
-}
-.filter-btn:hover {
-  width: 150px;
-  color: var(--white) !important;
-  background-color: var(--winter) !important;
-  border-color: var(--winter) !important;
-}
+
 .filter-icon-outline {
   color: var(--dark) !important;
 }

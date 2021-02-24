@@ -5,8 +5,7 @@ class InstitutionController {
   async index(req, res) {
     try {
       const data = await Institution.findAll({
-
-        attributes: { exclude: ['id_institution', 'created_at', 'updated_at'] },
+        attributes: { exclude: [ 'created_at', 'updated_at'] },
       });
       return res.json(data) ;
     } catch (error) {

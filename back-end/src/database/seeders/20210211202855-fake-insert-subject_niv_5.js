@@ -25,3 +25,4 @@ module.exports = {
     await queryInterface.bulkDelete('subject_niv_5', null, {});
   }
 };
+
