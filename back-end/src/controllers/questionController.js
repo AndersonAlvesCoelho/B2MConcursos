@@ -117,10 +117,10 @@ class QuestionController {
             attributes: { exclude: ['id_subject_niv_4', 'id_subject_niv_5', 'id_subject_niv_6', 'id_subject_niv_7', 'created_at', 'updated_at'] },
 
             // where: {
-            //   ...(dicipline00 && { id_dicipline: { [Op.in]: dicipline00 } }),
-            //   ...(dicipline01 && { id_subject_niv_1: { [Op.in]: dicipline01 } }),
-            //   ...(dicipline02 && { id_subject_niv_2: { [Op.in]: dicipline02 } }),
-            //   ...(dicipline03 && { id_subject_niv_3: { [Op.in]: dicipline03 } }),
+              // ...(dicipline00 && { id_dicipline: { [Op.in]: dicipline00 } }),
+              // ...(dicipline01 && { id_subject_niv_1: { [Op.in]: dicipline01 } }),
+              // ...(dicipline02 && { id_subject_niv_2: { [Op.in]: dicipline02 } }),
+              // ...(dicipline03 && { id_subject_niv_3: { [Op.in]: dicipline03 } }),
             // },
 
             include: [
