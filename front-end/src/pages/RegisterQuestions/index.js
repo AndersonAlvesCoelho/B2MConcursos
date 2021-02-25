@@ -1,7 +1,7 @@
-import React, { useRef, useState} from 'react';
+import React, { useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import MenuNavbar from '../../components/MenuNavbar/index';
-import {Button, Col, Container, Row} from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import { Input } from 'antd';
 import * as regusterQuestionsActions from '../../actions/registerQuestions.actions';
 
@@ -45,7 +45,7 @@ const RegisterQuestions = (props) => {
         // }
 
         props.uploadFile(formData)
-}
+    }
 
     const sendPDF = () => {
         // api.get('/pdfFile')
@@ -80,8 +80,8 @@ const RegisterQuestions = (props) => {
                 <div>
                     <div className="file-upload">
                         <input type="file" ref={el} onChange={handleChange} />                <div className="progessBar" style={{ width: progress }}>
-                        {progress}
-                    </div>
+                            {progress}
+                        </div>
                         <button onClick={uploadFileFunction} className="upbutton">                   Upload
                         </button>
                         <hr />
@@ -94,7 +94,8 @@ const RegisterQuestions = (props) => {
                     onClick={sendPDF}
                     className="B2M-btn B2M-btn-winter"
                     variant="info"
-                >Fazer upload do PDF
+                >
+                    Fazer upload do PDF
                 </Button>
 
                 <Row >
@@ -215,7 +216,7 @@ const mapStateToProps = state => ({
 })
 
 
-const  mapDispatchToProps = {
+const mapDispatchToProps = {
     uploadFile: regusterQuestionsActions.uploadFile,
 }
 

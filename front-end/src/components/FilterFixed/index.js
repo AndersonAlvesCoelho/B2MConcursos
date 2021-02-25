@@ -252,7 +252,15 @@ function FilterFixed(props) {
                     </Row>
 
                     <Row >
+
                         <Col sm={12}>
+                            <span className="mr-1">Questões com:</span>
+                            <span> <CheckboxGroup options={plainOptions} value={checkedList} onChange={onCheckboc} /></span>
+                        </Col>
+
+                        <Col sm={12}>
+                            <hr className="filter-line" />
+
                             <div style={{ textAlign: 'right', }}>
                                 <Button className="B2M-btn mr-2" onClick={clearFilter}
                                     disabled={questionSearch ||
@@ -277,11 +285,6 @@ function FilterFixed(props) {
                             </div>
                         </Col>
 
-                        <Col sm={12}>
-                            <hr className="filter-line" />
-                            <span className="mr-1">Questões com:</span>
-                            <span> <CheckboxGroup options={plainOptions} value={checkedList} onChange={onCheckboc} /></span>
-                        </Col>
                     </Row>
                 </Form>
             </Drawer>
