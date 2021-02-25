@@ -53,7 +53,7 @@ function Questions(props) {
     useEffect(() => {
         let data = dataFilter.length !== 0 ? dataFilter : false;
         getQuestion({ offset, limit, data });
-    }, [offset, limit, dataFilter]);
+    }, [getQuestion, offset, limit, dataFilter]);
 
     //get size data questions
     useEffect(() => {
@@ -61,7 +61,7 @@ function Questions(props) {
         getQtdQuestion({ data });
         setOffset(0);
         setPagerCurrent(1);
-    }, [dataFilter]);
+    }, [getQtdQuestion, dataFilter]);
 
     return (
         <>
@@ -76,9 +76,9 @@ function Questions(props) {
             </Jumbotron>
 
             {/* Formulario para o filtro de questões */}
-            <Divider  orientation="right">
+            <Divider orientation="right">
                 <Affix offsetTop={10}>
-                    <Menu onClick={(e) => setCurrent(e.key)} selectedKeys={[current]} mode="horizontal" mode="inline">
+                    <Menu onClick={(e) => setCurrent(e.key)} selectedKeys={[current]} mode="inline" >
                         <Menu.Item key="mail" onClick={showDrawer} icon={<FaFilter />}>Filtrar</Menu.Item>
                         <Pagination
                             current={pagerCurrent}

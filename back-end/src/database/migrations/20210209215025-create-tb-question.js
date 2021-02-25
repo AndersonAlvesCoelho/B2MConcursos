@@ -60,7 +60,7 @@ module.exports = {
         },
         issue_resolution: {
           type: Sequelize.TEXT,
-          allowNull: false
+          allowNull: true
         },
         id_user: {
           type: Sequelize.INTEGER,

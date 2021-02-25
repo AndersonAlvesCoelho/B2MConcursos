@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Row, Col, } from 'react-bootstrap';
-import { Drawer, TreeSelect, Input, Button, Form } from 'antd';
+import { Drawer, TreeSelect, Input, Button, Form, Checkbox } from 'antd';
 import { FaFilter, FaUndo } from "react-icons/fa";
 
 import { formataBank, formataInstitution, formataOffice, formataDicipline, formataYear } from '../../helpers/formatDataToQuery';// functions helps : format data retorn id
@@ -11,10 +11,12 @@ import * as institutionActions from '../../actions/institution.actions'; // Data
 import * as officeActions from '../../actions/office.actions'; // Data filter
 import * as diciplineActions from '../../actions/dicipline.actions'; // Data filter
 
+const CheckboxGroup = Checkbox.Group;
 const { SHOW_PARENT } = TreeSelect;
 
 function FilterFixed(props) {
 
+    const plainOptions = ['Gabarito comentado', 'Comentarios'];
     const {
         // actions function get
         getBank,
@@ -40,14 +42,16 @@ function FilterFixed(props) {
     } = props;
 
 
-
-    // dados para guarda os valores selecionados nos campos
+    // set  valores selecionados nos campos
     const [questionSearch, setQuestionSearch] = useState('');
     const [bankValue, setBankValue] = useState([]);
     const [institutionValue, setInstitutionValue] = useState([]);
     const [officeValue, setOfficeValue] = useState([]);
     const [yearValue, setYearValue] = useState([]);
     const [diciplineValue, setDiciplineValue] = useState([]);
+
+    //set controllers 
+    const [checkedList, setCheckedList] = useState();
 
     // get action return dados filter
     useEffect(() => {
@@ -64,8 +68,31 @@ function FilterFixed(props) {
         const idOffice = formataOffice(values.office, office);
         const year = formataYear(values.year, yearData);
         const idDicipline = formataDicipline(values.dicipline, dicipline);
+        var gabaritoComentado = false;
+        var comentarios = false;
 
-        let data = { enunciated: values.enunciated, bank: idBank, institution: idInstitution, office: idOffice, year: year, dicipline: idDicipline };
+        checkedList.map((list) => {
+            switch (list) {
+                case 'Gabarito comentado':
+                    gabaritoComentado = true;
+                    break;
+                case 'Comentarios':
+                    comentarios = true;
+                    break;
+                default:
+            }
+        })
+
+        let data = {
+            enunciated: values.enunciated,
+            bank: idBank, institution: idInstitution,
+            office: idOffice,
+            year: year,
+            dicipline: idDicipline,
+            gabaritoComentado,
+            comentarios
+        };
+
         return changerFilter(data);
     }
 
@@ -74,6 +101,13 @@ function FilterFixed(props) {
     function clearFilter() {
         window.location.reload();
     }
+
+    //set estados checkbox
+    function onCheckboc(list) {
+        setCheckedList(list);
+    }
+    console.log('checkedList ', checkedList);
+
     return (
         <>
             <Drawer
@@ -216,30 +250,39 @@ function FilterFixed(props) {
                             </Form.Item>
                         </Col>
                     </Row>
-                    <div
-                        style={{
-                            textAlign: 'right',
-                        }}
-                    >
-                        <Button className="B2M-btn mr-2" onClick={clearFilter}
-                            disabled={questionSearch ||
-                                bankValue.length !== 0 ||
-                                institutionValue.length !== 0 ||
-                                officeValue.length !== 0 ||
-                                yearValue.length !== 0 ||
-                                diciplineValue.length !== 0
-                                ? false : true}
-                        > <FaUndo className="mr-2" /> Limpar</Button>
-                        <Button className="B2M-btn B2M-btn-winter" onClick={onClose} htmlType="submit"
-                            disabled={questionSearch ||
-                                bankValue.length !== 0 ||
-                                institutionValue.length !== 0 ||
-                                officeValue.length !== 0 ||
-                                yearValue.length !== 0 ||
-                                diciplineValue.length !== 0
-                                ? false : true}
-                        > <FaFilter className="mr-2" />Filtrar</Button>
-                    </div>
+
+                    <Row >
+                        <Col sm={12}>
+                            <div style={{ textAlign: 'right', }}>
+                                <Button className="B2M-btn mr-2" onClick={clearFilter}
+                                    disabled={questionSearch ||
+                                        bankValue.length !== 0 ||
+                                        institutionValue.length !== 0 ||
+                                        officeValue.length !== 0 ||
+                                        yearValue.length !== 0 ||
+                                        diciplineValue.length !== 0 ||
+                                        plainOptions.length !== 0
+                                        ? false : true}
+                                > <FaUndo className="mr-2" /> Limpar</Button>
+                                <Button className="B2M-btn B2M-btn-winter" onClick={onClose} htmlType="submit"
+                                    disabled={questionSearch ||
+                                        bankValue.length !== 0 ||
+                                        institutionValue.length !== 0 ||
+                                        officeValue.length !== 0 ||
+                                        yearValue.length !== 0 ||
+                                        diciplineValue.length !== 0 ||
+                                        plainOptions.length !== 0
+                                        ? false : true}
+                                > <FaFilter className="mr-2" />Filtrar</Button>
+                            </div>
+                        </Col>
+
+                        <Col sm={12}>
+                            <hr className="filter-line" />
+                            <span className="mr-1">Questões com:</span>
+                            <span> <CheckboxGroup options={plainOptions} value={checkedList} onChange={onCheckboc} /></span>
+                        </Col>
+                    </Row>
                 </Form>
             </Drawer>
         </>
