@@ -59,6 +59,7 @@ function FilterFixed(props) {
 
     // filter formata dados ; return id dados
     function filter(values) {
+        console.log(values)
         const idBank = formataBank(values.bank, bank);
         const idInstitution = formataInstitution(values.institution, institution);
         const idOffice = formataOffice(values.office, office);

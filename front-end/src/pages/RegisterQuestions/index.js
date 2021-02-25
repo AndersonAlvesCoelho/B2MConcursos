@@ -1,14 +1,36 @@
 import React, {useEffect, useRef, useState} from 'react';
 import { connect } from 'react-redux';
 import MenuNavbar from '../../components/MenuNavbar/index';
-import {Button, Col, Container, Row} from "react-bootstrap";
-import {Card, Form, Input, Steps, TreeSelect} from 'antd';
+import { Col, Container, Row} from "react-bootstrap";
+import {
+    Form,
+    Input,
+    Button,
+    Card,
+    Radio,
+    Select,
+    Cascader,
+    DatePicker,
+    InputNumber,
+    TreeSelect,
+    Switch,
+    Steps
+} from 'antd';
+
+// import {Card, Form, Input, Steps, TreeSelect} from 'antd';
 import * as regusterQuestionsActions from '../../actions/registerQuestions.actions';
 import * as bankActions from "../../actions/bank.actions";
 import * as institutionActions from "../../actions/institution.actions";
 import * as officeActions from "../../actions/office.actions";
 import * as diciplineActions from "../../actions/dicipline.actions";
 import {yearData} from "../../services/filter/dataSelect";
+import {
+    formataBank,
+    formataDicipline,
+    formataInstitution,
+    formataOffice,
+    formataYear
+} from "../../helpers/formatDataToQuery";
 
 
 const answerStyleBox = {
@@ -54,6 +76,8 @@ const RegisterQuestions = (props) => {
     const [diciplineValue, setDiciplineValue] = useState([]);
 
     // questions info
+
+
     const [issueResolution , setIssueResolution] = useState();
     const [enunciated, setEnunciated] = useState();
     const [alternativeA, setAlternativeA] = useState();
@@ -115,8 +139,21 @@ const RegisterQuestions = (props) => {
         setFile(file); // storing file
     }
 
-    const handleSubmit = (e) => {
+    function handleSubmit(values) {
         // e.preventDefault()
+
+        console.log(values)
+
+        console.log(bankValue)
+        const idBank = formataBank(bankValue, bank);
+        console.log(institutionValue)
+        const idInstitution = formataInstitution(institutionValue);
+        console.log(officeValue)
+        const idOffice = formataOffice(officeValue);
+        console.log(yearValue)
+        const year = formataYear(yearValue);
+        console.log(diciplineValue)
+        const idDicipline = formataDicipline(diciplineValue);
 
         const nameAlternative = [
             alternativeA,
@@ -131,11 +168,11 @@ const RegisterQuestions = (props) => {
 
         const data = {
             // general info
-            bankValue,
-            institutionValue,
-            officeValue,
-            yearValue,
-            diciplineValue,
+            idBank,
+            idInstitution,
+            idOffice,
+            year,
+            idDicipline,
 
             // questions info
             issueResolution,
@@ -364,117 +401,146 @@ const RegisterQuestions = (props) => {
                                     </Form.Item>
                                 </Col>
                             </Row>
+
+                            <Card type="inner" title="Questão 01" >
+
+                                <Row >
+                                    <Col className="mt-3" xs={8} md={6}>
+                                        <Form.Item
+                                            name="enunciated"
+                                            label="Enunciado"
+                                        >
+                                            <Input
+                                                onChange={(e) => setEnunciated(e.target.value)}
+                                                placeholder="Enunciado.."
+                                                allowClear
+                                                className="filter-select"
+                                                enterButton
+                                                value={enunciated}
+                                            />
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
+
+                                <div style={answerStyleBox}>
+                                    {
+                                        radioData.map((lo, idx) => {
+                                            return <>
+                                                <div style={answerStyle}>
+                                                    <input
+                                                        key={idx}
+                                                        type="radio"
+                                                        name="answer"
+                                                        value={lo.radioName}
+                                                        checked={!!lo.selected}
+                                                        onChange={changeRadio}
+                                                    />
+                                                </div>
+                                            </>
+                                        })
+                                    }
+                                </div>
+
+                                <Row >
+                                    <Col className="mt-3" xs={8} md={6}>
+                                        <Form.Item
+                                            name="alternativeA"
+                                            label="Alternativa A"
+                                        >
+                                            <Input
+                                                onChange={(e) => setAlternativeA(e.target.value)}
+                                                placeholder="Descrição da alternativa A.."
+                                                allowClear
+                                                className="filter-select"
+                                                enterButton
+                                                value={alternativeA}
+                                            />
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
+
+                                <Row>
+                                    <Col className="mt-3" xs={8} md={6}>
+                                        <Form.Item
+                                            name="alternativeB"
+                                            label="Alternativa B"
+                                        >
+                                            <Input
+                                                onChange={(e) => setAlternativeB(e.target.value)}
+                                                placeholder="Descrição da pergunta B.."
+                                                allowClear
+                                                className="filter-select"
+                                                enterButton
+                                                value={alternativeB}
+                                            />
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
+
+                                <Row>
+                                    <Col className="mt-3" xs={8} md={6}>
+                                        <Form.Item
+                                            name="alternativeC"
+                                            label="Alternativa C"
+                                        >
+                                            <Input
+                                                onChange={(e) => setAlternativeC(e.target.value)}
+                                                placeholder="Descrição da pergunta C.."
+                                                allowClear
+                                                className="filter-select"
+                                                enterButton
+                                                value={alternativeC}
+                                            />
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
+
+                                <Row>
+                                    <Col className="mt-3" xs={8} md={6}>
+                                        <Form.Item
+                                            name="alternativeD"
+                                            label="Alternativa D"
+                                        >
+                                            <Input
+                                                name="alternativeD"
+                                                onChange={(e) => setAlternativeD(e.target.value)}
+                                                placeholder="Descrição da pergunta D.."
+                                                allowClear
+                                                className="filter-select"
+                                                enterButton
+                                                value={alternativeD}
+                                            />
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
+
+                                <Row >
+                                    <Col className="mt-3" xs={8} md={6}>
+                                        <Form.Item
+                                            name="issueResolution"
+                                            label="Resposta"
+                                        >
+                                            <Input
+                                                onChange={(e) => setIssueResolution(e.target.value)}
+                                                placeholder="Descrição da resposta .."
+                                                allowClear
+                                                className="filter-select"
+                                                enterButton
+                                                value={issueResolution}
+                                            />
+                                        </Form.Item>
+                                    </Col>
+                                </Row>
+
+                            </Card>
                         </div>
                     )}
 
-                    {step === 1 && (
-                        <Card type="inner" title="Questão 01" >
-
-                            <Row >
-                                <Col className="mt-3" xs={8} md={6}>
-                                    <Input
-                                        onChange={(e) => setEnunciated(e.target.value)}
-                                        placeholder="Enunciado.."
-                                        allowClear
-                                        className="filter-select"
-                                        enterButton
-                                        value={enunciated}
-                                    />
-                                </Col>
-                            </Row>
-
-                            <div style={answerStyleBox}>
-                                {
-                                    radioData.map((lo, idx) => {
-                                        return <>
-                                            <div style={answerStyle}>
-                                                <input
-                                                    key={idx}
-                                                    type="radio"
-                                                    name="answer"
-                                                    value={lo.radioName}
-                                                    checked={!!lo.selected}
-                                                    onChange={changeRadio}
-                                                />
-                                            </div>
-                                        </>
-                                    })
-                                }
-                            </div>
-
-                            <Row >
-                                <Col className="mt-3" xs={8} md={6}>
-                                    <Input
-                                        onChange={(e) => setAlternativeA(e.target.value)}
-                                        placeholder="Descrição da pergunta A.."
-                                        allowClear
-                                        className="filter-select"
-                                        enterButton
-                                        value={alternativeA}
-                                    />
-                                </Col>
-                            </Row>
-
-                            <Row>
-                                <Col className="mt-3" xs={8} md={6}>
-                                    <Input
-                                        onChange={(e) => setAlternativeB(e.target.value)}
-                                        placeholder="Descrição da pergunta B.."
-                                        allowClear
-                                        className="filter-select"
-                                        enterButton
-                                        value={alternativeB}
-                                    />
-                                </Col>
-                            </Row>
-
-                            <Row>
-                                <Col className="mt-3" xs={8} md={6}>
-                                    <Input
-                                        onChange={(e) => setAlternativeC(e.target.value)}
-                                        placeholder="Descrição da pergunta C.."
-                                        allowClear
-                                        className="filter-select"
-                                        enterButton
-                                        value={alternativeC}
-                                    />
-                                </Col>
-                            </Row>
-
-                            <Row>
-                                <Col className="mt-3" xs={8} md={6}>
-                                    <Input
-                                        name="alternativeD"
-                                        onChange={(e) => setAlternativeD(e.target.value)}
-                                        placeholder="Descrição da pergunta D.."
-                                        allowClear
-                                        className="filter-select"
-                                        enterButton
-                                        value={alternativeD}
-                                    />
-                                </Col>
-                            </Row>
-
-                            <Row >
-                                <Col className="mt-3" xs={8} md={6}>
-                                    <Input
-                                        onChange={(e) => setIssueResolution(e.target.value)}
-                                        placeholder="Descrição da resposta .."
-                                        allowClear
-                                        className="filter-select"
-                                        enterButton
-                                        value={issueResolution}
-                                    />
-                                </Col>
-                            </Row>
-                            <Button
-                                className="question-btn"
-                                type="submit"
-                            >
-                                Cadastrar questão
-                            </Button>
-                        </Card>
-                    )}
+                    <Button
+                        htmlType="submit"
+                    >
+                        Cadastrar questão
+                    </Button>
                 </Form>
 
             </Container>
