@@ -31,7 +31,8 @@ class QuestionController {
       var gabaritoComentado = false;
       var comentarios = false;
 
-      //pegando dados para filtragem 
+      console.log(req.body.data)
+      //pegando dados para filtragem
       if (req.body.data) {
         if (req.body.data.enunciated) enunciated = req.body.data.enunciated;
         if (req.body.data.bank.length !== 0) bank = req.body.data.bank;
@@ -68,8 +69,8 @@ class QuestionController {
             // 'id_bank',
             // 'id_institution',
             'id_user',
-            'createdAt',
-            // 'updatedAt'
+            'created_at',
+            // 'updated_at'
           ]
         },
 
@@ -81,7 +82,7 @@ class QuestionController {
             * conforme os ids que contem na tabela office
             */
             association: "office",
-            attributes: { exclude: ['id_office', 'createdAt', 'updatedAt'] },
+            attributes: { exclude: ['id_office', 'created_at', 'updated_at'] },
             // where: {
             //   // ...(office01 && { id_office_niv_1: { [Op.in]: office01 } }),
             //   //   // ...(office02 && { id_office_niv_2: { [Op.in]: office02 } }),
@@ -93,19 +94,19 @@ class QuestionController {
             include: [
               {
                 association: "office_niv_1",
-                attributes: { exclude: ['id_office_niv_1', 'createdAt', 'updatedAt'] },
+                attributes: { exclude: ['id_office_niv_1', 'created_at', 'updated_at'] },
               },
               {
                 association: "office_niv_2",
-                attributes: { exclude: ['id_office_niv_1', 'id_office_niv_2', 'createdAt', 'updatedAt'] },
+                attributes: { exclude: ['id_office_niv_1', 'id_office_niv_2', 'created_at', 'updated_at'] },
               },
               {
                 association: "office_niv_3",
-                attributes: { exclude: ['id_office_niv_2', 'id_office_niv_3', 'createdAt', 'updatedAt'] },
+                attributes: { exclude: ['id_office_niv_2', 'id_office_niv_3', 'created_at', 'updated_at'] },
               },
               {
                 association: "office_niv_4",
-                attributes: { exclude: ['id_office_niv_3', 'id_office_niv_4', 'createdAt', 'updatedAt'] },
+                attributes: { exclude: ['id_office_niv_3', 'id_office_niv_4', 'created_at', 'updated_at'] },
               }
             ],
 
@@ -113,7 +114,7 @@ class QuestionController {
           {
             //  A mesma coisa que acontece para os dados office aocntece para os dados de subject
             association: "discipline_subject",
-            attributes: { exclude: ['id_subject_niv_4', 'id_subject_niv_5', 'id_subject_niv_6', 'id_subject_niv_7', 'createdAt', 'updatedAt'] },
+            attributes: { exclude: ['id_subject_niv_4', 'id_subject_niv_5', 'id_subject_niv_6', 'id_subject_niv_7', 'created_at', 'updated_at'] },
 
             // where: {
             //   ...(dicipline00 && { id_dicipline: { [Op.in]: dicipline00 } }),
@@ -125,56 +126,56 @@ class QuestionController {
             include: [
               {
                 association: "dicipline",
-                attributes: { exclude: ['id_dicipline', 'createdAt', 'updatedAt'] },
+                attributes: { exclude: ['id_dicipline', 'created_at', 'updated_at'] },
               },
               {
                 association: "subject_niv_1",
-                attributes: { exclude: ['id_dicipline', 'id_subject_niv_1', 'createdAt', 'updatedAt'] },
+                attributes: { exclude: ['id_dicipline', 'id_subject_niv_1', 'created_at', 'updated_at'] },
               },
               {
                 association: "subject_niv_2",
-                attributes: { exclude: ['id_subject_niv_1', 'id_subject_niv_2', 'createdAt', 'updatedAt'] },
+                attributes: { exclude: ['id_subject_niv_1', 'id_subject_niv_2', 'created_at', 'updated_at'] },
               },
               {
                 association: "subject_niv_3",
-                attributes: { exclude: ['id_subject_niv_2', 'id_subject_niv_3', 'createdAt', 'updatedAt'] },
+                attributes: { exclude: ['id_subject_niv_2', 'id_subject_niv_3', 'created_at', 'updated_at'] },
               },
 
             ],
           },
           {
             association: "bank",
-            attributes: { exclude: ['id_bank', 'createdAt', 'updatedAt'] },
+            attributes: { exclude: ['id_bank', 'created_at', 'updated_at'] },
           },
           {
             association: "institution",
-            attributes: { exclude: ['id_institution', 'createdAt', 'updatedAt'] },
+            attributes: { exclude: ['id_institution', 'created_at', 'updated_at'] },
           },
           {
             association: "user",
-            attributes: { exclude: ['id_user', 'password', 'nivel', 'createdAt', 'updatedAt'] },
+            attributes: { exclude: ['id_user', 'password', 'nivel', 'created_at', 'updated_at'] },
           },
           {
             association: "alternative",
-            attributes: { exclude: ['id_alternative', 'id_question', 'createdAt', 'updatedAt'] },
+            attributes: { exclude: ['id_alternative', 'id_question', 'created_at', 'updated_at'] },
           },
           {
             association: "comment",
-            attributes: { exclude: ['id_comment', 'id_user', 'id_question', 'createdAt'] },
+            attributes: { exclude: ['id_comment', 'id_user', 'id_question', 'created_at'] },
             include: [
               {
                 association: "comment_answer",
-                attributes: { exclude: ['id_comment_answer', 'id_user', 'id_comment', 'createdAt'] },
+                attributes: { exclude: ['id_comment_answer', 'id_user', 'id_comment', 'created_at'] },
                 include: [
                   {
                     association: "user",
-                    attributes: { exclude: ['id_user', 'password', 'nivel', 'createdAt', 'updatedAt'] },
+                    attributes: { exclude: ['id_user', 'password', 'nivel', 'created_at', 'updated_at'] },
                   },
                 ],
               },
               {
                 association: "user",
-                attributes: { exclude: ['id_user', 'password', 'nivel', 'createdAt', 'updatedAt'] },
+                attributes: { exclude: ['id_user', 'password', 'nivel', 'created_at', 'updated_at'] },
               },
             ],
           },
@@ -211,7 +212,7 @@ class QuestionController {
     var dicipline = false;
     var gabaritoComentado = false;
 
-    //pegando dados para filtragem 
+    //pegando dados para filtragem
     if (req.body.data) {
       if (req.body.data.enunciated) enunciated = req.body.data.enunciated;
       if (req.body.data.bank.length !== 0) bank = req.body.data.bank;
@@ -232,8 +233,8 @@ class QuestionController {
             // 'id_bank',
             // 'id_institution',
             'id_user',
-            'createdAt',
-            // 'updatedAt'
+            'created_at',
+            // 'updated_at'
           ]
         },
         where: {
@@ -252,38 +253,18 @@ class QuestionController {
 
   async store(req, res) {
     try {
+      console.log(req.body)
+
       const {
-        // Office
-        // idOffice,
-        // idOfice1,
-        // idOfice2,
-        // idOfice3,
-        // idOfice4,
-
-        // Discipline
-        // idDiscipline,
-        // idSubject1,
-        // idSubject2,
-        // idSubject3,
-        // idSubject4,
-        // idSubject5,
-        // idSubject6,
-        // idSubject7,
-
-        // bank
-        // idBank,
-        // nameBank,
-
-        //institution
-        // nameInstitution,
+        //general info
+        bankValue,
+        institutionValue,
+        officeValue,
+        diciplineValue,
+        yearValue,
+        prove,
 
         // Question
-        idQuestion,
-        idOffice,
-        idDisciplineSubject,
-        idBank,
-        idInstitution,
-        year,
         issueResolution,
         idUser,
         enunciated,
@@ -291,9 +272,10 @@ class QuestionController {
         // Alternative
         idAlternative,
         nameAlternative,
-        answer,
-
+        answer
       } = req.body
+
+      console.log(nameAlternative)
 
       //  const office = await Office.create({
       //   id_office: idOffice,
@@ -349,14 +331,14 @@ class QuestionController {
       //   }
       // })
 
+      console.log('question')
 
       const question = await Question.create({
-        id_question: idQuestion,
-        id_office: idOffice,
-        id_discipline_subject: idDisciplineSubject,
-        id_bank: idBank,
-        id_institution: idInstitution,
-        year: year,
+        id_office: officeValue,
+        id_discipline_subject: diciplineValue,
+        id_bank: bankValue,
+        id_institution: institutionValue,
+        year: yearValue,
         issue_resolution: issueResolution,
         id_user: idUser,
         enunciated: enunciated,
@@ -367,6 +349,8 @@ class QuestionController {
           res.status(400).send('Erro ao inserir instituição');
         }
       })
+
+
 
       for (let i = 0; i < nameAlternative.length; i++) {
         await Alternative.create({

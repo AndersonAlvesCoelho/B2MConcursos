@@ -7,6 +7,7 @@ class Alternative extends Model {
                 id_alternative: {
                     type: DataTypes.INTEGER,
                     primaryKey: true,
+                    autoIncrement: true
                 },
                 name_alternative: {
                     type: DataTypes.TEXT,

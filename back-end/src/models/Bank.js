@@ -7,6 +7,7 @@ class Bank extends Model {
                 id_bank: {
                     type: DataTypes.INTEGER,
                     primaryKey: true,
+                    autoIncrement: true
                 },
                 name_bank: {
                     type: DataTypes.STRING,

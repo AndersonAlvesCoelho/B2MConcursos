@@ -1,40 +1,152 @@
-import React, { useRef, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import { connect } from 'react-redux';
 import MenuNavbar from '../../components/MenuNavbar/index';
-import { Button, Col, Container, Row } from "react-bootstrap";
-import { Input } from 'antd';
+import {Button, Col, Container, Row} from "react-bootstrap";
+import {Card, Form, Input, Steps, TreeSelect} from 'antd';
 import * as regusterQuestionsActions from '../../actions/registerQuestions.actions';
+import * as bankActions from "../../actions/bank.actions";
+import * as institutionActions from "../../actions/institution.actions";
+import * as officeActions from "../../actions/office.actions";
+import * as diciplineActions from "../../actions/dicipline.actions";
+import {yearData} from "../../services/filter/dataSelect";
 
+
+const answerStyleBox = {
+    float: 'left',
+    height: '190px',
+};
+
+const answerStyle = {
+    marginTop: '25px',
+};
+
+const { SHOW_PARENT } = TreeSelect;
 
 const RegisterQuestions = (props) => {
 
+    const { Step } = Steps;
+
     const {
-        uploadFile
+        getBank,
+        getInstitution,
+        getOffice,
+        getDicipline,
+
+        // uploadFile,
+        loadingBank,
+        store,
+        bank,
+        loadingInstitution,
+        institution,
+        loadingOffice,
+        office,
+        loadingDicipline,
+        dicipline
     } = props
 
-    const [enunciated, setEnunciated] = useState();
-    const [year, setYear] = useState();
-    const [bank, setBank] = useState();
+    // general info
+    // const [office, setOffice] = useState();
     const [prove, setProve] = useState();
-    const [institute, setInstitute] = useState();
+    const [bankValue, setBankValue] = useState([]);
+    const [institutionValue, setInstitutionValue] = useState([]);
+    const [officeValue, setOfficeValue] = useState([]);
+    const [yearValue, setYearValue] = useState([]);
+    const [diciplineValue, setDiciplineValue] = useState([]);
 
+    // questions info
+    const [issueResolution , setIssueResolution] = useState();
+    const [enunciated, setEnunciated] = useState();
     const [alternativeA, setAlternativeA] = useState();
     const [alternativeB, setAlternativeB] = useState();
     const [alternativeC, setAlternativeC] = useState();
     const [alternativeD, setAlternativeD] = useState();
+    const [radioData, setRadioData] = useState([
+        {
+            radioName: 'radioA', selected: false
+        },
+        {
+            radioName: 'radioB', selected: false
+        },
+        {
+            radioName: 'radioC', selected: false
+        },
+        {
+            radioName: 'radioD', selected: false
+        },
+    ])
+
+
+    const [step, setStep] = useState();
 
     const [file, setFile] = useState(''); // storing the uploaded file
     // storing the recived file from backend
-    const [data, getFile] = useState({ name: "", path: "" });
+    // const [data, getFile] = useState({ name: "", path: "" });
     const [progress, setProgess] = useState(0); // progess bar
     const el = useRef(); // accesing input element
 
-    const handleChange = (e) => {
+
+    useEffect(() => {
+        getBank();
+        getInstitution();
+        getOffice();
+        getDicipline();
+    }, [getBank, getInstitution, getOffice, getDicipline]);
+
+    const changeRadio =  ({ target })  => {
+        const newRadioData = radioData.map((radio) => {
+            const checked = radio.radioName === target.value;
+            return {
+                ...radio,
+                selected: checked
+            }
+        })
+        setRadioData(newRadioData)
+    }
+
+    const onChange = step => {
+        setStep(step);
+    };
+
+
+    const handleChangeFile = (e) => {
         setProgess(0)
         const file = e.target.files[0]; // accesing file
         console.log(file);
         setFile(file); // storing file
     }
+
+    const handleSubmit = (e) => {
+        // e.preventDefault()
+
+        const nameAlternative = [
+            alternativeA,
+            alternativeB,
+            alternativeC,
+            alternativeD
+        ]
+
+        const answer =  radioData.map((radio) => {
+            return radio.selected
+        })
+
+        const data = {
+            // general info
+            bankValue,
+            institutionValue,
+            officeValue,
+            yearValue,
+            diciplineValue,
+
+            // questions info
+            issueResolution,
+            enunciated,
+            prove,
+            nameAlternative,
+            answer
+        }
+
+        store(data)
+    };
 
     const uploadFileFunction = () => {
         const formData = new FormData();
@@ -73,138 +185,298 @@ const RegisterQuestions = (props) => {
             <MenuNavbar />
 
             <Container className="filter-conatiner" >
+
                 <Row >
-                    <span className="filter-titer mx-1 ml-2">Cadastro de questões:</span>
+                    <span className="filter-titer mx-1 ml-2">Upload da prova:</span>
                 </Row >
 
-                <div>
-                    <div className="file-upload">
-                        <input type="file" ref={el} onChange={handleChange} />                <div className="progessBar" style={{ width: progress }}>
-                            {progress}
-                        </div>
-                        <button onClick={uploadFileFunction} className="upbutton">                   Upload
-                        </button>
-                        <hr />
-                        {/* displaying received image*/}
-                        {data.path && <img src={data.path} alt={data.name} />}
+
+                <div className="file-upload">
+                    <input
+                        type="file" ref={el}
+                        onChange={handleChangeFile}
+                    />
+                    <div className="progessBar" style={{ width: progress }}>
+                        {progress}
                     </div>
+                    <button onClick={uploadFileFunction} className="upbutton">                   Upload
+                    </button>
+                    {/* displaying received image*/}
+                    {/*{data.path && <img src={data.path} alt={data.name} />}*/}
                 </div>
 
                 <Button
                     onClick={sendPDF}
-                    className="B2M-btn B2M-btn-winter"
+                    className="filter-btn"
                     variant="info"
                 >
                     Fazer upload do PDF
                 </Button>
+                <hr />
+                <>
+                    <Steps
+                        type="navigation"
+                        current={step}
+                        onChange={onChange}
+                        className="site-navigation-steps"
+                    >
+                        <Step status="process"  title="Informações gerais" />
+                        <Step status="process" title="Cadastro de questões" />
+                    </Steps>
+                </>
 
-                <Row >
-                    <Col className="mt-3" xs={2} md={2}>
-                        <Input
-                            placeholder="Ano"
-                            allowClear
-                            className="filter-select"
-                            enterButton
-                            value={year}
-                        />
-                    </Col>
+                <Form layout="vertical" requiredMark={false} onFinish={handleSubmit}>
 
-                    <Col className="mt-3" xs={2} md={2}>
-                        <Input
-                            placeholder="Banca"
-                            allowClear
-                            className="filter-select"
-                            enterButton
-                            value={bank}
-                        />
-                    </Col>
+                    {step === 0 && (
+                        <div id="generalInfo">
 
+                            <Row >
+                                {/*<Col className="mt-3" xs={6} md={6}>*/}
+                                <Col className="mt-3" xs={6} md={6}>
+                                    <Form.Item
+                                        name="year"
+                                        label="Ano da prova"
+                                    >
+                                        <TreeSelect
+                                            treeData={yearData}
+                                            value={yearValue}
+                                            maxLength={4}
+                                            onChange={(value) => { setYearValue(value) }}
+                                            placeholder="Ano..."
+                                            className="filter-field"
+                                            showCheckedStrategy={SHOW_PARENT}
+                                            maxTagCount='responsive'
+                                            showSearch
+                                            treeNodeFilterProp='title'
+                                            allowClear
+                                            loading={!yearData}
+                                        />
+                                    </Form.Item>
+                                </Col>
 
-                    <Col className="mt-3" xs={4} md={2}>
-                        <Input
-                            placeholder="Prova"
-                            allowClear
-                            className="filter-select"
-                            enterButton
-                            value={prove}
-                        />
-                    </Col>
+                                <Col className="mt-3" xs={6} md={6}>
+                                    <Form.Item
+                                        name="bank"
+                                        label="Banca"
+                                    >
+                                        <TreeSelect
+                                            treeData={bank}
+                                            value={bankValue}
+                                            onChange={(value) => { setBankValue(value) }}
 
-                    <Col className="mt-3" xs={4} md={2}>
-                        <Input
-                            placeholder="Órgão"
-                            allowClear
-                            className="filter-select"
-                            enterButton
-                            value={institute}
-                        />
-                    </Col>
-                </Row>
+                                            placeholder="Banca..."
+                                            className="filter-field"
+                                            showCheckedStrategy={SHOW_PARENT}
+                                            maxTagCount='responsive'
+                                            allowClear
+                                            showSearch
+                                            treeNodeFilterProp='title'
+                                            loading={loadingBank}
+                                        />
+                                    </Form.Item>
 
-                <Row >
-                    <Col className="mt-3" xs={8} md={6}>
-                        <Input
-                            placeholder="Enunciado.."
-                            allowClear
-                            className="filter-select"
-                            enterButton
-                            value={enunciated}
-                        />
-                    </Col>
-                </Row>
+                                    {/*</Col>*/}
+                                </Col>
+                            </Row>
 
-                <Row >
-                    <Col className="mt-3" xs={8} md={6}>
-                        <Input
-                            placeholder="Descrição da pergunta.."
-                            allowClear
-                            className="filter-select"
-                            enterButton
-                            value={alternativeA}
-                        />
-                    </Col>
-                </Row>
+                            <Row >
+                                <Col className="mt-3" xs={6} md={6}>
+                                    <Form.Item
+                                        name="office"
+                                        label="Cargo"
+                                    >
+                                        <TreeSelect
+                                            treeData={office}
+                                            value={officeValue}
 
-                <Row>
-                    <Col className="mt-3" xs={8} md={6}>
-                        <Input
-                            placeholder="Descrição da pergunta.."
-                            allowClear
-                            className="filter-select"
-                            enterButton
-                            value={alternativeB}
-                        />
-                    </Col>
-                </Row>
+                                            onChange={(value) => { setOfficeValue(value) }}
+                                            treeCheckable={true}
+                                            placeholder="Cargo..."
+                                            className="filter-field"
+                                            showCheckedStrategy={SHOW_PARENT}
+                                            maxTagCount='responsive'
+                                            showSearch
+                                            treeNodeFilterProp='title'
+                                            allowClear
+                                            loading={loadingOffice}
+                                        />
+                                    </Form.Item>
+                                </Col>
 
-                <Row>
-                    <Col className="mt-3" xs={8} md={6}>
-                        <Input
-                            placeholder="Descrição da pergunta.."
-                            allowClear
-                            className="filter-select"
-                            enterButton
-                            value={alternativeC}
-                        />
-                    </Col>
-                </Row>
+                                <Col className="mt-3" xs={6} md={6}>
+                                    <Form.Item
+                                        name="institution"
+                                        label="Orgão"
+                                    >
+                                        <TreeSelect
+                                            treeData={institution}
+                                            value={institutionValue}
+                                            onChange={(value) => { setInstitutionValue(value) }}
+                                            placeholder="Orgão..."
+                                            className="filter-field"
+                                            showCheckedStrategy={SHOW_PARENT}
+                                            maxTagCount='responsive'
+                                            showSearch
+                                            treeNodeFilterProp='title'
+                                            allowClear
+                                            loading={loadingInstitution}
+                                        />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
 
+                            <Row >
+                                <Col className="mt-3" xs={6} md={6}>
+                                    <Form.Item
+                                        name="dicipline"
+                                        label="Matéria & Assunto"
+                                    >
+                                        <TreeSelect
+                                            treeData={dicipline}
+                                            value={diciplineValue}
 
-                <Row>
-                    <Col className="mt-3" xs={8} md={6}>
-                        <Input
-                            placeholder="Descrição da pergunta.."
-                            allowClear
-                            className="filter-select"
-                            enterButton
-                            value={alternativeD}
-                        />
-                    </Col>
-                </Row>
+                                            onChange={(value) => { setDiciplineValue(value) }}
+                                            treeCheckable={true}
+                                            placeholder="Matéria & Assunto..."
+                                            className="filter-field"
+                                            showCheckedStrategy={SHOW_PARENT}
+                                            maxTagCount='responsive'
+                                            showSearch
+                                            treeNodeFilterProp='title'
+                                            allowClear
+                                            loading={loadingDicipline}
+                                        />
+                                    </Form.Item>
+                                </Col>
 
-                <Button
-                    className="question-btn"
-                >Cadastrar questão</Button>
+                                <Col className="mt-3" xs={6} md={6}>
+                                    <Form.Item
+                                        name="prove"
+                                        label="Prova"
+                                    >
+                                        <Input
+                                            onChange={(e) => setProve(e.target.value)}
+                                            placeholder="Prova"
+                                            allowClear
+                                            className="filter-select"
+                                            enterButton
+                                            value={prove}
+                                        />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                        </div>
+                    )}
+
+                    {step === 1 && (
+                        <Card type="inner" title="Questão 01" >
+
+                            <Row >
+                                <Col className="mt-3" xs={8} md={6}>
+                                    <Input
+                                        onChange={(e) => setEnunciated(e.target.value)}
+                                        placeholder="Enunciado.."
+                                        allowClear
+                                        className="filter-select"
+                                        enterButton
+                                        value={enunciated}
+                                    />
+                                </Col>
+                            </Row>
+
+                            <div style={answerStyleBox}>
+                                {
+                                    radioData.map((lo, idx) => {
+                                        return <>
+                                            <div style={answerStyle}>
+                                                <input
+                                                    key={idx}
+                                                    type="radio"
+                                                    name="answer"
+                                                    value={lo.radioName}
+                                                    checked={!!lo.selected}
+                                                    onChange={changeRadio}
+                                                />
+                                            </div>
+                                        </>
+                                    })
+                                }
+                            </div>
+
+                            <Row >
+                                <Col className="mt-3" xs={8} md={6}>
+                                    <Input
+                                        onChange={(e) => setAlternativeA(e.target.value)}
+                                        placeholder="Descrição da pergunta A.."
+                                        allowClear
+                                        className="filter-select"
+                                        enterButton
+                                        value={alternativeA}
+                                    />
+                                </Col>
+                            </Row>
+
+                            <Row>
+                                <Col className="mt-3" xs={8} md={6}>
+                                    <Input
+                                        onChange={(e) => setAlternativeB(e.target.value)}
+                                        placeholder="Descrição da pergunta B.."
+                                        allowClear
+                                        className="filter-select"
+                                        enterButton
+                                        value={alternativeB}
+                                    />
+                                </Col>
+                            </Row>
+
+                            <Row>
+                                <Col className="mt-3" xs={8} md={6}>
+                                    <Input
+                                        onChange={(e) => setAlternativeC(e.target.value)}
+                                        placeholder="Descrição da pergunta C.."
+                                        allowClear
+                                        className="filter-select"
+                                        enterButton
+                                        value={alternativeC}
+                                    />
+                                </Col>
+                            </Row>
+
+                            <Row>
+                                <Col className="mt-3" xs={8} md={6}>
+                                    <Input
+                                        name="alternativeD"
+                                        onChange={(e) => setAlternativeD(e.target.value)}
+                                        placeholder="Descrição da pergunta D.."
+                                        allowClear
+                                        className="filter-select"
+                                        enterButton
+                                        value={alternativeD}
+                                    />
+                                </Col>
+                            </Row>
+
+                            <Row >
+                                <Col className="mt-3" xs={8} md={6}>
+                                    <Input
+                                        onChange={(e) => setIssueResolution(e.target.value)}
+                                        placeholder="Descrição da resposta .."
+                                        allowClear
+                                        className="filter-select"
+                                        enterButton
+                                        value={issueResolution}
+                                    />
+                                </Col>
+                            </Row>
+                            <Button
+                                className="question-btn"
+                                type="submit"
+                            >
+                                Cadastrar questão
+                            </Button>
+                        </Card>
+                    )}
+                </Form>
 
             </Container>
         </div>
@@ -212,12 +484,28 @@ const RegisterQuestions = (props) => {
 }
 
 const mapStateToProps = state => ({
+    loadingBank: state.bank.loading,
+    bank: state.bank.bank,
 
+    loadingInstitution: state.institution.loading,
+    institution: state.institution.institution,
+
+    loadingOffice: state.office.loading,
+    office: state.office.office,
+
+    loadingDicipline: state.dicipline.loading,
+    dicipline: state.dicipline.dicipline,
 })
 
 
 const mapDispatchToProps = {
     uploadFile: regusterQuestionsActions.uploadFile,
+    store: regusterQuestionsActions.store,
+
+    getBank: bankActions.getBank,
+    getInstitution: institutionActions.getInstitution,
+    getOffice: officeActions.getOffice,
+    getDicipline: diciplineActions.getDicipline,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterQuestions);
