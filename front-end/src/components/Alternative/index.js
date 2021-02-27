@@ -30,7 +30,7 @@ function Alternative({ data, indexQ }) {
             <Container className="alternative-conatiner mb-5">
                 <Row className="mt-3 ">
                     <Col sm={12} className="alternative-titer">
-                        <span className="alternative-number mr-1" >Nº {data.id_question} - {Date.parse(data.updated_at)}</span>
+                        <span className="alternative-number mr-1" >Nº {data.id_question} - {Date.parse(data.updatedAt)}</span>
                         <span className="alternative-dicipline">{data.discipline_subject.dicipline.name_dicipline} </span>
                     </Col>
 

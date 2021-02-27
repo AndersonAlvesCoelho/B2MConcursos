@@ -28,6 +28,8 @@ class QuestionController {
       var dicipline01 = false;
       var dicipline02 = false;
       var dicipline03 = false;
+      var gabaritoComentado = false;
+      var comentarios = false;
 
       console.log(req.body.data)
       //pegando dados para filtragem
@@ -38,6 +40,8 @@ class QuestionController {
         if (req.body.data.year.length !== 0) year = req.body.data.year;
         if (req.body.data.office.length !== 0) office = req.body.data.office;
         if (req.body.data.dicipline.length !== 0) dicipline = req.body.data.dicipline;
+        if (req.body.data.gabaritoComentado) gabaritoComentado = req.body.data.gabaritoComentado;
+        if (req.body.data.comentarios) comentarios = req.body.data.comentarios;
       }
 
       if (office) {
@@ -53,15 +57,9 @@ class QuestionController {
         if (dicipline[2].length !== 0) dicipline02 = dicipline[2];
         if (dicipline[3].length !== 0) dicipline03 = dicipline[3];
       }
-      console.log(dicipline00);
-      console.log(dicipline01);
-      console.log(dicipline02);
-      console.log(dicipline03);
 
-      console.log(dicipline00);
-      console.log(dicipline01);
-      console.log(dicipline02);
-      console.log(dicipline03);
+      console.log(gabaritoComentado);
+      console.log(comentarios);
       const data = await Question.findAll({
         attributes: {
           exclude: [
@@ -119,10 +117,10 @@ class QuestionController {
             attributes: { exclude: ['id_subject_niv_4', 'id_subject_niv_5', 'id_subject_niv_6', 'id_subject_niv_7', 'created_at', 'updated_at'] },
 
             // where: {
-            //   ...(dicipline00 && { id_dicipline: { [Op.in]: dicipline00 } }),
-            //   ...(dicipline01 && { id_subject_niv_1: { [Op.in]: dicipline01 } }),
-            //   ...(dicipline02 && { id_subject_niv_2: { [Op.in]: dicipline02 } }),
-            //   ...(dicipline03 && { id_subject_niv_3: { [Op.in]: dicipline03 } }),
+              // ...(dicipline00 && { id_dicipline: { [Op.in]: dicipline00 } }),
+              // ...(dicipline01 && { id_subject_niv_1: { [Op.in]: dicipline01 } }),
+              // ...(dicipline02 && { id_subject_niv_2: { [Op.in]: dicipline02 } }),
+              // ...(dicipline03 && { id_subject_niv_3: { [Op.in]: dicipline03 } }),
             // },
 
             include: [
@@ -186,10 +184,13 @@ class QuestionController {
         offset: req.body.offset, limit: req.body.limit,
 
         where: {
+          // id_question: { [Op.in]: [1, 3] },
           ...(enunciated && { enunciated: { [Op.like]: `%${enunciated}%` } }),
           ...(bank && { id_bank: { [Op.in]: bank } }),
           ...(institution && { id_institution: { [Op.in]: institution } }),
           ...(year && { year: { [Op.in]: year } }),
+          ...(gabaritoComentado && { issue_resolution: { [Op.not]: null } }),
+          // ...(comentarios && { comment: { [Op.not]: null } }),
         },
 
         order: [['id_question']]
@@ -209,6 +210,7 @@ class QuestionController {
     var year = false;
     var office = false;
     var dicipline = false;
+    var gabaritoComentado = false;
 
     //pegando dados para filtragem
     if (req.body.data) {
@@ -218,6 +220,7 @@ class QuestionController {
       if (req.body.data.year.length !== 0) year = req.body.data.year;
       // if (req.body.data.office.length !== 0) office = req.body.data.office;
       // if (req.body.data.dicipline.length !== 0) dicipline = req.body.data.dicipline;
+      if (req.body.data.gabaritoComentado) gabaritoComentado = req.body.data.gabaritoComentado;
     }
 
     try {
@@ -235,6 +238,7 @@ class QuestionController {
           ]
         },
         where: {
+          ...(gabaritoComentado && { issue_resolution: { [Op.not]: null } }),
           ...(enunciated && { enunciated: { [Op.like]: `%${enunciated}%` } }),
           ...(bank && { id_bank: { [Op.in]: bank } }),
           ...(institution && { id_institution: { [Op.in]: institution } }),

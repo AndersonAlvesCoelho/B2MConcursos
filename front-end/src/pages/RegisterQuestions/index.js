@@ -244,7 +244,8 @@ const RegisterQuestions = (props) => {
                     onClick={sendPDF}
                     className="filter-btn"
                     variant="info"
-                >Fazer upload do PDF
+                >
+                    Fazer upload do PDF
                 </Button>
                 <hr />
                 <>
@@ -561,7 +562,7 @@ const mapStateToProps = state => ({
 })
 
 
-const  mapDispatchToProps = {
+const mapDispatchToProps = {
     uploadFile: regusterQuestionsActions.uploadFile,
     store: regusterQuestionsActions.store,
 
