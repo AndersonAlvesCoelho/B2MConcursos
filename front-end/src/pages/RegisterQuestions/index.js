@@ -25,21 +25,19 @@ import * as officeActions from "../../actions/office.actions";
 import * as diciplineActions from "../../actions/dicipline.actions";
 import {yearData} from "../../services/filter/dataSelect";
 import {
-    formataBank,
+    formatDefault,
     formataDicipline,
-    formataInstitution,
     formataOffice,
-    formataYear
 } from "../../helpers/formatDataToQuery";
 
 
 const answerStyleBox = {
     float: 'left',
-    height: '190px',
+    height: '350px',
 };
 
 const answerStyle = {
-    marginTop: '25px',
+    marginTop: '70px',
 };
 
 const { SHOW_PARENT } = TreeSelect;
@@ -145,15 +143,15 @@ const RegisterQuestions = (props) => {
         console.log(values)
 
         console.log(bankValue)
-        const idBank = formataBank(bankValue, bank);
+        const idBank = formatDefault(bankValue, bank);
         console.log(institutionValue)
-        const idInstitution = formataInstitution(institutionValue);
+        const idInstitution = formatDefault(institutionValue, institution);
         console.log(officeValue)
-        const idOffice = formataOffice(officeValue);
+        const idOffice = formataOffice(officeValue, office);
         console.log(yearValue)
-        const year = formataYear(yearValue);
-        console.log(diciplineValue)
-        const idDicipline = formataDicipline(diciplineValue);
+        const year = formatDefault(yearValue, yearData);
+        console.log(year)
+        const idDicipline = formataDicipline(diciplineValue,dicipline);
 
         const nameAlternative = [
             alternativeA,
@@ -183,7 +181,7 @@ const RegisterQuestions = (props) => {
         }
 
         store(data)
-    };
+    }
 
     const uploadFileFunction = () => {
         const formData = new FormData();
@@ -385,21 +383,21 @@ const RegisterQuestions = (props) => {
                                     </Form.Item>
                                 </Col>
 
-                                <Col className="mt-3" xs={6} md={6}>
-                                    <Form.Item
-                                        name="prove"
-                                        label="Prova"
-                                    >
-                                        <Input
-                                            onChange={(e) => setProve(e.target.value)}
-                                            placeholder="Prova"
-                                            allowClear
-                                            className="filter-select"
-                                            enterButton
-                                            value={prove}
-                                        />
-                                    </Form.Item>
-                                </Col>
+                                {/*<Col className="mt-3" xs={6} md={6}>*/}
+                                {/*    <Form.Item*/}
+                                {/*        name="prove"*/}
+                                {/*        label="Prova"*/}
+                                {/*    >*/}
+                                {/*        <Input*/}
+                                {/*            onChange={(e) => setProve(e.target.value)}*/}
+                                {/*            placeholder="Prova"*/}
+                                {/*            allowClear*/}
+                                {/*            className="filter-select"*/}
+                                {/*            enterButton*/}
+                                {/*            value={prove}*/}
+                                {/*        />*/}
+                                {/*    </Form.Item>*/}
+                                {/*</Col>*/}
                             </Row>
 
                             <Card type="inner" title="Questão 01" >

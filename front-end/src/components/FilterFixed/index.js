@@ -4,7 +4,11 @@ import { Row, Col, } from 'react-bootstrap';
 import { Drawer, TreeSelect, Input, Button, Form } from 'antd';
 import { FaFilter, FaUndo } from "react-icons/fa";
 
-import { formataBank, formataInstitution, formataOffice, formataDicipline, formataYear } from '../../helpers/formatDataToQuery';// functions helps : format data retorn id
+import {
+    formatDefault,
+    formataOffice,
+    formataDicipline,
+} from '../../helpers/formatDataToQuery';// functions helps : format data retorn id
 import { yearData } from '../../services/filter/dataSelect'; // Data filter
 import * as bankActions from '../../actions/bank.actions'; // Data filter
 import * as institutionActions from '../../actions/institution.actions'; // Data filter
@@ -59,11 +63,10 @@ function FilterFixed(props) {
 
     // filter formata dados ; return id dados
     function filter(values) {
-        console.log(values)
-        const idBank = formataBank(values.bank, bank);
-        const idInstitution = formataInstitution(values.institution, institution);
+        const idBank = formatDefault(values.bank, bank);
+        const idInstitution = formatDefault(values.institution, institution);
         const idOffice = formataOffice(values.office, office);
-        const year = formataYear(values.year, yearData);
+        const year = formatDefault(values.year, yearData);
         const idDicipline = formataDicipline(values.dicipline, dicipline);
 
         let data = { enunciated: values.enunciated, bank: idBank, institution: idInstitution, office: idOffice, year: year, dicipline: idDicipline };

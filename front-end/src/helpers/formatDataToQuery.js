@@ -4,31 +4,21 @@
 * As funções abixo, compara o valoar selecionado pelo usuario com o valoar do campo correspondende,
 * retornando somente o id de cada valor. 
 */
-export const formataBank = (bank, data) => {
+
+export const formatDefault = (value, data) => {
     const id = [];
 
-    if (bank) {
-        bank.forEach((e) => {
+    if (value && typeof value !== String ) {
+        data.map(e => {
+            if (value === e.value) {
+                return id.push(e.title);
+            }
+        })
+    } else if (value) {
+        value.forEach((e) => {
             data.map(evnt => {
                 if (e === evnt.value) {
-                    return id.push(evnt.id);
-                }
-            })
-        });
-    }
-
-    return id;
-};
-
-export const formataInstitution = (institution, data) => {
-    const id = [];
-
-
-    if (institution) {
-        institution.forEach((e) => {
-            data.map(evnt => {
-                if (e === evnt.value) {
-                    return id.push(evnt.id);
+                    return id.push(evnt.title);
                 }
             })
         });
@@ -99,22 +89,6 @@ export const formataOffice = (office, data) => {
     }
 
     return id;
-};
-
-export const formataYear = (value, data) => {
-    const year = [];
-
-    if (value) {
-        value.forEach((e) => {
-            data.map(evnt => {
-                if (e === evnt.value) {
-                    return year.push(evnt.title);
-                }
-            })
-        });
-    }
-
-    return year;
 };
 
 export const formataDicipline = (dicipline, data) => {
