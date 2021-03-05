@@ -1,0 +1,63 @@
+import React, { useState } from 'react';
+
+import '../../assets/css/login.css';
+
+function Login() {
+
+    const [classActive, setClassActive] = useState(false);
+
+    return (
+        <>
+            <div className="B2M-login-container">
+                <div className={classActive ? "B2M-login-login B2M-login-right-panel-active" : "B2M-login-login"} >
+                    <div className="B2M-login-form-container B2M-login-sign-up-container">
+                        <form action="#">
+                            <h1>Criar contar</h1>
+                            {/* <div className="B2M-login-social-container">
+                                <a href="#" className="social"><i className="fab fa-facebook-f"></i></a>
+                                <a href="#" className="social"><i className="fab fa-google-plus-g"></i></a>
+                                <a href="#" className="social"><i className="fab fa-linkedin-in"></i></a>
+                            </div>
+                            <span>or use your email for registration</span> */}
+                            <input type="text" placeholder="Name" />
+                            <input type="email" placeholder="Email" />
+                            <input type="password" placeholder="Password" />
+                            <button>Cadastrar</button>
+                        </form>
+                    </div>
+                    <div className="B2M-login-form-container B2M-login-sign-in-container">
+                        <form action="#">
+                            <h1>Entrar</h1>
+                            {/* <div className="B2M-login-social-container">
+                                <a href="#" className="social"><i className="fab fa-facebook-f"></i></a>
+                                <a href="#" className="social"><i className="fab fa-google-plus-g"></i></a>
+                                <a href="#" className="social"><i className="fab fa-linkedin-in"></i></a>
+                            </div>
+                            <span>or use your account</span> */}
+                            <input type="email" placeholder="Email" />
+                            <input type="password" placeholder="Password" />
+                            <a href="#">Esqueceu sua senha?</a>
+                            <button>Logar</button>
+                        </form>
+                    </div>
+                    <div className="B2M-login-overlay-container">
+                        <div className="B2M-login-overlay">
+                            <div className="B2M-login-overlay-panel B2M-login-overlay-left">
+                                <h1>Bem vindo de volta!</h1>
+                                <p>Para se manter conectado conosco, faça o login com suas informações pessoais</p>
+                                <button className="B2M-login-ghost" onClick={() => setClassActive(false)}>Entrar</button>
+                            </div>
+                            <div className="B2M-login-overlay-panel B2M-login-overlay-right">
+                                <h1>Olá amigo!</h1>
+                                <p>Insira seus dados pessoais e comece a jornada conosco</p>
+                                <button className="B2M-login-ghost" onClick={() => setClassActive(true)}>Registra-se</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
+}
+
+export default Login;

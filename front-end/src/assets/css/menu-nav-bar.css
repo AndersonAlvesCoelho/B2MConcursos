@@ -51,14 +51,14 @@
 }
 
 /*Button*/
-.B2M-login ul li:nth-child(2) {
+/* .B2M-login ul li a {
   background-color: var(--main-secondary);
   border: none;
   display: inline-block;
   padding: 0px 20px;
   border-radius: 8px;
-}
-.B2M-login ul li:nth-child(2) a {
+} */
+.B2M-login ul li a {
   color: var(--light) !important;
 }
 

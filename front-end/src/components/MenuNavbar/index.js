@@ -22,8 +22,7 @@ function MenuNavbar() {
                     </nav>
                     <div className="B2M-login">
                         <ul className="B2M-menu">
-                            <li><a href="#login">Login in</a></li>
-                            <li><a href="#sing" >Sing up</a></li>
+                            <li><a href="/login">Logar</a></li>
                         </ul>
                     </div>
                 </header>

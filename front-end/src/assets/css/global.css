@@ -20,7 +20,6 @@
   --dark: #1b262c;
 }
 
-
 body {
   background-color: var(--main-bg) !important;
 }
@@ -59,12 +58,11 @@ hr {
   font-size: 25px;
 }  */
 
-
 .B2M-guia-page {
   text-align: left;
   position: relative;
 }
-.B2M-guia-page > div a:nth-child(2){
+.B2M-guia-page > div a:nth-child(2) {
   font-size: 10px;
 }
 .B2M-guia-page > div a {
@@ -92,19 +90,34 @@ hr {
   margin-top: 20px;
 }
 /* Footer */
-  
 
+.B2M-btn {
 
+  background-color: var(--main-primary); /* Green */
+  border: none;
+  color: var(--white);
+  padding: 15px 32px;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
 
+  margin: 4px 2px;
+  opacity: 0.6;
+  transition: 0.3s;
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
+}
 
+.B2M-btn:hover {opacity: 1}
 
 .center-component {
   text-align: center;
 }
 
-.B2M-btn {
+/* .B2M-btn {
   width: 200px;
-}
+} */
 .B2M-btn-winter {
   color: var(--white) !important;
   background-color: var(--winter) !important;

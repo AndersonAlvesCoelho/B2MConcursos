@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, Button, ListGroup } from 'react-bootstrap';
+import { Container, Row, Col, Button, ListGroup, Form } from 'react-bootstrap';
 import { FaBookmark, FaComments, FaCheckCircle, FaInfoCircle, FaCommentAlt } from "react-icons/fa";
 import { Radio, Card, Avatar, Menu } from 'antd';
 
@@ -11,12 +11,17 @@ import ok from '../../assets/img/svg/ok.svg';
 import bookmark from '../../assets/img/svg/bookmark.svg';
 import chat from '../../assets/img/svg/chat-bubbles-with-ellipsis.svg';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Alternative({ data, indexQ }) {
 
     const [answer, setAnswer] = useState([]);
     const [alternative, setAlternative] = useState();
     const [current, setCurrent] = useState();
+    const [newComment, setNewComment] = useState([]);
+
+    const [openTextare01, setOpenTextare01] = useState(false);
+    const [openTextare02, setOpenTextare02] = useState(false);
 
     //verificar se a questão marcada está correta 
     function keyAnswer() {
@@ -27,7 +32,11 @@ function Alternative({ data, indexQ }) {
         })
     }
 
-    console.log('data ', data);
+    // function newComment() {
+
+    // }
+    console.log('data.comment ', data.comment);
+    console.log('newComment ', newComment);
 
     return (
         <>
@@ -128,11 +137,19 @@ function Alternative({ data, indexQ }) {
                                         <div className="B2M-a-post-commit">
                                             <div className="B2M-a-post-info">
                                                 <small> {Date(commit.updatedAt)} <a>{commit.user.login}</a></small>
-                                                <span> <FaCommentAlt /><a>Responder</a></span>
+                                                <span>
+                                                    <FaCommentAlt size={15} />
+                                                    <a
+                                                        href="/questoes#comment"
+                                                        onClick={() => setOpenTextare01(openTextare01 === true ? false : true)}
+                                                    >
+                                                        Responder
+                                                    </a>
+
+                                                </span>
                                             </div>
-                                            <div>
-                                                {commit.comment}
-                                            </div>
+                                            {commit.comment}
+
                                         </div>
 
                                         <hr />
@@ -143,7 +160,15 @@ function Alternative({ data, indexQ }) {
                                                     <div className="B2M-a-post-commit">
                                                         <div className="B2M-a-post-info">
                                                             <small> {Date(ans.updatedAt)} <a>{ans.user.login}</a></small>
-                                                            <span> <FaCommentAlt /><a>Responder</a></span>
+                                                            <span>
+                                                                <FaCommentAlt size={15} />
+                                                                <a
+                                                                    href="/questoes#comment"
+                                                                    onClick={() => setOpenTextare02(openTextare02 === true ? false : true)}
+                                                                >
+                                                                    Responder
+                                                                </a>
+                                                            </span>
                                                         </div>
                                                         <div>
                                                             {ans.answer}
@@ -153,7 +178,16 @@ function Alternative({ data, indexQ }) {
                                             </>)}
                                         </ul>
                                     </li>
+
+
                                 </>)}
+
+                                {openTextare01 || openTextare02 &&
+                                    <Form className="B2M-a-post-textarea" id="comment">
+                                        <Form.Control as="textarea" rows={3} />
+                                        <button className="B2M-btn" type="submit"> Comentar</button>
+                                    </Form>
+                                }
                             </ul>
                         </div>
                     </div>

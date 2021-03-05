@@ -17,7 +17,7 @@ import Pagination from '../../components/Pagination';
 import Footer from '../../components/Footer';
 import * as questionActions from '../../actions/question.actions';
 
-const viewSizeQuestion = 2;
+const viewSizeQuestion = 1;
 
 function Questions(props) {
 
