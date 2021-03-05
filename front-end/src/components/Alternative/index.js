@@ -1,115 +1,164 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Button, ListGroup } from 'react-bootstrap';
-import { FaBookmark, FaComments, FaCheckCircle, FaInfoCircle, FaWindowClose } from "react-icons/fa";
+import { FaBookmark, FaComments, FaCheckCircle, FaInfoCircle, FaCommentAlt } from "react-icons/fa";
 import { Radio, Card, Avatar, Menu } from 'antd';
 
 import CommentUser from '../Comment/commentUser';
+
+import logo from '../../assets/img/svg/logo.svg';
+import erro from '../../assets/img/svg/erro.svg';
+import ok from '../../assets/img/svg/ok.svg';
+import bookmark from '../../assets/img/svg/bookmark.svg';
+import chat from '../../assets/img/svg/chat-bubbles-with-ellipsis.svg';
+
 
 function Alternative({ data, indexQ }) {
 
     const [answer, setAnswer] = useState([]);
     const [alternative, setAlternative] = useState();
-    const [current, setCurrent] = useState('close');
+    const [current, setCurrent] = useState();
 
     //verificar se a questão marcada está correta 
-    const keyAnswer = () => {
+    function keyAnswer() {
         data.alternative.map((e, index) => {
-            if (e.answer) {
-                return setAnswer({
-                    check: true,
-                    answer: index + 1,
-                    hitMessage: 'Alternativa correta, parabéns!!',
-                    errorMessage: 'Você errou!',
-                })
+            if (index === parseInt(alternative)) {
+                return setAnswer({ check: e.answer, answer: parseInt(alternative) })
             }
         })
     }
 
+    console.log('data ', data);
+
     return (
         <>
-            <Container className="alternative-conatiner mb-5">
-                <Row className="mt-3 ">
-                    <Col sm={12} className="alternative-titer">
-                        <span className="alternative-number mr-1" >Nº {data.id_question} - {Date.parse(data.updatedAt)}</span>
-                        <span className="alternative-dicipline">{data.discipline_subject.dicipline.name_dicipline} </span>
-                    </Col>
+            <div className="B2M-a-container">
+                <div className="B2M-a-test">
+                    <div className="B2M-a-title">
+                        <img src={logo} />
+                        <span>{data.bank.name_bank} - {data.year} - {data.institution.name_institution} - {data.discipline_subject.dicipline.name_dicipline}</span>
+                    </div>
 
-                    <Col sm={12} className="my-1">
-                        <span className="alternative-info mr-1" >Ano:</span><span className="mr-1">{data.year}</span>
-                        <span className="alternative-info mr-1" >Banca:</span> <span className="mr-1">{data.bank.name_bank}</span>
-                        <span className="alternative-info mr-1" >Órgão:</span><span className="mr-1">{data.institution.name_institution}</span>
-                        <span className="alternative-info mr-1" >Prova:</span><span className="mr-1">{data.bank.name_bank} - {data.year} - {data.institution.name_institution} - {data.discipline_subject.dicipline.name_dicipline} </span>
-                        <hr className="filter-line" />
-                    </Col>
+                    <span>Nº {data.id_question} - {Date.parse(data.updatedAt)}</span>
+                </div>
+                <hr />
+                {/* <div className="B2M-a-option">
+                    <p><span >Ano:   </span> {data.year}</p>
+                    <p><span >Banca: </span> {data.bank.name_bank}</p>
+                    <p><span >Órgão: </span> {data.institution.name_institution}</p>
+                </div> */}
 
-                    <Col sm={12}>
-                        {data.enunciated}
-                    </Col>
+                <Col className="B2M-a-enunciated">
+                    {data.enunciated}
+                </Col>
+                <div className="B2M-a-alternative" onChange={(e) => setAlternative(e.target.value)}>
+                    {data.alternative.map((e, index) => (
+                        <label className="B2M-a-option" key={index} >
+                            {!(answer.answer === index) ? e.name_alternative : (<b>{e.name_alternative}</b>)}
+                            <input type="radio" value={index} name="alternative" disabled={answer.length !== 0} />
+                            <span className="B2M-a-checkmark"></span>
+                        </label>
+                    ))}
+                    <hr />
+                    <div className="B2M-a-answer">
+                        {!alternative}
+                        <div className="B2M-a-answer-msg">
+                            {answer.length !== 0
+                                ? answer.check ?
+                                    <>
+                                        <img src={ok} />
+                                        <span>Alternativa correta, parabéns!</span>
+                                    </>
+                                    : <>
+                                        <img src={erro} />
+                                        <span>Você errou!</span>
+                                    </>
+                                : null}
+                        </div>
+                        <a className={!alternative && answer.length !== 0 && "disabled"} disabled={!alternative || answer.length !== 0} onClick={() => keyAnswer()}>
+                            Visualizar Resposta
+                        </a>
+                    </div>
+                </div>
 
-                    <Col sm={12}>
-                        <ListGroup variant="flush">
-                            <Radio.Group onChange={(e) => setAlternative(e.target.value)} value={alternative} >
-                                {data.alternative.map((e, index) => (
-                                    <div key={index}>
-                                        <ListGroup.Item
-                                            style={{ background: e.answer === answer.check && 'var(--success)' }}
-                                        >
-                                            <Radio
-                                                className="alternative-alternative"
-                                                value={index + 1}
-                                                disabled={answer.answer}
-                                            >
-                                                {!answer.answer ? e.name_alternative : (<b>{e.name_alternative}</b>)}
-                                            </Radio>
-                                        </ListGroup.Item>
+                <duv className="B2M-a-container-comments" >
+                    <div  >
+                        <div onClick={() => setCurrent(current === 'teacher' ? '' : 'teacher')} >
+                            <img src={bookmark} />
+                            <span >Comentário  do professor</span>
+                        </div>
+
+                    </div>
+                    <div onClick={() => setCurrent(current === 'comment' ? '' : 'comment')} >
+                        <img src={chat} />
+                        <span >Comentários (0)</span>
+                    </div>
+                </duv>
+                {current === "teacher" && (<>
+                    <div className="B2M-a-comment-chat" >
+                        <div className="B2M-a-chat">
+                            <hr />
+                            <ul >
+                                <li>
+                                    <img src="https://bootdey.com/img/Content/user_1.jpg" className="B2M-a-avatar" alt="avatar" />
+                                    <div className="B2M-a-post-commit">
+                                        <div className="B2M-a-post-info">
+                                            <small> {Date(data.updatedAt)} <a>{data.user.login}</a></small>
+                                        </div>
+                                        <div>
+                                            {data.issue_resolution}
+                                        </div>
                                     </div>
-                                ))}
-                            </Radio.Group>
-                        </ListGroup>
-                    </Col>
 
-                    <Col sm={12} className="my-2 ">
-                        <ListGroup className="float-right">
-                            <span className="mb-1">
-                                {answer.length !== 0 ?
-                                    answer.answer === alternative ?
-                                        (<><FaCheckCircle size={25} className="alternative-hit-icon-outline mx-1" /> {answer.hitMessage} </>) :
-                                        (<><FaInfoCircle size={25} className="alternative-error-icon-outline mx-1" /> {answer.errorMessage} </>)
-                                    : null}
-                            </span>
-                            <Button className="B2M-btn B2M-btn-winter" disabled={!alternative || answer.answer} onClick={() => keyAnswer()} >Visualizar Resposta</Button>
-                        </ListGroup>
-                    </Col>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </>)}
 
-                    <Col sm={12} className="my-2">
-                        <Menu onClick={(e) => setCurrent(e.key)} selectedKeys={[current]} mode="horizontal">
-                            <Menu.Item key="teacher" disabled={!alternative} icon={<FaBookmark size={25} className="alternative-icon-outline" />}>Resposta do professor</Menu.Item>
-                            <Menu.Item key="comment" icon={<FaComments size={25} className="alternative-icon-outline" />}>Comentarios</Menu.Item>
-                            <Menu.Item key="close" className="float-right" icon={<FaWindowClose size={25} className="alternative-icon-outline " />}></Menu.Item>
-                        </Menu>
+                {current === "comment" && (<>
+                    <div className="B2M-a-comment-chat" >
+                        <div className="B2M-a-chat">
+                            <hr />
+                            <ul >
 
-                        {current === "teacher" && (<>
-                            {/* // View Comment teacher   */}
-                            <Card title={data.user.login} extra={<Avatar shape="square" size="large" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}>
-                                <p>{data.issue_resolution}</p>
-                            </Card>
-                        </>)}
-                        {current === "comment" && (<>
-                            {/* // Array view Comment and answer    */}
-                            {data.comment.map((com, index) =>
-                                <div key={index}>
-                                    <CommentUser dataComment={com} numComment={index} />
-                                </div>
-                            )}
-                        </>)}
+                                {data.comment && data.comment.map((commit, index) => <>
 
-                    </Col >
+                                    <li key={index}>
+                                        <img src="https://bootdey.com/img/Content/user_1.jpg" className="B2M-a-avatar" alt="avatar" />
+                                        <div className="B2M-a-post-commit">
+                                            <div className="B2M-a-post-info">
+                                                <small> {Date(commit.updatedAt)} <a>{commit.user.login}</a></small>
+                                                <span> <FaCommentAlt /><a>Responder</a></span>
+                                            </div>
+                                            <div>
+                                                {commit.comment}
+                                            </div>
+                                        </div>
 
-                    <hr className="filter-line" />
-
-                </Row >
-            </Container>
-
+                                        <hr />
+                                        <ul >
+                                            {commit.comment_answer.map((ans) => <>
+                                                <li >
+                                                    <img src="https://bootdey.com/img/Content/user_1.jpg" className="B2M-a-avatar" alt="avatar" />
+                                                    <div className="B2M-a-post-commit">
+                                                        <div className="B2M-a-post-info">
+                                                            <small> {Date(ans.updatedAt)} <a>{ans.user.login}</a></small>
+                                                            <span> <FaCommentAlt /><a>Responder</a></span>
+                                                        </div>
+                                                        <div>
+                                                            {ans.answer}
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </>)}
+                                        </ul>
+                                    </li>
+                                </>)}
+                            </ul>
+                        </div>
+                    </div>
+                </>)}
+            </div>
         </>
     );
 }

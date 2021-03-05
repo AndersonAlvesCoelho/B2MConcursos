@@ -2,15 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Jumbotron, Container } from 'react-bootstrap';
 import { Divider } from 'antd';
-import { Menu, Pagination, Affix, Spin, Empty } from 'antd';
-import { FaFilter } from "react-icons/fa";
+import { Menu, Affix, Spin, Empty } from 'antd';
+import { FaFilter, FaLongArrowAltRight } from "react-icons/fa";
 
-import './index.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
+import 'antd/dist/antd.css';
+import '../../assets/css/question.css';
+
 // import { questionData } from '../../services/filter/dataSelect';
 import MenuNavbar from '../../components/MenuNavbar';
 import Alternative from '../../components/Alternative';
 import FilterFixed from '../../components/FilterFixed';
-
+import Pagination from '../../components/Pagination';
+import Footer from '../../components/Footer';
 import * as questionActions from '../../actions/question.actions';
 
 const viewSizeQuestion = 2;
@@ -21,23 +25,10 @@ function Questions(props) {
     const [current, setCurrent] = useState();
     const [dataFilter, setDataFilter] = useState([]);
     const [pagerCurrent, setPagerCurrent] = useState(1);
-
     const [offset, setOffset] = useState(0);
     const [limit, setLimit] = useState(viewSizeQuestion);
+    const items = [];
 
-    const showDrawer = () => {
-        setVisible(true);
-    };
-
-    const onClose = () => {
-        setVisible(false);
-    };
-
-    function onShowSizeChange(page) {
-        setPagerCurrent(page);
-        setLimit(viewSizeQuestion)
-        setOffset((page - 1) * viewSizeQuestion)
-    }
 
     const {
         loadingQuestion,
@@ -61,51 +52,72 @@ function Questions(props) {
         getQtdQuestion({ data });
         setOffset(0);
         setPagerCurrent(1);
+
     }, [getQtdQuestion, dataFilter]);
+
+
+    const showDrawer = () => {
+        setVisible(true);
+    };
+
+    const onClose = () => {
+        setVisible(false);
+    };
+
+    function onShowSizeChange(page) {
+        console.log(page)
+        setPagerCurrent(page);
+        setLimit(viewSizeQuestion)
+        setOffset((page - 1) * viewSizeQuestion)
+    }
+
+    console.log(dataFilter);
 
     return (
         <>
             {/* Navbar */}
             <MenuNavbar />
 
-            <Jumbotron className="conatiner-banner">
-                <Container >
-                    <h1>Questões de Concurso</h1>
-                    <p>Resolva centenas de milhares de questões de provas anteriores de concursos, OAB, CFC, ENEM e Vestibulares. Bateu dúvida? Confira os comentários dos professores!</p>
-                </Container>
-            </Jumbotron>
+            <div className="B2M-q-container">
+                <section className="B2M-guia-page">
+                    <div ><a href="/" >Home</a></div>
+                    <div ><a href="#" >/</a></div>
+                    <div ><a href="/questoes" >Questões</a></div>
+                </section>
 
-            {/* Formulario para o filtro de questões */}
-            <Divider orientation="right">
-                <Affix offsetTop={10}>
+
+                <div className="B2M-q-pagination">
                     <Menu onClick={(e) => setCurrent(e.key)} selectedKeys={[current]} mode="inline" >
                         <Menu.Item key="mail" onClick={showDrawer} icon={<FaFilter />}>Filtrar</Menu.Item>
-                        <Pagination
-                            current={pagerCurrent}
-                            defaultCurrent={1}
-                            total={qtdQuestion}
-                            onChange={onShowSizeChange}
-                            defaultPageSize={viewSizeQuestion}
-                            responsive={true}
-                        />
                     </Menu>
 
                     <FilterFixed visible={visible} onClose={onClose} changerFilter={(e) => { setDataFilter(e); }} />
-                </Affix>
-            </Divider>
+                </div>
+            </div>
 
-            {/* Lista de questões baseado  */}
-            {
-                question.length !== 0 ? (<>
-                    {question.map((e, x) =>
-                        <div key={x}>
-                            <Alternative data={e} indexQ={x} />
-                        </div>
-                    )}
-                </>) : (<>
-                    {loadingQuestion ? <div className="center-component"><Spin /></div> : <div className="center-Component"><Empty /></div>}
-                </>)
-            }
+            <section className="B2M-q-question">
+
+                {
+                    question.length !== 0 ? (<>
+                        <Pagination
+                            postsPerPage={viewSizeQuestion}
+                            totalPosts={qtdQuestion}
+                            newPage={onShowSizeChange}
+                            paginate={pagerCurrent}
+                        />
+                        {question.map((e, x) =>
+                            <div key={x}>
+                                <Alternative data={e} indexQ={x} />
+                            </div>
+                        )}
+                    </>) : (<>
+                        {loadingQuestion ? <div className="center-component"><Spin /></div> : <div className="center-Component"><Empty /></div>}
+                    </>)
+                }
+
+            </section>
+
+            < Footer />
         </>
     );
 }
