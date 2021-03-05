@@ -8,6 +8,9 @@
 export const formatDefault = (value, data) => {
     const id = [];
 
+    console.log(data)
+    console.log(value)
+
     if (value && typeof value !== String ) {
         data.map(e => {
             if (value === e.value) {
@@ -24,6 +27,31 @@ export const formatDefault = (value, data) => {
         });
     }
 
+    return id;
+};
+
+
+export const formatDefaultRegister = (value, data) => {
+    var id;
+
+    console.log(data)
+    console.log(value)
+
+    if (value && typeof value !== String ) {
+        data.map(e => {
+            if (value === e.value) {
+                return id = e.id;
+            }
+        })
+    } else if (value) {
+        value.forEach((e) => {
+            data.map(evnt => {
+                if (e === evnt.value) {
+                    return id.push(evnt.td);
+                }
+            })
+        });
+    }
     return id;
 };
 

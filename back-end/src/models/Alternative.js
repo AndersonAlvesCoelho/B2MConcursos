@@ -13,7 +13,7 @@ class Alternative extends Model {
                     type: DataTypes.TEXT,
                 },
                 answer: {
-                    type: DataTypes.TEXT,
+                    type: DataTypes.BOOLEAN,
                 },
                 id_question: {
                     type: DataTypes.INTEGER,
