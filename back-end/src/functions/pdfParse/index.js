@@ -29,6 +29,7 @@ export const regexPDF = (pdfFile) => {
 
         const questionsInfo = [];
         questionsInfo.push(questionsA, questionsB, questionsC, questionsD);
+        console.log(questionsInfo);
         return questionsInfo
 
         // const search = 'Atenção';
