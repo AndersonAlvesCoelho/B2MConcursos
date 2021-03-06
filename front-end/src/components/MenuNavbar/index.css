@@ -1,4 +1,4 @@
-@import url('../../global.css');
+@import url("../../assets/css/global.css");
 
 .menu-container{
   background-color: var(--winter);

@@ -1,0 +1,230 @@
+@import url("../css/global.css");
+
+.B2M-q {
+  height: 80vh;
+  width: 100%;
+}
+
+.B2M-q-container {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  grid-gap: 20px;
+  margin: 0 auto;
+  max-width: 1800px;
+  position: relative;
+}
+
+.B2M-q-question {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 20px;
+  margin: 0 auto;
+  max-width: 1200px;
+  position: relative;
+}
+
+.B2M-q-pagination {
+  display: flex;
+  justify-content: space-around;
+}
+
+.B2M-q-pagination button {
+  background-color: var(--main-bg);
+  border: none;
+  display: inline-block;
+  padding: 0px 20px;
+  border-radius: 8px;
+}
+
+.B2M-a-container {
+  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.5s;
+  background-color: var(--white);
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 10px;
+}
+
+.B2M-a-container:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.B2M-a-test {
+  display: grid;
+  grid-template-columns: 1fr 200px;
+  max-width: 100%;
+}
+
+.B2M-a-title {
+  display: flex;
+}
+.B2M-a-title span {
+  margin-top: 10px;
+  margin-left: 10px;
+}
+.B2M-a-title img {
+  height: 100%;
+}
+
+.B2M-a-enunciated {
+  font-size: 25px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+/*Alternativa*/
+.B2M-a-alternative {
+  display: block;
+}
+
+.B2M-a-option {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.B2M-a-option input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.B2M-a-checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #dedede;
+  border-radius: 50%;
+}
+
+.B2M-a-option:hover input ~ .B2M-a-checkmark {
+  background-color: #ccc;
+}
+.B2M-a-option input:checked ~ .B2M-a-checkmark {
+  background-color: var(--main-primary);
+}
+
+.B2M-a-checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.B2M-a-option input:checked ~ .B2M-a-checkmark:after {
+  display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.B2M-a-option .checkmark:after {
+  top: 9px;
+  left: 9px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: white;
+}
+
+.B2M-a-answer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.B2M-a-answer span {
+  font-size: 20px;
+  font-weight: 300;
+  font-style: oblique;
+  padding: 0px 10px;
+}
+
+/*Button*/
+.B2M-a-answer a {
+  background-color: var(--main-secondary);
+
+  border: none;
+  display: inline-block;
+  padding: 15px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.B2M-a-answer .disabled {
+  background: var(--darkGray);
+}
+.B2M-a-answer a:hover {
+  background-color: var(--main-primary);
+  color: var(--black);
+}
+/*Button*/
+
+.B2M-a-answer .B2M-a-answer-msg {
+  justify-content: space-between;
+  align-items: center;
+  display: inline-block;
+}
+
+.B2M-a-answer .B2M-a-answer-msg img {
+  height: 30px;
+}
+
+/*Alternativa*/
+
+.B2M-a-container-comments {
+  display: flex;
+}
+.B2M-a-container-comments > div {
+  cursor: pointer;
+}
+.B2M-a-container-comments img {
+  margin: 5px;
+  height: 30px;
+}
+
+/*Comentarios*/
+.B2M-a-comment-chat {
+  display: flex;
+}
+
+.B2M-a-chat ul li {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  max-width: 1780px;
+  padding: 10px;
+  margin: 0 auto;
+  grid-gap: 20px;
+}
+
+.B2M-a-post-commit {
+  display: block;
+}
+
+.B2M-a-post-info {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+}
+
+.B2M-a-post-info span > a {
+  font-size: 15px;
+  cursor: pointer;
+}
+.B2M-a-post-info a {
+  font-size: 20px;
+  font-style: oblique;
+  cursor: pointer;
+  margin-left: 5px;
+}
+/*Comentarios*/
+
+.B2M-a-post-textarea {
+  display: block;
+}

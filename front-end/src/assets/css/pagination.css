@@ -1,0 +1,23 @@
+.B2M-p-pagination-center {
+  text-align: center;
+}
+.B2M-p-pagination {
+  display: inline-block;
+}
+.B2M-p-pagination a {
+  border-radius: 5px;
+  background-color: var(--main-secondary);
+  padding: 8px 16px;
+  margin: 5px;
+}
+.B2M-p-pagination a.active {
+  background-color: var(--main-primary);
+  color: var(--main-secondary);
+  border-radius: 5px;
+}
+.B2M-p-pagination a:hover:not(.active) {
+  background-color: var(--main-secondary);
+  border-radius: 5px;
+  color: var(--black) !important;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
