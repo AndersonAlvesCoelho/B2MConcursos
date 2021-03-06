@@ -23,6 +23,19 @@
   position: relative;
 }
 
+.B2M-q-pagination {
+  display: flex;
+  justify-content: space-around;
+}
+
+.B2M-q-pagination button {
+  background-color: var(--main-bg);
+  border: none;
+  display: inline-block;
+  padding: 0px 20px;
+  border-radius: 8px;
+}
+
 .B2M-a-container {
   box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.2);
   transition: 0.5s;
@@ -204,8 +217,7 @@
   font-size: 15px;
   cursor: pointer;
 }
-.B2M-a-post-info 
-a {
+.B2M-a-post-info a {
   font-size: 20px;
   font-style: oblique;
   cursor: pointer;
