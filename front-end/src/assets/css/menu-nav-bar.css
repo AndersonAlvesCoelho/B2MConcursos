@@ -1,0 +1,70 @@
+@import url("../../assets/css/global.css");
+
+/*HEDAER*/
+.B2M-m-container {
+  height: 20vh;
+  width: 100%;
+}
+
+.B2M-m-header {
+  background: transparent;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: var(--main-primary);
+  border-radius: 0px 0px 10px 10px;
+}
+
+.B2M-m-header .B2M-m-logo a {
+  font-size: 40px;
+  font-weight: 700;
+  margin: 10px;
+  color: #000;
+}
+.B2M-m-menu,
+.B2M-m-login {
+  display: flex;
+}
+
+.B2M-m-login,
+.B2M-m-menu li {
+  margin-left: 10px;
+}
+.B2M-m-header .B2M-m-logo img {
+  height: 50px;
+  margin-bottom: 10px;
+}
+
+.B2M-m-menu li a {
+  display: block;
+  padding: 20px;
+  font-weight: 300;
+  color: var(--main-secondary) ;
+  transition: width 2s;
+}
+
+.B2M-m-menu li a:hover {
+  border-top: 2px solid var(--main-secondary);
+  padding: 19px;
+}
+
+/*Button*/
+.B2M-m-btn a {
+  background-color: var(--main-secondary);
+  border: none;
+  display: inline-block;
+  border-radius: 8px;
+  color: var(--main-primary) !important;
+}
+
+
+@media (max-width: 800px) {
+  .B2M-m-login,
+  .B2M-m-menu li {
+    width: 100%;
+    float: none;
+    justify-content: center;
+  }
+}
