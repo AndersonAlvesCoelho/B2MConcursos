@@ -350,6 +350,7 @@ class QuestionController {
 
       for (let i = 0; i < nameAlternative.length; i++) {
         await Alternative.create({
+          id_alternative: [i + 45],
           name_alternative: nameAlternative[i],
           answer: answer[i],
           id_question: question.id_question,
