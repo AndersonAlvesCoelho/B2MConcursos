@@ -1,40 +1,33 @@
 import React from 'react';
-import { Navbar, Nav, Button } from 'react-bootstrap';
-import { FaFacebook, FaYoutube, FaInstagram, FaTwitter, FaQuestionCircle } from "react-icons/fa";
 
-// import logoQuest from '../../assets/img/logo-quest.png';
-import './index.css';
+import logo from '../../assets/img/svg/logo.svg';
+import '../../assets/css/menu-nav-bar.css';
 
 function MenuNavbar() {
     return (
-        <Navbar className="menu-container" expand="lg">
-            <Navbar.Brand href="/" className="menu-link-text">
-                <FaQuestionCircle size={35} className="mr-1" />{''}
-                B2MConcursos
-            </Navbar.Brand>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-                <Nav className="mr-auto">
-                    <Nav.Link className="menu-link-text" href="/questoes">Questões</Nav.Link>
-                    <Nav.Link className="menu-link-text" href="/cadastrar-questoes">Registrar questão</Nav.Link>
-                </Nav>
+        <>
+            <div className="B2M-m-container">
+                <header className="B2M-m-header">
+                    <div className="B2M-m-logo">
+                        <img src={logo} />
+                        <a href="/" >B2MConcursos</a>
+                    </div>
+                    <nav>
+                        <ul className="B2M-m-menu">
+                            <li><a href="/questoes">Questões </a></li>
+                            <li><a href="/cadastrar-questoes">Registrar questão</a></li>
+                            <li className="B2M-m-btn"><a href="/login">Logar</a></li>
 
-                <Nav >
-                    <div className="icons-content">
-                        <FaFacebook size={20} />
-                    </div>
-                    <div className="icons-content" >
-                        <FaYoutube size={20} />
-                    </div>
-                    <div className="icons-content">
-                        <FaInstagram size={20} />
-                    </div>
-                    <div className="icons-content">
-                        <FaTwitter size={20} />
-                    </div>
-                </Nav>
-            </Navbar.Collapse>
-        </Navbar>
+                        </ul>
+                    </nav>
+                    {/* <div className="B2M-m-login">
+                        <ul className="B2M-m-menu">
+                            <li><a href="/login">Logar</a></li>
+                        </ul>
+                    </div> */}
+                </header>
+            </div>
+        </>
     );
 }
 
