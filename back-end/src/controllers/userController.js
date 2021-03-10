@@ -22,8 +22,8 @@ class UserController {
 
       const user = await User.create({
         login: name,
-        password: email,
-        nivel: password,
+        password: password,
+        nivel: 1,
       }).then(function (result) {
         if (result) {
           return result

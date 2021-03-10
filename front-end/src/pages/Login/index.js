@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 
 import '../../assets/css/login.css';
+import * as User from "../../actions/user.actions";
+import {connect} from "react-redux";
 
 function Login() {
 
@@ -20,6 +22,7 @@ function Login() {
 
     function handleSubmit(event) {
         event.preventDefault();
+        store(requestAccess)
     }
 
     return (
@@ -76,4 +79,13 @@ function Login() {
     );
 }
 
-export default Login;
+const mapStateToProps = state => ({
+    loading: state.user.loading,
+})
+
+const mapDispatchToProps = {
+    store: User.store,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
+
