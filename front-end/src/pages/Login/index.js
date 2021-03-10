@@ -5,23 +5,39 @@ import '../../assets/css/login.css';
 function Login() {
 
     const [classActive, setClassActive] = useState(false);
+    const [requestAccess, setRequestAccess] = useState({
+        nome: '',
+        email: '',
+        senha: '',
+    });
+
+    const handleChange = (e) => {
+        const { name } = e.target;
+        const { value } = e.target;
+        requestAccess[name] = value;
+        setRequestAccess(requestAccess);
+    };
+
+    function handleSubmit(event) {
+        event.preventDefault();
+    }
 
     return (
         <>
             <div className="B2M-login-container">
                 <div className={classActive ? "B2M-login-login B2M-login-right-panel-active" : "B2M-login-login"} >
                     <div className="B2M-login-form-container B2M-login-sign-up-container">
-                        <form action="#">
-                            <h1>Criar contar</h1>
+                        <form onSubmit={handleSubmit} action="#">
+                            <h1>Criar conta</h1>
                             {/* <div className="B2M-login-social-container">
                                 <a href="#" className="social"><i className="fab fa-facebook-f"></i></a>
                                 <a href="#" className="social"><i className="fab fa-google-plus-g"></i></a>
                                 <a href="#" className="social"><i className="fab fa-linkedin-in"></i></a>
                             </div>
                             <span>or use your email for registration</span> */}
-                            <input type="text" placeholder="Name" />
-                            <input type="email" placeholder="Email" />
-                            <input type="password" placeholder="Password" />
+                            <input type="text" name="nome" placeholder="Nome"  onChange={handleChange}/>
+                            <input type="email" name="email" placeholder="E-mail"  onChange={handleChange}/>
+                            <input type="password" name="senha" placeholder="Senha"  onChange={handleChange}/>
                             <button>Cadastrar</button>
                         </form>
                     </div>
