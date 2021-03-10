@@ -4,7 +4,11 @@ import '../../assets/css/login.css';
 import * as User from "../../actions/user.actions";
 import {connect} from "react-redux";
 
-function Login() {
+function Login(props) {
+
+    const {
+        store
+    } = props;
 
     const [classActive, setClassActive] = useState(false);
     const [requestAccess, setRequestAccess] = useState({

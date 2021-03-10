@@ -32,6 +32,7 @@ class UserController {
         }
       })
 
+      return res.json(user)
     } catch (error) {
       res.status(400).json({ message: `Erro ao retornar os dados. ${error}` });
     }

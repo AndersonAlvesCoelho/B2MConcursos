@@ -4,6 +4,8 @@ import {
     REGISTER_USER_FAILURE,
 } from '../constants/user.constants';
 
+import api from '../services/api';
+
 export const store = (formData) => (dispatch) => {
     dispatch({ type: REGISTER_USER_REQUEST });
     api.post('/registerUser', formData  )
