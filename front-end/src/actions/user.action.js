@@ -6,20 +6,13 @@ import {
 
 export const register = (formData) => (dispatch) => {
     dispatch({ type: REGISTER_USER_REQUEST });
-    api.post('/uploadQuestions', { formData }, { headers: { 'Content-Type': 'multipart/form-data' } } )
+    api.post('/registerUser', formData  )
         .then((res) => {
             const { data } = res;
 
             console.log(data);
-            const formatData = data;
 
-            // const formatData = data.map((institution, index) => ({
-            //     title: institution.name_institution,
-            //     value: `0-${index}`,
-            //     key: `0-${index}`,
-            // }));
-
-            dispatch({ type: REGISTER_USER_SUCCESS, formatData });
+            dispatch({ type: REGISTER_USER_SUCCESS });
         })
         .catch((error) => {
             const { response: err } = error;

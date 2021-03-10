@@ -22,6 +22,7 @@ routes.post(`${apiVersionV1}/qtdQuestions`, QuestionController.qtdQuestions);
 // --- ROTAS QUE NECESSITAM DE AUTENTICAÇÃO ---
 routes.post(`${apiVersionV1}/uploadQuestions`, QuestionController.upload);
 routes.post(`${apiVersionV1}/registerQuestions`, QuestionController.store);
+routes.post(`${apiVersionV1}/registerUser`, UserController.store);
 
 // --- EM ANALISE ---
 routes.get(`${apiVersionV1}/users`, UserController.index);

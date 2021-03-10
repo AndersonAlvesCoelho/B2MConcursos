@@ -6,9 +6,9 @@ function Login() {
 
     const [classActive, setClassActive] = useState(false);
     const [requestAccess, setRequestAccess] = useState({
-        nome: '',
+        name: '',
         email: '',
-        senha: '',
+        password: '',
     });
 
     const handleChange = (e) => {
@@ -35,9 +35,9 @@ function Login() {
                                 <a href="#" className="social"><i className="fab fa-linkedin-in"></i></a>
                             </div>
                             <span>or use your email for registration</span> */}
-                            <input type="text" name="nome" placeholder="Nome"  onChange={handleChange}/>
+                            <input type="text" name="name" placeholder="Nome"  onChange={handleChange}/>
                             <input type="email" name="email" placeholder="E-mail"  onChange={handleChange}/>
-                            <input type="password" name="senha" placeholder="Senha"  onChange={handleChange}/>
+                            <input type="password" name="password" placeholder="Senha"  onChange={handleChange}/>
                             <button>Cadastrar</button>
                         </form>
                     </div>
