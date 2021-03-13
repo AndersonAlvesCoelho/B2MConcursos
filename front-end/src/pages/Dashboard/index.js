@@ -11,7 +11,7 @@ import {
     MailOutlined,
 } from '@ant-design/icons';
 
-import MenuNavbar from '../../components/MenuNavbar';
+// import MenuNavbar from '../../components/MenuNavbar';
 
 const { SubMenu } = Menu;
 
@@ -22,7 +22,7 @@ function Dashboard() {
     return (
         <>
             {/* Navbar */}
-            <MenuNavbar />
+            {/* <MenuNavbar /> */}
 
             {/* <Divider type="vertical" /> */}
             <div style={{ width: 256 }}>

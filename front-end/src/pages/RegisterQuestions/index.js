@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import { connect } from 'react-redux';
-import MenuNavbar from '../../components/MenuNavbar/index';
+// import MenuNavbar from '../../components/MenuNavbar/index';
 import { Col, Container, Row} from "react-bootstrap";
 import {
     Form,
@@ -217,7 +217,7 @@ const RegisterQuestions = (props) => {
 
     return (
         <div>
-            <MenuNavbar />
+            {/* <MenuNavbar /> */}
 
             <Container className="filter-conatiner" >
 

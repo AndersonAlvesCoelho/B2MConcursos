@@ -1,0 +1,27 @@
+@import url("../../assets/css/global.css");
+
+.B2M-p-content {
+    margin-top: 100px;
+  padding: 100px 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  margin: 0 auto;
+  max-width: 1200px;
+  position: relative;
+  background-color: #2196f3;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-gap: 10px;
+  background-color: #2196f3;
+  padding: 10px;
+}
+
+.grid-container > div {
+  background-color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  padding: 20px 0;
+  font-size: 30px;
+}

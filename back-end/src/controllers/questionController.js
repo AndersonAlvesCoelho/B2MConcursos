@@ -4,6 +4,7 @@ import { regexPDF } from "../functions/pdfParse"
 // import Office from "../models/Office";
 import Alternative from "../models/Alternative";
 import { Console } from "console";
+import OfficeController from "./officeController";
 const fs = require('fs');
 const pdfFile = fs.readFileSync('src/PDF/TJ MG.pdf');
 
@@ -31,7 +32,6 @@ class QuestionController {
       var gabaritoComentado = false;
       var comentarios = false;
 
-      console.log(req.body.data)
       //pegando dados para filtragem
       if (req.body.data) {
         if (req.body.data.enunciated) enunciated = req.body.data.enunciated;
@@ -58,8 +58,6 @@ class QuestionController {
         if (dicipline[3].length !== 0) dicipline03 = dicipline[3];
       }
 
-      console.log(gabaritoComentado);
-      console.log(comentarios);
       const data = await Question.findAll({
         attributes: {
           exclude: [
@@ -82,14 +80,14 @@ class QuestionController {
             * conforme os ids que contem na tabela office
             */
             association: "office",
-            attributes: { exclude: ['id_office', 'created_at', 'updated_at'] },
+            // attributes: { exclude: ['id_office', 'created_at', 'updated_at'] },
             // where: {
-            //   // ...(office01 && { id_office_niv_1: { [Op.in]: office01 } }),
-            //   //   // ...(office02 && { id_office_niv_2: { [Op.in]: office02 } }),
-            //   //   // ...(office03 && { id_office_niv_3: { [Op.in]: office03 } }),
-            //   //   // ...(office04 && { id_office_niv_4: { [Op.in]: office04 } }),
+            //   //   // ...(office01 && { id_office_niv_1: { [Op.in]: office01 } }),
+            //   //   //   // ...(office02 && { id_office_niv_2: { [Op.in]: office02 } }),
+            //   //   //   // ...(office03 && { id_office_niv_3: { [Op.in]: office03 } }),
+            //   //   //   // ...(office04 && { id_office_niv_4: { [Op.in]: office04 } }),
 
-            //   id_office_niv_1: 1
+            // id_office: 1
             // },
             include: [
               {
@@ -109,18 +107,17 @@ class QuestionController {
                 attributes: { exclude: ['id_office_niv_3', 'id_office_niv_4', 'created_at', 'updated_at'] },
               }
             ],
-
           },
           {
-            //  A mesma coisa que acontece para os dados office aocntece para os dados de subject
+            // A mesma coisa que acontece para os dados office aocntece para os dados de subject
             association: "discipline_subject",
             attributes: { exclude: ['id_subject_niv_4', 'id_subject_niv_5', 'id_subject_niv_6', 'id_subject_niv_7', 'created_at', 'updated_at'] },
 
             // where: {
-              // ...(dicipline00 && { id_dicipline: { [Op.in]: dicipline00 } }),
-              // ...(dicipline01 && { id_subject_niv_1: { [Op.in]: dicipline01 } }),
-              // ...(dicipline02 && { id_subject_niv_2: { [Op.in]: dicipline02 } }),
-              // ...(dicipline03 && { id_subject_niv_3: { [Op.in]: dicipline03 } }),
+            // ...(dicipline00 && { id_dicipline: { [Op.in]: dicipline00 } }),
+            // ...(dicipline01 && { id_subject_niv_1: { [Op.in]: dicipline01 } }),
+            // ...(dicipline02 && { id_subject_niv_2: { [Op.in]: dicipline02 } }),
+            // ...(dicipline03 && { id_subject_niv_3: { [Op.in]: dicipline03 } }),
             // },
 
             include: [
@@ -196,6 +193,7 @@ class QuestionController {
         order: [['id_question']]
 
       });
+
       return res.json(data);
     } catch (error) {
       res.status(400).json({ message: `Erro ao retornar os dados. ${error}` });

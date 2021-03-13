@@ -11,7 +11,7 @@ import ok from '../../assets/img/svg/ok.svg';
 import bookmark from '../../assets/img/svg/bookmark.svg';
 import chat from '../../assets/img/svg/chat-bubbles-with-ellipsis.svg';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Alternative({ data, indexQ }) {
 

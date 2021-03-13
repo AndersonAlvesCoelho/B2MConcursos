@@ -4,9 +4,9 @@ function Footer() {
 
     return (
         <>
-            <div class="footer">
-                <h2>Footer</h2>
-            </div>
+            <footer className="b2m-f-footer">
+                <p className="copyright">Company Name © 2018</p>
+            </footer>
         </>
     );
 }

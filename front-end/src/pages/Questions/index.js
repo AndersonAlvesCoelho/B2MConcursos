@@ -4,10 +4,10 @@ import { Menu, Spin, Empty } from 'antd';
 import { FaFilter, FaLongArrowAltRight } from "react-icons/fa";
 
 // import 'bootstrap/dist/css/bootstrap.min.css';
-import 'antd/dist/antd.css';
 import '../../assets/css/question.css';
+import 'antd/dist/antd.css';
 
-import MenuNavbar from '../../components/MenuNavbar';
+// import MenuNavbar from '../../components/MenuNavbar';
 import Alternative from '../../components/Alternative';
 import FilterFixed from '../../components/FilterFixed';
 import Pagination from '../../components/Pagination';
@@ -68,16 +68,14 @@ function Questions(props) {
         setOffset((page - 1) * viewSizeQuestion)
     }
 
-    console.log(dataFilter);
 
     return (
         <>
             {/* Navbar */}
-            <MenuNavbar />
-
-            <section className="B2M-q-question">
+            {/* <MenuNavbar /> */}
 
 
+            <div className="B2M-q-content">
                 {question.length !== 0 ? (<>
                     <div className="B2M-q-pagination">
                         <Pagination
@@ -89,10 +87,8 @@ function Questions(props) {
 
                         <div className="B2M-q-infos">
                             <FilterFixed visible={visible} onClose={onClose} changerFilter={(e) => { setDataFilter(e); }} />
-                            <button onClick={showDrawer}><FaFilter /></button>
+                            <a onClick={showDrawer}><i className="B2M-zoom-out"></i></a>
                         </div>
-
-
                     </div>
 
                     {question.map((e, x) =>
@@ -101,10 +97,11 @@ function Questions(props) {
                         </div>
                     )}
                 </>) : (<>
-                    {loadingQuestion ? <div className="center-component"><Spin /></div> : <div className="center-Component"><Empty /></div>}
+                    {loadingQuestion ?
+                        <div class="B2M-loader"></div>
+                        : <div className="center-Component"><Empty /></div>}
                 </>)}
-
-            </section>
+            </div>
 
             < Footer />
         </>
