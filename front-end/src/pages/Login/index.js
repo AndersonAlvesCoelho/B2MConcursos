@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 
 import '../../assets/css/login.css';
 import * as User from "../../actions/user.actions";
+import * as Auth from "../../actions/auth.actions";
 import {connect} from "react-redux";
 
 function Login(props) {
 
     const {
-        store
+        store,
+        login
     } = props
 
     const [classActive, setClassActive] = useState(false);
@@ -31,7 +33,7 @@ function Login(props) {
 
     function handleSubmit(event) {
         event.preventDefault()
-        store(requestAccess)
+        login(requestAccess)
     }
 
     return (
@@ -94,6 +96,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
     store: User.store,
+    login: Auth.login,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
