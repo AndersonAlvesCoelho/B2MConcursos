@@ -191,6 +191,7 @@ nav.navbar .dropdown-menu {
 nav.navbar .dropdown-menu .dropdown-item {
   background: #fff;
   padding: 10px 20px;
+<<<<<<< HEAD
   font-size: 0.8rem;
   color: #777;
   width: 100%;
@@ -213,6 +214,10 @@ nav.navbar .dropdown-menu .dropdown-item i {
 
 nav.navbar .dropdown-menu .dropdown-item small {
   margin-left: 40px;
+=======
+  background-color: var(--main-primary);
+  border-radius: 0px 0px 10px 10px;
+>>>>>>> f84a52ea5800673cd02ee58384edbe592e6b8202
 }
 
 nav.navbar .dropdown-menu span {

@@ -250,27 +250,27 @@ class QuestionController {
   }
 
   async store(req, res) {
+
+    //TODO: finish catch value discipline and office
+    //TODO: inserir usuario
+    //TODO: corrigir o erro validation error
     try {
       console.log(req.body)
 
       const {
         //general info
-        bankValue,
-        institutionValue,
-        officeValue,
-        diciplineValue,
-        yearValue,
-        prove,
+        idBank,
+        idInstitution,
+        idOffice,
+        year,
+        idDicipline,
 
         // Question
+        enunciated,
+        nameAlternative,
+        answer,
         issueResolution,
         idUser,
-        enunciated,
-
-        // Alternative
-        idAlternative,
-        nameAlternative,
-        answer
       } = req.body
 
       console.log(nameAlternative)
@@ -329,16 +329,14 @@ class QuestionController {
       //   }
       // })
 
-      console.log('question')
-
       const question = await Question.create({
-        id_office: officeValue,
-        id_discipline_subject: diciplineValue,
-        id_bank: bankValue,
-        id_institution: institutionValue,
-        year: yearValue,
+        id_office: 1,
+        id_discipline_subject: 1,
+        id_bank: idBank,
+        id_institution: idInstitution,
+        year: year,
         issue_resolution: issueResolution,
-        id_user: idUser,
+        id_user: 1,
         enunciated: enunciated,
       }).then(function (result) {
         if (result) {
@@ -348,18 +346,14 @@ class QuestionController {
         }
       })
 
-
-
       for (let i = 0; i < nameAlternative.length; i++) {
         await Alternative.create({
-          id_alternative: idAlternative[i],
+          id_alternative: [i + 45],
           name_alternative: nameAlternative[i],
           answer: answer[i],
           id_question: question.id_question,
         }).then(function (result) {
-          if (result) {
-            res.send(result);
-          } else {
+          if (!result) {
             res.status(400).send('Erro ao inserir alternativas');
           }
         });

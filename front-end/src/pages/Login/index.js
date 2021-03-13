@@ -1,27 +1,50 @@
 import React, { useState } from 'react';
 
 import '../../assets/css/login.css';
+import * as User from "../../actions/user.actions";
+import {connect} from "react-redux";
 
-function Login() {
+function Login(props) {
+
+    const {
+        store
+    } = props;
 
     const [classActive, setClassActive] = useState(false);
+    const [requestAccess, setRequestAccess] = useState({
+        name: '',
+        email: '',
+        password: '',
+    });
+
+    const handleChange = (e) => {
+        const { name } = e.target;
+        const { value } = e.target;
+        requestAccess[name] = value;
+        setRequestAccess(requestAccess);
+    };
+
+    function handleSubmit(event) {
+        event.preventDefault();
+        store(requestAccess)
+    }
 
     return (
         <>
             <div className="B2M-login-container">
                 <div className={classActive ? "B2M-login-login B2M-login-right-panel-active" : "B2M-login-login"} >
                     <div className="B2M-login-form-container B2M-login-sign-up-container">
-                        <form action="#">
-                            <h1>Criar contar</h1>
+                        <form onSubmit={handleSubmit} action="#">
+                            <h1>Criar conta</h1>
                             {/* <div className="B2M-login-social-container">
                                 <a href="#" className="social"><i className="fab fa-facebook-f"></i></a>
                                 <a href="#" className="social"><i className="fab fa-google-plus-g"></i></a>
                                 <a href="#" className="social"><i className="fab fa-linkedin-in"></i></a>
                             </div>
                             <span>or use your email for registration</span> */}
-                            <input type="text" placeholder="Name" />
-                            <input type="email" placeholder="Email" />
-                            <input type="password" placeholder="Password" />
+                            <input type="text" name="name" placeholder="Nome"  onChange={handleChange}/>
+                            <input type="email" name="email" placeholder="E-mail"  onChange={handleChange}/>
+                            <input type="password" name="password" placeholder="Senha"  onChange={handleChange}/>
                             <button>Cadastrar</button>
                         </form>
                     </div>
@@ -60,4 +83,13 @@ function Login() {
     );
 }
 
-export default Login;
+const mapStateToProps = state => ({
+    loading: state.user.loading,
+})
+
+const mapDispatchToProps = {
+    store: User.store,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
+

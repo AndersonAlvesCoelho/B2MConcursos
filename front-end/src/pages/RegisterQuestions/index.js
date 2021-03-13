@@ -28,6 +28,7 @@ import {
     formatDefault,
     formataDicipline,
     formataOffice,
+    formatDefaultRegister
 } from "../../helpers/formatDataToQuery";
 
 
@@ -61,12 +62,11 @@ const RegisterQuestions = (props) => {
         loadingOffice,
         office,
         loadingDicipline,
-        dicipline
+        dicipline,
     } = props
 
     // general info
     // const [office, setOffice] = useState();
-    const [prove, setProve] = useState();
     const [bankValue, setBankValue] = useState([]);
     const [institutionValue, setInstitutionValue] = useState([]);
     const [officeValue, setOfficeValue] = useState([]);
@@ -140,17 +140,15 @@ const RegisterQuestions = (props) => {
     function handleSubmit(values) {
         // e.preventDefault()
 
-        console.log(values)
+        const idBank = formatDefaultRegister(bankValue, bank);
+        const idInstitution = formatDefaultRegister(institutionValue, institution);
+        const yearArray = formatDefault(yearValue, yearData);
+        const year = yearArray[0]
 
-        console.log(bankValue)
-        const idBank = formatDefault(bankValue, bank);
-        console.log(institutionValue)
-        const idInstitution = formatDefault(institutionValue, institution);
+        //TODO: finish catch value discipline and office
         console.log(officeValue)
         const idOffice = formataOffice(officeValue, office);
-        console.log(yearValue)
-        const year = formatDefault(yearValue, yearData);
-        console.log(year)
+        console.log(diciplineValue)
         const idDicipline = formataDicipline(diciplineValue,dicipline);
 
         const nameAlternative = [
@@ -175,7 +173,6 @@ const RegisterQuestions = (props) => {
             // questions info
             issueResolution,
             enunciated,
-            prove,
             nameAlternative,
             answer
         }
@@ -248,21 +245,21 @@ const RegisterQuestions = (props) => {
                     Fazer upload do PDF
                 </Button>
                 <hr />
-                <>
-                    <Steps
-                        type="navigation"
-                        current={step}
-                        onChange={onChange}
-                        className="site-navigation-steps"
-                    >
-                        <Step status="process"  title="Informações gerais" />
-                        <Step status="process" title="Cadastro de questões" />
-                    </Steps>
-                </>
+
+                {/*<>*/}
+                {/*    <Steps*/}
+                {/*        type="navigation"*/}
+                {/*        current={step}*/}
+                {/*        onChange={onChange}*/}
+                {/*        className="site-navigation-steps"*/}
+                {/*    >*/}
+                {/*        <Step status="process"  title="Informações gerais" />*/}
+                {/*        <Step status="process" title="Cadastro de questões" />*/}
+                {/*    </Steps>*/}
+                {/*</>*/}
 
                 <Form layout="vertical" requiredMark={false} onFinish={handleSubmit}>
 
-                    {step === 0 && (
                         <div id="generalInfo">
 
                             <Row >
@@ -533,7 +530,6 @@ const RegisterQuestions = (props) => {
 
                             </Card>
                         </div>
-                    )}
 
                     <Button
                         htmlType="submit"

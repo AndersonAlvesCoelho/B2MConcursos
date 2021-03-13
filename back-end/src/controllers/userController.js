@@ -10,6 +10,34 @@ class UserController {
       res.status(400).json({ message: `Erro ao retornar os dados. ${error}` });
     }
   }
+
+  async store(req, res) {
+    try {
+      const {
+        //general info
+        name,
+        email,
+        password
+      } = req.body
+
+      const user = await User.create({
+        login: name,
+        password: password,
+        nivel: 1,
+      }).then(function (result) {
+        if (result) {
+          return result
+        } else {
+          res.status(400).send('Erro ao inserir instituição')
+        }
+      })
+
+      return res.json(user)
+    } catch (error) {
+      res.status(400).json({ message: `Erro ao retornar os dados. ${error}` });
+    }
+  }
+
 }
 
 export default new UserController();
