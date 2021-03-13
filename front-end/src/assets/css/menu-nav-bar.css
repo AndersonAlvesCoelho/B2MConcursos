@@ -191,33 +191,8 @@ nav.navbar .dropdown-menu {
 nav.navbar .dropdown-menu .dropdown-item {
   background: #fff;
   padding: 10px 20px;
-<<<<<<< HEAD
-  font-size: 0.8rem;
-  color: #777;
-  width: 100%;
-}
-
-nav.navbar .dropdown-menu .dropdown-item:hover {
-  background: #f5f5f5;
-}
-
-nav.navbar .dropdown-menu .dropdown-item i {
-  width: 30px;
-  height: 30px;
-  line-height: 30px;
-  background: #2b90d9;
-  text-align: center;
-  color: #fff;
-  border-radius: 50%;
-  margin-right: 10px;
-}
-
-nav.navbar .dropdown-menu .dropdown-item small {
-  margin-left: 40px;
-=======
   background-color: var(--main-primary);
   border-radius: 0px 0px 10px 10px;
->>>>>>> f84a52ea5800673cd02ee58384edbe592e6b8202
 }
 
 nav.navbar .dropdown-menu span {
