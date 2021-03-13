@@ -9,6 +9,7 @@
   background-color: var(--main-secondary);
   padding: 8px 16px;
   margin: 5px;
+  color: var(--black) !important;
 }
 .B2M-p-pagination a.active {
   background-color: var(--main-primary);
@@ -18,6 +19,12 @@
 .B2M-p-pagination a:hover:not(.active) {
   background-color: var(--main-secondary);
   border-radius: 5px;
-  color: var(--black) !important;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+
+@media (min-width: 350px) {
+  .B2M-p-pagination a {
+    font-size: 10pt;
+  }
 }
