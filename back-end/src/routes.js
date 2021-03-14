@@ -26,6 +26,8 @@ routes.post(`${apiVersionV1}/registerQuestions`, QuestionController.store);
 routes.post(`${apiVersionV1}/registerUser`, UserController.store);
 routes.post(`${apiVersionV1}/login`, AuthController.login);
 
+// routes.get(`${apiVersionV1}/userAnswersQuestion`, UserController.index);
+
 // --- EM ANALISE ---
 routes.get(`${apiVersionV1}/users`, UserController.index);
 

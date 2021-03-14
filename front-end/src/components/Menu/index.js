@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { getUserCookie } from '../../services/session';
-
 import '../../assets/css/menu-nav-bar.css';
 
 const user = getUserCookie();

@@ -9,12 +9,6 @@ const Pagination = ({ postsPerPage, totalPosts, newPage, paginate }) => {
     pageNumbers.push(i);
   }
 
-  console.log('pageNumbers ', pageNumbers);
-  console.log('postsPerPage ', postsPerPage);
-  console.log('totalPosts ', totalPosts);
-  console.log('newPage ', newPage);
-  console.log('paginate ', paginate);
-
   return (
     <section className="B2M-pagination">
       <ul>

@@ -12,7 +12,7 @@ import Pagination from '../../components/Pagination';
 import Footer from '../../components/Footer';
 import * as questionActions from '../../actions/question.actions';
 
-const viewSizeQuestion = 2;
+const viewSizeQuestion = 1;
 
 function Questions(props) {
 
@@ -62,7 +62,7 @@ function Questions(props) {
                 <div className="B2M-page-content">
                     <SideNavbar toggle={toggle} type="Questions" /> {/* SIDEBAR */}
                     {/* Page Header */}
-                    <div className={`B2M-content-inner ${toggle ? 'active' : ''}`}>
+                    <div className={`B2M-content-inner side-navbar-active ${toggle ? 'active' : ''}`}>
                         <header className="B2M-page-header">
                             <h2>Questões</h2>
                         </header>
@@ -111,6 +111,7 @@ function Questions(props) {
                                 </div>
                             </div>
                         </section>
+                       
                         <Footer />
                     </div>
                 </div>

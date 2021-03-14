@@ -44,7 +44,7 @@ const answerStyle = {
     marginTop: '70px',
 };
 
-const { SHOW_PARENT } = TreeSelect;
+const { SHOW_PARENT, SHOW_ALL } = TreeSelect;
 
 // TODO: Retirar o menu desse componenete e criar um menu para toda a apalicacao
 const RegisterQuestions = (props) => {
@@ -330,7 +330,7 @@ const RegisterQuestions = (props) => {
                                             treeCheckable={true}
                                             placeholder="Cargo..."
                                             className="filter-field"
-                                            showCheckedStrategy={SHOW_PARENT}
+                                            showCheckedStrategy={SHOW_ALL }
                                             maxTagCount='responsive'
                                             showSearch
                                             treeNodeFilterProp='title'

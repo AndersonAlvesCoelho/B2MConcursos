@@ -26,6 +26,7 @@ import Alternative from "../models/Alternative";
 import User from "../models/User";
 import Comment from "../models/Comment";
 import CommentAnswer from "../models/CommentAnswer";
+import UserAnswersQuestion from "../models/UserAnswersQuestion";
 
 // tabelas do banco de dados
 const modelsDbB2mConcursos = [    
@@ -52,6 +53,7 @@ const modelsDbB2mConcursos = [
     User,
     Comment,
     CommentAnswer,
+    UserAnswersQuestion,
 ];
 
 class Database {
