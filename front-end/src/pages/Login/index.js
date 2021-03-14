@@ -33,15 +33,9 @@ function Login(props) {
 
     function handleSubmit(event) {
         event.preventDefault()
-
-
         login(requestAccess).then(() => {
             history.push('/');
         })
-        // const {token} = loginT(requestAccess)
-        // if(token){
-        //     setToken(token)
-        // }
     }
 
     return (

@@ -18,7 +18,7 @@ class UserController {
 
       const data = await User.findAll({
         where: {
-          login: email,
+          email: email,
           password: password
         }
       })
