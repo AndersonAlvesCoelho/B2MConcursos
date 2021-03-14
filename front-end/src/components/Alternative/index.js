@@ -111,7 +111,7 @@ function Alternative({ data, indexQ }) {
                                     <img src="https://bootdey.com/img/Content/user_1.jpg" className="B2M-a-avatar" alt="avatar" />
                                     <div className="B2M-a-post-commit">
                                         <div className="B2M-a-post-info">
-                                            <small> {Date(data.updatedAt)} <a>{data.user.login}</a></small>
+                                            <small> {Date(data.updatedAt)} <a>{data.user.email}</a></small>
                                         </div>
                                         <div>
                                             {data.issue_resolution}
@@ -136,7 +136,7 @@ function Alternative({ data, indexQ }) {
                                         <img src="https://bootdey.com/img/Content/user_1.jpg" className="B2M-a-avatar" alt="avatar" />
                                         <div className="B2M-a-post-commit">
                                             <div className="B2M-a-post-info">
-                                                <small> {Date(commit.updatedAt)} <a>{commit.user.login}</a></small>
+                                                <small> {Date(commit.updatedAt)} <a>{commit.user.email}</a></small>
                                                 <span>
                                                     <FaCommentAlt size={15} />
                                                     <a
@@ -159,7 +159,7 @@ function Alternative({ data, indexQ }) {
                                                     <img src="https://bootdey.com/img/Content/user_1.jpg" className="B2M-a-avatar" alt="avatar" />
                                                     <div className="B2M-a-post-commit">
                                                         <div className="B2M-a-post-info">
-                                                            <small> {Date(ans.updatedAt)} <a>{ans.user.login}</a></small>
+                                                            <small> {Date(ans.updatedAt)} <a>{ans.user.email}</a></small>
                                                             <span>
                                                                 <FaCommentAlt size={15} />
                                                                 <a

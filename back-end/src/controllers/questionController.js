@@ -5,10 +5,13 @@ import { regexPDF } from "../functions/pdfParse"
 import Alternative from "../models/Alternative";
 import { Console } from "console";
 import OfficeController from "./officeController";
+import dbConfig from "../config/database";
+import Bank from "../models/Bank";
 const fs = require('fs');
 const pdfFile = fs.readFileSync('src/PDF/TJ MG.pdf');
-
-
+const { QueryTypes } = require('sequelize');
+var Sequelize = require('sequelize');
+var sequelize = new Sequelize(dbConfig["development"]);
 class QuestionController {
 
   // Retornar o registro das questões
@@ -273,8 +276,6 @@ class QuestionController {
         idUser,
       } = req.body
 
-      console.log(nameAlternative)
-
       //  const office = await Office.create({
       //   id_office: idOffice,
       //   id_office_niv_1: idOfice1,
@@ -328,8 +329,15 @@ class QuestionController {
       //     res.status(400).send('Erro ao inserir instituição');
       //   }
       // })
+      const idQuestion = await Question.findOne({
+        order: [
+          ['id_question', 'DESC']
+        ]
+      })
 
+      // TODO: resolver problema do auto increment postgres default value e sequelize
       const question = await Question.create({
+        id_question: idQuestion.toJSON().id_alternative +1,
         id_office: 1,
         id_discipline_subject: 1,
         id_bank: idBank,
@@ -346,9 +354,28 @@ class QuestionController {
         }
       })
 
+      // const question = await sequelize.query(
+      //     'INSERT INTO public.question VALUES((SELECT MAX(id_question)+1 FROM public.question), 1, 1, ' + idBank + ',' +  idInstitution + ',' + year + ',' + issueResolution + ', 1,' + enunciated + ') ',
+      //     {
+      //       type: QueryTypes.INSERT
+      //     }
+      // ).then(function (result) {
+      //   if (result) {
+      //     return result
+      //   } else {
+      //     res.status(400).send('Erro ao inserir instituição');
+      //   }
+      // });
+
       for (let i = 0; i < nameAlternative.length; i++) {
+       //TODO: retirar essa gambiarra para pegar o ultimo ID
+        const idQAlternative = await Alternative.findOne({
+          order: [
+            ['id_alternative', 'DESC']
+          ]
+        })
         await Alternative.create({
-          id_alternative: [i + 45],
+          id_alternative: idQAlternative.toJSON().id_alternative +1,
           name_alternative: nameAlternative[i],
           answer: answer[i],
           id_question: question.id_question,
@@ -358,6 +385,7 @@ class QuestionController {
           }
         });
       }
+      console.log('teste2')
 
       return res.json(question)
     } catch (error) {

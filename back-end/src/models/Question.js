@@ -3,12 +3,11 @@ import { Model, DataTypes } from "sequelize";
 class Question extends Model {
     static init(sequelize) {
         super.init(
-
             {
                 id_question: {
                     type: DataTypes.INTEGER,
                     primaryKey: true,
-                    autoIncrement: true
+                    autoIncrement: true,
                 },
                 id_office: {
                     type: DataTypes.INTEGER,

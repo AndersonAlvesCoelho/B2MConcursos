@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
 import { SideNavbar, Navbar } from '../components/Menu/';
-import { getUserCookie } from '../services/session';
 import '../assets/css/home.css';
 
+// TODO: criar um menu para toda a apalicacao
 function Home() {
     const [toggle, setToggle] = useState(false); // mudar o stado do side bar
 
-    console.log('toggle ', getUserCookie);
-    
     return (
         <>
-
             <div className="B2M-page">
                 <Navbar toggle={toggle} onToggle={(e) => setToggle(e)}/>
 
