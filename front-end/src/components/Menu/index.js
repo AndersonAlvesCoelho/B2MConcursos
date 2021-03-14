@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
+
+import { getUserCookie } from '../../services/session';
+
 import '../../assets/css/menu-nav-bar.css';
 
+const user = getUserCookie();
 
 export const Navbar = (props) => {
 
@@ -28,9 +32,15 @@ export const Navbar = (props) => {
                             <ul className="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
                                 {/* <li className="nav-item d-flex align-items-center"><a id="search" href="#"><i className="B2M-search-icon"></i></a></li> */}
                                 <li className="nav-item">
-                                    <a href="#" className="nav-link logout">
-                                        <span className="d-none d-sm-inline">Entrar</span><i className="B2M-log-out-icon"></i>
-                                    </a>
+                                    {user[0].length === 0 ?
+                                        <a href="/login" className="nav-link logout">
+                                            <span className="d-none d-sm-inline">Entrar</span><i className="B2M-log-out-icon"></i>
+                                        </a>
+                                        :
+                                        <a href="/login" className="nav-link logout">
+                                            <span className="d-none d-sm-inline">Sair</span><i className="B2M-log-in-icon"></i>
+                                        </a>
+                                    }
                                 </li>
                             </ul>
                         </div>
@@ -46,15 +56,20 @@ export const SideNavbar = (props) => {
 
     return (
         <>
-            <nav className={`side-navbar  ${props.toggle ? "shrinked" : ""}`} >
+            <nav className={`side-navbar  ${props.toggle ? "side-navbar-active shrinked" : ""}`} >
                 {/* <nav className="side-navbar ">; */}
-                {/* <div className="sidebar-header d-flex align-items-center">
-                    <div className="avatar"><img src="https://image.freepik.com/vetores-gratis/perfil-de-avatar-de-homem-no-icone-redondo_24640-14044.jpg" alt="avatar" className="img-fluid rounded-circle" /></div>
-                    <div className="title">
-                        <h1 className="h4">Aluno</h1>
-                        <p>Concurseiro</p>
+
+                {user[0].length !== 0 && (<>
+                    <div className="sidebar-header d-flex align-items-center">
+                        <div className="avatar"><a href="dashboard/perfil"><img src="https://image.flaticon.com/icons/png/512/16/16363.png" alt="avatar" className="img-fluid rounded-circle" /></a></div>
+                        <div className="title">
+                            <h5 className="h4">{user[0].name}</h5>
+                            {/* <p>Concurseiro</p> */}
+                            {/* <a className="perfil" href="dashboard/perfil"><i className="B2M-eye-icon"></i> Perfil</a> */}
+                        </div>
                     </div>
-                </div> */}
+                </>)}
+
                 {/* <span className="heading">Principal</span> */}
                 <ul className="list-unstyled">
                     <li className={props.type === "Home" && "active"}><a href="/"> <i className="B2M-menu-grid-r-icon"></i>Home </a></li>

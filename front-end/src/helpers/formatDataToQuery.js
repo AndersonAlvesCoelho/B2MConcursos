@@ -7,7 +7,6 @@
 
 export const formatDefault = (value, data) => {
     const id = [];
-    console.log('id 1 ', data);
 
     if (value && typeof value !== String ) {
         data.map(e => {
@@ -25,7 +24,6 @@ export const formatDefault = (value, data) => {
         });
     }
 
-    console.log('id 2 ', data);
     return id;
 };
 
@@ -49,6 +47,55 @@ export const formatDefaultRegister = (value, data) => {
         });
     }
     return id;
+};
+
+
+export const formataBank = (bank, data) => {
+    const id = [];
+
+    if (bank) {
+        bank.forEach((e) => {
+            data.map(evnt => {
+                if (e === evnt.value) {
+                    return id.push(evnt.id);
+                }
+            })
+        });
+    }
+
+    return id;
+};
+
+export const formataInstitution = (institution, data) => {
+    const id = [];
+
+
+    if (institution) {
+        institution.forEach((e) => {
+            data.map(evnt => {
+                if (e === evnt.value) {
+                    return id.push(evnt.id);
+                }
+            })
+        });
+    }
+
+    return id;
+};
+export const formataYear = (value, data) => {
+    const year = [];
+
+    if (value) {
+        value.forEach((e) => {
+            data.map(evnt => {
+                if (e === evnt.value) {
+                    return year.push(evnt.title);
+                }
+            })
+        });
+    }
+
+    return year;
 };
 
 export const formataOffice = (office, data) => {

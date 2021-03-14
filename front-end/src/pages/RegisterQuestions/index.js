@@ -1,7 +1,7 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 // import MenuNavbar from '../../components/MenuNavbar/index';
-import { Col, Container, Row} from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import {
     Form,
     Input,
@@ -20,12 +20,13 @@ import { SideNavbar, Navbar } from '../../components/Menu/';
 import '../../assets/css/home.css';
 
 // import {Card, Form, Input, Steps, TreeSelect} from 'antd';
+import Footer from '../../components/Footer';
 import * as regusterQuestionsActions from '../../actions/registerQuestions.actions';
 import * as bankActions from "../../actions/bank.actions";
 import * as institutionActions from "../../actions/institution.actions";
 import * as officeActions from "../../actions/office.actions";
 import * as diciplineActions from "../../actions/dicipline.actions";
-import {yearData} from "../../services/filter/dataSelect";
+import { yearData } from "../../services/filter/dataSelect";
 import {
     formatDefault,
     formataDicipline,
@@ -77,9 +78,7 @@ const RegisterQuestions = (props) => {
     const [diciplineValue, setDiciplineValue] = useState([]);
 
     // questions info
-
-
-    const [issueResolution , setIssueResolution] = useState();
+    const [issueResolution, setIssueResolution] = useState();
     const [enunciated, setEnunciated] = useState();
     const [alternativeA, setAlternativeA] = useState();
     const [alternativeB, setAlternativeB] = useState();
@@ -117,7 +116,7 @@ const RegisterQuestions = (props) => {
         getDicipline();
     }, [getBank, getInstitution, getOffice, getDicipline]);
 
-    const changeRadio =  ({ target })  => {
+    const changeRadio = ({ target }) => {
         const newRadioData = radioData.map((radio) => {
             const checked = radio.radioName === target.value;
             return {
@@ -152,7 +151,7 @@ const RegisterQuestions = (props) => {
         console.log(officeValue)
         const idOffice = formataOffice(officeValue, office);
         console.log(diciplineValue)
-        const idDicipline = formataDicipline(diciplineValue,dicipline);
+        const idDicipline = formataDicipline(diciplineValue, dicipline);
 
         const nameAlternative = [
             alternativeA,
@@ -161,7 +160,7 @@ const RegisterQuestions = (props) => {
             alternativeD
         ]
 
-        const answer =  radioData.map((radio) => {
+        const answer = radioData.map((radio) => {
             return radio.selected
         })
 
@@ -217,10 +216,10 @@ const RegisterQuestions = (props) => {
 
     return (
         <div className="B2M-page">
-            <Navbar toggle={toggle} onToggle={(e) => setToggle(e)}/>
+            <Navbar toggle={toggle} onToggle={(e) => setToggle(e)} />
 
             <div className="B2M-page-content">
-                <SideNavbar toggle={toggle}/>
+                <SideNavbar toggle={toggle}  type="RegisterQuestions"/>
 
                 <Container className="filter-conatiner" >
 
@@ -544,7 +543,9 @@ const RegisterQuestions = (props) => {
                         </Button>
                     </Form>
 
+
                 </Container>
+                {/* <Footer /> */}
             </div>
         </div>
     );

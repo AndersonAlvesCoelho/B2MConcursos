@@ -5,7 +5,10 @@ import { Drawer, TreeSelect, Input, Button, Form, Checkbox } from 'antd';
 import { FaFilter, FaUndo } from "react-icons/fa";
 
 import {
-    formatDefault,
+    // formatDefault,
+    formataBank,
+    formataInstitution,
+    formataYear,
     formataOffice,
     formataDicipline,
 } from '../../helpers/formatDataToQuery';// functions helps : format data retorn id
@@ -71,10 +74,12 @@ function FilterFixed(props) {
     // filter formata dados ; return id dados
     function filter(values) {
 
-        const idBank = formatDefault(values.bank, bank);
-        const idInstitution = formatDefault(values.institution, institution);
+        console.log('values ', values);
+
+        const idBank = formataBank(values.bank, bank);
+        const idInstitution = formataInstitution(values.institution, institution);
+        const year = formataYear(values.year, yearData);
         const idOffice = formataOffice(values.office, office);
-        const year = formatDefault(values.year, yearData);
         const idDicipline = formataDicipline(values.dicipline, dicipline);
         // var gabaritoComentado = false;
         // var comentarios = false;
@@ -102,7 +107,6 @@ function FilterFixed(props) {
             // comentarios
         };
 
-        console.log('data ', data);
 
         onClose();
         return changerFilter(data);

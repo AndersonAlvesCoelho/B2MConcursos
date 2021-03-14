@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Menu, Spin, Empty } from 'antd';
-import { FaFilter, FaLongArrowAltRight } from "react-icons/fa";
+import { Empty } from 'antd';
 
-// import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../assets/css/question.css';
 import 'antd/dist/antd.css';
 
@@ -14,7 +12,7 @@ import Pagination from '../../components/Pagination';
 import Footer from '../../components/Footer';
 import * as questionActions from '../../actions/question.actions';
 
-const viewSizeQuestion = 1;
+const viewSizeQuestion = 2;
 
 function Questions(props) {
 
@@ -24,7 +22,6 @@ function Questions(props) {
     const [pagerCurrent, setPagerCurrent] = useState(1);
     const [offset, setOffset] = useState(0);
     const [limit, setLimit] = useState(viewSizeQuestion);
-
 
     const {
         loadingQuestion,

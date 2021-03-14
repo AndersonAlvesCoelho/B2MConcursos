@@ -107,7 +107,6 @@ nav.navbar .menu-btn.active span:last-of-type {
   transform: translateY(-12px);
 }
 
-
 nav.navbar .nav-link span.badge-corner {
   position: absolute;
   top: 0;
@@ -303,6 +302,8 @@ nav.side-navbar {
   /*==== Shrinked Sidebar ====*/
 }
 
+
+
 nav.side-navbar a {
   color: inherit;
   position: relative;
@@ -352,7 +353,7 @@ nav.side-navbar .title {
   margin-left: 10px;
 }
 
-nav.side-navbar .title h1 {
+nav.side-navbar .title h4 {
   color: var(--black);
 }
 
@@ -373,6 +374,11 @@ nav.side-navbar span.heading {
 
 nav.side-navbar ul {
   padding: 15px 0;
+}
+
+.navbar-header {
+  display: flex;
+  align-items: center;
 }
 
 nav.side-navbar ul li {
@@ -543,6 +549,9 @@ nav.side-navbar.shrinked .sidebar-header .title {
   }
   nav.side-navbar ul li.active > a i {
     color: var(--white);
+  }
+  nav.side-navbar .sidebar-header img {
+    display: none;
   }
   nav.side-navbar .sidebar-header .title {
     display: none;

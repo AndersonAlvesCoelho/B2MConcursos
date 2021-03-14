@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { SideNavbar, Navbar } from '../components/Menu/';
 
+import { SideNavbar, Navbar } from '../components/Menu/';
 import Footer from '../components/Footer';
 
 import '../assets/css/home.css';
@@ -9,9 +9,6 @@ import '../assets/css/home.css';
 function Home() {
     const [toggle, setToggle] = useState(false); // mudar o stado do side bar
 
-
-    console.log('toggle ', toggle);
-
     return (
         <>
             <div className="B2M-page">
@@ -19,7 +16,7 @@ function Home() {
                 <div className="B2M-page-content">
                     <SideNavbar toggle={toggle} type="Home" /> {/* SIDEBAR */}
                     {/* Page Header */}
-                    <div className="B2M-content-inner">
+                    <div className="B2M-content-inner side-navbar-active">
                         <header className="B2M-page-header">
                             <h2>Home</h2>
                         </header>

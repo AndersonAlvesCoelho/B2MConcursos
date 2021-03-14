@@ -9,30 +9,25 @@ const Pagination = ({ postsPerPage, totalPosts, newPage, paginate }) => {
     pageNumbers.push(i);
   }
 
-  return (
-    // <nav>
-    //   <ul className='B2M-p-pagination-center'>
-    //     {pageNumbers.map(number => (
-    //       <li key={number} className='B2M-p-pagination'>
-    //         <a onClick={() => newPage(number)} className={ paginate === number  && "active"} >
-    //           {number}
-    //         </a>
-    //       </li>
-    //     ))}
-    //   </ul>
-    // </nav>
+  console.log('pageNumbers ', pageNumbers);
+  console.log('postsPerPage ', postsPerPage);
+  console.log('totalPosts ', totalPosts);
+  console.log('newPage ', newPage);
+  console.log('paginate ', paginate);
 
+  return (
     <section className="B2M-pagination">
       <ul>
-        <li><a><i className="B2M-chevron-double-left-icon"></i></a></li>
-        <li><a><i className="B2M-chevron-left-icon"></i></a></li>
+        <li onClick={() => newPage(paginate !== 1 ? 1 : paginate)}><i className="B2M-chevron-double-left-icon"></i></li>
+        <li onClick={() => newPage(paginate !== 1 ? paginate - 1 : paginate)}><i className="B2M-chevron-left-icon"></i></li>
         {pageNumbers.map((number, index) => (
-          <li key={index} onClick={() => newPage(number)}  className={paginate === number && "B2M-active"} >
-              {(pageNumbers.length - 1) === number ? <i className="B2M-more-alt-icon"></i> : number}
+          <li key={index} onClick={() => newPage(number)} className={paginate === number && "B2M-active"} >
+            {/* {((pageNumbers.length - 1) === number) ? <i className="B2M-more-alt-icon"></i> : number} */}
+            {number}
           </li>
         ))}
-        <li><a><i className="B2M-chevron-right-icon"></i></a></li>
-        <li><a><i className="B2M-chevron-double-right-icon"></i></a></li>
+        <li onClick={() => newPage(paginate !== pageNumbers.length ? paginate + 1 : paginate )}><i className="B2M-chevron-right-icon"></i></li>
+        <li onClick={() => newPage(pageNumbers.length)}><i className="B2M-chevron-double-right-icon"></i></li>
       </ul>
     </section>
   );

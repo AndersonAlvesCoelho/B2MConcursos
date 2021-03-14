@@ -1,17 +1,11 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, Button, ListGroup, Form } from 'react-bootstrap';
-import { FaBookmark, FaComments, FaCheckCircle, FaInfoCircle, FaCommentAlt } from "react-icons/fa";
-import { Radio, Card, Avatar, Menu } from 'antd';
-
 import CommentUser from '../Comment/commentUser';
 
 import logo from '../../assets/img/svg/logo.svg';
 import erro from '../../assets/img/svg/erro.svg';
 import ok from '../../assets/img/svg/ok.svg';
-import bookmark from '../../assets/img/svg/bookmark.svg';
-import chat from '../../assets/img/svg/chat-bubbles-with-ellipsis.svg';
 
-import { dataFormatada } from '../../utils/dataFormata';
+import { dataFormatada } from '../../helpers/dataFormata';
 
 
 function Alternative({ data, index }) {
@@ -34,7 +28,6 @@ function Alternative({ data, index }) {
 
     return (
         <>
-
             <div className="B2M-card-header">
                 <div className="B2M-card-title">
                     <img src={logo} atl="LOGO" />
@@ -92,25 +85,26 @@ function Alternative({ data, index }) {
             </div>
 
             {/* CONETARIO DO PROFESSOR */}
-            {current === "teacher" && (<>
-
-                <div class="B2M-comment-teacher">
-                    <div class="feed d-flex justify-content-between">
-                        <div class="feed-body d-flex justify-content-between">
-                            <a href="#" class="feed-profile"><img src="https://bootdey.com/img/Content/user_1.jpg" alt="avatar" class="img-fluid rounded-circle" /></a>
-                            <div class="B2M-comment-content">
-                                <h5>{data.user.login}</h5>
-                                <div class="full-date">
-                                    <small>{dataFormatada(data.updatedAt)}</small>
+            {current === "teacher" && <>
+                {data.issue_resolution ? (<>
+                    <div class="B2M-comment-teacher">
+                        <div class="feed d-flex justify-content-between">
+                            <div class="feed-body d-flex justify-content-between">
+                                <a href="#" class="feed-profile"><img src="https://image.flaticon.com/icons/png/512/16/16363.png" alt="avatar" class="img-fluid rounded-circle" /></a>
+                                <div class="B2M-comment-content">
+                                    <h5>{data.user.login}</h5>
+                                    <div class="full-date">
+                                        <small>{dataFormatada(data.updatedAt)}</small>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="B2M-comment">
+                            <small>{data.issue_resolution}</small>
+                        </div>
                     </div>
-                    <div class="B2M-comment">
-                        <small>{data.issue_resolution}</small>
-                    </div>
-                </div>
-            </>)}
+                </>) : <p className="mx-5 my-5">Sem comentário do professor</p>}
+            </>}
 
             {/* COMENTARIOS DE USUARIOS */}
             {current === "comment" && (<>
@@ -119,7 +113,7 @@ function Alternative({ data, index }) {
                     <div class="B2M-comment-user">
                         <div class="feed d-flex justify-content-between" key={index}>
                             <div class="feed-body d-flex justify-content-between">
-                                <a href="#" class="feed-profile"><img src="https://bootdey.com/img/Content/user_1.jpg" alt="avatar" class="img-fluid rounded-circle" /></a>
+                                <a href="#" class="feed-profile"><img src="https://image.flaticon.com/icons/png/512/16/16363.png" alt="avatar" class="img-fluid rounded-circle" /></a>
                                 <div class="B2M-comment-content">
                                     <h5>{commit.user.login}</h5>
                                     <div class="full-date">

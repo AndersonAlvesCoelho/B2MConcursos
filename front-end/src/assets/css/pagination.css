@@ -4,6 +4,7 @@ section.B2M-pagination {
 }
 .B2M-pagination ul {
   display: flex;
+  justify-content: center;
 }
 .B2M-pagination ul li {
   background-color: var(--main-secondary);
