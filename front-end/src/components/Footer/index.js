@@ -4,8 +4,18 @@ function Footer() {
 
     return (
         <>
-            <footer className="b2m-f-footer">
-                <p className="copyright">Company Name © 2018</p>
+
+            <footer className="main-footer">
+                <div className="container-fluid">
+                    <div className="row">
+                        <div className="col-sm-6">
+                            <p>Your company &copy; 2021</p>
+                        </div>
+                        <div className="col-sm-6 text-right">
+                            <p>Design by <a href="#" className="external">B2M</a></p>
+                        </div>
+                    </div>
+                </div>
             </footer>
         </>
     );

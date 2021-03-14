@@ -15,8 +15,11 @@ import * as institutionActions from '../../actions/institution.actions'; // Data
 import * as officeActions from '../../actions/office.actions'; // Data filter
 import * as diciplineActions from '../../actions/dicipline.actions'; // Data filter
 
-const CheckboxGroup = Checkbox.Group;
+import 'antd/dist/antd.css';
+
+// const CheckboxGroup = Checkbox.Group;
 const { SHOW_PARENT } = TreeSelect;
+
 
 function FilterFixed(props) {
 
@@ -67,36 +70,41 @@ function FilterFixed(props) {
 
     // filter formata dados ; return id dados
     function filter(values) {
+
         const idBank = formatDefault(values.bank, bank);
         const idInstitution = formatDefault(values.institution, institution);
         const idOffice = formataOffice(values.office, office);
         const year = formatDefault(values.year, yearData);
         const idDicipline = formataDicipline(values.dicipline, dicipline);
-        var gabaritoComentado = false;
-        var comentarios = false;
+        // var gabaritoComentado = false;
+        // var comentarios = false;
 
-        checkedList.map((list) => {
-            switch (list) {
-                case 'Gabarito comentado':
-                    gabaritoComentado = true;
-                    break;
-                case 'Comentarios':
-                    comentarios = true;
-                    break;
-                default:
-            }
-        })
+        // checkedList.map((list) => {
+        //     switch (list) {
+        //         case 'Gabarito comentado':
+        //             gabaritoComentado = true;
+        //             break;
+        //         case 'Comentarios':
+        //             comentarios = true;
+        //             break;
+        //         default:
+        //     }
+        // })
 
         let data = {
             enunciated: values.enunciated,
-            bank: idBank, institution: idInstitution,
+            bank: idBank,
+            institution: idInstitution,
             office: idOffice,
             year: year,
             dicipline: idDicipline,
-            gabaritoComentado,
-            comentarios
+            // gabaritoComentado,
+            // comentarios
         };
 
+        console.log('data ', data);
+
+        onClose();
         return changerFilter(data);
     }
 
@@ -105,12 +113,6 @@ function FilterFixed(props) {
     function clearFilter() {
         window.location.reload();
     }
-
-    //set estados checkbox
-    function onCheckboc(list) {
-        setCheckedList(list);
-    }
-    console.log('checkedList ', checkedList);
 
     return (
         <>
@@ -122,7 +124,6 @@ function FilterFixed(props) {
                 onClose={onClose}
                 visible={visible}
                 bodyStyle={{ paddingBottom: 80 }}
-
             >
                 <Form layout="vertical" requiredMark={false} onFinish={filter} >
                     <Row>
@@ -257,10 +258,10 @@ function FilterFixed(props) {
 
                     <Row >
 
-                        <Col sm={12}>
+                        {/* <Col sm={12}>
                             <span className="mr-1">Questões com:</span>
-                            <span> <CheckboxGroup options={plainOptions} value={checkedList} onChange={onCheckboc} /></span>
-                        </Col>
+                            <span> <CheckboxGroup options={plainOptions} value={checkedList} onChange={(list) => setCheckedList(list)} /></span>
+                        </Col> */}
 
                         <Col sm={12}>
                             <hr className="filter-line" />
@@ -276,7 +277,7 @@ function FilterFixed(props) {
                                         plainOptions.length !== 0
                                         ? false : true}
                                 > <FaUndo className="mr-2" /> Limpar</Button>
-                                <Button className="B2M-btn B2M-btn-winter" onClick={onClose} htmlType="submit"
+                                <Button className="B2M-btn B2M-btn-winter" type="primary" htmlType="submit"
                                     disabled={questionSearch ||
                                         bankValue.length !== 0 ||
                                         institutionValue.length !== 0 ||

@@ -6,10 +6,10 @@
 * ==========================================================
 */
 nav.navbar {
-  background: #2f333e;
+  background: var(--main-primary);
   padding-top: 15px;
   padding-bottom: 15px;
-  color: #fff;
+  color: var(--white);
   position: relative;
   border-radius: 0;
   -webkit-box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
@@ -54,7 +54,7 @@ nav.navbar .menu-btn {
 nav.navbar .menu-btn span {
   width: 20px;
   height: 2px;
-  background: #fff;
+  background: var(--main-secondary);
   display: block;
   margin: 4px auto 0;
   -webkit-transition: all 0.3s cubic-bezier(0.81, -0.33, 0.345, 1.375);
@@ -74,7 +74,7 @@ nav.navbar .menu-btn span:nth-of-type(2)::after {
   width: 6px;
   height: 2px;
   display: block;
-  background: #fff;
+  background: var(--main-secondary);
   -webkit-transform: rotate(45deg);
   transform: rotate(45deg);
   position: absolute;
@@ -136,7 +136,7 @@ nav.navbar .search-box {
   top: 0;
   right: 0;
   padding: 0;
-  background: #fff;
+  background: var(--white);
   z-index: 12;
   border-radius: 0;
   display: none;
@@ -152,7 +152,7 @@ nav.navbar .search-box .dismiss {
   border: none;
   cursor: pointer;
   font-size: 1.5em;
-  color: #999;
+  color: var(--darkGray);
 }
 
 nav.navbar .search-box form {
@@ -189,7 +189,7 @@ nav.navbar .dropdown-menu {
 }
 
 nav.navbar .dropdown-menu .dropdown-item {
-  background: #fff;
+  background: var(--white);
   padding: 10px 20px;
   background-color: var(--main-primary);
   border-radius: 0px 0px 10px 10px;
@@ -198,7 +198,7 @@ nav.navbar .dropdown-menu .dropdown-item {
 nav.navbar .dropdown-menu span {
   position: static;
   font-size: 0.9em;
-  color: #999;
+  color: var(--darkGray);
 }
 
 nav.navbar .dropdown-menu strong {
@@ -291,10 +291,10 @@ nav.navbar .dropdown-menu h3 {
 * ==========================================================
 */
 nav.side-navbar {
-  background: #fff;
+  background: var(--main-bg);
   min-width: 250px;
   max-width: 250px;
-  color: #686a76;
+  color: var(--black);
   -webkit-box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
   z-index: 9;
@@ -321,7 +321,7 @@ nav.side-navbar a[data-toggle="collapse"]::before {
 }
 
 nav.side-navbar a[aria-expanded="true"] {
-  background: #eef5f9;
+  background: var(--light);
 }
 
 nav.side-navbar a[aria-expanded="true"]::before {
@@ -353,21 +353,21 @@ nav.side-navbar .title {
 }
 
 nav.side-navbar .title h1 {
-  color: #333;
+  color: var(--black);
 }
 
 nav.side-navbar .title p {
   font-size: 0.9em;
   font-weight: 200;
   margin-bottom: 0;
-  color: #aaa;
+  color: var(--darkGray);
 }
 
 nav.side-navbar span.heading {
   text-transform: uppercase;
   font-weight: 400;
   margin-left: 20px;
-  color: #ccc;
+  color: var(--white);
   font-size: 0.8em;
 }
 
@@ -388,28 +388,28 @@ nav.side-navbar ul li a {
 }
 
 nav.side-navbar ul li a:hover {
-  background: #2b90d9;
-  border-left: 4px solid #1c669c;
-  color: #fff;
+  background: var(--main-secondary);
+  border-left: 4px solid var(--main-darkSecondary);
+  color: var(--white);
 }
 
 nav.side-navbar ul li li a {
   padding-left: 50px;
-  background: #eef5f9;
+  background: var(--light);
 }
 
 nav.side-navbar ul li.active > a {
-  background: #2b90d9;
-  color: #fff;
-  border-left: 4px solid #1c669c;
+  background: var(--main-secondary);
+  color: var(--white);
+  border-left: 4px solid var(--main-darkSecondary);
 }
 
 nav.side-navbar ul li.active > a:hover {
-  background: #2b90d9;
+  background: var(--main-secondary);
 }
 
 nav.side-navbar ul li li.active > a {
-  background: #419bdd;
+  background: var(--main-secondary);
 }
 
 nav.side-navbar ul li ul {
@@ -430,7 +430,7 @@ nav.side-navbar.shrinked ul li a {
   padding: 15px 2px;
   border: none;
   font-size: 0.8em;
-  color: #aaa;
+  color: var(--darkGray);
   -webkit-transition: color 0.3s, background 0.3s;
   transition: color 0.3s, background 0.3s;
   overflow: hidden;
@@ -456,30 +456,29 @@ nav.side-navbar.shrinked
 }
 
 nav.side-navbar.shrinked ul li a:hover {
-  color: #fff;
+  color: var(--white);
   border: none;
 }
 
 nav.side-navbar.shrinked ul li a:hover i {
-  color: #fff;
+  color: var(--white);
 }
 
 nav.side-navbar.shrinked ul li a i {
-  margin-right: 0;
-  margin-bottom: 2px;
   display: block;
   font-size: 1rem;
-  color: #333;
+  color: var(--black);
   -webkit-transition: color 0.3s;
   transition: color 0.3s;
+  margin: 0 auto 5px;
 }
 
 nav.side-navbar.shrinked ul li.active > a {
-  color: #fff;
+  color: var(--white);
 }
 
 nav.side-navbar.shrinked ul li.active > a i {
-  color: #fff;
+  color: var(--white);
 }
 
 nav.side-navbar.shrinked .sidebar-header .title {
@@ -503,7 +502,7 @@ nav.side-navbar.shrinked .sidebar-header .title {
     padding: 15px 2px;
     border: none;
     font-size: 0.8em;
-    color: #aaa;
+    color: var(--darkGray);
     -webkit-transition: color 0.3s, background 0.3s;
     transition: color 0.3s, background 0.3s;
   }
@@ -524,11 +523,11 @@ nav.side-navbar.shrinked .sidebar-header .title {
     content: "\f106";
   }
   nav.side-navbar ul li a:hover {
-    color: #fff;
+    color: var(--white);
     border: none;
   }
   nav.side-navbar ul li a:hover i {
-    color: #fff;
+    color: var(--white);
   }
   nav.side-navbar ul li a i {
     margin-right: 0;
@@ -540,10 +539,10 @@ nav.side-navbar.shrinked .sidebar-header .title {
     transition: color 0.3s;
   }
   nav.side-navbar ul li.active > a {
-    color: #fff;
+    color: var(--white);
   }
   nav.side-navbar ul li.active > a i {
-    color: #fff;
+    color: var(--white);
   }
   nav.side-navbar .sidebar-header .title {
     display: none;

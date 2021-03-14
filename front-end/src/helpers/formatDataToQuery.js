@@ -7,9 +7,7 @@
 
 export const formatDefault = (value, data) => {
     const id = [];
-
-    console.log(data)
-    console.log(value)
+    console.log('id 1 ', data);
 
     if (value && typeof value !== String ) {
         data.map(e => {
@@ -27,15 +25,13 @@ export const formatDefault = (value, data) => {
         });
     }
 
+    console.log('id 2 ', data);
     return id;
 };
 
 
 export const formatDefaultRegister = (value, data) => {
     var id;
-
-    console.log(data)
-    console.log(value)
 
     if (value && typeof value !== String ) {
         data.map(e => {

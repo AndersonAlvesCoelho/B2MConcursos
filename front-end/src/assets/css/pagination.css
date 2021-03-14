@@ -1,30 +1,81 @@
-.B2M-p-pagination-center {
+section.B2M-pagination {
   text-align: center;
+  margin-left: 10px;
 }
-.B2M-p-pagination {
-  display: inline-block;
+.B2M-pagination ul {
+  display: flex;
 }
-.B2M-p-pagination a {
-  border-radius: 5px;
+.B2M-pagination ul li {
   background-color: var(--main-secondary);
-  padding: 8px 16px;
+  border-radius: 5px;
+  padding: 10px 20px;
   margin: 5px;
-  color: var(--black) !important;
+  list-style-type: none;
+  align-self: center;
+  font-size: 20px;
+  text-decoration: none;
+  color: var(--black);
+  text-decoration: none;
+  cursor: pointer;
 }
-.B2M-p-pagination a.active {
+.B2M-pagination ul li:hover {
   background-color: var(--main-primary);
-  color: var(--main-secondary);
-  border-radius: 5px;
+  color: var(--white);
+  font-size: 25px;
 }
-.B2M-p-pagination a:hover:not(.active) {
-  background-color: var(--main-secondary);
-  border-radius: 5px;
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+.B2M-pagination ul li.B2M-active {
+  background-color: var(--main-primary);
+  color: var(--white);
+  font-size: 25px;
+}
+.B2M-pagination ul li.B2M-active:hover {
+  text-decoration: none;
 }
 
+/* PAGINATION ICON COLOR AND HOVER ----------------------------------- */
+.B2M-pagination ul li:nth-child(-n + 2) {
+  border-radius: 15px;
+  font-size: 25px;
+  color: var(--white);
+  cursor: pointer;
+}
+.B2M-pagination ul li:nth-child(1) {
+  background-color: var(--darkGray);
+}
+.B2M-pagination ul li:nth-child(2) {
+  background-color: var(--secondary);
+}
 
-@media (min-width: 350px) {
-  .B2M-p-pagination a {
-    font-size: 10pt;
+.B2M-pagination ul li:hover:nth-child(-n + 2) {
+  background-color: transparent;
+  color: var(--black);
+}
+
+.B2M-pagination ul li:nth-last-child(-n + 2) {
+  border-radius: 15px;
+  font-size: 25px;
+  color: var(--white);
+  cursor: pointer;
+}
+.B2M-pagination ul li:nth-last-child(1) {
+  background-color: var(--darkGray);
+}
+.B2M-pagination ul li:nth-last-child(2) {
+  background-color: var(--secondary);
+}
+
+.B2M-pagination ul li:hover:nth-last-child(-n + 2) {
+  background-color: transparent;
+  color: var(--black);
+}
+
+/* PAGINATION MEDIAQUERIES ----------------------------------- */
+
+@media (max-width: 1700px) {
+  .B2M-pagination ul li:nth-child(n + 3):nth-last-child(n + 3) {
+    display: none;
+  }
+  .B2M-pagination  {
+    margin-right: 50px;
   }
 }

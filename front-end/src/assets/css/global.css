@@ -1,6 +1,8 @@
 :root {
   --main-primary: #10495c;
+  --main-darkPrimary: #043444;
   --main-secondary: #f1ae5f;
+  --main-darkSecondary: #be7828;
   --main-bg: #fdfaf1;
 
   --primary: #007bff;
@@ -33,7 +35,19 @@ body {
 a {
   color: #000000;
 }
+a:hover {
+  color: #000000;
+  text-decoration: underline;
+}
 
+.B2M-active {
+  color: #000000;
+  text-decoration: underline;
+}
+.B2M-active:hover {
+  color: #000000;
+  text-decoration: underline;
+}
 .B2M-page {
   overflow-x: hidden;
   background: var(--main-bg);
@@ -44,14 +58,128 @@ a {
   display: flex !important;
 }
 
-/* Footer */
-.b2m-f-footer {
-  position: fixed;
-  left: 0;
+/*
+* ==========================================================
+*     BACKGROUND COLOR
+* ==========================================================
+*/
+.B2M-bg {
+  background-color: var(--main-bg) !important;
+}
+.B2M-bg-primary {
+  background-color: var(--main-primary) !important;
+}
+.B2M-bg-darkPrimary {
+  background-color: var(--main-darkPrimary) !important;
+}
+.B2M-bg-secondary {
+  background-color: var(--main-secondary) !important;
+}
+.B2M-bg-darkSecondary {
+  background-color: var(--main-darkSecondary) !important;
+}
+
+/*
+* ==========================================================
+*     TEXT COLOR
+* ==========================================================
+*/
+
+/* Page Header ----------------------------------- */
+.B2M-content-inner {
+  position: relative;
+  width: calc(100% - 250px);
+  min-height: calc(100vh - 70px);
+  padding-bottom: 60px;
+}
+.B2M-content-inner.active {
+  width: calc(100% - 90px);
+}
+@media (max-width: 1199px) {
+  .B2M-content-inner {
+    width: 100%;
+  }
+}
+
+/*
+* ==========================================================
+*     BUTTON STYLES
+* ==========================================================
+*/
+/* Button Primary ----------------------------------- */
+.B2M-btn-primary {
+  background-color: var(--main-primary);
+  border: none;
+  border-radius: 5px;
+  display: inline-block;
+  padding: 15px;
+  color: var(--white);
+  font-size: large;
+  font-weight: 500;
+}
+.B2M-btn-primary a {
+  color: var(--white);
+}
+.B2M-btn-primary:hover {
+  background-color: var(--main-secondary);
+}
+.B2M-btn-primary a:hover {
+  text-decoration: none;
+}
+
+.B2M-page-header {
+  background: var(--main-secondary);
+  padding: 10px;
+  -webkit-box-shadow: 2px 2px 2px rgb(0 0 0 / 10%);
+  box-shadow: 2px 2px 2px rgb(0 0 0 / 10%);
+  position: relative;
+  z-index: 8;
+}
+.B2M-page-header h2 {
+  font-size: 35px;
+  font-weight: bolder;
+}
+
+/* Breadcrumb ----------------------------------- */
+.B2M-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  list-style: none;
+  background-color: transparent;
+  border-radius: 0.25rem;
+}
+.B2M-breadcrumb li a {
+  color: #000000;
+}
+
+/*
+* ==========================================================
+*     FOOTER
+* ==========================================================
+*/
+footer.main-footer {
+  position: absolute;
   bottom: 0;
   width: 100%;
-  background-color: var(--light);
-  color: var(--main-primary);
-  text-align: center;
+  background: var(--main-primary);
+  color: var(--main-bg);
+  padding: 20px 10px;
 }
-/* Footer */
+
+footer.main-footer a {
+  color: inherit;
+}
+
+footer.main-footer p {
+  margin: 0;
+  font-size: 0.8em;
+}
+
+/* FOOTER MEDIAQUERIES  --------------------------------- */
+@media (max-width: 575px) {
+  footer.main-footer div[class*="col"] {
+    text-align: center !important;
+  }
+}

@@ -1,5 +1,303 @@
 @import url("../css/global.css");
 
+section.B2M-questions {
+  padding: 10px 0;
+}
+
+.B2M-info-question {
+  display: flex;
+  justify-content: center;
+}
+.B2M-info-question {
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+/* CARD HEADER ----------------------------------- */
+
+.B2M-card-header {
+  display: grid;
+  grid-template-columns: 1fr 100px;
+  /* display: flex; */
+  /* justify-content: space-between; */
+  padding: 1rem 1.25rem;
+  background-color: var(--white);
+  border-bottom: 1px solid var(--white);
+  box-shadow: 2px 2px 2px rgb(0 0 0 / 5%);
+
+  font-size: 25px;
+}
+.B2M-card-title p {
+  margin: 5px;
+}
+.B2M-card-header .B2M-card-title {
+  display: flex;
+  justify-content: space-around;
+  margin: 0 auto;
+}
+.B2M-card-title img {
+  width: 50px;
+  margin-right: 10px;
+}
+.B2M-card-header .B2M-card-info ul{
+  display: flex;
+  justify-content:space-evenly;
+}
+/* CARD BODY ----------------------------------- */
+.B2M-card-body {
+  flex: 1 1 auto;
+  min-height: 1px;
+  padding: 1.25rem;
+}
+
+.B2M-card-body p {
+  font-size: 25px;
+  font-weight: bolder;
+}
+
+.B2M-alternative {
+  display: block;
+  margin: 10px;
+}
+
+.B2M-option-alternative {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.B2M-option-alternative input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.B2M-checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #dedede;
+  border-radius: 50%;
+}
+
+.B2M-option-alternative:hover input ~ .B2M-checkmark {
+  background-color: #ccc;
+}
+.B2M-option-alternative input:checked ~ .B2M-checkmark {
+  background-color: var(--main-primary);
+}
+
+.B2M-checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.B2M-option-alternative input:checked ~ .B2M-checkmark:after {
+  display: block;
+}
+
+.B2M-option-alternative .checkmark:after {
+  top: 9px;
+  left: 9px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: white;
+}
+.B2M-answer-option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+.B2M-answer-msg span {
+  font-size: 20px;
+  font-weight: bolder;
+  font-style: inherit;
+}
+.B2M-answer-msg img {
+  display: inline-block;
+  padding: 5px;
+  height: 50px;
+}
+.B2M-answer-msg button:disabled,
+button[disabled] {
+  opacity: 0.5;
+}
+
+.B2M-answer-option button {
+  background-color: var(--main-primary);
+  border: none;
+  border-radius: 5px;
+  display: inline-block;
+  padding: 15px;
+  color: var(--white);
+  font-size: large;
+  font-weight: 500;
+}
+.B2M-answer-option button a {
+  color: var(--white);
+}
+
+/* CARD FOOTER ----------------------------------- */
+
+.card {
+  margin-bottom: 50px;
+}
+
+.B2M-card-footer {
+  overflow: hidden;
+  border: 3px solid var(--light);
+  background-color: var(--white);
+  border-bottom: 1px solid var(--white);
+}
+.B2M-card-footer button {
+  background-color: var(--white);
+  float: left;
+  border: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 20px;
+  color: var(--black);
+}
+.B2M-card-footer button:hover {
+  background-color: var(--main-primary);
+  color: var(--white);
+}
+.B2M-card-footer button.B2M-card-tab-active {
+  background-color: var(--main-primary);
+  color: var(--white);
+}
+
+.B2M-comment-teacher {
+  padding: 10px;
+  border-bottom: 1px solid var(--white);
+}
+
+.B2M-comment-content {
+  padding: 10px;
+}
+
+.B2M-comment-content h5 {
+  margin-bottom: 0;
+  color: var(--darkGray);
+}
+.B2M-comment-content span {
+  font-size: 0.8em;
+  color: var(--secondary);
+}
+
+.B2M-comment {
+  background: var(--main-bg);
+  margin-top: 10px;
+  border-radius: 0;
+  padding: 15px;
+  margin-left: 100px;
+  box-shadow: 2px 2px 2px rgb(0 0 0 / 10%), -1px 0 2px rgb(0 0 0 / 5%);
+}
+
+.B2M-comment-user {
+  padding: 20px;
+  border-bottom: 1px solid var(--white);
+}
+
+.B2M-comment-user-answer {
+  padding: 15px;
+  margin-left: 100px;
+  border-bottom: 1px solid var(--white);
+}
+
+.B2M-comment-answer-btn {
+  cursor: pointer;
+  font-size: 15px;
+}
+.B2M-comment-answer-btn a {
+  color: var(--black);
+  text-decoration: none;
+}
+.B2M-comment-answer-btn a:hover {
+  color: var(--black);
+}
+
+.B2M-comment-new {
+  display: inline;
+  padding: 20px;
+}
+.B2M-comment-new button {
+  background-color: var(--main-secondary);
+  border: none;
+  border-radius: 2px;
+  display: inline-block;
+  padding: 10px;
+  margin: 10px;
+  color: var(--white);
+}
+
+.B2M-comment-first {
+  padding: 20px;
+}
+
+/* QUESTION MEDIAQUERIES ----------------------------------- */
+@media (max-width: 992px) {
+  .B2M-info-question-none {
+    display: none;
+  }
+  .B2M-card-header {
+    display: inline;
+    font-size: 18px;
+  }
+  .B2M-card-header span {
+    margin-top: 30px;
+  }
+  .B2M-card-title img {
+    display: none;
+  }
+  .B2M-card-body p {
+    font-size: 20px;
+  }
+  .B2M-option-alternative {
+    font-size: 15px;
+  }
+  .B2M-answer-msg span {
+    font-size: 13px;
+  }
+  .B2M-answer-msg img {
+    display: block;
+    height: 30px;
+  }
+  .B2M-answer-option button {
+    padding: 10px;
+    font-size: 15px;
+  }
+  .B2M-card-footer button {
+    font-size: 15px;
+  }
+  .B2M-card-footer button .B2M-bookmark-icon,
+  .B2M-list-icon {
+    transform: scale(var(--ggs, 1)) !important;
+  }
+  .B2M-comment-teacher .B2M-comment {
+    margin-left: 10px;
+  }
+  .B2M-comment-user .B2M-comment {
+    margin-left: 10px;
+  }
+  .B2M-comment-user-answer {
+    margin-left: 10px;
+  }
+}
+
 .B2M-q-content {
   padding: 100px 0;
   display: grid;
@@ -47,8 +345,6 @@
 .B2M-a-title img {
   height: 100%;
 }
-
-
 
 .B2M-a-enunciated {
   font-size: 25px;

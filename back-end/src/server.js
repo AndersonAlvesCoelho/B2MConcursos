@@ -9,7 +9,6 @@ const HOST = "0.0.0.0";
 
 const app = express();
 app.use(express.static('public')); //to access the files in public folder
-app.use(cors()); // it enables all cors requests
 app.use(cors()); // desabilitando cors
 app.use(express.json());
 app.use(routes);

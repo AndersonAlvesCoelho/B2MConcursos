@@ -1,5 +1,6 @@
 @import url("../../assets/css/global.css");
 
+/*ICONS ADQUIRIDOS PELO SITE https://css.gg/*
 /*
 * ==========================================================
 *     ICON ZOOM OUT
@@ -48,12 +49,12 @@
 * ==========================================================
 */
 .B2M-loader {
-  justify-self: center;
   border: 8px solid rgba(0, 0, 0, 0.1);
   border-left-color: #22a6b3;
   border-radius: 50%;
   width: 50px;
   height: 50px;
+  margin: 0 auto;
   animation: spin 1s linear infinite;
 }
 
@@ -258,7 +259,7 @@
   box-sizing: border-box;
   position: relative;
   display: inline-block;
-  transform: scale(var(--ggs,1));
+  transform: scale(var(--ggs, 1));
   width: 14px;
   height: 16px;
   border: 2px solid transparent;
@@ -267,36 +268,34 @@
   box-shadow: 0 0 0 2px;
   border-radius: 1px;
   border-top-right-radius: 4px;
-  overflow: hidden
- }
- 
- .B2M-file-document-icon::after,
- .B2M-file-document-icon::before {
+  overflow: hidden;
+}
+
+.B2M-file-document-icon::after,
+.B2M-file-document-icon::before {
   content: "";
   display: block;
   box-sizing: border-box;
-  position: absolute
- }
- 
- .B2M-file-document-icon::before {
+  position: absolute;
+}
+
+.B2M-file-document-icon::before {
   background: currentColor;
-  box-shadow:
-  0 4px 0,
-  -6px -4px 0;
+  box-shadow: 0 4px 0, -6px -4px 0;
   left: 0;
   width: 10px;
   height: 2px;
-  top: 8px
- }
- 
- .B2M-file-document-icon::after {
+  top: 8px;
+}
+
+.B2M-file-document-icon::after {
   width: 6px;
   height: 6px;
   border-left: 2px solid;
   border-bottom: 2px solid;
   right: -1px;
-  top: -1px
- } 
+  top: -1px;
+}
 /*
 * ==========================================================
 *     ICON PLAY LIST ADD
@@ -307,19 +306,16 @@
   position: relative;
   display: inline-block;
   align-items: center;
-  transform: scale(var(--ggs,1));
+  transform: scale(var(--ggs, 1));
   width: 12px;
   height: 6px;
   border-top: 0 solid transparent;
   border-bottom: 2px solid transparent;
-  box-shadow:
-  inset 0 -2px 0,
-  -2px 4px 0 -2px,
-  0 -2px 0 0
- }
- 
- .B2M-play-list-add-icon::after,
- .B2M-play-list-add-icon::before {
+  box-shadow: inset 0 -2px 0, -2px 4px 0 -2px, 0 -2px 0 0;
+}
+
+.B2M-play-list-add-icon::after,
+.B2M-play-list-add-icon::before {
   content: "";
   display: block;
   box-sizing: border-box;
@@ -328,12 +324,375 @@
   height: 2px;
   background: currentColor;
   top: 6px;
-  right: -8px
- }
- 
- .B2M-play-list-add-icon::before {
+  right: -8px;
+}
+
+.B2M-play-list-add-icon::before {
   width: 2px;
   height: 10px;
   top: 2px;
-  right: -4px
+  right: -4px;
+}
+/*
+* ==========================================================
+*     ICON CHECRON LEFT
+* ==========================================================
+*/
+.B2M-chevron-left-icon {
+  box-sizing: border-box;
+  position: relative;
+  display: inline-block;
+  transform: scale(var(--ggs, 1));
+  width: 22px;
+  height: 22px;
+  border: 2px solid transparent;
+  border-radius: 100px;
+}
+
+.B2M-chevron-left-icon::after {
+  content: "";
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-bottom: 2px solid;
+  border-left: 2px solid;
+  transform: rotate(45deg);
+  left: 6px;
+  top: 4px;
+}
+/*
+* ==========================================================
+*     ICON CHECRON RIGTH
+* ==========================================================
+*/
+.B2M-chevron-right-icon {
+  box-sizing: border-box;
+  position: relative;
+  display: inline-block;
+  transform: scale(var(--ggs, 1));
+  width: 22px;
+  height: 22px;
+  border: 2px solid transparent;
+  border-radius: 100px;
+}
+
+.B2M-chevron-right-icon::after {
+  content: "";
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-bottom: 2px solid;
+  border-right: 2px solid;
+  transform: rotate(-45deg);
+  right: 6px;
+  top: 4px;
+}
+/*
+* ==========================================================
+*     ICON CHECRON DOUBLE LEFT
+* ==========================================================
+*/
+.B2M-chevron-double-left-icon {
+  box-sizing: border-box;
+  position: relative;
+  display: inline-block;
+  transform: scale(var(--ggs, 1));
+  width: 22px;
+  height: 22px;
+}
+
+.B2M-chevron-double-left-icon::after,
+.B2M-chevron-double-left-icon::before {
+  content: "";
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-left: 2px solid;
+  border-bottom: 2px solid;
+  transform: rotate(45deg);
+  top: 7px;
+  left: 6px;
+}
+
+.B2M-chevron-double-left-icon::after {
+  left: 11px;
+}
+/*
+* ==========================================================
+*     ICON CHECRON DOUBLE RIGTH
+* ==========================================================
+*/
+.B2M-chevron-double-right-icon {
+  box-sizing: border-box;
+  position: relative;
+  display: inline-block;
+  transform: scale(var(--ggs, 1));
+  width: 22px;
+  height: 22px;
+}
+
+.B2M-chevron-double-right-icon::after,
+.B2M-chevron-double-right-icon::before {
+  content: "";
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid;
+  border-top: 2px solid;
+  transform: rotate(45deg);
+  top: 7px;
+  right: 6px;
+}
+
+.B2M-chevron-double-right-icon::after {
+  right: 11px;
+}
+/*
+* ==========================================================
+*     ICON MORE
+* ==========================================================
+*/
+.B2M-more-icon {
+  transform: scale(var(--ggs, 1));
+}
+
+.B2M-more-icon,
+.B2M-more-icon::after,
+.B2M-more-icon::before {
+  box-sizing: border-box;
+  position: relative;
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border: 2px solid;
+  border-radius: 100%;
+}
+
+.B2M-more-icon::after,
+.B2M-more-icon::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+}
+
+.B2M-more-icon::after {
+  left: -9px;
+}
+
+.B2M-more-icon::before {
+  right: -9px;
+}
+/*
+* ==========================================================
+*     ICON MORE ALT
+* ==========================================================
+*/
+.B2M-more-alt-icon {
+  transform: scale(var(--ggs, 1));
+}
+
+.B2M-more-alt-icon,
+.B2M-more-alt-icon::after,
+.B2M-more-alt-icon::before {
+  box-sizing: border-box;
+  position: relative;
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  background: currentColor;
+  border-radius: 100%;
+}
+
+.B2M-more-alt-icon::after,
+.B2M-more-alt-icon::before {
+  content: "";
+  position: absolute;
+  top: 0;
+}
+
+.B2M-more-alt-icon::after {
+  left: -6px;
+}
+
+.B2M-more-alt-icon::before {
+  right: -6px;
+}
+/*
+* ==========================================================
+*     ICON BORDE STYLE DASHED
+* ==========================================================
+*/
+.B2M-border-style-dashed-icon {
+  transform: scale(var(--ggs, 1));
+}
+
+.B2M-border-style-dashed-icon,
+.B2M-border-style-dashed-icon::before {
+  box-sizing: border-box;
+  position: relative;
+  display: inlineblock;
+  width: 26px;
+  height: 17px;
+}
+
+.B2M-border-style-dashed-icon::before {
+  content: "";
+  position: absolute;
+  height: 2px;
+  top: 7px;
+  border-top: 2px dashed;
+}
+/*
+* ==========================================================
+*     ICON SEARCH
+* ==========================================================
+*/
+.B2M-search-icon {
+  box-sizing: border-box;
+  position: relative;
+  display: inline-block;
+  transform: scale(var(--ggs, 2));
+  width: 16px;
+  height: 16px;
+  border: 2px solid;
+  border-radius: 100%;
+  margin-left: -4px;
+  margin-top: -4px;
+}
+
+.B2M-search-icon::after {
+  content: "";
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  border-radius: 3px;
+  width: 2px;
+  height: 8px;
+  background: currentColor;
+  transform: rotate(-45deg);
+  top: 10px;
+  left: 12px;
+}
+/*
+* ==========================================================
+*     ICON COMMENT
+* ==========================================================
+*/
+.B2M-comment-icon {
+  box-sizing: border-box;
+  position: relative;
+  display: inline-block;
+  transform: scale(var(--ggs,1));
+  width: 20px;
+  height: 16px;
+  border: 2px solid;
+  border-bottom: 0;
+  box-shadow:
+  -6px 8px 0 -6px,
+  6px 8px 0 -6px
+ }
+ 
+ .B2M-comment-icon::after,
+ .B2M-comment-icon::before {
+  content: "";
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  width: 8px
+ }
+ 
+ .B2M-comment-icon::before {
+  border: 2px solid;
+  border-top-color: transparent;
+  border-bottom-left-radius: 20px;
+  right: 4px;
+  bottom: -6px;
+  height: 6px
+ }
+ 
+ .B2M-comment-icon::after {
+  height: 2px;
+  background: currentColor;
+  box-shadow: 0 4px 0 0;
+  left: 4px;
+  top: 4px
+ } 
+/*
+* ==========================================================
+*     ICON BOOKMARK
+* ==========================================================
+*/
+.B2M-bookmark-icon,
+.B2M-bookmark-icon::after {
+ display: inline-block;
+ box-sizing: border-box;
+ border-top-right-radius: 3px
+}
+
+.B2M-bookmark-icon {
+ border: 2px solid;
+ border-bottom: 0;
+ border-top-left-radius: 3px;
+ overflow: hidden;
+ position: relative;
+ transform: scale(var(--ggs,2));
+ width: 14px;
+ height: 16px
+}
+
+.B2M-bookmark-icon::after {
+ content: "";
+ position: absolute;
+ width: 12px;
+ height: 12px;
+ border-top: 2px solid;
+ border-right: 2px solid;
+ transform: rotate(-45deg);
+ top: 9px;
+ left: -1px
+} 
+/*
+* ==========================================================
+*     ICON LIST
+* ==========================================================
+*/
+.B2M-list-icon {
+  box-sizing: border-box;
+  position: relative;
+  display: inline-block;
+  transform: scale(var(--ggs,1.5));
+  width: 22px;
+  height: 20px;
+  border: 2px solid;
+  border-radius: 3px
+ }
+ 
+ .B2M-list-icon::after,
+ .B2M-list-icon::before {
+  content: "";
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: currentColor;
+  top: 3px;
+  left: 3px;
+  box-shadow:
+  0 4px 0,
+  0 8px 0
+ }
+ 
+ .B2M-list-icon::after {
+  border-radius: 3px;
+  width: 8px;
+  left: 7px
  } 
