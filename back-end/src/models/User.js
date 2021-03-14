@@ -9,7 +9,10 @@ class User extends Model {
                     primaryKey: true,
                     autoIncrement: true
                 },
-                login: {
+                name: {
+                    type: DataTypes.STRING,
+                },
+                email: {
                     type: DataTypes.STRING,
                 },
                 password: {

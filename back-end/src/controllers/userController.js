@@ -21,7 +21,8 @@ class UserController {
       } = req.body
 
       const user = await User.create({
-        login: name,
+        email: email,
+        name: name,
         password: password,
         nivel: 1,
       }).then(function (result) {

@@ -54,11 +54,11 @@ function CommentUser({ dataComment, numComment }) {
     return (
         <Comment
             actions={actionsComment}
-            author={<a> {dataComment.user.login}</a>}
+            author={<a> {dataComment.user.email}</a>}
             avatar={
                 <Avatar
                     src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                    alt={dataComment.user.login}
+                    alt={dataComment.user.email}
                 />
             }
             content={

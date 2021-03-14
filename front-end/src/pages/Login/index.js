@@ -1,32 +1,42 @@
-import React, { useState } from 'react';
-
+import React, { useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import '../../assets/css/login.css';
 import * as User from "../../actions/user.actions";
+import * as Auth from "../../actions/auth.actions";
 import {connect} from "react-redux";
 
 function Login(props) {
-
-    const {
-        store
-    } = props;
-
     const [classActive, setClassActive] = useState(false);
     const [requestAccess, setRequestAccess] = useState({
         name: '',
         email: '',
         password: '',
-    });
+    })
+
+
+    const {
+        store,
+        login,
+        history
+    } = props
 
     const handleChange = (e) => {
-        const { name } = e.target;
-        const { value } = e.target;
-        requestAccess[name] = value;
-        setRequestAccess(requestAccess);
-    };
+        const { name } = e.target
+        const { value } = e.target
+        requestAccess[name] = value
+        setRequestAccess(requestAccess)
+    }
+
+    function handleSubmitStore(event) {
+        event.preventDefault()
+        store(requestAccess)
+    }
 
     function handleSubmit(event) {
-        event.preventDefault();
-        store(requestAccess)
+        event.preventDefault()
+        login(requestAccess).then(() => {
+            history.push('/');
+        })
     }
 
     return (
@@ -34,7 +44,7 @@ function Login(props) {
             <div className="B2M-login-container">
                 <div className={classActive ? "B2M-login-login B2M-login-right-panel-active" : "B2M-login-login"} >
                     <div className="B2M-login-form-container B2M-login-sign-up-container">
-                        <form onSubmit={handleSubmit} action="#">
+                        <form onSubmit={handleSubmitStore} action="#">
                             <h1>Criar conta</h1>
                             {/* <div className="B2M-login-social-container">
                                 <a href="#" className="social"><i className="fab fa-facebook-f"></i></a>
@@ -49,7 +59,7 @@ function Login(props) {
                         </form>
                     </div>
                     <div className="B2M-login-form-container B2M-login-sign-in-container">
-                        <form action="#">
+                        <form onSubmit={handleSubmit}>
                             <h1>Entrar</h1>
                             {/* <div className="B2M-login-social-container">
                                 <a href="#" className="social"><i className="fab fa-facebook-f"></i></a>
@@ -57,8 +67,8 @@ function Login(props) {
                                 <a href="#" className="social"><i className="fab fa-linkedin-in"></i></a>
                             </div>
                             <span>or use your account</span> */}
-                            <input type="email" placeholder="Email" />
-                            <input type="password" placeholder="Password" />
+                            <input type="email"  onChange={handleChange} name="email" placeholder="Email" />
+                            <input type="password"  onChange={handleChange} name="password" placeholder="Password" />
                             <a href="#">Esqueceu sua senha?</a>
                             <button>Logar</button>
                         </form>
@@ -83,12 +93,16 @@ function Login(props) {
     );
 }
 
-const mapStateToProps = state => ({
-    loading: state.user.loading,
-})
+const mapStateToProps = state => {
+    const { auth } = state;
+    return {
+        loading: state.user.loading,
+    }
+}
 
 const mapDispatchToProps = {
     store: User.store,
+    login: Auth.login,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

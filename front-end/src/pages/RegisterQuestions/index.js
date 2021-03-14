@@ -16,6 +16,8 @@ import {
     Switch,
     Steps
 } from 'antd';
+import { SideNavbar, Navbar } from '../../components/Menu/';
+import '../../assets/css/home.css';
 
 // import {Card, Form, Input, Steps, TreeSelect} from 'antd';
 import * as regusterQuestionsActions from '../../actions/registerQuestions.actions';
@@ -43,6 +45,7 @@ const answerStyle = {
 
 const { SHOW_PARENT } = TreeSelect;
 
+// TODO: Retirar o menu desse componenete e criar um menu para toda a apalicacao
 const RegisterQuestions = (props) => {
 
     const { Step } = Steps;
@@ -96,7 +99,7 @@ const RegisterQuestions = (props) => {
             radioName: 'radioD', selected: false
         },
     ])
-
+    const [toggle, setToggle] = useState(false); // mudar o stado do side bar
 
     const [step, setStep] = useState();
 
@@ -213,52 +216,55 @@ const RegisterQuestions = (props) => {
     };
 
     return (
-        <div>
-            {/* <MenuNavbar /> */}
+        <div className="B2M-page">
+            <Navbar toggle={toggle} onToggle={(e) => setToggle(e)}/>
 
-            <Container className="filter-conatiner" >
+            <div className="B2M-page-content">
+                <SideNavbar toggle={toggle}/>
 
-                <Row >
-                    <span className="filter-titer mx-1 ml-2">Upload da prova:</span>
-                </Row >
+                <Container className="filter-conatiner" >
+
+                    <Row >
+                        <span className="filter-titer mx-1 ml-2">Upload da prova:</span>
+                    </Row >
 
 
-                <div className="file-upload">
-                    <input
-                        type="file" ref={el}
-                        onChange={handleChangeFile}
-                    />
-                    <div className="progessBar" style={{ width: progress }}>
-                        {progress}
+                    <div className="file-upload">
+                        <input
+                            type="file" ref={el}
+                            onChange={handleChangeFile}
+                        />
+                        <div className="progessBar" style={{ width: progress }}>
+                            {progress}
+                        </div>
+                        <button onClick={uploadFileFunction} className="upbutton">                   Upload
+                        </button>
+                        {/* displaying received image*/}
+                        {/*{data.path && <img src={data.path} alt={data.name} />}*/}
                     </div>
-                    <button onClick={uploadFileFunction} className="upbutton">                   Upload
-                    </button>
-                    {/* displaying received image*/}
-                    {/*{data.path && <img src={data.path} alt={data.name} />}*/}
-                </div>
 
-                <Button
-                    onClick={sendPDF}
-                    className="filter-btn"
-                    variant="info"
-                >
-                    Fazer upload do PDF
-                </Button>
-                <hr />
+                    <Button
+                        onClick={sendPDF}
+                        className="filter-btn"
+                        variant="info"
+                    >
+                        Fazer upload do PDF
+                    </Button>
+                    <hr />
 
-                {/*<>*/}
-                {/*    <Steps*/}
-                {/*        type="navigation"*/}
-                {/*        current={step}*/}
-                {/*        onChange={onChange}*/}
-                {/*        className="site-navigation-steps"*/}
-                {/*    >*/}
-                {/*        <Step status="process"  title="Informações gerais" />*/}
-                {/*        <Step status="process" title="Cadastro de questões" />*/}
-                {/*    </Steps>*/}
-                {/*</>*/}
+                    {/*<>*/}
+                    {/*    <Steps*/}
+                    {/*        type="navigation"*/}
+                    {/*        current={step}*/}
+                    {/*        onChange={onChange}*/}
+                    {/*        className="site-navigation-steps"*/}
+                    {/*    >*/}
+                    {/*        <Step status="process"  title="Informações gerais" />*/}
+                    {/*        <Step status="process" title="Cadastro de questões" />*/}
+                    {/*    </Steps>*/}
+                    {/*</>*/}
 
-                <Form layout="vertical" requiredMark={false} onFinish={handleSubmit}>
+                    <Form layout="vertical" requiredMark={false} onFinish={handleSubmit}>
 
                         <div id="generalInfo">
 
@@ -531,14 +537,15 @@ const RegisterQuestions = (props) => {
                             </Card>
                         </div>
 
-                    <Button
-                        htmlType="submit"
-                    >
-                        Cadastrar questão
-                    </Button>
-                </Form>
+                        <Button
+                            htmlType="submit"
+                        >
+                            Cadastrar questão
+                        </Button>
+                    </Form>
 
-            </Container>
+                </Container>
+            </div>
         </div>
     );
 }

@@ -5,8 +5,8 @@ import Footer from '../components/Footer';
 
 import '../assets/css/home.css';
 
+// TODO: criar um menu para toda a apalicacao
 function Home() {
-
     const [toggle, setToggle] = useState(false); // mudar o stado do side bar
 
 
@@ -14,7 +14,6 @@ function Home() {
 
     return (
         <>
-
             <div className="B2M-page">
                 <Navbar toggle={toggle} onToggle={(e) => setToggle(e)} /> {/* MAIN NAVBAR */}
                 <div className="B2M-page-content">
