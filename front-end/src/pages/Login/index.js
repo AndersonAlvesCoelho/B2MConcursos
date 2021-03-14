@@ -1,23 +1,23 @@
-import React, { useState } from 'react';
-
+import React, { useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import '../../assets/css/login.css';
 import * as User from "../../actions/user.actions";
 import * as Auth from "../../actions/auth.actions";
 import {connect} from "react-redux";
 
 function Login(props) {
-
-    const {
-        store,
-        login
-    } = props
-
     const [classActive, setClassActive] = useState(false);
     const [requestAccess, setRequestAccess] = useState({
         name: '',
         email: '',
         password: '',
     })
+
+    const {
+        store,
+        login,
+        history
+    } = props
 
     const handleChange = (e) => {
         const { name } = e.target
@@ -33,7 +33,15 @@ function Login(props) {
 
     function handleSubmit(event) {
         event.preventDefault()
-        login(requestAccess)
+
+
+        login(requestAccess).then(() => {
+            history.push('/');
+        })
+        // const {token} = loginT(requestAccess)
+        // if(token){
+        //     setToken(token)
+        // }
     }
 
     return (
@@ -90,9 +98,12 @@ function Login(props) {
     );
 }
 
-const mapStateToProps = state => ({
-    loading: state.user.loading,
-})
+const mapStateToProps = state => {
+    const { auth } = state;
+    return {
+        loading: state.user.loading,
+    }
+}
 
 const mapDispatchToProps = {
     store: User.store,

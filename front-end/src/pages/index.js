@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import { SideNavbar, Navbar } from '../components/Menu/';
-
+import { getUserCookie } from '../services/session';
 import '../assets/css/home.css';
 
 function Home() {
-
     const [toggle, setToggle] = useState(false); // mudar o stado do side bar
 
-
-    console.log('toggle ', toggle);
+    console.log('toggle ', getUserCookie);
     
     return (
         <>
