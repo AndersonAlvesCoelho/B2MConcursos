@@ -10,7 +10,7 @@ import { dataFormatada } from '../../helpers/dataFormata';
 function Alternative({ data, index }) {
 
     const [checkAnswer, setCheckAnswer] = useState([]);
-    const [option, setOption] = useState();
+    const [option, setOption] = useState(false);
     const [current, setCurrent] = useState();
 
     const [openTextare01, setOpenTextare01] = useState(false);
@@ -24,6 +24,7 @@ function Alternative({ data, index }) {
                 answer = { check: e.answer, answer: parseInt(option) }
             }
         })
+        setOption(false);
         saveAnswer(answer);
     }
 
@@ -66,7 +67,7 @@ function Alternative({ data, index }) {
                                 !(checkAnswer.answer === index) ? e.name_alternative : (<b>{e.name_alternative}</b>)
                                 : e.name_alternative}
 
-                            <input type="radio" value={index} name="alternative" disabled={checkAnswer} />
+                            <input type="radio" value={index} name="alternative" />
                             <span className="B2M-checkmark"></span>
                         </label>
                     ))}
@@ -86,11 +87,9 @@ function Alternative({ data, index }) {
                             </> : null}
                     </div>
 
-                    {!checkAnswer &&
-                        <button disabled={!option || checkAnswer} onClick={() => keyAnswer()}>
-                            Visualizar Resposta
+                    <button disabled={!option} onClick={() => keyAnswer()}>
+                        Visualizar Resposta
                         </button>
-                    }
                 </div>
             </div>
 

@@ -7,6 +7,7 @@ import DiciplineController from './controllers/diciplineController';
 import QuestionController from './controllers/questionController';
 import UserController from './controllers/userController';
 import AuthController from './controllers/authController';
+import UserAnswersQuestionController from './controllers/userAnswersQuestionController';
 
 const routes = express.Router();
 
@@ -26,7 +27,8 @@ routes.post(`${apiVersionV1}/registerQuestions`, QuestionController.store);
 routes.post(`${apiVersionV1}/registerUser`, UserController.store);
 routes.post(`${apiVersionV1}/login`, AuthController.login);
 
-// routes.get(`${apiVersionV1}/userAnswersQuestion`, UserController.index);
+routes.get(`${apiVersionV1}/userAnswersQuestion`, UserAnswersQuestionController.index);
+routes.post(`${apiVersionV1}/userAnswersQuestion`, UserAnswersQuestionController.store);
 
 // --- EM ANALISE ---
 routes.get(`${apiVersionV1}/users`, UserController.index);

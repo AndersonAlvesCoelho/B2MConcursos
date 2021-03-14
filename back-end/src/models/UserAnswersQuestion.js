@@ -16,9 +16,8 @@ class UserAnswersQuestion extends Model {
                     type: DataTypes.INTEGER
                 },
                 answer: {
-                    type: DataTypes.BOOLEAN
+                    type: DataTypes.INTEGER
                 },
-
             },
             {
                 sequelize,
@@ -29,17 +28,6 @@ class UserAnswersQuestion extends Model {
             },
         );
         return this;
-    }
-
-    static associate(models) {
-        this.belongsTo(models.User, {
-            foreignKey: "id_user",
-            as: "user",
-        });
-        this.belongsTo(models.Question, {
-            foreignKey: "id_question",
-            as: "question",
-        });
     }
 }
 

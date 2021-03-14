@@ -32,7 +32,7 @@ module.exports = {
           onDelete: 'CASCADE',
         },
         answer: {
-          type: Sequelize.BOOLEAN,
+          type: Sequelize.INTEGER,
           allowNull: false
         },
 
