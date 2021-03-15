@@ -134,28 +134,3 @@ const mapDispatchToProps = {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Questions);
-{/* <div className="B2M-q-content">
-{question.length !== 0 ? (<>
-    <div className="B2M-q-pagination">
-        <Pagination
-            postsPerPage={viewSizeQuestion}
-            totalPosts={qtdQuestion}
-            newPage={onShowSizeChange}
-            paginate={pagerCurrent}
-        />
-
-        <div className="B2M-q-infos">
-            <FilterFixed visible={visible} onClose={onClose} changerFilter={(e) => { setDataFilter(e); }} />
-            <a onClick={showDrawer}><i className="B2M-zoom-out"></i></a>
-        </div>
-    </div>
-
-    {question.map((e, x) =>
-        <div key={x}>
-            <Alternative data={e} indexQ={x} />
-        </div>
-    )}
-</>) : (<>
-    {loadingQuestion ? <div class="B2M-loader"></div> : <div className="center-Component"><Empty /></div>}
-</>)}
-</div> */}

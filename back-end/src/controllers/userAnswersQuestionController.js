@@ -1,6 +1,5 @@
 import { Op } from "sequelize";
 import UserAnswersQuestion from "../models/UserAnswersQuestion";
-import dataFormat from "../helpers/date";
 
 class UserAnswersQuestionController {
 
@@ -27,13 +26,9 @@ class UserAnswersQuestionController {
             const data = await UserAnswersQuestion.findAll({ where: { [Op.and]: [{ id_user: idUser }, { id_question: idQuestion }] } });
             const lastId = await UserAnswersQuestion.findOne({ order: [['id_user_answers_question', 'DESC']] })
 
-            console.log(dataFormat(data[0].dataValues.createdAt));
-
-            return res.json(data[0].createdAt);
-
             // CREATE
             if (data.length === 0) {
-                const newAnserUser = await UserAnswersQuestion.create({
+                await UserAnswersQuestion.create({
                     id_user_answers_question: lastId ? lastId.id_user_answers_question + 1 : 1,
                     id_user: idUser,
                     id_question: idQuestion,
@@ -48,7 +43,7 @@ class UserAnswersQuestionController {
 
                 // UPDATE
             } else {
-                const newAnserUser = await UserAnswersQuestion.update(
+                await UserAnswersQuestion.update(
                     { id_user: idUser, id_question: idQuestion, answer: answer, updated_at: new Date() },
                     {
                         where:

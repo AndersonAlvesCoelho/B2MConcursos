@@ -60,7 +60,7 @@ export const SideNavbar = (props) => {
 
                 {user[0].length !== 0 && (<>
                     <div className="sidebar-header d-flex align-items-center">
-                        <div className="avatar"><a href="dashboard/perfil"><img src="https://image.flaticon.com/icons/png/512/16/16363.png" alt="avatar" className="img-fluid rounded-circle" /></a></div>
+                        <div className="avatar"><a href="dashboard/perfil"><img src="https://bootdey.com/img/Content/user_1.jpg" alt="avatar" className="img-fluid rounded-circle" /></a></div>
                         <div className="title">
                             <h5 className="h4">{user[0].name}</h5>
                             {/* <p>Concurseiro</p> */}

@@ -104,7 +104,7 @@ function Alternative({ data, index }) {
                     <div class="B2M-comment-teacher">
                         <div class="feed d-flex justify-content-between">
                             <div class="feed-body d-flex justify-content-between">
-                                <a href="#" class="feed-profile"><img src="https://image.flaticon.com/icons/png/512/16/16363.png" alt="avatar" class="img-fluid rounded-circle" /></a>
+                                <a href="#" class="feed-profile"><img src="https://bootdey.com/img/Content/user_1.jpg" alt="avatar" class="img-fluid rounded-circle" /></a>
                                 <div class="B2M-comment-content">
                                     <h5>{data.user.login}</h5>
                                     <div class="full-date">
@@ -127,7 +127,7 @@ function Alternative({ data, index }) {
                     <div class="B2M-comment-user">
                         <div class="feed d-flex justify-content-between" key={index}>
                             <div class="feed-body d-flex justify-content-between">
-                                <a href="#" class="feed-profile"><img src="https://image.flaticon.com/icons/png/512/16/16363.png" alt="avatar" class="img-fluid rounded-circle" /></a>
+                                <a href="#" class="feed-profile"><img src="https://bootdey.com/img/Content/user_1.jpg" alt="avatar" class="img-fluid rounded-circle" /></a>
                                 <div class="B2M-comment-content">
                                     <h5>{commit.user.login}</h5>
                                     <div class="full-date">

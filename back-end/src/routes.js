@@ -8,6 +8,7 @@ import QuestionController from './controllers/questionController';
 import UserController from './controllers/userController';
 import AuthController from './controllers/authController';
 import UserAnswersQuestionController from './controllers/userAnswersQuestionController';
+import CommentController from './controllers/commentController';
 
 const routes = express.Router();
 
@@ -29,6 +30,9 @@ routes.post(`${apiVersionV1}/login`, AuthController.login);
 
 routes.get(`${apiVersionV1}/userAnswersQuestion`, UserAnswersQuestionController.index);
 routes.post(`${apiVersionV1}/userAnswersQuestion`, UserAnswersQuestionController.store);
+
+routes.get(`${apiVersionV1}/comments`, CommentController.index);
+routes.post(`${apiVersionV1}/comments`, CommentController.store);
 
 // --- EM ANALISE ---
 routes.get(`${apiVersionV1}/users`, UserController.index);
