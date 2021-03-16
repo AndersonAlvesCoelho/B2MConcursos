@@ -1,11 +1,23 @@
 import { Op } from "sequelize";
 import UserAnswersQuestion from "../models/UserAnswersQuestion";
 
+//GET USER QANSWER QUESTION
 class UserAnswersQuestionController {
 
     async index(req, res) {
+        const { idUser, idQuestion } = req.body;
+
         try {
-            const data = await UserAnswersQuestion.findAll();
+            const data = await UserAnswersQuestion.findAll({
+                attributes: { exclude: ['id_user_answers_question', 'id_user', 'createdAt', 'updatedAt'] },
+
+                where: {
+                    [Op.and]: [
+                        { id_user: idUser }, { id_question: { [Op.or]: idQuestion } }
+                    ]
+                },
+                order: [['id_user_answers_question']]
+            });
             return res.json(data);
         } catch (error) {
             res.status(400).json({ message: `Erro ao retornar os dados. ${error}` });
@@ -13,10 +25,10 @@ class UserAnswersQuestionController {
     }
 
 
-    /** CREATE OR UPDATE
-     * Cadastrar resposta do usuario
+    /** CREATE OR UPDATE 
+     * create answer user
      * ou
-     * atualizar resposta do usuario
+     * update answer user
      */
     async store(req, res) {
         try {

@@ -99,6 +99,9 @@ a:hover {
   .B2M-content-inner {
     width: 100%;
   }
+  .B2M-content-inner.side-navbar-active{
+    width: 100%;
+  }
 }
 
 

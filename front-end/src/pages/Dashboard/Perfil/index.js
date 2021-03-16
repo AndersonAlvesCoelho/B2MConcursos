@@ -36,7 +36,7 @@ function Perfil() {
                                     <div className="client card">
                                         <div className="card-body text-center">
                                             <div className="B2M-client-avatar">
-                                                <img src="https://bootdey.com/img/Content/user_1.jpg" alt="avatar" className="img-fluid rounded-circle" />
+                                                <img src="https://secure.gravatar.com/avatar/?s=56&d=mm&r=g" alt="avatar" className="img-fluid rounded-circle" />
                                                 <div className="status bg-green"></div>
                                             </div>
                                             <div className="client-title">

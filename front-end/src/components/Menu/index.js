@@ -3,7 +3,7 @@ import React from 'react';
 import { getUserCookie } from '../../services/session';
 import '../../assets/css/menu-nav-bar.css';
 
-const user = getUserCookie();
+const user = getUserCookie() ? getUserCookie() : [];
 
 export const Navbar = (props) => {
 
@@ -31,7 +31,7 @@ export const Navbar = (props) => {
                             <ul className="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
                                 {/* <li className="nav-item d-flex align-items-center"><a id="search" href="#"><i className="B2M-search-icon"></i></a></li> */}
                                 <li className="nav-item">
-                                    {user[0].length === 0 ?
+                                    {user.length === 0 ?
                                         <a href="/login" className="nav-link logout">
                                             <span className="d-none d-sm-inline">Entrar</span><i className="B2M-log-out-icon"></i>
                                         </a>
@@ -52,15 +52,14 @@ export const Navbar = (props) => {
 
 export const SideNavbar = (props) => {
 
-
     return (
         <>
             <nav className={`side-navbar  ${props.toggle ? "side-navbar-active shrinked" : ""}`} >
                 {/* <nav className="side-navbar ">; */}
 
-                {user[0].length !== 0 && (<>
+                {user.length !== 0 && (<>
                     <div className="sidebar-header d-flex align-items-center">
-                        <div className="avatar"><a href="dashboard/perfil"><img src="https://bootdey.com/img/Content/user_1.jpg" alt="avatar" className="img-fluid rounded-circle" /></a></div>
+                        <div className="avatar"><a href="dashboard/perfil"><img src="https://secure.gravatar.com/avatar/?s=56&d=mm&r=g" alt="avatar" className="img-fluid rounded-circle" /></a></div>
                         <div className="title">
                             <h5 className="h4">{user[0].name}</h5>
                             {/* <p>Concurseiro</p> */}

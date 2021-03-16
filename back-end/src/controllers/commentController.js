@@ -36,12 +36,11 @@ class CommentController {
 
             const { type, comment, answer, idQuestion, idComment, idUser } = req.body;
 
-
             const lastIdComment = await Comment.findOne({ order: [['id_comment', 'DESC']] })
             const lastIdCommentAnswer = await CommentAnswer.findOne({ order: [['id_comment_answer', 'DESC']] })
 
             switch (type) {
-                case 'commnet':
+                case 'comment':
                     await Comment.create({
                         id_comment: lastIdComment ? lastIdComment.id_comment + 1 : 1,
                         comment: comment,
@@ -53,7 +52,12 @@ class CommentController {
                         if (result) return result
                         else res.status(400).send('Erro ao fazer comentário!')
                     })
-                    return res.send('Comentário realizado com sucesso!')
+
+                    const dataComment = await Comment.findOne({
+                        attributes: { exclude: [ 'createdAt'] },
+                        order: [['id_comment', 'DESC']]
+                    })
+                    return res.json(dataComment);
                 case 'comment answer':
                     await CommentAnswer.create({
                         id_comment_answer: lastIdCommentAnswer ? lastIdCommentAnswer.id_comment_answer + 1 : 1,
@@ -66,7 +70,12 @@ class CommentController {
                         if (result) return result
                         else res.status(400).send('Erro ao fazer comentário!')
                     })
-                    return res.send('Comentário realizado com sucesso!')
+
+                    const dataCommentAnswer = await CommentAnswer.findOne({
+                        attributes: { exclude: ['id_comment_answer', 'createdAt'] },
+                        order: [['id_comment_answer', 'DESC']]
+                    })
+                    return res.json(dataCommentAnswer);
                 default:
                     break;
             }

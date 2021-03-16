@@ -28,10 +28,10 @@ routes.post(`${apiVersionV1}/registerQuestions`, QuestionController.store);
 routes.post(`${apiVersionV1}/registerUser`, UserController.store);
 routes.post(`${apiVersionV1}/login`, AuthController.login);
 
-routes.get(`${apiVersionV1}/userAnswersQuestion`, UserAnswersQuestionController.index);
-routes.post(`${apiVersionV1}/userAnswersQuestion`, UserAnswersQuestionController.store);
+routes.post(`${apiVersionV1}/userAnswersQuestion`, UserAnswersQuestionController.index);
+routes.post(`${apiVersionV1}/saveUserAnswers`, UserAnswersQuestionController.store);
 
-routes.get(`${apiVersionV1}/comments`, CommentController.index);
+routes.get(`${apiVersionV1}/comments`, CommentController.index); // não ta sendo usar
 routes.post(`${apiVersionV1}/comments`, CommentController.store);
 
 // --- EM ANALISE ---

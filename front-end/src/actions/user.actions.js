@@ -8,7 +8,7 @@ import api from '../services/api';
 
 export const store = (formData) => (dispatch) => {
     dispatch({ type: REGISTER_USER_REQUEST });
-    api.post('/registerUser', formData  )
+    api.post('/registerUser', formData)
         .then((res) => {
             const { data } = res;
 
