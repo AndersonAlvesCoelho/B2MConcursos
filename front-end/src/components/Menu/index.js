@@ -1,12 +1,21 @@
 import React, { useState } from 'react';
 
-import { getUserCookie } from '../../services/session';
-
+import { getUserCookie, removeUserCookie} from '../../services/session';
+import { useHistory } from 'react-router-dom';
 import '../../assets/css/menu-nav-bar.css';
 
 const user = getUserCookie();
 
 export const Navbar = (props) => {
+
+    console.log('user', user)
+    const history = useHistory();
+
+    const logout = (e) => {
+        removeUserCookie();
+        history.push('/login');
+    }
+
 
     return (
         <>
@@ -37,7 +46,7 @@ export const Navbar = (props) => {
                                             <span className="d-none d-sm-inline">Entrar</span><i className="B2M-log-out-icon"></i>
                                         </a>
                                         :
-                                        <a href="/login" className="nav-link logout">
+                                        <a onClick={logout} className="nav-link logout">
                                             <span className="d-none d-sm-inline">Sair</span><i className="B2M-log-in-icon"></i>
                                         </a>
                                     }

@@ -23,7 +23,13 @@ class UserController {
         }
       })
 
-      res.status(200).json({message: `Login aprovado`, user: data});
+      console.log('data', data)
+      if(data !== null){
+        res.status(200).json({message: `Login aprovado`, user: data});
+      }else{
+        res.status(400).json({message: `Usuario inexistente`});
+      }
+
     } catch (error) {
       res.status(400).json({message: `Erro ao retornar os dados. ${error}`});
     }

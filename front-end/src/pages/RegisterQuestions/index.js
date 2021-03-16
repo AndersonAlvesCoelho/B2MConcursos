@@ -140,7 +140,7 @@ const RegisterQuestions = (props) => {
     }
 
     function handleSubmit(values) {
-        // e.preventDefault()
+        // values.preventDefault()
 
         const idBank = formatDefaultRegister(bankValue, bank);
         const idInstitution = formatDefaultRegister(institutionValue, institution);
@@ -323,18 +323,16 @@ const RegisterQuestions = (props) => {
                                         label="Cargo"
                                     >
                                         <TreeSelect
+                                            showSearch
                                             treeData={office}
                                             value={officeValue}
-
+                                            allowClear
                                             onChange={(value) => { setOfficeValue(value) }}
-                                            treeCheckable={true}
                                             placeholder="Cargo..."
                                             className="filter-field"
                                             showCheckedStrategy={SHOW_PARENT}
                                             maxTagCount='responsive'
-                                            showSearch
                                             treeNodeFilterProp='title'
-                                            allowClear
                                             loading={loadingOffice}
                                         />
                                     </Form.Item>
@@ -369,17 +367,15 @@ const RegisterQuestions = (props) => {
                                         label="Matéria & Assunto"
                                     >
                                         <TreeSelect
+                                            treeDataSimpleMode
                                             treeData={dicipline}
                                             value={diciplineValue}
-
                                             onChange={(value) => { setDiciplineValue(value) }}
-                                            treeCheckable={true}
                                             placeholder="Matéria & Assunto..."
                                             className="filter-field"
                                             showCheckedStrategy={SHOW_PARENT}
                                             maxTagCount='responsive'
                                             showSearch
-                                            treeNodeFilterProp='title'
                                             allowClear
                                             loading={loadingDicipline}
                                         />
@@ -536,9 +532,7 @@ const RegisterQuestions = (props) => {
                             </Card>
                         </div>
 
-                        <Button
-                            htmlType="submit"
-                        >
+                        <Button htmlType="submit">
                             Cadastrar questão
                         </Button>
                     </Form>

@@ -276,6 +276,9 @@ class QuestionController {
         idUser,
       } = req.body
 
+      console.log('idOffice',idOffice)
+      console.log('idDicipline',idDicipline)
+
       //  const office = await Office.create({
       //   id_office: idOffice,
       //   id_office_niv_1: idOfice1,
