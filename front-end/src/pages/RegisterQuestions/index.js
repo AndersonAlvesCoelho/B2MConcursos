@@ -383,7 +383,7 @@ const RegisterQuestions = (props) => {
                                 />
                             </div>
                             {questions.map((data, index) =>
-                                <Card type="inner"  title={`Questão ${index}`} >
+                                <Card type="inner"  title={`Questão ${index +1}`} >
 
                                     <Row >
                                         <Col className="mt-3" xs={8} md={6}>
