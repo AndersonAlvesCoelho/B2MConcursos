@@ -12,8 +12,9 @@ import api from '../services/api';
 
 export const uploadFile = (formData) => (dispatch) => {
     dispatch({ type: UPLOAD_PDF_REQUEST });
-    api.post('/uploadQuestions', { formData }, { headers: { 'Content-Type': 'multipart/form-data' } } )
+    api.post('/uploadQuestions',  formData , { headers: { 'Content-Type': 'multipart/form-data' } } )
         .then((res) => {
+            alert(JSON.stringify(res))
             const { data } = res;
 
             console.log(data);

@@ -194,6 +194,9 @@ const RegisterQuestions = (props) => {
     }
 
     const sendPDF = () => {
+        const formData = new FormData();
+        formData.append('file', file); // appending file
+
         // api.get('/pdfFile')
         //     .then((res) => {
         //         console.log(res);

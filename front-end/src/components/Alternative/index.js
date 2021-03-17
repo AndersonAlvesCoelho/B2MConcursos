@@ -265,7 +265,7 @@ function Alternative(props) {
 
 const mapStateToProps = (state) => ({
     loading: state.userAnswersQuestion.loading,
-    loading: state.comment.loading,
+    // loading: state.comment.loading,
     newComment: state.comment.newComment,
 });
 

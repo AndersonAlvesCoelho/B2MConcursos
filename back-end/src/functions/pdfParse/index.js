@@ -2,7 +2,6 @@ const pdf = require('pdf-parse')
 
 export const regexPDF = (pdfFile) => {
 
-
     pdf(pdfFile).then(function (data){
 
         //regex
@@ -29,7 +28,7 @@ export const regexPDF = (pdfFile) => {
 
         const questionsInfo = [];
         questionsInfo.push(questionsA, questionsB, questionsC, questionsD);
-        console.log(questionsInfo);
+        console.log('questionsInfo', questionsInfo);
         return questionsInfo
 
         // const search = 'Atenção';
