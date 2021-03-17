@@ -7,6 +7,7 @@ const user = getUserCookie() ? getUserCookie() : [];
 
 export const Navbar = (props) => {
 
+
     return (
         <>
             <header className="header">
@@ -72,7 +73,11 @@ export const SideNavbar = (props) => {
                 <ul className="list-unstyled">
                     <li className={props.type === "Home" && "active"}><a href="/"> <i className="B2M-menu-grid-r-icon"></i>Home </a></li>
                     <li className={props.type === "Questions" && "active"}><a href="/questoes"> <i className="B2M-file-document-icon"></i>Questões </a></li>
-                    <li className={props.type === "RegisterQuestions" && "active"}><a href="/cadastrar-questoes"> <i className="B2M-play-list-add-icon"></i>Registrar questão </a></li>
+                    {user.length !== 0 &&
+                        <li className={props.type === "RegisterQuestions" && "active"}>
+                            <a href="/cadastrar-questoes"> <i className="B2M-play-list-add-icon"></i>Registrar questão </a>
+                        </li>
+                    }
                     {/* <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i className="icon-interface-windows"></i>Example dropdown </a>
                         <ul id="exampledropdownDropdown" className="collapse list-unstyled ">
                             <li><a href="#">Page</a></li>

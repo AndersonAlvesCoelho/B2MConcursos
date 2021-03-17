@@ -54,8 +54,14 @@ class CommentController {
                     })
 
                     const dataComment = await Comment.findOne({
-                        attributes: { exclude: [ 'createdAt'] },
-                        order: [['id_comment', 'DESC']]
+                        attributes: { exclude: ['createdAt'] },
+                        order: [['id_comment', 'DESC']],
+                        include: [
+                            {
+                                association: "user",
+                                attributes: { exclude: ['id_user', 'password', 'email', 'nivel', 'createdAt', 'updated_at'] },
+                            },
+                        ],
                     })
                     return res.json(dataComment);
                 case 'comment answer':
@@ -73,7 +79,13 @@ class CommentController {
 
                     const dataCommentAnswer = await CommentAnswer.findOne({
                         attributes: { exclude: ['id_comment_answer', 'createdAt'] },
-                        order: [['id_comment_answer', 'DESC']]
+                        order: [['id_comment_answer', 'DESC']],
+                        include: [
+                            {
+                                association: "user",
+                                attributes: { exclude: ['id_user', 'password', 'email', 'nivel', 'createdAt', 'updated_at'] },
+                            },
+                        ],
                     })
                     return res.json(dataCommentAnswer);
                 default:

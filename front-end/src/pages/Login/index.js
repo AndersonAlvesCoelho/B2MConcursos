@@ -4,8 +4,14 @@ import '../../assets/css/login.css';
 import * as User from "../../actions/user.actions";
 import * as Auth from "../../actions/auth.actions";
 import {connect} from "react-redux";
+import { getUserCookie } from '../../services/session';
+
+const user = getUserCookie() ? getUserCookie() : [];
 
 function Login(props) {
+    
+    console.log("getUserCookie() ", getUserCookie());
+    
     const [classActive, setClassActive] = useState(false);
     const [requestAccess, setRequestAccess] = useState({
         name: '',

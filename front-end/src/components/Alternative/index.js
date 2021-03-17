@@ -22,16 +22,19 @@ function Alternative(props) {
         newComment
     } = props;
 
+    const [loadingComment, setLoadingComment] = useState(false);
+
     // estados auxiliar de escolha de alternativa
     const [checkAnswer, setCheckAnswer] = useState([]);
     const [option, setOption] = useState();
 
     // estado auxiliar do registre do comnetario
     const [current, setCurrent] = useState();
-    const [typeComment, setTypeComment] = useState('');
     const [comment, setComment] = useState('');
     const [idComment, setIdComment] = useState(0);
     const [dataComment, setDataComment] = useState([]);
+    const [openComment, setOpenComment] = useState(false);
+    const [openIndex, setOpenIndex] = useState(false);
 
     //verificar se a questão marcada está correta 
     function keyAnswer(opt, situation) {
@@ -76,37 +79,40 @@ function Alternative(props) {
 
 
     // get new comment
-    // useEffect(() => {
-    //     console.log("dataComment 01", dataComment);
+    useEffect(() => {
+        console.log("dataComment 01", dataComment);
+        setLoadingComment(true);
+        setTimeout(() => {
+            if (newComment.length !== 0) {
+                let aux = dataComment;
+                console.log("newComment 01", newComment);
 
-    //     if (newComment.length !== 0) {
-    //         let aux = dataComment;
-    //         console.log("newComment 01", newComment);
-    //         if (newComment.id_question) {
-    //             aux.push({
-    //                 comment: newComment.comment,
-    //                 id_comment: newComment.id_comment,
-    //                 updatedAt: newComment.updatedAt,
-    //                 comment_answer: [],
-    //                 user: newComment.user
-    //             })
-    //         } else {
-    //             dataComment.map((e) => {
-    //                 if (e) {
-    //                     aux.comment_answer.push({
-    //                         answer: newComment.comment,
-    //                         updatedAt: newComment.updatedAt,
-    //                         user: newComment.user
-    //                     })
-    //                 }
-    //             })
-    //         }
-    //         setDataComment(aux)
-    //     }
-    //     console.log("dataComment 02", dataComment);
+                if (newComment.id_question) {
+                    aux.push({
+                        comment: newComment.comment,
+                        id_comment: newComment.id_comment,
+                        updatedAt: newComment.updatedAt,
+                        comment_answer: [],
+                        user: newComment.user
+                    })
+                } else {
+                    dataComment.map((e, i) => {
+                        if (e.id_comment === newComment.id_comment) {
+                            aux[i].comment_answer.push({
+                                answer: newComment.answer,
+                                updatedAt: newComment.updatedAt,
+                                user: newComment.user
+                            })
+                        }
+                    })
+                    setDataComment(aux)
+                }
+            }
 
-    // }, [newComment])
+            setLoadingComment(false);
+        }, 700);
 
+    }, [dataComment, newComment])
 
     return (
         <>
@@ -117,13 +123,6 @@ function Alternative(props) {
                 </div>
                 <span>Nº {data.id_question}</span>
 
-                {/* <div className="B2M-card-info">
-                    <ul>
-                        <li>Ano: {data.year}</li>
-                        <li>Banca:{data.bank.name_bank}  </li>
-                        <li>Orgão: {data.institution.name_institution} </li>
-                    </ul>
-                </div> */}
             </div>
 
             <div className="B2M-card-body">
@@ -135,7 +134,7 @@ function Alternative(props) {
                     {data.alternative.map((e, x) => (
                         <label className="B2M-option-alternative" key={x} >
                             {checkAnswer.length !== 0 ? !(checkAnswer.answer === x) ? e.name_alternative : (<b>{e.name_alternative}</b>) : e.name_alternative}
-                            <input type="radio" value={x} name="alternative" />
+                            <input type="radio" value={x} name="alternative" checked={checkAnswer.answer === x ? true : false} />
                             <span className="B2M-checkmark"></span>
                         </label>
                     ))}
@@ -163,7 +162,6 @@ function Alternative(props) {
                 <button disabled={!idUser ? true : false} className={current === 'teacher' && 'B2M-card-tab-active'} onClick={() => setCurrent(current === 'teacher' ? '' : 'teacher')} ><i className="B2M-bookmark-icon mr-3"></i>Comentário  do professor</button>
                 <button disabled={!idUser ? true : false} className={current === 'comment' && 'B2M-card-tab-active'} onClick={() => setCurrent(current === 'comment' ? '' : 'comment')} ><i className="B2M-list-icon mr-3"></i>Comentários</button>
             </div>
-
 
             {idUser && (<>
                 {/* CONETARIO DO PROFESSOR */}
@@ -208,8 +206,9 @@ function Alternative(props) {
                                     <a
                                         href="/questoes#comment"
                                         onClick={() => {
-                                            setTypeComment('comment answer');
                                             setIdComment(commit.id_comment);
+                                            setOpenComment(openComment ? false : true);
+                                            setOpenIndex(x);
                                         }
                                         }>
                                         <i className="B2M-comment-icon mr-2"></i>Responder</a>
@@ -242,20 +241,47 @@ function Alternative(props) {
                                 </div>
                             </>)}
 
+                            {openComment && openIndex === x ? (<>
+                                {!loading && !loadingComment ? (<>
+                                    <div className="B2M-comment-new" id="comment" >
+                                        <label className="form-label">Escreva um resposta...</label>
+                                        <textarea
+                                            onChange={(e) => setComment(e.target.value)}
+                                            className="form-control"
+                                            id="comment"
+                                            rows="3"
+                                            value={comment}
+                                        ></textarea>
+                                        <button
+                                            type="submit"
+                                            disabled={!comment}
+                                            onClick={() => SotreComment('comment answer', comment, data.id_question, idComment, idUser)}
+                                        >
+                                            <i className="B2M-comment-icon mr-2"></i>Enviar</button>
+                                    </div>
+                                </>) : <div class="B2M-loader mb-5"></div>}
+                            </>) : null}
                         </div>
                     </>) : null}
 
-                    {!loading ? (<>
-                        <div className="B2M-comment-new" id="comment" onChange={(e) => setComment(e.target.value)}>
-                            <label className="form-label">{typeComment !== 'comment answer' ? 'Escreva um comentário...' : 'Escreva um resposta...'}</label>
-                            <textarea className="form-control" id="comment" rows="3" value={comment}></textarea>
+                    {!loading && !loadingComment ? (<>
+                        <div className="B2M-comment-new" id="comment" >
+                            <label className="form-label">Escreva um comentário...</label>
+                            <textarea
+                                onChange={(e) => setComment(e.target.value)}
+                                className="form-control"
+                                id="comment"
+                                rows="3"
+                                value={comment}
+                            ></textarea>
                             <button
                                 type="submit"
-                                onClick={() => SotreComment(typeComment, comment, data.id_question, idComment, idUser)}
+                                disabled={!comment}
+                                onClick={() => SotreComment('comment', comment, data.id_question, idComment, idUser)}
                             >
                                 <i className="B2M-comment-icon mr-2"></i>Enviar</button>
                         </div>
-                    </>) : <p>Carregando ...</p>}
+                    </>) : <div class="B2M-loader mb-5"></div>}
 
                 </>)}
             </>)}
@@ -264,7 +290,7 @@ function Alternative(props) {
 }
 
 const mapStateToProps = (state) => ({
-    loading: state.userAnswersQuestion.loading,
+    loadingAnswer: state.userAnswersQuestion.loading,
     loading: state.comment.loading,
     newComment: state.comment.newComment,
 });

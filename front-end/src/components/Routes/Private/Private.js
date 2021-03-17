@@ -1,11 +1,13 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 import { getUserCookie } from '../../../services/session';
 
-const PrivateRoute = ({ component: Component,  ...rest }) => (
+const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route
         {...rest}
+        // render={(props) => <Component {...props} />}
+
         render={(props) => (getUserCookie() ? (
             <Component {...props} />
         ) : (
@@ -14,8 +16,7 @@ const PrivateRoute = ({ component: Component,  ...rest }) => (
                     pathname: '/login',
                 }}
             />
-        ))
-        }
+        ))}
     />
 );
 
