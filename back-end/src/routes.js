@@ -7,6 +7,8 @@ import DiciplineController from './controllers/diciplineController';
 import QuestionController from './controllers/questionController';
 import UserController from './controllers/userController';
 import AuthController from './controllers/authController';
+import UserAnswersQuestionController from './controllers/userAnswersQuestionController';
+import CommentController from './controllers/commentController';
 
 const routes = express.Router();
 
@@ -25,6 +27,12 @@ routes.post(`${apiVersionV1}/uploadQuestions`, QuestionController.upload);
 routes.post(`${apiVersionV1}/registerQuestions`, QuestionController.store);
 routes.post(`${apiVersionV1}/registerUser`, UserController.store);
 routes.post(`${apiVersionV1}/login`, AuthController.login);
+
+routes.post(`${apiVersionV1}/userAnswersQuestion`, UserAnswersQuestionController.index);
+routes.post(`${apiVersionV1}/saveUserAnswers`, UserAnswersQuestionController.store);
+
+routes.get(`${apiVersionV1}/comments`, CommentController.index); // não ta sendo usar
+routes.post(`${apiVersionV1}/comments`, CommentController.store);
 
 // --- EM ANALISE ---
 routes.get(`${apiVersionV1}/users`, UserController.index);

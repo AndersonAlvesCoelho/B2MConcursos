@@ -1,30 +1,112 @@
-import React, { useState } from 'react';
-import CommentUser from '../Comment/commentUser';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+
+import { dataFormatada } from '../../helpers/dataFormata';
+import * as userAnswersQuestionActions from '../../actions/userAnswersQuestion.actions';
+import * as commentActions from '../../actions/comment.actions';
 
 import logo from '../../assets/img/svg/logo.svg';
 import erro from '../../assets/img/svg/erro.svg';
 import ok from '../../assets/img/svg/ok.svg';
 
-import { dataFormatada } from '../../helpers/dataFormata';
+function Alternative(props) {
 
+    const {
+        data,
+        idUser,
+        // answerUser,
 
-function Alternative({ data, index }) {
+        saveUserAnswersQuestion,
+        saveComment,
+        loading,
+        newComment
+    } = props;
 
-    const [answer, setAnswer] = useState([]);
-    const [alternative, setAlternative] = useState();
+    // estados auxiliar de escolha de alternativa
+    const [checkAnswer, setCheckAnswer] = useState([]);
+    const [option, setOption] = useState();
+
+    // estado auxiliar do registre do comnetario
     const [current, setCurrent] = useState();
-
-    const [openTextare01, setOpenTextare01] = useState(false);
-    const [openTextare02, setOpenTextare02] = useState(false);
+    const [typeComment, setTypeComment] = useState('');
+    const [comment, setComment] = useState('');
+    const [idComment, setIdComment] = useState(0);
+    const [dataComment, setDataComment] = useState([]);
 
     //verificar se a questão marcada está correta 
-    function keyAnswer() {
-        data.alternative.map((e, index) => {
-            if (index === parseInt(alternative)) {
-                return setAnswer({ check: e.answer, answer: parseInt(alternative) })
+    function keyAnswer(opt, situation) {
+        let answer = [];
+        data.alternative.map((e, x) => {
+            if (x === parseInt(opt)) {
+                answer = { check: e.answer, answer: parseInt(opt) }
             }
+
         })
+        setOption(false);
+        setCheckAnswer(answer);
+        if (situation === 0) saveAnswer(answer);
     }
+
+    // salvando resposta da pergunta 
+    function saveAnswer(e) {
+        if (idUser) {
+            saveUserAnswersQuestion(idUser, data.id_question, e.answer);
+        }
+        localStorage.setItem(data.id_question, JSON.stringify(e));
+        setCheckAnswer(JSON.parse(localStorage.getItem(data.id_question)));
+    }
+
+    //salvando comentario do usuario na questão
+    function SotreComment(type, comment, idQuestion, idComment, idUser) {
+        setComment('');
+
+        if (type !== 'comment answer') {
+            return saveComment('comment', comment, false, idQuestion, false, idUser)
+        } else {
+            return saveComment(type, false, comment, false, idComment, idUser)
+        }
+
+    }
+
+    // setando os valores inicial dos option
+    useEffect(() => {
+        keyAnswer(data.answer, 1);
+        setDataComment(data.comment);
+    }, [data])
+
+
+    // get new comment
+    // useEffect(() => {
+    //     console.log("dataComment 01", dataComment);
+
+    //     if (newComment.length !== 0) {
+    //         let aux = dataComment;
+    //         console.log("newComment 01", newComment);
+    //         if (newComment.id_question) {
+    //             aux.push({
+    //                 comment: newComment.comment,
+    //                 id_comment: newComment.id_comment,
+    //                 updatedAt: newComment.updatedAt,
+    //                 comment_answer: [],
+    //                 user: newComment.user
+    //             })
+    //         } else {
+    //             dataComment.map((e) => {
+    //                 if (e) {
+    //                     aux.comment_answer.push({
+    //                         answer: newComment.comment,
+    //                         updatedAt: newComment.updatedAt,
+    //                         user: newComment.user
+    //                     })
+    //                 }
+    //             })
+    //         }
+    //         setDataComment(aux)
+    //     }
+    //     console.log("dataComment 02", dataComment);
+
+    // }, [newComment])
+
 
     return (
         <>
@@ -33,7 +115,7 @@ function Alternative({ data, index }) {
                     <img src={logo} atl="LOGO" />
                     <p>{data.bank.name_bank} - {data.year} - {data.institution.name_institution} - {data.discipline_subject.dicipline.name_dicipline}</p>
                 </div>
-                <span>Nº {index + 1}</span>
+                <span>Nº {data.id_question}</span>
 
                 {/* <div className="B2M-card-info">
                     <ul>
@@ -48,20 +130,22 @@ function Alternative({ data, index }) {
                 <p>{data.enunciated}</p>
 
                 {/* OPTION  */}
-                <div className="B2M-alternative" onChange={(e) => setAlternative(e.target.value)}>
-                    {data.alternative.map((e, index) => (
-                        <label className="B2M-option-alternative" key={index} >
-                            {!(answer.answer === index) ? e.name_alternative : (<b>{e.name_alternative}</b>)}
-                            <input type="radio" value={index} name="alternative" disabled={answer.length !== 0} />
+
+                <div className="B2M-alternative" onChange={(e) => setOption(e.target.value)}>
+                    {data.alternative.map((e, x) => (
+                        <label className="B2M-option-alternative" key={x} >
+                            {checkAnswer.length !== 0 ? !(checkAnswer.answer === x) ? e.name_alternative : (<b>{e.name_alternative}</b>) : e.name_alternative}
+                            <input type="radio" value={x} name="alternative" />
                             <span className="B2M-checkmark"></span>
                         </label>
                     ))}
                 </div>
 
+
                 {/* MENSSAGEM DE REPOSTA DA OPTION  */}
                 <div className="B2M-answer-option">
                     <div className="B2M-answer-msg">
-                        {answer.length !== 0 ? answer.check ?
+                        {checkAnswer.length !== 0 ? checkAnswer.check ?
                             <>
                                 <img src={ok} alt="ok" />
                                 <span>Alternativa correta, parabéns!</span>
@@ -71,249 +155,123 @@ function Alternative({ data, index }) {
                             </> : null}
                     </div>
 
-                    <button
-                        disabled={!alternative || answer.length !== 0}
-                        onClick={() => keyAnswer()}>
-                        Visualizar Resposta
-                    </button>
+                    <button type="button" disabled={!option} onClick={() => keyAnswer(option, 0)}>Visualizar Resposta</button>
                 </div>
             </div>
 
             <div className="B2M-card-footer">
-                <button className={current === 'teacher' && 'B2M-card-tab-active'} onClick={() => setCurrent(current === 'teacher' ? '' : 'teacher')} ><i className="B2M-bookmark-icon mr-3"></i>Comentário  do professor</button>
-                <button className={current === 'comment' && 'B2M-card-tab-active'} onClick={() => setCurrent(current === 'comment' ? '' : 'comment')} ><i className="B2M-list-icon mr-3"></i>Comentários</button>
+                <button disabled={!idUser ? true : false} className={current === 'teacher' && 'B2M-card-tab-active'} onClick={() => setCurrent(current === 'teacher' ? '' : 'teacher')} ><i className="B2M-bookmark-icon mr-3"></i>Comentário  do professor</button>
+                <button disabled={!idUser ? true : false} className={current === 'comment' && 'B2M-card-tab-active'} onClick={() => setCurrent(current === 'comment' ? '' : 'comment')} ><i className="B2M-list-icon mr-3"></i>Comentários</button>
             </div>
 
-            {/* CONETARIO DO PROFESSOR */}
-            {current === "teacher" && <>
-                {data.issue_resolution ? (<>
-                    <div class="B2M-comment-teacher">
-                        <div class="feed d-flex justify-content-between">
-                            <div class="feed-body d-flex justify-content-between">
-                                <a href="#" class="feed-profile"><img src="https://image.flaticon.com/icons/png/512/16/16363.png" alt="avatar" class="img-fluid rounded-circle" /></a>
-                                <div class="B2M-comment-content">
-                                    <h5>{data.user.login}</h5>
-                                    <div class="full-date">
-                                        <small>{dataFormatada(data.updatedAt)}</small>
+
+            {idUser && (<>
+                {/* CONETARIO DO PROFESSOR */}
+                {current === "teacher" && <>
+                    {data.issue_resolution ? (<>
+                        <div class="B2M-comment-teacher">
+                            <div class="feed d-flex justify-content-between">
+                                <div class="feed-body d-flex justify-content-between">
+                                    <a href="#" class="feed-profile"><img src="https://secure.gravatar.com/avatar/?s=56&d=mm&r=g" alt="avatar" class="img-fluid rounded-circle" /></a>
+                                    <div class="B2M-comment-content">
+                                        <h5>{data.user.name}</h5>
+                                        <div class="full-date">
+                                            <small>{dataFormatada(data.updatedAt)}</small>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            <div class="B2M-comment">
+                                <small>{data.issue_resolution}</small>
+                            </div>
                         </div>
-                        <div class="B2M-comment">
-                            <small>{data.issue_resolution}</small>
-                        </div>
-                    </div>
-                </>) : <p className="mx-5 my-5">Sem comentário do professor</p>}
-            </>}
+                    </>) : <p className="mx-5 my-5">Sem comentário do professor</p>}
+                </>}
 
-            {/* COMENTARIOS DE USUARIOS */}
-            {current === "comment" && (<>
-                {/* COMENTARIO PRINCIPAL */}
-                {data.comment.length !== 0 ? data.comment.map((commit, index) => <>
-                    <div class="B2M-comment-user">
-                        <div class="feed d-flex justify-content-between" key={index}>
-                            <div class="feed-body d-flex justify-content-between">
-                                <a href="#" class="feed-profile"><img src="https://image.flaticon.com/icons/png/512/16/16363.png" alt="avatar" class="img-fluid rounded-circle" /></a>
-                                <div class="B2M-comment-content">
-                                    <h5>{commit.user.login}</h5>
-                                    <div class="full-date">
-                                        <small>{dataFormatada(commit.updatedAt)}</small>
+                {/* COMENTARIOS DE USUARIOS */}
+                {current === "comment" && (<>
+                    {/* COMENTARIO PRINCIPAL */}
+                    {dataComment.length !== 0 ? dataComment.map((commit, x) => <>
+                        <div class="B2M-comment-user">
+                            <div class="feed d-flex justify-content-between" key={x}>
+                                <div class="feed-body d-flex justify-content-between">
+                                    <a href="#" class="feed-profile"><img src="https://secure.gravatar.com/avatar/?s=56&d=mm&r=g" alt="avatar" class="img-fluid rounded-circle" /></a>
+                                    <div class="B2M-comment-content">
+                                        <h5>{commit.user.name}</h5>
+                                        <div class="full-date">
+                                            <small>{dataFormatada(commit.updatedAt)}</small>
+                                        </div>
                                     </div>
+                                </div>
+
+                                <div class="B2M-comment-answer-btn text-right">
+                                    <a
+                                        href="/questoes#comment"
+                                        onClick={() => {
+                                            setTypeComment('comment answer');
+                                            setIdComment(commit.id_comment);
+                                        }
+                                        }>
+                                        <i className="B2M-comment-icon mr-2"></i>Responder</a>
                                 </div>
                             </div>
 
-                            <div class="B2M-comment-answer-btn text-right">
-                                <a href="/questoes#comment" onClick={() => setOpenTextare01(openTextare01 === true ? false : true)}><i className="B2M-comment-icon mr-2"></i>Responder</a>
+                            <div class="B2M-comment">
+                                <small>{commit.comment}</small>
                             </div>
-                        </div>
-                        <div class="B2M-comment">
-                            <small>{commit.comment}</small>
-                        </div>
-                        <hr />
-                        {/* RESPOSTA DO COMENTARIO PRINCIPAL */}
-                        {commit.comment_answer.map((ans, index) => <>
-                            <div class="B2M-comment-user-answer" key={index}>
-                                <div class="feed d-flex justify-content-between">
-                                    <div class="feed-body d-flex justify-content-between">
-                                        <a href="#" class="feed-profile"><img src="https://bootdey.com/img/Content/user_1.jpg" alt="avatar" class="img-fluid rounded-circle" /></a>
-                                        <div class="B2M-comment-content">
-                                            <h5>{ans.user.login}</h5>
-                                            <div class="full-date">
-                                                <small>{dataFormatada(ans.updatedAt)}</small>
+                            <hr />
+                            {/* RESPOSTA DO COMENTARIO PRINCIPAL */}
+                            {commit.comment_answer.map((ans, y) => <>
+                                <div class="B2M-comment-user-answer" key={y}>
+                                    <div class="feed d-flex justify-content-between">
+                                        <div class="feed-body d-flex justify-content-between">
+                                            <a href="#" class="feed-profile"><img src="https://secure.gravatar.com/avatar/?s=56&d=mm&r=g" alt="avatar" class="img-fluid rounded-circle" /></a>
+                                            <div class="B2M-comment-content">
+                                                <h5>{ans.user.name}</h5>
+                                                <div class="full-date">
+                                                    <small>{dataFormatada(ans.updatedAt)}</small>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <div class="B2M-comment-answer-btn text-right">
-                                        <a href="/questoes#comment" onClick={() => setOpenTextare02(openTextare02 === true ? false : true)}><i className="B2M-comment-icon mr-2"></i>Responder</a>
-                                    </div>
-                                </div>
-                                <div class="B2M-comment">
-                                    <small>{ans.answer}</small>
-                                </div>
-                                <hr />
-                            </div>
-                        </>)}
-
-                    </div>
-                </>) : (<>
-                    <div className="B2M-comment-new">
-                        <label for="exampleFormControlTextarea1" className="form-label">Seja o primeiro a comentar</label>
-                        <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                        <button><i className="B2M-comment-icon mr-2"></i> Enviar</button>
-                    </div>
-                </>)}
-
-                {openTextare01 || openTextare02 && <>
-                    <div class="B2M-comment-new" id="comment">
-                        <label for="exampleFormControlTextarea1" class="form-label">Responder comentario do </label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                        <button><i className="B2M-comment-icon mr-2"></i> Enviar</button>
-                    </div>
-                </>}
-            </>)}
-
-
-            {/* <Col className="B2M-a-enunciated">
-                {data.enunciated}
-            </Col>
-            <div className="B2M-a-alternative" onChange={(e) => setAlternative(e.target.value)}>
-                {data.alternative.map((e, index) => (
-                    <label className="B2M-a-option" key={index} >
-                        {!(answer.answer === index) ? e.name_alternative : (<b>{e.name_alternative}</b>)}
-                        <input type="radio" value={index} name="alternative" disabled={answer.length !== 0} />
-                        <span className="B2M-a-checkmark"></span>
-                    </label>
-                ))}
-                <hr />
-                <div className="B2M-a-answer">
-                    {!alternative}
-                    <div className="B2M-a-answer-msg">
-                        {answer.length !== 0
-                            ? answer.check ?
-                                <>
-                                    <img src={ok} />
-                                    <span>Alternativa correta, parabéns!</span>
-                                </>
-                                : <>
-                                    <img src={erro} />
-                                    <span>Você errou!</span>
-                                </>
-                            : null}
-                    </div>
-                    <a className={!alternative && answer.length !== 0 && "disabled"} disabled={!alternative || answer.length !== 0} onClick={() => keyAnswer()}>
-                        Visualizar Resposta
-                        </a>
-                </div>
-            </div>
-
-            <duv className="B2M-a-container-comments" >
-                <div  >
-                    <div onClick={() => setCurrent(current === 'teacher' ? '' : 'teacher')} >
-                        <img src={bookmark} />
-                        <span >Comentário  do professor</span>
-                    </div>
-
-                </div>
-                <div onClick={() => setCurrent(current === 'comment' ? '' : 'comment')} >
-                    <img src={chat} />
-                    <span >Comentários (0)</span>
-                </div>
-            </duv>
-            {current === "teacher" && (<>
-                <div className="B2M-a-comment-chat" >
-                    <div className="B2M-a-chat">
-                        <hr />
-                        <ul >
-                            <li>
-                                <img src="https://bootdey.com/img/Content/user_1.jpg" className="B2M-a-avatar" alt="avatar" />
-                                <div className="B2M-a-post-commit">
-                                    <div className="B2M-a-post-info">
-                                        <small> {Date(data.updatedAt)} <a>{data.user.login}</a></small>
-                                    </div>
-                                    <div>
-                                        {data.issue_resolution}
-                                    </div>
-                                </div>
-
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </>)}
-
-            {current === "comment" && (<>
-                <div className="B2M-a-comment-chat" >
-                    <div className="B2M-a-chat">
-                        <hr />
-                        <ul >
-
-                            {data.comment && data.comment.map((commit, index) => <>
-
-                                <li key={index}>
-                                    <img src="https://bootdey.com/img/Content/user_1.jpg" className="B2M-a-avatar" alt="avatar" />
-                                    <div className="B2M-a-post-commit">
-                                        <div className="B2M-a-post-info">
-                                            <small> {Date(commit.updatedAt)} <a>{commit.user.login}</a></small>
-                                            <span>
-                                                <FaCommentAlt size={15} />
-                                                <a
-                                                    href="/questoes#comment"
-                                                    onClick={() => setOpenTextare01(openTextare01 === true ? false : true)}
-                                                >
-                                                    Responder
-                                                    </a>
-
-                                            </span>
-                                        </div>
-                                        {commit.comment}
 
                                     </div>
-
+                                    <div class="B2M-comment">
+                                        <small>{ans.answer}</small>
+                                    </div>
                                     <hr />
-                                    <ul >
-                                        {commit.comment_answer.map((ans) => <>
-                                            <li >
-                                                <img src="https://bootdey.com/img/Content/user_1.jpg" className="B2M-a-avatar" alt="avatar" />
-                                                <div className="B2M-a-post-commit">
-                                                    <div className="B2M-a-post-info">
-                                                        <small> {Date(ans.updatedAt)} <a>{ans.user.login}</a></small>
-                                                        <span>
-                                                            <FaCommentAlt size={15} />
-                                                            <a
-                                                                href="/questoes#comment"
-                                                                onClick={() => setOpenTextare02(openTextare02 === true ? false : true)}
-                                                            >
-                                                                Responder
-                                                                </a>
-                                                        </span>
-                                                    </div>
-                                                    <div>
-                                                        {ans.answer}
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </>)}
-                                    </ul>
-                                </li>
-
-
+                                </div>
                             </>)}
 
-                            {openTextare01 || openTextare02 &&
-                                <Form className="B2M-a-post-textarea" id="comment">
-                                    <Form.Control as="textarea" rows={3} />
-                                    <button className="B2M-btn" type="submit"> Comentar</button>
-                                </Form>
-                            }
-                        </ul>
-                    </div>
-                </div>
+                        </div>
+                    </>) : null}
+
+                    {!loading ? (<>
+                        <div className="B2M-comment-new" id="comment" onChange={(e) => setComment(e.target.value)}>
+                            <label className="form-label">{typeComment !== 'comment answer' ? 'Escreva um comentário...' : 'Escreva um resposta...'}</label>
+                            <textarea className="form-control" id="comment" rows="3" value={comment}></textarea>
+                            <button
+                                type="submit"
+                                onClick={() => SotreComment(typeComment, comment, data.id_question, idComment, idUser)}
+                            >
+                                <i className="B2M-comment-icon mr-2"></i>Enviar</button>
+                        </div>
+                    </>) : <p>Carregando ...</p>}
+
+                </>)}
             </>)}
-       
-        */}
         </>
     );
 }
 
-export default Alternative;
+const mapStateToProps = (state) => ({
+    loading: state.userAnswersQuestion.loading,
+    loading: state.comment.loading,
+    newComment: state.comment.newComment,
+});
+
+const mapDispatchToProps = {
+    saveUserAnswersQuestion: userAnswersQuestionActions.saveUserAnswersQuestion,
+    saveComment: commentActions.saveComment
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Alternative);

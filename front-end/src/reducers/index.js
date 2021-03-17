@@ -5,6 +5,8 @@ import office from './office.reducer';
 import dicipline from './dicipline.reducer';
 import question from './question.reducer';
 import user from './user.reducer';
+import userAnswersQuestion from './userAnswersQuestion.reducer';
+import comment from './comment.reducer';
 
 const rootReducer = combineReducers({
     bank,
@@ -12,7 +14,9 @@ const rootReducer = combineReducers({
     office,
     dicipline,
     question,
-    user
+    user,
+    userAnswersQuestion,
+    comment
 });
 
 export default rootReducer;

@@ -70,7 +70,7 @@ class QuestionController {
             // 'id_bank',
             // 'id_institution',
             'id_user',
-            'created_at',
+            'createdAt',
             // 'updated_at'
           ]
         },
@@ -83,7 +83,7 @@ class QuestionController {
             * conforme os ids que contem na tabela office
             */
             association: "office",
-            // attributes: { exclude: ['id_office', 'created_at', 'updated_at'] },
+            // attributes: { exclude: ['id_office', 'createdAt', 'updated_at'] },
             // where: {
             //   //   // ...(office01 && { id_office_niv_1: { [Op.in]: office01 } }),
             //   //   //   // ...(office02 && { id_office_niv_2: { [Op.in]: office02 } }),
@@ -95,26 +95,26 @@ class QuestionController {
             include: [
               {
                 association: "office_niv_1",
-                attributes: { exclude: ['id_office_niv_1', 'created_at', 'updated_at'] },
+                attributes: { exclude: ['id_office_niv_1', 'createdAt', 'updated_at'] },
               },
               {
                 association: "office_niv_2",
-                attributes: { exclude: ['id_office_niv_1', 'id_office_niv_2', 'created_at', 'updated_at'] },
+                attributes: { exclude: ['id_office_niv_1', 'id_office_niv_2', 'createdAt', 'updated_at'] },
               },
               {
                 association: "office_niv_3",
-                attributes: { exclude: ['id_office_niv_2', 'id_office_niv_3', 'created_at', 'updated_at'] },
+                attributes: { exclude: ['id_office_niv_2', 'id_office_niv_3', 'createdAt', 'updated_at'] },
               },
               {
                 association: "office_niv_4",
-                attributes: { exclude: ['id_office_niv_3', 'id_office_niv_4', 'created_at', 'updated_at'] },
+                attributes: { exclude: ['id_office_niv_3', 'id_office_niv_4', 'createdAt', 'updated_at'] },
               }
             ],
           },
           {
             // A mesma coisa que acontece para os dados office aocntece para os dados de subject
             association: "discipline_subject",
-            attributes: { exclude: ['id_subject_niv_4', 'id_subject_niv_5', 'id_subject_niv_6', 'id_subject_niv_7', 'created_at', 'updated_at'] },
+            attributes: { exclude: ['id_subject_niv_4', 'id_subject_niv_5', 'id_subject_niv_6', 'id_subject_niv_7', 'createdAt', 'updated_at'] },
 
             // where: {
             // ...(dicipline00 && { id_dicipline: { [Op.in]: dicipline00 } }),
@@ -126,56 +126,56 @@ class QuestionController {
             include: [
               {
                 association: "dicipline",
-                attributes: { exclude: ['id_dicipline', 'created_at', 'updated_at'] },
+                attributes: { exclude: ['id_dicipline', 'createdAt', 'updated_at'] },
               },
               {
                 association: "subject_niv_1",
-                attributes: { exclude: ['id_dicipline', 'id_subject_niv_1', 'created_at', 'updated_at'] },
+                attributes: { exclude: ['id_dicipline', 'id_subject_niv_1', 'createdAt', 'updated_at'] },
               },
               {
                 association: "subject_niv_2",
-                attributes: { exclude: ['id_subject_niv_1', 'id_subject_niv_2', 'created_at', 'updated_at'] },
+                attributes: { exclude: ['id_subject_niv_1', 'id_subject_niv_2', 'createdAt', 'updated_at'] },
               },
               {
                 association: "subject_niv_3",
-                attributes: { exclude: ['id_subject_niv_2', 'id_subject_niv_3', 'created_at', 'updated_at'] },
+                attributes: { exclude: ['id_subject_niv_2', 'id_subject_niv_3', 'createdAt', 'updated_at'] },
               },
 
             ],
           },
           {
             association: "bank",
-            attributes: { exclude: ['id_bank', 'created_at', 'updated_at'] },
+            attributes: { exclude: ['id_bank', 'createdAt', 'updated_at'] },
           },
           {
             association: "institution",
-            attributes: { exclude: ['id_institution', 'created_at', 'updated_at'] },
+            attributes: { exclude: ['id_institution', 'createdAt', 'updated_at'] },
           },
           {
             association: "user",
-            attributes: { exclude: ['id_user', 'password', 'nivel', 'created_at', 'updated_at'] },
+            attributes: { exclude: ['id_user', 'password', 'nivel', 'createdAt', 'updated_at'] },
           },
           {
             association: "alternative",
-            attributes: { exclude: ['id_alternative', 'id_question', 'created_at', 'updated_at'] },
+            attributes: { exclude: ['id_alternative', 'id_question', 'createdAt', 'updated_at'] },
           },
           {
             association: "comment",
-            attributes: { exclude: ['id_comment', 'id_user', 'id_question', 'created_at'] },
+            attributes: { exclude: ['id_user', 'id_question', 'createdAt'] },
             include: [
               {
                 association: "comment_answer",
-                attributes: { exclude: ['id_comment_answer', 'id_user', 'id_comment', 'created_at'] },
+                attributes: { exclude: ['id_comment_answer', 'id_user', 'id_comment', 'createdAt'] },
                 include: [
                   {
                     association: "user",
-                    attributes: { exclude: ['id_user', 'password', 'nivel', 'created_at', 'updated_at'] },
+                    attributes: { exclude: ['id_user', 'password', 'email', 'nivel', 'createdAt', 'updated_at'] },
                   },
                 ],
               },
               {
                 association: "user",
-                attributes: { exclude: ['id_user', 'password', 'nivel', 'created_at', 'updated_at'] },
+                attributes: { exclude: ['id_user', 'password', 'email', 'nivel', 'createdAt', 'updated_at'] },
               },
             ],
           },
@@ -234,7 +234,7 @@ class QuestionController {
             // 'id_bank',
             // 'id_institution',
             'id_user',
-            'created_at',
+            'createdAt',
             // 'updated_at'
           ]
         },
@@ -340,7 +340,7 @@ class QuestionController {
 
       // TODO: resolver problema do auto increment postgres default value e sequelize
       const question = await Question.create({
-        id_question: idQuestion.toJSON().id_alternative +1,
+        id_question: idQuestion.toJSON().id_alternative + 1,
         id_office: 1,
         id_discipline_subject: 1,
         id_bank: idBank,
@@ -371,14 +371,14 @@ class QuestionController {
       // });
 
       for (let i = 0; i < nameAlternative.length; i++) {
-       //TODO: retirar essa gambiarra para pegar o ultimo ID
+        //TODO: retirar essa gambiarra para pegar o ultimo ID
         const idQAlternative = await Alternative.findOne({
           order: [
             ['id_alternative', 'DESC']
           ]
         })
         await Alternative.create({
-          id_alternative: idQAlternative.toJSON().id_alternative +1,
+          id_alternative: idQAlternative.toJSON().id_alternative + 1,
           name_alternative: nameAlternative[i],
           answer: answer[i],
           id_question: question.id_question,

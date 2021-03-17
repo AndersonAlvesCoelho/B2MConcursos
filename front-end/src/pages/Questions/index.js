@@ -2,19 +2,40 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Empty } from 'antd';
 
-import '../../assets/css/question.css';
-import 'antd/dist/antd.css';
-
+import { getUserCookie } from '../../services/session';
 import { SideNavbar, Navbar } from '../../components/Menu/';
 import Alternative from '../../components/Alternative';
 import FilterFixed from '../../components/FilterFixed';
 import Pagination from '../../components/Pagination';
 import Footer from '../../components/Footer';
 import * as questionActions from '../../actions/question.actions';
+import * as userAnswersQuestionActions from '../../actions/userAnswersQuestion.actions';
 
-const viewSizeQuestion = 2;
+import '../../assets/css/question.css';
+import 'antd/dist/antd.css';
+
+const viewSizeQuestion = 1;
 
 function Questions(props) {
+
+    const {
+        loadingQuestion,
+        loadingAnswerQuestion,
+
+        question,
+        qtdQuestion,
+        answerQuestion,
+
+        getQuestion,
+        getQtdQuestion,
+        getAnswerQuestion,
+
+    } = props;
+
+    const loading = loadingQuestion && loadingAnswerQuestion;
+
+    // const idUser = getUserCookie()[0].id_user;
+    const idUser = getUserCookie() ? getUserCookie()[0].id_user : false;
 
     const [toggle, setToggle] = useState(false); // mudar o stado do side bar
     const [visible, setVisible] = useState(false);
@@ -22,16 +43,8 @@ function Questions(props) {
     const [pagerCurrent, setPagerCurrent] = useState(1);
     const [offset, setOffset] = useState(0);
     const [limit, setLimit] = useState(viewSizeQuestion);
-
-    const {
-        loadingQuestion,
-
-        question,
-        qtdQuestion,
-
-        getQuestion,
-        getQtdQuestion,
-    } = props;
+    const [checkAnswer, setCheckAnswer] = useState([]);
+    const [dataQuestion, setDataQuestion] = useState([]);
 
     //get data questions
     useEffect(() => {
@@ -48,21 +61,66 @@ function Questions(props) {
 
     }, [getQtdQuestion, dataFilter]);
 
+    //get answer user question
+    useEffect(() => {
+        let auxAnswer = [];
+
+        if (question.length !== 0) {
+            question.forEach(e => auxAnswer.push(e.id_question));
+
+            if (idUser) {
+                getAnswerQuestion(idUser, auxAnswer)
+            } else {
+                const keys = Object.keys(localStorage)
+                // get alll localStorages answer
+                let auxStorage = []
+                keys.map((id) => {
+                    let aux = JSON.parse(localStorage.getItem(parseInt(id)))
+                    auxStorage.push({ id_question: parseInt(id), check: aux.check, answer: aux.answer });
+                })
+                setCheckAnswer(auxStorage);
+            }
+        }
+    }, [getAnswerQuestion, question])
+
+
+    // juntado resposta do usuario com a pergunta
+    useEffect(() => {
+        if (answerQuestion.length !== 0) {
+            if (question.length !== 0) {
+                let auxNewData = question.map((quest) => ({
+                    ...quest,
+                    ...answerQuestion.find((answer) => answer.id_question === quest.id_question)
+                }))
+                setDataQuestion(auxNewData);
+            }
+        } else {
+            if (question.length !== 0) {
+                let auxNewData = question.map((quest) => ({
+                    ...quest,
+                    ...checkAnswer.find((answer) => answer.id_question === quest.id_question)
+                }))
+
+                setDataQuestion(auxNewData);
+            }
+        }
+    }, [answerQuestion, checkAnswer])
+
     function onShowSizeChange(page) {
         setPagerCurrent(page);
         setLimit(viewSizeQuestion)
         setOffset((page - 1) * viewSizeQuestion)
     }
 
+
     return (
         <>
-
             <div className="B2M-page">
                 <Navbar toggle={toggle} onToggle={(e) => setToggle(e)} /> {/* MAIN NAVBAR */}
                 <div className="B2M-page-content">
                     <SideNavbar toggle={toggle} type="Questions" /> {/* SIDEBAR */}
                     {/* Page Header */}
-                    <div className={`B2M-content-inner ${toggle ? 'active' : ''}`}>
+                    <div className={`B2M-content-inner side-navbar-active ${toggle ? 'active' : ''}`}>
                         <header className="B2M-page-header">
                             <h2>Questões</h2>
                         </header>
@@ -79,38 +137,43 @@ function Questions(props) {
                                 <div class="row">
                                     <div class="col-12">
 
-                                        {question.length !== 0 ? (<>
-                                            <div className="row">
-                                                <div className="col-lg-2 col-md-12 B2M-info-question-none">
-                                                    <div className="B2M-info-question">
-                                                        <FilterFixed visible={visible} onClose={() => setVisible(false)} changerFilter={(e) => { setDataFilter(e); }} />
-                                                        <a onClick={() => setVisible(true)}><i className="B2M-search-icon"></i></a>
+                                        {!loading ? <>
+                                            {dataQuestion.length !== 0 ? (<>
+                                                <div className="row">
+                                                    <div className="col-lg-2 col-md-12 B2M-info-question-none">
+                                                        <div className="B2M-info-question">
+                                                            <FilterFixed visible={visible} onClose={() => setVisible(false)} changerFilter={(e) => { setDataFilter(e); }} />
+                                                            <a onClick={() => setVisible(true)}><i className="B2M-search-icon"></i></a>
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div className="col-lg-10 col-md-12">
-                                                    <Pagination
-                                                        postsPerPage={viewSizeQuestion}
-                                                        totalPosts={qtdQuestion}
-                                                        newPage={onShowSizeChange}
-                                                        paginate={pagerCurrent}
-                                                    />
-                                                </div>
+                                                    <div className="col-lg-10 col-md-12">
+                                                        <Pagination
+                                                            postsPerPage={viewSizeQuestion}
+                                                            totalPosts={qtdQuestion}
+                                                            newPage={onShowSizeChange}
+                                                            paginate={pagerCurrent}
+                                                        />
+                                                    </div>
 
-                                            </div>
-
-                                            {question.map((data, index) =>
-                                                <div key={index} className="card">
-                                                    <Alternative data={data} index={index} />
                                                 </div>
-                                            )}
-                                        </>) : (<>
-                                            {loadingQuestion ? <div class="B2M-loader"></div> : <div className="center-Component"><Empty /></div>}
-                                        </>)}
+                                                {dataQuestion.map((data, index) =>
+                                                    <div key={index} className="card">
+                                                        <Alternative
+                                                            data={data}
+                                                            idUser={idUser}
+                                                            // answerUser={data.check !== undefined || data.check ? ({ check: data.check, answer: data.answer }) : []}
+                                                        />
+                                                    </div>
+                                                )}
+                                            </>) : (<> <div className="center-Component"><Empty /></div></>)}
+                                        </> : <div class="B2M-loader"></div>}
+
                                     </div>
                                 </div>
                             </div>
                         </section>
+
                         <Footer />
                     </div>
                 </div>
@@ -125,36 +188,17 @@ const mapStateToProps = (state) => ({
     loadingQuestion: state.question.loading,
     question: state.question.question,
     qtdQuestion: state.question.qtdQuestion,
+
+    loadingAnswerQuestion: state.userAnswersQuestion.loading,
+    answerQuestion: state.userAnswersQuestion.answerQuestion,
 });
 
 const mapDispatchToProps = {
     getQuestion: questionActions.getQuestion,
     getQtdQuestion: questionActions.getQtdQuestion,
+
+    getAnswerQuestion: userAnswersQuestionActions.getAnswerQuestion,
+    saveUserAnswersQuestion: userAnswersQuestionActions.saveUserAnswersQuestion
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Questions);
-{/* <div className="B2M-q-content">
-{question.length !== 0 ? (<>
-    <div className="B2M-q-pagination">
-        <Pagination
-            postsPerPage={viewSizeQuestion}
-            totalPosts={qtdQuestion}
-            newPage={onShowSizeChange}
-            paginate={pagerCurrent}
-        />
-
-        <div className="B2M-q-infos">
-            <FilterFixed visible={visible} onClose={onClose} changerFilter={(e) => { setDataFilter(e); }} />
-            <a onClick={showDrawer}><i className="B2M-zoom-out"></i></a>
-        </div>
-    </div>
-
-    {question.map((e, x) =>
-        <div key={x}>
-            <Alternative data={e} indexQ={x} />
-        </div>
-    )}
-</>) : (<>
-    {loadingQuestion ? <div class="B2M-loader"></div> : <div className="center-Component"><Empty /></div>}
-</>)}
-</div> */}
