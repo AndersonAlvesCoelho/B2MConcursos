@@ -2,7 +2,7 @@ import {
     REGISTER_USER_REQUEST,
     REGISTER_USER_SUCCESS,
     REGISTER_USER_FAILURE,
-} from '../constants/user.constants';
+} from '../constants';
 
 import api from '../services/api';
 

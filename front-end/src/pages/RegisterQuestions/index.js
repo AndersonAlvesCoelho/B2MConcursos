@@ -33,6 +33,9 @@ import {
     formataOffice,
     formatDefaultRegister
 } from "../../helpers/formatDataToQuery";
+import Pagination from "../../components/Pagination";
+import registerQuestion from "../../reducers/registeQuestions.reducer";
+import Alternative from "../../components/Alternative";
 
 
 const answerStyleBox = {
@@ -67,8 +70,11 @@ const RegisterQuestions = (props) => {
         office,
         loadingDicipline,
         dicipline,
+        qtdUploadQuestions,
+        questions
     } = props
 
+    const viewSizeQuestion = 1;
     // general info
     // const [office, setOffice] = useState();
     const [bankValue, setBankValue] = useState([]);
@@ -107,7 +113,7 @@ const RegisterQuestions = (props) => {
     // const [data, getFile] = useState({ name: "", path: "" });
     const [progress, setProgess] = useState(0); // progess bar
     const el = useRef(); // accesing input element
-
+    const [pagerCurrent, setPagerCurrent] = useState(1);
 
     useEffect(() => {
         getBank();
@@ -137,6 +143,10 @@ const RegisterQuestions = (props) => {
         const file = e.target.files[0]; // accesing file
         console.log(file);
         setFile(file); // storing file
+    }
+
+    function onShowSizeChange(page) {
+        setPagerCurrent(page);
     }
 
     function handleSubmit(values) {
@@ -183,39 +193,11 @@ const RegisterQuestions = (props) => {
     }
 
     const uploadFileFunction = () => {
-        const formData = new FormData();
-        formData.append('file', file); // appending file
-
-        // for (let i = 0; i < file.length; i++) {
-        //     formData.append(file[i].name, files[i])
-        // }
+        const formData = new FormData()
+        formData.append('file', file)
 
         props.uploadFile(formData)
     }
-
-    const sendPDF = () => {
-        const formData = new FormData();
-        formData.append('file', file); // appending file
-
-        // api.get('/pdfFile')
-        //     .then((res) => {
-        //         console.log(res);
-        //     })
-        //     .catch((error) => {
-        //         //
-        //     });
-
-        props.uploadFile('teste')
-        // setEnunciated('De acordo com o Provimento nº 260/CGJ/2013, são requisitos indispensáveis à escritura pública que implique alienação, a qualquer título, de imóvel rural ou de direito a ele relativo, assim como sua oneração, EXCETO: ')
-        // setYear('2015')
-        // setBank('Prefeitura de Colônia Leopoldina - AL ')
-        // setProve('ADM&TEC - 2019 - Prefeitura de Colônia Leopoldina - AL - Analista de Controle Interno')
-        // setInstitute('ADM&TEC')
-        // setAlternativeA('Observância da descrição georreferenciada, nos termos da legislação específica')
-        // setAlternativeB('Apresentação do Documento de Informação e Apuração do ITR – DIAT, ressalvadas as hipóteses de isenção ou imunidade previstas em lei. ')
-        // setAlternativeC('Apresentação do Recibo de Inscrição do Imóvel Rural no Cadastro Ambiental Rural – CAR, emitido por órgão nacional competente, desde que a reserva legal não esteja averbada na matrícula imobiliária. ')
-        // setAlternativeD(') Apresentação de certidão negativa de débito para com o INSS da pessoa jurídica alienante e da pessoa física alienante, caso esta última seja empregadora ou, se a pessoa física não for empregadora, declaração expressa nesse sentido sob sua responsabilidade civil e criminal.')
-    };
 
     return (
         <div className="B2M-page">
@@ -230,7 +212,6 @@ const RegisterQuestions = (props) => {
                         <span className="filter-titer mx-1 ml-2">Upload da prova:</span>
                     </Row >
 
-
                     <div className="file-upload">
                         <input
                             type="file" ref={el}
@@ -239,19 +220,10 @@ const RegisterQuestions = (props) => {
                         <div className="progessBar" style={{ width: progress }}>
                             {progress}
                         </div>
-                        <button onClick={uploadFileFunction} className="upbutton">                   Upload
-                        </button>
-                        {/* displaying received image*/}
-                        {/*{data.path && <img src={data.path} alt={data.name} />}*/}
+                        <Button onClick={uploadFileFunction} className="filter-btn">
+                            Upload
+                        </Button>
                     </div>
-
-                    <Button
-                        onClick={sendPDF}
-                        className="filter-btn"
-                        variant="info"
-                    >
-                        Fazer upload do PDF
-                    </Button>
                     <hr />
 
                     {/*<>*/}
@@ -402,142 +374,153 @@ const RegisterQuestions = (props) => {
                                 {/*</Col>*/}
                             </Row>
 
-                            <Card type="inner" title="Questão 01" >
+                            <div className="col-lg-10 col-md-12">
+                                <Pagination
+                                    postsPerPage={viewSizeQuestion}
+                                    totalPosts={qtdUploadQuestions}
+                                    newPage={onShowSizeChange}
+                                    paginate={pagerCurrent}
+                                />
+                            </div>
+                            {questions.map((data, index) =>
+                                <Card type="inner"  title={`Questão ${index}`} >
 
-                                <Row >
-                                    <Col className="mt-3" xs={8} md={6}>
-                                        <Form.Item
-                                            name="enunciated"
-                                            label="Enunciado"
-                                        >
-                                            <Input
-                                                onChange={(e) => setEnunciated(e.target.value)}
-                                                placeholder="Enunciado.."
-                                                allowClear
-                                                className="filter-select"
-                                                enterButton
-                                                value={enunciated}
-                                            />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
+                                    <Row >
+                                        <Col className="mt-3" xs={8} md={6}>
+                                            <Form.Item
+                                                name="enunciated"
+                                                label="Enunciado"
+                                            >
+                                                <Input
+                                                    onChange={(e) => setEnunciated(e.target.value)}
+                                                    placeholder="Enunciado.."
+                                                    allowClear
+                                                    className="filter-select"
+                                                    enterButton
+                                                    value={enunciated}
+                                                />
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
 
-                                <div style={answerStyleBox}>
-                                    {
-                                        radioData.map((lo, idx) => {
-                                            return <>
-                                                <div style={answerStyle}>
-                                                    <input
-                                                        key={idx}
-                                                        type="radio"
-                                                        name="answer"
-                                                        value={lo.radioName}
-                                                        checked={!!lo.selected}
-                                                        onChange={changeRadio}
-                                                    />
-                                                </div>
-                                            </>
-                                        })
-                                    }
-                                </div>
+                                    <div style={answerStyleBox}>
+                                        {
+                                            radioData.map((lo, idx) => {
+                                                return <>
+                                                    <div style={answerStyle}>
+                                                        <input
+                                                            key={idx}
+                                                            type="radio"
+                                                            name="answer"
+                                                            value={lo.radioName}
+                                                            checked={!!lo.selected}
+                                                            onChange={changeRadio}
+                                                        />
+                                                    </div>
+                                                </>
+                                            })
+                                        }
+                                    </div>
 
-                                <Row >
-                                    <Col className="mt-3" xs={8} md={6}>
-                                        <Form.Item
-                                            name="alternativeA"
-                                            label="Alternativa A"
-                                        >
-                                            <Input
-                                                onChange={(e) => setAlternativeA(e.target.value)}
-                                                placeholder="Descrição da alternativa A.."
-                                                allowClear
-                                                className="filter-select"
-                                                enterButton
-                                                value={alternativeA}
-                                            />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
+                                    <Row >
+                                        <Col className="mt-3" xs={8} md={6}>
+                                            <Form.Item
+                                                name="alternativeA"
+                                                label="Alternativa A"
+                                            >
+                                                <Input
+                                                    onChange={(e) => setAlternativeA(e.target.value)}
+                                                    placeholder="Descrição da alternativa A.."
+                                                    allowClear
+                                                    className="filter-select"
+                                                    enterButton
+                                                    value={alternativeA}
+                                                />
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
 
-                                <Row>
-                                    <Col className="mt-3" xs={8} md={6}>
-                                        <Form.Item
-                                            name="alternativeB"
-                                            label="Alternativa B"
-                                        >
-                                            <Input
-                                                onChange={(e) => setAlternativeB(e.target.value)}
-                                                placeholder="Descrição da pergunta B.."
-                                                allowClear
-                                                className="filter-select"
-                                                enterButton
-                                                value={alternativeB}
-                                            />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
+                                    <Row>
+                                        <Col className="mt-3" xs={8} md={6}>
+                                            <Form.Item
+                                                name="alternativeB"
+                                                label="Alternativa B"
+                                            >
+                                                <Input
+                                                    onChange={(e) => setAlternativeB(e.target.value)}
+                                                    placeholder="Descrição da pergunta B.."
+                                                    allowClear
+                                                    className="filter-select"
+                                                    enterButton
+                                                    value={alternativeB}
+                                                />
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
 
-                                <Row>
-                                    <Col className="mt-3" xs={8} md={6}>
-                                        <Form.Item
-                                            name="alternativeC"
-                                            label="Alternativa C"
-                                        >
-                                            <Input
-                                                onChange={(e) => setAlternativeC(e.target.value)}
-                                                placeholder="Descrição da pergunta C.."
-                                                allowClear
-                                                className="filter-select"
-                                                enterButton
-                                                value={alternativeC}
-                                            />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
+                                    <Row>
+                                        <Col className="mt-3" xs={8} md={6}>
+                                            <Form.Item
+                                                name="alternativeC"
+                                                label="Alternativa C"
+                                            >
+                                                <Input
+                                                    onChange={(e) => setAlternativeC(e.target.value)}
+                                                    placeholder="Descrição da pergunta C.."
+                                                    allowClear
+                                                    className="filter-select"
+                                                    enterButton
+                                                    value={alternativeC}
+                                                />
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
 
-                                <Row>
-                                    <Col className="mt-3" xs={8} md={6}>
-                                        <Form.Item
-                                            name="alternativeD"
-                                            label="Alternativa D"
-                                        >
-                                            <Input
+                                    <Row>
+                                        <Col className="mt-3" xs={8} md={6}>
+                                            <Form.Item
                                                 name="alternativeD"
-                                                onChange={(e) => setAlternativeD(e.target.value)}
-                                                placeholder="Descrição da pergunta D.."
-                                                allowClear
-                                                className="filter-select"
-                                                enterButton
-                                                value={alternativeD}
-                                            />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
+                                                label="Alternativa D"
+                                            >
+                                                <Input
+                                                    name="alternativeD"
+                                                    onChange={(e) => setAlternativeD(e.target.value)}
+                                                    placeholder="Descrição da pergunta D.."
+                                                    allowClear
+                                                    className="filter-select"
+                                                    enterButton
+                                                    value={alternativeD}
+                                                />
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
 
-                                <Row >
-                                    <Col className="mt-3" xs={8} md={6}>
-                                        <Form.Item
-                                            name="issueResolution"
-                                            label="Resposta"
-                                        >
-                                            <Input
-                                                onChange={(e) => setIssueResolution(e.target.value)}
-                                                placeholder="Descrição da resposta .."
-                                                allowClear
-                                                className="filter-select"
-                                                enterButton
-                                                value={issueResolution}
-                                            />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
+                                    <Row >
+                                        <Col className="mt-3" xs={8} md={6}>
+                                            <Form.Item
+                                                name="issueResolution"
+                                                label="Resposta"
+                                            >
+                                                <Input
+                                                    onChange={(e) => setIssueResolution(e.target.value)}
+                                                    placeholder="Descrição da resposta .."
+                                                    allowClear
+                                                    className="filter-select"
+                                                    enterButton
+                                                    value={issueResolution}
+                                                />
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
+                                    <Button htmlType="submit">
+                                        Cadastrar questão
+                                    </Button>
+                                </Card>
+                            )}
 
-                            </Card>
                         </div>
 
-                        <Button htmlType="submit">
-                            Cadastrar questão
-                        </Button>
+
                     </Form>
 
 
@@ -560,6 +543,8 @@ const mapStateToProps = state => ({
 
     loadingDicipline: state.dicipline.loading,
     dicipline: state.dicipline.dicipline,
+    qtdUploadQuestions: state.registerQuestion.qtdUploadQuestions,
+    questions: state.registerQuestion.questions,
 })
 
 

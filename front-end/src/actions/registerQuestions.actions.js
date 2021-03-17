@@ -10,15 +10,15 @@ import {
 
 import api from '../services/api';
 
+
+
+
 export const uploadFile = (formData) => (dispatch) => {
     dispatch({ type: UPLOAD_PDF_REQUEST });
     api.post('/uploadQuestions',  formData , { headers: { 'Content-Type': 'multipart/form-data' } } )
         .then((res) => {
             alert(JSON.stringify(res))
-            const { data } = res;
-
-            console.log(data);
-            const formatData = data;
+            const {qtdQuestion, questions } = res.data;
 
             // const formatData = data.map((institution, index) => ({
             //     title: institution.name_institution,
@@ -26,7 +26,7 @@ export const uploadFile = (formData) => (dispatch) => {
             //     key: `0-${index}`,
             // }));
 
-            dispatch({ type: UPLOAD_PDF_SUCCESS, formatData });
+            dispatch({ type: UPLOAD_PDF_SUCCESS, qtdQuestion, questions });
         })
         .catch((error) => {
             const { response: err } = error;

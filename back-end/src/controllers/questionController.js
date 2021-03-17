@@ -437,8 +437,9 @@ class QuestionController {
 
           const questionsInfo = [];
           questionsInfo.push(questionsA, questionsB, questionsC, questionsD);
-          console.log('questionsInfo', questionsInfo);
+
           res.send({
+            qtdQuestion: Object.keys(questionsInfo[0]).length,
             questions: questionsInfo,
             message: "File is uploaded"
           })
