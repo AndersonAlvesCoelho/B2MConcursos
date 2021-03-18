@@ -1,23 +1,30 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Home from './pages';
+
+{/* // --- ROTAS SEM AUTENTICAÇÃO --- */ }
+import Home from  './pages';
 import Questions from './pages/Questions';
 import RegisterQuestions from './pages/RegisterQuestions';
+{/* // --- ROTAS QUE NECESSITAM DE AUTENTICAÇÃO --- */ }
+import PrivateRoute from "./Auth";
 import Login from './pages/Login';
 import Perfil from './pages/Dashboard/Perfil';
-import PrivateRoute from "./components/Routes/Private/Private";
 
 const Routes = () => (
     <>
         <Router>
-                <Switch>
-                    <PrivateRoute path="/" exact component={Home} />
-                    <Route path="/questoes" exact component={Questions} />
-                    <Route path="/cadastrar-questoes" exact component={RegisterQuestions} />
-                    <Route path="/login" exact component={Login} />
+            <Switch>
+                {/* // --- ROTAS SEM AUTENTICAÇÃO --- */}
+                <Route path="/" exact component={Home} />
+                <Route path="/questoes" exact component={Questions} />
+                <Route path="/login" exact component={Login} />
 
-                    <Route path="/dashboard/perfil" exact component={Perfil} />
-                </Switch>
+                {/* // --- ROTAS QUE NECESSITAM DE AUTENTICAÇÃO --- */}
+                <PrivateRoute path="/cadastrar-questoes" exact component={RegisterQuestions} />
+                <PrivateRoute path="/dashboard/perfil" exact component={Perfil}
+                   
+                />
+            </Switch>
         </Router>
 
     </>

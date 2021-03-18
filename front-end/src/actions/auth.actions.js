@@ -6,22 +6,27 @@ import {
 
 import { setUserCookie } from '../services/session';
 import api from '../services/api';
+import { errorsMessage } from '../utils/errorsMessage';
+import { successMessage } from '../utils/successMessage';
 
 export const login = (data) => (dispatch) => {
     dispatch({ type: LOGIN_REQUEST });
     const { email, password } = data;
-    if (!email || !password) {
-        console.log(' Preencha todos os dados para se cadastrar')
-        // this.setState({ error: "Preencha todos os dados para se cadastrar" });
-    } else {
-        return new Promise((resolve, reject) => {
-        api.post('/login', { email, password }  )
+
+    return new Promise((resolve, reject) => {
+        api.post('/login', { email, password })
             .then((res) => {
                 const { data } = res;
-                const { user } = data;
+                const { user, message } = data;
+                let msg = '';
+                if (res.status === 201) {
+                    msg = successMessage[message];
+                } else {
+                    msg = errorsMessage[message];
+                }
                 setUserCookie(user);
                 resolve(user);
-                dispatch({ type: LOGIN_SUCCESS, user: user });
+                dispatch({ type: LOGIN_SUCCESS, message: msg });
             })
             .catch((error) => {
                 const { response: err } = error;
@@ -29,9 +34,7 @@ export const login = (data) => (dispatch) => {
                 dispatch({ type: LOGIN_FAILURE, message });
                 reject(error);
             });
-        });
-    }
-
+    });
 
 }
 

@@ -33,8 +33,6 @@ function Questions(props) {
     } = props;
 
     const loading = loadingQuestion && loadingAnswerQuestion;
-
-    // const idUser = getUserCookie()[0].id_user;
     const idUser = getUserCookie() ? getUserCookie()[0].id_user : false;
 
     const [toggle, setToggle] = useState(false); // mudar o stado do side bar
@@ -161,11 +159,11 @@ function Questions(props) {
                                                         <Alternative
                                                             data={data}
                                                             idUser={idUser}
-                                                            // answerUser={data.check !== undefined || data.check ? ({ check: data.check, answer: data.answer }) : []}
+                                                        // answerUser={data.check !== undefined || data.check ? ({ check: data.check, answer: data.answer }) : []}
                                                         />
                                                     </div>
                                                 )}
-                                            </>) : (<> <div className="center-Component"><Empty /></div></>)}
+                                            </>) : <div className="center-Component"><Empty /></div>}
                                         </> : <div class="B2M-loader"></div>}
 
                                     </div>

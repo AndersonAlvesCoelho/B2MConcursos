@@ -7,31 +7,28 @@ class UserController {
       const data = await User.findAll();
       return res.json(data);
     } catch (error) {
-      res.status(400).json({message: `Erro ao retornar os dados. ${error}`});
+      res.status(400).json({ message: `Erro ao retornar os dados. ${error}` });
     }
   }
 
   async login(req, res) {
     try {
-      const {email, password} = req.body;
-      console.log(email)
+      const { email, password } = req.body;
 
       const data = await User.findAll({
         where: {
           email: email,
           password: password
         }
-      })
+      })  
 
-      console.log('data', data)
-      if(data !== null){
-        res.status(200).json({message: `Login aprovado`, user: data});
-      }else{
-        res.status(400).json({message: `Usuario inexistente`});
+      if (data.length !== 0) {
+        res.status(201).json({ message: 'auth/access', user: data });
+      } else {
+        res.status(203).json({ message: 'auth/erro-auth-user', user: '' });
       }
-
     } catch (error) {
-      res.status(400).json({message: `Erro ao retornar os dados. ${error}`});
+      res.status(400).json({ message: `Erro ao retornar os dados. ${error}` });
     }
 
   }

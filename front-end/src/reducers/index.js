@@ -5,6 +5,7 @@ import office from './office.reducer';
 import dicipline from './dicipline.reducer';
 import question from './question.reducer';
 import user from './user.reducer';
+import auth from './auth.reducer';
 import userAnswersQuestion from './userAnswersQuestion.reducer';
 import comment from './comment.reducer';
 import registerQuestion from './registeQuestions.reducer';
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
     dicipline,
     question,
     user,
+    auth,
     userAnswersQuestion,
     comment,
     registerQuestion
