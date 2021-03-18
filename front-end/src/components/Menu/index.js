@@ -1,11 +1,20 @@
 import React from 'react';
-
-import { getUserCookie } from '../../services/session';
+import { useHistory } from 'react-router-dom';
+import { getUserCookie, removeUserCookie} from '../../services/session';
 import '../../assets/css/menu-nav-bar.css';
 
 const user = getUserCookie() ? getUserCookie() : [];
 
 export const Navbar = (props) => {
+
+    console.log('user', user)
+    const history = useHistory();
+
+    const logout = (e) => {
+        removeUserCookie();
+        history.push('/login');
+    }
+
 
     return (
         <>

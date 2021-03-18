@@ -1,6 +1,7 @@
 import { Op } from "sequelize";
 import Question from "../models/Question"
 import { regexPDF } from "../functions/pdfParse"
+const pdf = require('pdf-parse')
 // import Office from "../models/Office";
 import Alternative from "../models/Alternative";
 import { Console } from "console";
@@ -276,6 +277,9 @@ class QuestionController {
         idUser,
       } = req.body
 
+      console.log('idOffice',idOffice)
+      console.log('idDicipline',idDicipline)
+
       //  const office = await Office.create({
       //   id_office: idOffice,
       //   id_office_niv_1: idOfice1,
@@ -395,30 +399,56 @@ class QuestionController {
 
   upload(req, res) {
     try {
-      return regexPDF(pdfFile)
 
+      if(!req.files){
+        res.send({
+          status: false,
+          message: "No files"
+        })
+      } else {
+        const {file} = req.files
 
-      // if (!req.files) {
-      //     return res.status(500).send({ msg: "file is not found" })
-      // }
-      //
-      // // accessing the file
-      // const myFile = req.files.file;
-      //
-      // console.log(req)
-      //
-      // //  mv() method places the file inside public directory
-      // myFile.mv(`${__dirname}/public/${myFile.name}`, function (err) {
-      //     if (err) {
-      //         console.log(err)
-      //         return res.status(500).send({ msg: "Error occured" });
-      //     }
-      //     // returing the response with file path and name
-      //     return res.send({name: myFile.name, path: `/${myFile.name}`});
-      // });
+        //TODO:TRANSFORMAR EM FUNCAO ESSA LOGICA DO PDF PARSER
+        // const questions = regexPDF(file)
+
+        pdf(file).then(function (data){
+
+          //regex
+          const AtoB = new RegExp("A\\)(.*?)B\\)", "g")
+          const BtoC = new RegExp("B\\)(.*?)C\\)", "g")
+          const CtoD = new RegExp("C\\)(.*?)D\\)", "g")
+
+          //transformando em uma única String
+          var linhas = data.text.split("\n")
+          var pdfData = linhas.join()
+
+          //catch questions
+          const questionsA = pdfData.match(AtoB);
+          const questionsB = pdfData.match(BtoC);
+          const questionsC = pdfData.match(CtoD);
+          var questionsD = [];
+
+          //catch question D (search everything between D) to number of question)
+          for(let i = 2 ; i < 4; i = i + 1) {
+            var DtoNext = new RegExp(`D\\)(.*?)${i}`, `g`)
+            var matchsD = pdfData.match(DtoNext);
+            questionsD.push(matchsD[0])
+          }
+
+          const questionsInfo = [];
+          questionsInfo.push(questionsA, questionsB, questionsC, questionsD);
+
+          res.send({
+            qtdQuestion: Object.keys(questionsInfo[0]).length,
+            questions: questionsInfo,
+            message: "File is uploaded"
+          })
+        })
+
+      }
 
     } catch (error) {
-      res.status(400).json({ message: `Erro ao retornar os dados. ${error}` })
+      res.status(500).json({ message: `Erro ao retornar os dados. ${error}` })
     }
   }
 

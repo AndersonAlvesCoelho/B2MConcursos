@@ -7,6 +7,7 @@ import question from './question.reducer';
 import user from './user.reducer';
 import userAnswersQuestion from './userAnswersQuestion.reducer';
 import comment from './comment.reducer';
+import registerQuestion from './registeQuestions.reducer';
 
 const rootReducer = combineReducers({
     bank,
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
     question,
     user,
     userAnswersQuestion,
-    comment
+    comment,
+    registerQuestion
 });
 
 export default rootReducer;

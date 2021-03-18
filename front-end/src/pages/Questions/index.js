@@ -112,7 +112,6 @@ function Questions(props) {
         setOffset((page - 1) * viewSizeQuestion)
     }
 
-
     return (
         <>
             <div className="B2M-page">
