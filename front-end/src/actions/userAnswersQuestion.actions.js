@@ -10,11 +10,11 @@ import {
 import api from '../services/api';
 
 //SALVE USER QANSWER QUESTION
-export const saveUserAnswersQuestion = (idUser, idQuestion, answer) => (dispatch) => {
+export const saveUserAnswersQuestion = (idUser, idQuestion, answer, check) => (dispatch) => {
 
     dispatch({ type: POST_USER_ANSWERS_QUESTION_REQUEST });
 
-    api.post('/saveUserAnswers', { idUser, idQuestion, answer })
+    api.post('/saveUserAnswers', { idUser, idQuestion, answer, check })
         .then(() => {
             dispatch({ type: POST_USER_ANSWERS_QUESTION_SUCCESS });
         })

@@ -23,6 +23,7 @@ function Alternative(props) {
     } = props;
 
     const [loadingComment, setLoadingComment] = useState(false);
+    const [loadingCommentAnswer, setLoadingCommentAnswer] = useState(false);
 
     // estados auxiliar de escolha de alternativa
     const [checkAnswer, setCheckAnswer] = useState([]);
@@ -31,6 +32,7 @@ function Alternative(props) {
     // estado auxiliar do registre do comnetario
     const [current, setCurrent] = useState();
     const [comment, setComment] = useState('');
+    const [commentAnswer, setCommentAnswer] = useState('');
     const [idComment, setIdComment] = useState(0);
     const [dataComment, setDataComment] = useState([]);
     const [openComment, setOpenComment] = useState(false);
@@ -45,7 +47,8 @@ function Alternative(props) {
             }
 
         })
-        setOption(false);
+        console.log('answer ', answer);
+        setOption(opt);
         setCheckAnswer(answer);
         if (situation === 0) saveAnswer(answer);
     }
@@ -53,7 +56,8 @@ function Alternative(props) {
     // salvando resposta da pergunta 
     function saveAnswer(e) {
         if (idUser) {
-            saveUserAnswersQuestion(idUser, data.id_question, e.answer);
+            console.log(e.check);
+            saveUserAnswersQuestion(idUser, data.id_question, e.answer, e.check);
         }
         localStorage.setItem(data.id_question, JSON.stringify(e));
         setCheckAnswer(JSON.parse(localStorage.getItem(data.id_question)));
@@ -62,13 +66,14 @@ function Alternative(props) {
     //salvando comentario do usuario na questão
     function SotreComment(type, comment, idQuestion, idComment, idUser) {
         setComment('');
-
+        setCommentAnswer('');
+        setOpenComment(false);
+        setOpenIndex(false);
         if (type !== 'comment answer') {
             return saveComment('comment', comment, false, idQuestion, false, idUser)
         } else {
             return saveComment(type, false, comment, false, idComment, idUser)
         }
-
     }
 
     // setando os valores inicial dos option
@@ -80,14 +85,13 @@ function Alternative(props) {
 
     // get new comment
     useEffect(() => {
-        console.log("dataComment 01", dataComment);
-        setLoadingComment(true);
-        setTimeout(() => {
-            if (newComment.length !== 0) {
-                let aux = dataComment;
-                console.log("newComment 01", newComment);
+        if (newComment.length !== 0) {
+            let aux = dataComment;
 
-                if (newComment.id_question) {
+            if (newComment.id_question) {
+                setLoadingComment(true);
+                setTimeout(() => {
+
                     aux.push({
                         comment: newComment.comment,
                         id_comment: newComment.id_comment,
@@ -95,7 +99,12 @@ function Alternative(props) {
                         comment_answer: [],
                         user: newComment.user
                     })
-                } else {
+                    setLoadingComment(false);
+                }, 700);
+            } else {
+                setTimeout(() => {
+                    setLoadingCommentAnswer(true);
+
                     dataComment.map((e, i) => {
                         if (e.id_comment === newComment.id_comment) {
                             aux[i].comment_answer.push({
@@ -105,14 +114,15 @@ function Alternative(props) {
                             })
                         }
                     })
-                    setDataComment(aux)
-                }
+                    setDataComment(aux);
+                    setLoadingCommentAnswer(false);
+                }, 700);
             }
+        }
 
-            setLoadingComment(false);
-        }, 700);
 
-    }, [dataComment, newComment])
+    }, [dataComment, newComment]);
+
 
     return (
         <>
@@ -134,7 +144,7 @@ function Alternative(props) {
                     {data.alternative.map((e, x) => (
                         <label className="B2M-option-alternative" key={x} >
                             {checkAnswer.length !== 0 ? !(checkAnswer.answer === x) ? e.name_alternative : (<b>{e.name_alternative}</b>) : e.name_alternative}
-                            <input type="radio" value={x} name="alternative" checked={checkAnswer.answer === x ? true : false} />
+                            <input type="radio" value={x} name="alternative" />
                             <span className="B2M-checkmark"></span>
                         </label>
                     ))}
@@ -242,20 +252,21 @@ function Alternative(props) {
                             </>)}
 
                             {openComment && openIndex === x ? (<>
-                                {!loading && !loadingComment ? (<>
+                                {!loading && !loadingCommentAnswer ? (<>
                                     <div className="B2M-comment-new" id="comment" >
                                         <label className="form-label">Escreva um resposta...</label>
                                         <textarea
-                                            onChange={(e) => setComment(e.target.value)}
+                                            onChange={(e) => setCommentAnswer(e.target.value)}
                                             className="form-control"
                                             id="comment"
                                             rows="3"
-                                            value={comment}
-                                        ></textarea>
+                                            value={commentAnswer}
+                                        >
+                                        </textarea>
                                         <button
                                             type="submit"
-                                            disabled={!comment}
-                                            onClick={() => SotreComment('comment answer', comment, data.id_question, idComment, idUser)}
+                                            disabled={!commentAnswer}
+                                            onClick={() => SotreComment('comment answer', commentAnswer, data.id_question, idComment, idUser)}
                                         >
                                             <i className="B2M-comment-icon mr-2"></i>Enviar</button>
                                     </div>

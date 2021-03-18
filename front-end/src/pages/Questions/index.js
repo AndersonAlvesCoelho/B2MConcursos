@@ -14,7 +14,7 @@ import * as userAnswersQuestionActions from '../../actions/userAnswersQuestion.a
 import '../../assets/css/question.css';
 import 'antd/dist/antd.css';
 
-const viewSizeQuestion = 1;
+const viewSizeQuestion = 2;
 
 function Questions(props) {
 

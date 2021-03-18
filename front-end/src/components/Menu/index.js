@@ -7,7 +7,6 @@ const user = getUserCookie() ? getUserCookie() : [];
 
 export const Navbar = (props) => {
 
-
     return (
         <>
             <header className="header">
@@ -32,11 +31,7 @@ export const Navbar = (props) => {
                             <ul className="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
                                 {/* <li className="nav-item d-flex align-items-center"><a id="search" href="#"><i className="B2M-search-icon"></i></a></li> */}
                                 <li className="nav-item">
-                                    {user.length === 0 ?
-                                        <a href="/login" className="nav-link logout">
-                                            <span className="d-none d-sm-inline">Entrar</span><i className="B2M-log-out-icon"></i>
-                                        </a>
-                                        :
+                                    {user.length !== 0 &&
                                         <a href="/login" className="nav-link logout">
                                             <span className="d-none d-sm-inline">Sair</span><i className="B2M-log-in-icon"></i>
                                         </a>
@@ -58,16 +53,22 @@ export const SideNavbar = (props) => {
             <nav className={`side-navbar  ${props.toggle ? "side-navbar-active shrinked" : ""}`} >
                 {/* <nav className="side-navbar ">; */}
 
-                {user.length !== 0 && (<>
+                {user.length !== 0 ? (<>
                     <div className="sidebar-header d-flex align-items-center">
-                        <div className="avatar"><a href="dashboard/perfil"><img src="https://secure.gravatar.com/avatar/?s=56&d=mm&r=g" alt="avatar" className="img-fluid rounded-circle" /></a></div>
+                        <div className="avatar">
+                            <a href="/dashboard/perfil"><img src="https://secure.gravatar.com/avatar/?s=56&d=mm&r=g" alt="avatar" className="img-fluid rounded-circle" /></a>
+                            </div>
                         <div className="title">
                             <h5 className="h4">{user[0].name}</h5>
                             {/* <p>Concurseiro</p> */}
                             {/* <a className="perfil" href="dashboard/perfil"><i className="B2M-eye-icon"></i> Perfil</a> */}
                         </div>
                     </div>
-                </>)}
+                </>) :
+                    <a href="/login" className="nav-link logout">
+                        <span className="d-none d-sm-inline">Entrar</span><i className="B2M-log-out-icon"></i>
+                    </a>
+                }
 
                 {/* <span className="heading">Principal</span> */}
                 <ul className="list-unstyled">

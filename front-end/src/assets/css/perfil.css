@@ -6,3 +6,12 @@
   margin: 0 auto;
   position: relative;
 }
+
+.B2M-client-info{
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.B2M-client-info .B2M-client-info-total { color: var(--black);}
+.B2M-client-info .B2M-client-info-wrong { color: var(--success);}
+.B2M-client-info .B2M-client-info-acts { color: var(--danger);}

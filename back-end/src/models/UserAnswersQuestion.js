@@ -18,6 +18,9 @@ class UserAnswersQuestion extends Model {
                 answer: {
                     type: DataTypes.INTEGER
                 },
+                check: {
+                    type: DataTypes.BOOLEAN
+                },
             },
             {
                 sequelize,
