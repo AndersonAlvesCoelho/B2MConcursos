@@ -127,6 +127,13 @@ nav.navbar .nav-link.logout i {
 nav.navbar .nav-menu {
   margin-bottom: 0;
 }
+nav.navbar .nav-item > a {
+  font-size: 20px;
+}
+
+nav.navbar .nav-item > a span {
+  margin-right: 15px;
+}
 
 nav.navbar .search-box {
   width: 100%;
@@ -301,8 +308,6 @@ nav.side-navbar {
   /*==== Sidebar Menu ====*/
   /*==== Shrinked Sidebar ====*/
 }
-
-
 
 nav.side-navbar a {
   color: inherit;
@@ -490,7 +495,6 @@ nav.side-navbar.shrinked ul li.active > a i {
 nav.side-navbar.shrinked .sidebar-header .title {
   display: none;
 }
-
 
 /* SIDEBAR MEDIAQUERIES ----------------------------------- */
 @media (max-width: 1199px) {

@@ -41,7 +41,7 @@ export const store = (formValues) => (dispatch) => {
         .then((res) => {
             const { data } = res;
 
-            console.log(data);
+            console.log('data ', data);
 
             dispatch({ type: REGISTER_QUESTIONS_SUCCESS });
         })

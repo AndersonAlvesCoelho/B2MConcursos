@@ -1,16 +1,15 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { getUserCookie, removeUserCookie} from '../../services/session';
+import { getUserCookie, removeUserCookie } from '../../services/session';
 import '../../assets/css/menu-nav-bar.css';
 
-const user = getUserCookie() ? getUserCookie() : [];
 
 export const Navbar = (props) => {
 
-    console.log('user', user)
+    console.log('props', props)
     const history = useHistory();
 
-    const logout = (e) => {
+    const logout = () => {
         removeUserCookie();
         history.push('/login');
     }
@@ -40,13 +39,13 @@ export const Navbar = (props) => {
                             <ul className="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
                                 {/* <li className="nav-item d-flex align-items-center"><a id="search" href="#"><i className="B2M-search-icon"></i></a></li> */}
                                 <li className="nav-item">
-                                    {user.length === 0 ?
-                                        <a href="/login" className="nav-link logout">
-                                            <span className="d-none d-sm-inline">Entrar</span><i className="B2M-log-out-icon"></i>
+                                    {getUserCookie() ?
+                                        <a className="nav-link logout" onClick={logout()}>
+                                            <span className="d-none d-sm-inline">Sair</span><i className="B2M-log-in-icon"></i>
                                         </a>
                                         :
-                                        <a onClick={logout} className="nav-link logout">
-                                            <span className="d-none d-sm-inline">Sair</span><i className="B2M-log-in-icon"></i>
+                                        <a href="/login" className="nav-link logout" >
+                                            <span className="d-none d-sm-inline">Entrar</span><i className="B2M-log-in-icon"></i>
                                         </a>
                                     }
                                 </li>
@@ -66,11 +65,13 @@ export const SideNavbar = (props) => {
             <nav className={`side-navbar  ${props.toggle ? "side-navbar-active shrinked" : ""}`} >
                 {/* <nav className="side-navbar ">; */}
 
-                {user.length !== 0 && (<>
+                {getUserCookie() && (<>
                     <div className="sidebar-header d-flex align-items-center">
-                        <div className="avatar"><a href="dashboard/perfil"><img src="https://secure.gravatar.com/avatar/?s=56&d=mm&r=g" alt="avatar" className="img-fluid rounded-circle" /></a></div>
+                        <div className="avatar">
+                            <a href="/dashboard/perfil"><img src="https://secure.gravatar.com/avatar/?s=56&d=mm&r=g" alt="avatar" className="img-fluid rounded-circle" /></a>
+                        </div>
                         <div className="title">
-                            <h5 className="h4">{user[0].name}</h5>
+                            <h5 className="h4">{getUserCookie()[0].name}</h5>
                             {/* <p>Concurseiro</p> */}
                             {/* <a className="perfil" href="dashboard/perfil"><i className="B2M-eye-icon"></i> Perfil</a> */}
                         </div>
@@ -81,7 +82,11 @@ export const SideNavbar = (props) => {
                 <ul className="list-unstyled">
                     <li className={props.type === "Home" && "active"}><a href="/"> <i className="B2M-menu-grid-r-icon"></i>Home </a></li>
                     <li className={props.type === "Questions" && "active"}><a href="/questoes"> <i className="B2M-file-document-icon"></i>Questões </a></li>
-                    <li className={props.type === "RegisterQuestions" && "active"}><a href="/cadastrar-questoes"> <i className="B2M-play-list-add-icon"></i>Registrar questão </a></li>
+                    {getUserCookie() &&
+                        <li className={props.type === "RegisterQuestions" && "active"}>
+                            <a href="/cadastrar-questoes"> <i className="B2M-play-list-add-icon"></i>Registrar questão </a>
+                        </li>
+                    }
                     {/* <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i className="icon-interface-windows"></i>Example dropdown </a>
                         <ul id="exampledropdownDropdown" className="collapse list-unstyled ">
                             <li><a href="#">Page</a></li>

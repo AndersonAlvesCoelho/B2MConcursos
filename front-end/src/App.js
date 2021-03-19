@@ -1,5 +1,4 @@
-import Routes from './Routes';
-// import { BackTop } from 'antd';
+import Routes from './Routes.js';
 
 import '../src/assets/css/global.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -9,10 +8,6 @@ function App() {
   return (
     <>
       <Routes />
-{/* 
-      <BackTop>
-        <div style={style}>UP</div>
-      </BackTop> */}
     </>
   );
 }

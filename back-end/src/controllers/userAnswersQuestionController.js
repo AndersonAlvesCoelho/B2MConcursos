@@ -13,7 +13,8 @@ class UserAnswersQuestionController {
 
                 where: {
                     [Op.and]: [
-                        { id_user: idUser }, { id_question: { [Op.or]: idQuestion } }
+                        { id_user: idUser },
+                        (idQuestion && { id_question: { [Op.or]: idQuestion } }),
                     ]
                 },
                 order: [['id_user_answers_question']]
@@ -33,8 +34,9 @@ class UserAnswersQuestionController {
     async store(req, res) {
         try {
 
-            const { idUser, idQuestion, answer } = req.body;
+            const { idUser, idQuestion, answer, check } = req.body;
 
+            console.log(req.body)
             const data = await UserAnswersQuestion.findAll({ where: { [Op.and]: [{ id_user: idUser }, { id_question: idQuestion }] } });
             const lastId = await UserAnswersQuestion.findOne({ order: [['id_user_answers_question', 'DESC']] })
 
@@ -45,6 +47,7 @@ class UserAnswersQuestionController {
                     id_user: idUser,
                     id_question: idQuestion,
                     answer: answer,
+                    check: check,
                     created_at: new Date(),
                     updated_at: new Date()
                 }).then(function (result) {
@@ -56,7 +59,13 @@ class UserAnswersQuestionController {
                 // UPDATE
             } else {
                 await UserAnswersQuestion.update(
-                    { id_user: idUser, id_question: idQuestion, answer: answer, updated_at: new Date() },
+                    {
+                        id_user: idUser,
+                        id_question: idQuestion,
+                        answer: answer,
+                        check: check,
+                        updated_at: new Date()
+                    },
                     {
                         where:
                         {
