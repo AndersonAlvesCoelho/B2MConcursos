@@ -17,7 +17,7 @@ export const uploadFile = (formData) => (dispatch) => {
     dispatch({ type: UPLOAD_PDF_REQUEST });
     api.post('/uploadQuestions',  formData , { headers: { 'Content-Type': 'multipart/form-data' } } )
         .then((res) => {
-            alert(JSON.stringify(res))
+            // alert(JSON.stringify(res))
             const {qtdQuestion, questions } = res.data;
 
             // const formatData = data.map((institution, index) => ({

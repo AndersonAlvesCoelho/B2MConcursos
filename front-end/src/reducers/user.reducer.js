@@ -2,7 +2,7 @@ import {
   REGISTER_USER_REQUEST,
   REGISTER_USER_SUCCESS,
   REGISTER_USER_FAILURE,
-} from '../constants/user.constants';
+} from '../constants';
 
 const initialState = {
   loading: false,
@@ -19,11 +19,11 @@ export default function userReducer(state = initialState, action) {
 
     case REGISTER_USER_SUCCESS: {
       const { message } = action;
-      return { ...state, message, loading: false, };
+      return { ...state, message: message, loading: false, };
     }
     case REGISTER_USER_FAILURE:
       const { message } = action;
-      return { ...state, message, loading: false };
+      return { ...state, message: message, loading: false };
 
     default:
       return state;

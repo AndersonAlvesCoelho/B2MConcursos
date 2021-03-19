@@ -122,6 +122,13 @@ const RegisterQuestions = (props) => {
         getDicipline();
     }, [getBank, getInstitution, getOffice, getDicipline]);
 
+    console.log(alternativeA)
+    useEffect(() => {
+        if(questions.length !== 0) {
+            setAlternativeA(questions[0][0])
+        }
+    }, [questions]);
+
     const changeRadio = ({ target }) => {
         const newRadioData = radioData.map((radio) => {
             const checked = radio.radioName === target.value;
@@ -235,7 +242,6 @@ const RegisterQuestions = (props) => {
                     {/*        <Step status="process" title="Cadastro de questões" />*/}
                     {/*    </Steps>*/}
                     {/*</>*/}
-
                     <Form layout="vertical" requiredMark={false} onFinish={handleSubmit}>
 
                         <div id="generalInfo">
@@ -383,7 +389,6 @@ const RegisterQuestions = (props) => {
 
                             {questions.slice(pagerCurrent, qtdUploadQuestions).map((data, index) =>
                                 <Card type="inner"  title={`Questão ${pagerCurrent}`} >
-                                    {data[0]}
                                     <Row >
                                         <Col className="mt-3" xs={8} md={6}>
                                             <Form.Item
