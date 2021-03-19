@@ -113,7 +113,7 @@ const RegisterQuestions = (props) => {
     // const [data, getFile] = useState({ name: "", path: "" });
     const [progress, setProgess] = useState(0); // progess bar
     const el = useRef(); // accesing input element
-    const [pagerCurrent, setPagerCurrent] = useState(1);
+    const [pagerCurrent, setPagerCurrent] = useState(0);
 
     useEffect(() => {
         getBank();
@@ -136,7 +136,6 @@ const RegisterQuestions = (props) => {
     const onChange = step => {
         setStep(step);
     };
-
 
     const handleChangeFile = (e) => {
         setProgess(0)
@@ -195,7 +194,6 @@ const RegisterQuestions = (props) => {
     const uploadFileFunction = () => {
         const formData = new FormData()
         formData.append('file', file)
-
         props.uploadFile(formData)
     }
 
@@ -382,9 +380,10 @@ const RegisterQuestions = (props) => {
                                     paginate={pagerCurrent}
                                 />
                             </div>
-                            {questions.map((data, index) =>
-                                <Card type="inner"  title={`Questão ${index +1}`} >
 
+                            {questions.slice(pagerCurrent, qtdUploadQuestions).map((data, index) =>
+                                <Card type="inner"  title={`Questão ${pagerCurrent}`} >
+                                    {data[0]}
                                     <Row >
                                         <Col className="mt-3" xs={8} md={6}>
                                             <Form.Item
