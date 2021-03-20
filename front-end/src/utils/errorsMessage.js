@@ -10,8 +10,9 @@ export const errorsMessage = {
     'auth/invalid-min-email': 'O e-mail deve ter no minimo 3 caracteres.',
     'auth/invalid-max-email': 'O e-mail deve ter no maximo 50 caracteres.',
     'auth/invalid-shot-password': 'A senha é muito curta (mínimo de 6 caracteres)',
-    'auth/invalid-exist-email': { message: 'Email já registrado!', status: 203 },
-    'auth/erro-auth-user': { message: 'Email ou senha incorretos!', status: 203 },
+    'auth/invalid-exist-email': { message: 'Email já registrado!', status: 401 },
+    'auth/erro-auth-user': { message: 'Email ou senha incorretos!', status: 401 },
+    'auth/erro-register-user': { message: 'Erro ao se registrar. Tente novamente em alguns instantes!', status: 401 },
 }
 
 export const firebaseErrors = {

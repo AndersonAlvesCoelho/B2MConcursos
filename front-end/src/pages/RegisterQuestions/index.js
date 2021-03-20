@@ -45,7 +45,7 @@ const answerStyleBox = {
 };
 
 const answerStyle = {
-    marginTop: '70px',
+    marginTop: '20px',
 };
 
 
@@ -77,6 +77,7 @@ const RegisterQuestions = (props) => {
         questions
     } = props
 
+    const editor = useRef(null);
     const viewSizeQuestion = 1;
     // general info
     // const [office, setOffice] = useState();
@@ -128,7 +129,9 @@ const RegisterQuestions = (props) => {
     useEffect(() => {
         if(questions.length !== 0) {
             setAlternativeA(questions[0][0])
-            setAlternativeB('value Teste')
+            setAlternativeB(questions[0][1])
+            setAlternativeC(questions[0][2])
+            setAlternativeD(questions[0][3])
         }
     }, [questions]);
 
@@ -206,8 +209,7 @@ const RegisterQuestions = (props) => {
         formData.append('file', file)
         props.uploadFile(formData)
     }
-    console.log('alternativeA', alternativeA)
-    console.log('alternativeB', alternativeB)
+
     return (
         <div className="B2M-page">
             <Navbar toggle={toggle} onToggle={(e) => setToggle(e)} />
@@ -251,16 +253,7 @@ const RegisterQuestions = (props) => {
                     }} initialValues={{ alternativeA: alternativeA }} layout="vertical" requiredMark={false} onFinish={handleSubmit}>
 
                         <div id="generalInfo">
-                            <Row >
-                            <JoditEditor
-                                ref={editor}
-                                value={paragraph1}
-                                // config={config}
-                                tabIndex={0} // tabIndex of textarea
-                                onBlur={(newContent) => setParagraph1(newContent)}
-                                onChange={() => {}}
-                            />
-                            </Row>
+
 
                             <Row >
                                 {/*<Col className="mt-3" xs={6} md={6}>*/}
@@ -405,28 +398,94 @@ const RegisterQuestions = (props) => {
 
                             {questions.slice(pagerCurrent, qtdUploadQuestions).map((data, index) =>
                                 <Card type="inner"  title={`Questão ${pagerCurrent}`} >
+                                    <Card type="inner"  title={`Questão ${pagerCurrent}`} >
+                                        <Row >
+                                            <Col xs={12} md={12}>
+                                                <Form.Item
+                                                    name="enunciated"
+                                                    label="Enunciado"
+                                                >
+                                                    <Input
+                                                        onChange={(e) => setEnunciated(e.target.value)}
+                                                        placeholder="Enunciado.."
+                                                        allowClear
+                                                        className="filter-select"
+                                                        enterButton
+                                                        value={enunciated}
+                                                    />
+                                                </Form.Item>
+                                            </Col>
+                                        </Row>
+                                    </Card>
+
                                     <Row >
-                                        <Col className="mt-3" xs={8} md={6}>
-                                            <Form.Item
-                                                name="enunciated"
-                                                label="Enunciado"
-                                            >
-                                                <Input
-                                                    onChange={(e) => setEnunciated(e.target.value)}
-                                                    placeholder="Enunciado.."
-                                                    allowClear
-                                                    className="filter-select"
-                                                    enterButton
-                                                    value={enunciated}
-                                                />
-                                            </Form.Item>
+                                        <Col xs={12} md={12}>
+                                            <JoditEditor
+                                                ref={editor}
+                                                value={alternativeA}
+                                                // config={config}
+                                                tabIndex={0}
+                                                onBlur={(newContent) => setAlternativeA(newContent)}
+                                                onChange={() => {}}
+                                            />
                                         </Col>
                                     </Row>
 
+                                    <Row>
+                                        <Col xs={12} md={12}>
+                                            <JoditEditor
+                                                ref={editor}
+                                                value={alternativeB}
+                                                // config={config}
+                                                tabIndex={0}
+                                                onBlur={(newContent) => setAlternativeB(newContent)}
+                                                onChange={() => {}}
+                                            />
+                                        </Col>
+                                    </Row>
+
+                                    <Row>
+                                        <Col xs={12} md={12}>
+                                            <JoditEditor
+                                                ref={editor}
+                                                value={alternativeC}
+                                                // config={config}
+                                                tabIndex={0}
+                                                onBlur={(newContent) => setAlternativeC(newContent)}
+                                                onChange={() => {}}
+                                            />
+                                        </Col>
+                                    </Row>
+
+                                    <Row>
+                                        <Col xs={12} md={12}>
+                                            <JoditEditor
+                                                ref={editor}
+                                                value={alternativeD}
+                                                // config={config}
+                                                tabIndex={0}
+                                                onBlur={(newContent) => setAlternativeD(newContent)}
+                                                onChange={() => {}}
+                                            />
+                                        </Col>
+                                    </Row>
+
+                                    <span>Questão correta</span>
                                     <div style={answerStyleBox}>
                                         {
                                             radioData.map((lo, idx) => {
                                                 return <>
+                                                    <div style={answerStyle}>
+                                                        <input
+                                                            key={idx}
+                                                            type="radio"
+                                                            name="answer"
+                                                            value={lo.radioName}
+                                                            checked={!!lo.selected}
+                                                            onChange={changeRadio}
+                                                        />
+                                                    </div>
+
                                                     <div style={answerStyle}>
                                                         <input
                                                             key={idx}
@@ -444,93 +503,14 @@ const RegisterQuestions = (props) => {
 
                                     <Row >
                                         <Col className="mt-3" xs={8} md={6}>
-                                            <Form.Item
-                                                name="alternativeA"
-                                                label="Alternativa A"
-                                                fieldKey={[index, 'alternativeA']}
-                                            >
-                                                <Input
-                                                    onChange={(e) => setAlternativeA(e.target.value)}
-                                                    placeholder="Descrição da alternativa A.."
-                                                    allowClear
-                                                    className="filter-select"
-                                                    enterButton
-                                                    value={alternativeA}
-                                                />
-                                            </Form.Item>
-                                        </Col>
-                                    </Row>
-
-                                    <Row>
-                                        <Col className="mt-3" xs={8} md={6}>
-                                            <Form.Item
-                                                name="alternativeB"
-                                                label="Alternativa B"
-                                            >
-                                                <Input
-                                                    onChange={(e) => setAlternativeB(e.target.value)}
-                                                    placeholder="Descrição da pergunta B.."
-                                                    allowClear
-                                                    className="filter-select"
-                                                    enterButton
-                                                    value={alternativeB}
-                                                />
-                                            </Form.Item>
-                                        </Col>
-                                    </Row>
-
-                                    <Row>
-                                        <Col className="mt-3" xs={8} md={6}>
-                                            <Form.Item
-                                                name="alternativeC"
-                                                label="Alternativa C"
-                                            >
-                                                <Input
-                                                    onChange={(e) => setAlternativeC(e.target.value)}
-                                                    placeholder="Descrição da pergunta C.."
-                                                    allowClear
-                                                    className="filter-select"
-                                                    enterButton
-                                                    value={alternativeC}
-                                                />
-                                            </Form.Item>
-                                        </Col>
-                                    </Row>
-
-                                    <Row>
-                                        <Col className="mt-3" xs={8} md={6}>
-                                            <Form.Item
-                                                name="alternativeD"
-                                                label="Alternativa D"
-                                            >
-                                                <Input
-                                                    name="alternativeD"
-                                                    onChange={(e) => setAlternativeD(e.target.value)}
-                                                    placeholder="Descrição da pergunta D.."
-                                                    allowClear
-                                                    className="filter-select"
-                                                    enterButton
-                                                    value={alternativeD}
-                                                />
-                                            </Form.Item>
-                                        </Col>
-                                    </Row>
-
-                                    <Row >
-                                        <Col className="mt-3" xs={8} md={6}>
-                                            <Form.Item
-                                                name="issueResolution"
-                                                label="Resposta"
-                                            >
-                                                <Input
-                                                    onChange={(e) => setIssueResolution(e.target.value)}
-                                                    placeholder="Descrição da resposta .."
-                                                    allowClear
-                                                    className="filter-select"
-                                                    enterButton
-                                                    value={issueResolution}
-                                                />
-                                            </Form.Item>
+                                            <JoditEditor
+                                                ref={editor}
+                                                value={issueResolution}
+                                                // config={config}
+                                                tabIndex={0} // tabIndex of textarea
+                                                onBlur={(newContent) => setIssueResolution(newContent)}
+                                                onChange={() => {}}
+                                            />
                                         </Col>
                                     </Row>
                                     <Button htmlType="submit">

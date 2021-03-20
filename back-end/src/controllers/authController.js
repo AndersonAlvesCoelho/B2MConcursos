@@ -25,7 +25,7 @@ class UserController {
       if (data.length !== 0) {
         res.status(201).json({ message: 'auth/access', user: data });
       } else {
-        res.status(203).json({ message: 'auth/erro-auth-user', user: '' });
+        res.status(401).json({ message: 'auth/erro-auth-user', user: null });
       }
     } catch (error) {
       res.status(400).json({ message: `Erro ao retornar os dados. ${error}` });

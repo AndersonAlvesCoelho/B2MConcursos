@@ -21,6 +21,7 @@ class UserController {
 
       const emailExist = await User.findAll({ where: { email: email } });
 
+
       if (emailExist.length === 0) {
         await User.create({
           email: email,
@@ -31,16 +32,13 @@ class UserController {
           if (result) {
             return res.status(201).send('auth/create-user');
           } else {
-            res.status(400).send('Erro ao inserir instituição')
+            return res.status(400).send('auth/erro-register-user')
           }
         })
 
       } else {
-        return res.status(203).send('auth/invalid-exist-email');
+        return res.status(401).send('auth/invalid-exist-email');
       }
-
-
-      // return res.send('Hello Word');
     } catch (error) {
       res.status(400).json({ message: `Erro ao retornar os dados. ${error}` });
     }

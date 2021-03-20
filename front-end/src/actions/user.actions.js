@@ -13,18 +13,11 @@ export const store = (formData) => (dispatch) => {
     api.post('/registerUser', formData)
         .then((res) => {
             const { data } = res;
-            let message = '';
-            if (res.status === 201) {
-                message = successMessage[data];
-            } else {
-                message = errorsMessage[data];
-            }
-
-            dispatch({ type: REGISTER_USER_SUCCESS, message: message });
+            dispatch({ type: REGISTER_USER_SUCCESS, message: successMessage[data] });
         })
         .catch((error) => {
             const { response: err } = error;
-            const message = err && err.data ? err.data.message : 'Erro desconhecido';
+            const message = err && err.data ? errorsMessage[err.data] : 'Erro desconhecido';
             dispatch({ type: REGISTER_USER_FAILURE, message });
         });
 }

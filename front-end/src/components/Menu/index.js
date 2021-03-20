@@ -6,7 +6,6 @@ import '../../assets/css/menu-nav-bar.css';
 
 export const Navbar = (props) => {
 
-    console.log('props', props)
     const history = useHistory();
 
     const logout = () => {
@@ -40,7 +39,7 @@ export const Navbar = (props) => {
                                 {/* <li className="nav-item d-flex align-items-center"><a id="search" href="#"><i className="B2M-search-icon"></i></a></li> */}
                                 <li className="nav-item">
                                     {getUserCookie() ?
-                                        <a className="nav-link logout" onClick={logout()}>
+                                        <a className="nav-link logout" onClick={logout}>
                                             <span className="d-none d-sm-inline">Sair</span><i className="B2M-log-in-icon"></i>
                                         </a>
                                         :

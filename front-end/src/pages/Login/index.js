@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from "react-redux";
 import { Toast } from 'react-bootstrap';
+import { useHistory } from "react-router-dom";
 
+import { } from '../../services/session';
 import * as User from "../../actions/user.actions";
 import * as Auth from "../../actions/auth.actions";
 import { validationRegister, validationLogin } from '../../helpers/validationForm';
 import '../../assets/css/login.css';
+
 
 function Login(props) {
 
@@ -13,13 +16,13 @@ function Login(props) {
     const {
         store,
         login,
-        history,
-
         loadingStore,
         messageStore,
         loadingLogin,
         messageLogin
     } = props;
+
+    const history = useHistory();
 
     const [show, setShow] = useState(false);
     const [requestAccess, setRequestAccess] = useState({
@@ -30,6 +33,7 @@ function Login(props) {
 
     const [classActive, setClassActive] = useState(false);
     const [validation, setValidation] = useState([]);
+    const [nameAux, setNameAux] = useState();
 
     const handleChange = (e) => {
         const { name } = e.target;
@@ -39,34 +43,52 @@ function Login(props) {
         setRequestAccess(requestAccess);
     }
 
+    //REGISTRAR USUÁRIO
     function handleSubmitStore(event) {
         event.preventDefault();
-        if (validation.success) store(requestAccess);
+        setValidation(validationRegister(requestAccess));
+
+        if (validation.success) {
+            store(requestAccess);
+            setNameAux(requestAccess.name);
+        };
     }
 
+    //SOLICITAÇÃO DE ACESSO
     function handleSubmitLogin(event) {
-        // event.preventDefault();
-        console.log('validation ', validation);
+        event.preventDefault();
+        setValidation(validationLogin(requestAccess));
+
         if (validation.success) {
-            login(requestAccess);
-            if (messageLogin.status === 201) history.push('/');
+            login(requestAccess).then(() => {
+                history.push('/');
+            });
         }
     }
 
-    useEffect(() => {
-        if (validation.success && (messageStore.status === 201 || messageLogin.status === 201)) {
-            setShow(true);
-            if (messageStore.status === 201) setClassActive(!classActive);
-            setValidation([]);
-            document.getElementById('name').value = '';
-            document.getElementById('email').value = '';
-            document.getElementById('password').value = '';
-            requestAccess.name = '';
-            requestAccess.email = '';
-            requestAccess.password = '';
-        };
-    }, [messageStore, messageStore]);
+    function clearInput() {
+        setShow(true);
+        requestAccess.name = '';
+        requestAccess.email = '';
+        requestAccess.password = '';
+        document.getElementById('name').value = '';
+        document.getElementById('email').value = '';
+        document.getElementById('password').value = '';
+        setValidation([]);
+    }
 
+    useEffect(() => {
+        if (validation.success && messageStore.status === 201) {
+            setClassActive(!classActive);
+            clearInput();
+        };
+    }, [messageStore]);
+
+    // useEffect(() => {
+    //     if (validation.success && messageLogin.status === 201) {
+    //         clearInput();
+    //     };
+    // }, [messageLogin]);
 
     return (
         <>
@@ -86,7 +108,7 @@ function Login(props) {
                                 className="rounded mr-2"
                                 alt=""
                             />
-                            <strong className="mr-auto">{requestAccess.name}</strong>
+                            <strong className="mr-auto">{nameAux}</strong>
                             {/* <small></small> */}
                         </Toast.Header>
                         <Toast.Body>{messageStore.status === 201 && messageStore.message}</Toast.Body>
@@ -99,21 +121,20 @@ function Login(props) {
                 <div className={classActive ? "B2M-login-login B2M-login-right-panel-active" : "B2M-login-login"} >
 
                     <div className="B2M-login-form-container B2M-login-sign-up-container">
-                        <form onSubmit={() => { setValidation(validationRegister(requestAccess)); handleSubmitStore(); }} action="#">
+                        <form onSubmit={handleSubmitStore} >
                             <h1>Criar conta</h1>
                             <ul className="B2M-validate-login">
                                 {validation.erroAll ? (<li>{validation.erroAll}</li>) : (<>
                                     {validation.erroName && (<li>{validation.erroName}</li>)}
                                     {validation.erroEmail && (<li>{validation.erroEmail}</li>)}
                                     {validation.erroPassowrd && (<li>{validation.erroPassowrd}</li>)}
-                                    {validation.erroPassowrd && (<li>{validation.erroPassowrd}</li>)}
-                                    {messageStore.status === 203 && (<li>{messageStore.message}</li>)}
+                                    {messageStore.status === 401 && (<li>{messageStore.message}</li>)}
                                 </>)}
                             </ul>
                             <input disabled={loadingStore} type="text" id="name" name="name" placeholder="Nome" onChange={handleChange} />
                             <input disabled={loadingStore} type="text" id="email" name="email" placeholder="E-mail" onChange={handleChange} />
                             <input disabled={loadingStore} type="password" id="password" name="password" placeholder="Senha" onChange={handleChange} />
-                            <button disabled={loadingStore}>{loadingStore ? <div className="B2M-loader"></div> : 'Cadastrar'}</button>
+                            <button disabled={show}>{loadingStore ? <div className="B2M-loader"></div> : 'Cadastrar'}</button>
                         </form>
                     </div>
 
@@ -122,15 +143,14 @@ function Login(props) {
                             <h1>Entrar</h1>
                             <ul className="B2M-validate-login">
                                 {validation.erroAll ? (<li>{validation.erroAll}</li>) :
-                                    (<> {messageLogin.status === 203 && (<li>{messageLogin.message}</li>)}</>)
+                                    (<> {messageLogin.status === 401 && (<li>{messageLogin.message}</li>)}</>)
                                 }
-
                             </ul>
 
                             <input disabled={loadingLogin} type="text" onChange={handleChange} name="email" placeholder="Email" />
                             <input disabled={loadingLogin} type="password" onChange={handleChange} name="password" placeholder="Password" />
                             {/* <a href="#">Esqueceu sua senha?</a> */}
-                            <button onClick={() => { setValidation(validationLogin(requestAccess)); handleSubmitLogin(); }} type="button" disabled={loadingLogin}>{loadingStore ? <div className="B2M-loader"></div> : 'Entrar'}</button>
+                            <button onClick={handleSubmitLogin} disabled={loadingLogin}>{loadingStore ? <div className="B2M-loader"></div> : 'Entrar'}</button>
                         </form>
                     </div>
 
@@ -144,7 +164,7 @@ function Login(props) {
                             <div className="B2M-login-overlay-panel B2M-login-overlay-right">
                                 <h1>Olá amigo!</h1>
                                 <p>Insira seus dados pessoais e comece a jornada conosco</p>
-                                <button className="B2M-login-ghost" onClick={() => setClassActive(true)}>Registra-se</button>
+                                <button className="B2M-login-ghost" onClick={() => setClassActive(true)} >Registra-se</button>
                             </div>
                         </div>
                     </div>

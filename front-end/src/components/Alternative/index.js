@@ -47,7 +47,6 @@ function Alternative(props) {
             }
 
         })
-        console.log('answer ', answer);
         setOption(opt);
         setCheckAnswer(answer);
         if (situation === 0) saveAnswer(answer);
@@ -56,7 +55,6 @@ function Alternative(props) {
     // salvando resposta da pergunta 
     function saveAnswer(e) {
         if (idUser) {
-            console.log(e.check);
             saveUserAnswersQuestion(idUser, data.id_question, e.answer, e.check);
         }
         localStorage.setItem(data.id_question, JSON.stringify(e));

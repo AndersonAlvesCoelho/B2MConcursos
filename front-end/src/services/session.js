@@ -7,18 +7,11 @@ export const setUserCookie = (session) => {
 
 export const getUserCookie = () => {
     const sessionCookie = Cookies.get('userCookie');
-
     if (sessionCookie === undefined) {
         return null;
     }
     return JSON.parse(sessionCookie);
 };
-
-// export const getDataCookie = () => {
-//     console.log('sad',getUserCookie())
-//     const user = getUserCookie(//     return user[0].original.data
-// };
-
 
 export const removeUserCookie = () => {
     Cookies.remove('userCookie');

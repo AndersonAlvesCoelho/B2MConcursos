@@ -6,15 +6,12 @@ import { getUserCookie } from './services/session';
 const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route
         {...rest}
-        render={(props) => (
-            getUserCookie() ? (
-                <Component {...props} />
-            ) : (
-                <Redirect to={{ pathname: '/login', state: { from: props.location } }}
-                />
-            ))}
+        render={(props) => (getUserCookie() ? (
+            <Component {...props} />
+        ) : (
+            <Redirect to={{ pathname: '/', state: { from: props.location } }} />
+        ))}
     />
-
 );
 
 const mapStateToProps = (state) => {
