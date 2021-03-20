@@ -14,11 +14,12 @@ import {
     InputNumber,
     TreeSelect,
     Switch,
-    Steps
+    Steps,
+    onFieldsChange
 } from 'antd';
 import { SideNavbar, Navbar } from '../../components/Menu/';
 import '../../assets/css/home.css';
-
+import JoditEditor from 'jodit-react';
 // import {Card, Form, Input, Steps, TreeSelect} from 'antd';
 import Footer from '../../components/Footer';
 import * as regusterQuestionsActions from '../../actions/registerQuestions.actions';
@@ -46,6 +47,8 @@ const answerStyleBox = {
 const answerStyle = {
     marginTop: '70px',
 };
+
+
 
 const { SHOW_PARENT, SHOW_ALL } = TreeSelect;
 
@@ -122,10 +125,10 @@ const RegisterQuestions = (props) => {
         getDicipline();
     }, [getBank, getInstitution, getOffice, getDicipline]);
 
-    console.log(alternativeA)
     useEffect(() => {
         if(questions.length !== 0) {
             setAlternativeA(questions[0][0])
+            setAlternativeB('value Teste')
         }
     }, [questions]);
 
@@ -203,7 +206,8 @@ const RegisterQuestions = (props) => {
         formData.append('file', file)
         props.uploadFile(formData)
     }
-
+    console.log('alternativeA', alternativeA)
+    console.log('alternativeB', alternativeB)
     return (
         <div className="B2M-page">
             <Navbar toggle={toggle} onToggle={(e) => setToggle(e)} />
@@ -242,9 +246,21 @@ const RegisterQuestions = (props) => {
                     {/*        <Step status="process" title="Cadastro de questões" />*/}
                     {/*    </Steps>*/}
                     {/*</>*/}
-                    <Form layout="vertical" requiredMark={false} onFinish={handleSubmit}>
+                    <Form  onFieldsChange={(_, allFields) => {
+                        onChange(allFields);
+                    }} initialValues={{ alternativeA: alternativeA }} layout="vertical" requiredMark={false} onFinish={handleSubmit}>
 
                         <div id="generalInfo">
+                            <Row >
+                            <JoditEditor
+                                ref={editor}
+                                value={paragraph1}
+                                // config={config}
+                                tabIndex={0} // tabIndex of textarea
+                                onBlur={(newContent) => setParagraph1(newContent)}
+                                onChange={() => {}}
+                            />
+                            </Row>
 
                             <Row >
                                 {/*<Col className="mt-3" xs={6} md={6}>*/}
@@ -431,6 +447,7 @@ const RegisterQuestions = (props) => {
                                             <Form.Item
                                                 name="alternativeA"
                                                 label="Alternativa A"
+                                                fieldKey={[index, 'alternativeA']}
                                             >
                                                 <Input
                                                     onChange={(e) => setAlternativeA(e.target.value)}
