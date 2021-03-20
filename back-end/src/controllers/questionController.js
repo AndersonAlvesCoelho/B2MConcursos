@@ -436,10 +436,13 @@ class QuestionController {
           }
 
           const questionsInfo = [];
-          questionsInfo.push(questionsA, questionsB, questionsC, questionsD);
+
+          questionsA.forEach(function(a, i){
+            questionsInfo.push([questionsA[i], questionsB[i], questionsC[i], questionsD[i]]);
+          })
 
           res.send({
-            qtdQuestion: Object.keys(questionsInfo[0]).length,
+            qtdQuestion: questionsInfo.length,
             questions: questionsInfo,
             message: "File is uploaded"
           })

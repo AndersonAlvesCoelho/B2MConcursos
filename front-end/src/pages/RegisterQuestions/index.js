@@ -113,7 +113,7 @@ const RegisterQuestions = (props) => {
     // const [data, getFile] = useState({ name: "", path: "" });
     const [progress, setProgess] = useState(0); // progess bar
     const el = useRef(); // accesing input element
-    const [pagerCurrent, setPagerCurrent] = useState(1);
+    const [pagerCurrent, setPagerCurrent] = useState(0);
 
     useEffect(() => {
         getBank();
@@ -121,6 +121,13 @@ const RegisterQuestions = (props) => {
         getOffice();
         getDicipline();
     }, [getBank, getInstitution, getOffice, getDicipline]);
+
+    console.log(alternativeA)
+    useEffect(() => {
+        if(questions.length !== 0) {
+            setAlternativeA(questions[0][0])
+        }
+    }, [questions]);
 
     const changeRadio = ({ target }) => {
         const newRadioData = radioData.map((radio) => {
@@ -136,7 +143,6 @@ const RegisterQuestions = (props) => {
     const onChange = step => {
         setStep(step);
     };
-
 
     const handleChangeFile = (e) => {
         setProgess(0)
@@ -195,7 +201,6 @@ const RegisterQuestions = (props) => {
     const uploadFileFunction = () => {
         const formData = new FormData()
         formData.append('file', file)
-
         props.uploadFile(formData)
     }
 
@@ -237,7 +242,6 @@ const RegisterQuestions = (props) => {
                     {/*        <Step status="process" title="Cadastro de questões" />*/}
                     {/*    </Steps>*/}
                     {/*</>*/}
-
                     <Form layout="vertical" requiredMark={false} onFinish={handleSubmit}>
 
                         <div id="generalInfo">
@@ -382,9 +386,9 @@ const RegisterQuestions = (props) => {
                                     paginate={pagerCurrent}
                                 />
                             </div>
-                            {questions.map((data, index) =>
-                                <Card type="inner"  title={`Questão ${index +1}`} >
 
+                            {questions.slice(pagerCurrent, qtdUploadQuestions).map((data, index) =>
+                                <Card type="inner"  title={`Questão ${pagerCurrent}`} >
                                     <Row >
                                         <Col className="mt-3" xs={8} md={6}>
                                             <Form.Item

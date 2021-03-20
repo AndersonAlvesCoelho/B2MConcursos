@@ -20,8 +20,9 @@ const Routes = () => (
 
                 {/* // --- ROTAS QUE NECESSITAM DE AUTENTICAÇÃO --- */}
                 <PrivateRoute path="/cadastrar-questoes" exact component={RegisterQuestions} />
-                <PrivateRoute path="/dashboard/perfil" exact component={Perfil}/>
-                
+                <PrivateRoute path="/dashboard/perfil" exact component={Perfil}
+                   
+                />
             </Switch>
         </BrowserRouter>
 
