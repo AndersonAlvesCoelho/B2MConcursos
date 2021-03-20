@@ -88,7 +88,6 @@ export const validationLogin = (requestAccess) => {
         return false;
     }
 
-
     return {
         success: successValidation(),
         erroAll: fieldEmptyu(),

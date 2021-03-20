@@ -36,7 +36,6 @@ class UserAnswersQuestionController {
 
             const { idUser, idQuestion, answer, check } = req.body;
 
-            console.log(req.body)
             const data = await UserAnswersQuestion.findAll({ where: { [Op.and]: [{ id_user: idUser }, { id_question: idQuestion }] } });
             const lastId = await UserAnswersQuestion.findOne({ order: [['id_user_answers_question', 'DESC']] })
 

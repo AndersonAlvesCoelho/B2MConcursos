@@ -5,9 +5,10 @@ import {
 } from '../constants/auth.constants';
 
 import { setUserCookie } from '../services/session';
-import api from '../services/api';
 import { errorsMessage } from '../utils/errorsMessage';
 import { successMessage } from '../utils/successMessage';
+
+import api from '../services/api';
 
 export const login = (data) => (dispatch) => {
     dispatch({ type: LOGIN_REQUEST });
@@ -18,19 +19,14 @@ export const login = (data) => (dispatch) => {
             .then((res) => {
                 const { data } = res;
                 const { user, message } = data;
-                let msg = '';
-                if (res.status === 201) {
-                    msg = successMessage[message];
-                } else {
-                    msg = errorsMessage[message];
-                }
+
+                dispatch({ type: LOGIN_SUCCESS, message: successMessage[message], user: user });
                 setUserCookie(user);
                 resolve(user);
-                dispatch({ type: LOGIN_SUCCESS, message: msg });
             })
             .catch((error) => {
                 const { response: err } = error;
-                const message = err && err.data ? err.data.message : 'Erro desconhecido';
+                const message = err && err.data ? errorsMessage[err.data.message] : 'Erro desconhecido';
                 dispatch({ type: LOGIN_FAILURE, message });
                 reject(error);
             });
