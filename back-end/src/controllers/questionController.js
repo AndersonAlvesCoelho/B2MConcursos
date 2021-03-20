@@ -341,7 +341,7 @@ class QuestionController {
 
       // TODO: resolver problema do auto increment postgres default value e sequelize
       const question = await Question.create({
-        id_question: idQuestion.toJSON().id_alternative + 1,
+        id_question: idQuestion.toJSON().id_question + 1,
         id_office: 1,
         id_discipline_subject: 1,
         id_bank: idBank,

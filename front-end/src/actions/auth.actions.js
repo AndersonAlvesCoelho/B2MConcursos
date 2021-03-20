@@ -26,7 +26,12 @@ export const login = (data) => (dispatch) => {
             })
             .catch((error) => {
                 const { response: err } = error;
-                const message = err && err.data ? errorsMessage[err.data.message] : 'Erro desconhecido';
+
+
+                console.log(err)
+                console.log(data)
+                const message = err && err.data ? errorsMessage[err.data.message] : errorsMessage['all/erro'];
+                console.log(message)
                 dispatch({ type: LOGIN_FAILURE, message });
                 reject(error);
             });
