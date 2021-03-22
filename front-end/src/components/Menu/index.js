@@ -13,7 +13,6 @@ export const Navbar = (props) => {
         history.push('/login');
     }
 
-
     return (
         <>
             <header className="header">
@@ -29,7 +28,7 @@ export const Navbar = (props) => {
                         <div className="navbar-holder d-flex align-items-center justify-content-between">
                             <div className="navbar-header">
                                 <a href="/" className="navbar-brand d-none d-sm-inline-block">
-                                    <div className="brand-text d-none d-lg-inline-block"><span>B2M </span><strong>Concurso</strong></div>
+                                    <div className="brand-text d-none d-lg-inline-block"><span>B2M </span><strong>Concursos</strong></div>
                                     <div className="brand-text d-none d-sm-inline-block d-lg-none"><strong>B2M</strong></div>
                                 </a>
                                 <a id="toggle-btn" onClick={() => props.onToggle(props.toggle ? false : true)} className={`menu-btn  ${props.toggle ? "active" : ""}`} ><span></span><span></span><span></span>
@@ -81,7 +80,7 @@ export const SideNavbar = (props) => {
                 <ul className="list-unstyled">
                     <li className={props.type === "Home" && "active"}><a href="/"> <i className="B2M-menu-grid-r-icon"></i>Home </a></li>
                     <li className={props.type === "Questions" && "active"}><a href="/questoes"> <i className="B2M-file-document-icon"></i>Questões </a></li>
-                    {getUserCookie() &&
+                    {getUserCookie() && getUserCookie()[0].nivel === 2 &&
                         <li className={props.type === "RegisterQuestions" && "active"}>
                             <a href="/cadastrar-questoes"> <i className="B2M-play-list-add-icon"></i>Registrar questão </a>
                         </li>

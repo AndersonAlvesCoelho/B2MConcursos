@@ -27,7 +27,7 @@ function Alternative(props) {
 
     // estados auxiliar de escolha de alternativa
     const [checkAnswer, setCheckAnswer] = useState([]);
-    const [option, setOption] = useState();
+    const [option, setOption] = useState('');
 
     // estado auxiliar do registre do comnetario
     const [current, setCurrent] = useState();
@@ -47,7 +47,7 @@ function Alternative(props) {
             }
 
         })
-        setOption(opt);
+        setOption('');
         setCheckAnswer(answer);
         if (situation === 0) saveAnswer(answer);
     }
@@ -80,6 +80,7 @@ function Alternative(props) {
         setDataComment(data.comment);
     }, [data])
 
+    console.log('option ', option);
 
     // get new comment
     useEffect(() => {
@@ -89,7 +90,6 @@ function Alternative(props) {
             if (newComment.id_question) {
                 setLoadingComment(true);
                 setTimeout(() => {
-
                     aux.push({
                         comment: newComment.comment,
                         id_comment: newComment.id_comment,
@@ -102,7 +102,6 @@ function Alternative(props) {
             } else {
                 setTimeout(() => {
                     setLoadingCommentAnswer(true);
-
                     dataComment.map((e, i) => {
                         if (e.id_comment === newComment.id_comment) {
                             aux[i].comment_answer.push({
