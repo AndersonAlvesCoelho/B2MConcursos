@@ -13,6 +13,7 @@ export const errorsMessage = {
     'auth/invalid-exist-email': { message: 'Email já registrado!', status: 401 },
     'auth/erro-auth-user': { message: 'Email ou senha incorretos!', status: 401 },
     'auth/erro-register-user': { message: 'Erro ao se registrar. Tente novamente em alguns instantes!', status: 401 },
+    'all/erro': { message: 'Erro desconhecido', status: 401 },
 }
 
 export const firebaseErrors = {

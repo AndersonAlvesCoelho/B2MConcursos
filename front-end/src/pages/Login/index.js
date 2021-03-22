@@ -30,7 +30,7 @@ function Login(props) {
         email: '',
         password: '',
     })
-
+console.log('messageLogin', messageLogin)
     const [classActive, setClassActive] = useState(false);
     const [validation, setValidation] = useState([]);
     const [nameAux, setNameAux] = useState();
@@ -84,11 +84,6 @@ function Login(props) {
         };
     }, [messageStore]);
 
-    // useEffect(() => {
-    //     if (validation.success && messageLogin.status === 201) {
-    //         clearInput();
-    //     };
-    // }, [messageLogin]);
 
     return (
         <>
@@ -111,8 +106,8 @@ function Login(props) {
                             <strong className="mr-auto">{nameAux}</strong>
                             {/* <small></small> */}
                         </Toast.Header>
-                        <Toast.Body>{messageStore.status === 201 && messageStore.message}</Toast.Body>
-                        <Toast.Body>{messageLogin.status === 201 && messageLogin.message}</Toast.Body>
+                        <Toast.Body>{messageStore !== undefined && messageStore.status === 201 && messageStore.message}</Toast.Body>
+                        <Toast.Body>{messageLogin !== undefined && messageLogin.status === 201 && messageLogin.message}</Toast.Body>
                     </Toast>
                 </div>
             </div>
@@ -143,7 +138,7 @@ function Login(props) {
                             <h1>Entrar</h1>
                             <ul className="B2M-validate-login">
                                 {validation.erroAll ? (<li>{validation.erroAll}</li>) :
-                                    (<> {messageLogin.status === 401 && (<li>{messageLogin.message}</li>)}</>)
+                                    (<> {messageLogin !== undefined && messageLogin.status === 401 && (<li>{messageLogin.message}</li>)}</>)
                                 }
                             </ul>
 

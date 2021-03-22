@@ -84,8 +84,7 @@ export const validationLogin = (requestAccess) => {
     }
 
     const successValidation = () => {
-        if (!fieldEmptyu()) return true;
-        return false;
+        return !fieldEmptyu();
     }
 
     return {

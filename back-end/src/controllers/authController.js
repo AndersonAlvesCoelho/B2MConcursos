@@ -16,6 +16,7 @@ class UserController {
       const { email, password } = req.body;
 
       const data = await User.findAll({
+
         where: {
           email: email,
           password: password

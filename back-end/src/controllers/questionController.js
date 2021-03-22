@@ -341,7 +341,7 @@ class QuestionController {
 
       // TODO: resolver problema do auto increment postgres default value e sequelize
       const question = await Question.create({
-        id_question: idQuestion.toJSON().id_alternative + 1,
+        id_question: idQuestion.toJSON().id_question + 1,
         id_office: 1,
         id_discipline_subject: 1,
         id_bank: idBank,
@@ -427,24 +427,51 @@ class QuestionController {
           const questionsB = pdfData.match(BtoC);
           const questionsC = pdfData.match(CtoD);
           var questionsD = [];
-
-          //catch question D (search everything between D) to number of question)
-          for(let i = 2 ; i < 4; i = i + 1) {
-            var DtoNext = new RegExp(`D\\)(.*?)${i}`, `g`)
-            var matchsD = pdfData.match(DtoNext);
-            questionsD.push(matchsD[0])
-          }
-
+          var enunciated = [];
           const questionsInfo = [];
 
+
+          //catch question D (search everything between D) to number of question)
+          for(let i = 1 ; i < questionsA.length; i = i + 1) {
+            // cath algarisms with '0' ex: 01,02,03
+            var regexD
+            if(i < 9){
+              regexD = `D\\)(.*?)0${i}`
+            }else{
+              regexD = `D\\)(.*?)${i}`
+            }
+            var DtoNext = new RegExp(regexD, `g`)
+            var matchsD = pdfData.match(DtoNext);
+            if(matchsD) {
+              questionsD.push(matchsD[0])
+            }
+          }
+
+          //catch enuncidated
+          for(let i = 1 ; i < questionsA.length; i = i + 1) {
+            // cath algarisms with '0' ex: 01,02,03
+            var regexEnum
+            if(i < 9){
+              regexEnum = `0${i}(.*?)A\\)`
+            }else{
+              regexEnum = `${i}(.*?)A\\)`
+            }
+            var enun = new RegExp(regexEnum, `g`)
+            var matchEnun = pdfData.match(enun);
+
+            if(matchEnun) {
+              enunciated.push(matchEnun[0])
+            }
+          }
+
           questionsA.forEach(function(a, i){
-            questionsInfo.push([questionsA[i], questionsB[i], questionsC[i], questionsD[i]]);
+            questionsInfo.push([enunciated[i], questionsA[i], questionsB[i], questionsC[i], questionsD[i]]);
           })
 
           res.send({
             qtdQuestion: questionsInfo.length,
             questions: questionsInfo,
-            message: "File is uploaded"
+            message: "PDF carregado com sucesso"
           })
         })
 
