@@ -427,6 +427,9 @@ class QuestionController {
           const questionsB = pdfData.match(BtoC);
           const questionsC = pdfData.match(CtoD);
           var questionsD = [];
+          var enunciated = [];
+          const questionsInfo = [];
+
 
           //catch question D (search everything between D) to number of question)
           for(let i = 2 ; i < 4; i = i + 1) {
@@ -435,16 +438,31 @@ class QuestionController {
             questionsD.push(matchsD[0])
           }
 
-          const questionsInfo = [];
+          //catch enuncidated
+          for(let i = 1 ; i < 4; i = i + 1) {
+            var regex
+            // cath algarisms with '0' ex: 01,02,03
+            if(i < 9){
+              regex = `0${i}(.*?)A\\)`
+            }else{
+              regex = `${i}(.*?)A\\)`
+            }
+            var enun = new RegExp(regex, `g`)
+            var matchEnun = pdfData.match(enun);
+
+            if(matchEnun) {
+              enunciated.push(matchEnun[0])
+            }
+          }
 
           questionsA.forEach(function(a, i){
-            questionsInfo.push([questionsA[i], questionsB[i], questionsC[i], questionsD[i]]);
+            questionsInfo.push([enunciated, questionsA[i], questionsB[i], questionsC[i], questionsD[i]]);
           })
 
           res.send({
             qtdQuestion: questionsInfo.length,
             questions: questionsInfo,
-            message: "File is uploaded"
+            message: "PDF carregado com sucesso"
           })
         })
 

@@ -53,6 +53,7 @@ class CommentController {
                         else res.status(400).send('Erro ao fazer comentário!')
                     })
 
+
                     const dataComment = await Comment.findOne({
                         attributes: { exclude: ['createdAt'] },
                         order: [['id_comment', 'DESC']],

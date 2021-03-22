@@ -136,10 +136,11 @@ const RegisterQuestions = (props) => {
 
     useEffect(() => {
         if(questions.length !== 0) {
-            setAlternativeA(questions[0][0])
-            setAlternativeB(questions[0][1])
-            setAlternativeC(questions[0][2])
-            setAlternativeD(questions[0][3])
+            setEnunciated(questions[0][0])
+            setAlternativeA(questions[0][1])
+            setAlternativeB(questions[0][2])
+            setAlternativeC(questions[0][3])
+            setAlternativeD(questions[0][4])
         }
     }, [questions]);
 
