@@ -432,22 +432,31 @@ class QuestionController {
 
 
           //catch question D (search everything between D) to number of question)
-          for(let i = 2 ; i < 4; i = i + 1) {
-            var DtoNext = new RegExp(`D\\)(.*?)${i}`, `g`)
+          for(let i = 1 ; i < questionsA.length; i = i + 1) {
+            // cath algarisms with '0' ex: 01,02,03
+            var regexD
+            if(i < 9){
+              regexD = `D\\)(.*?)0${i}`
+            }else{
+              regexD = `D\\)(.*?)${i}`
+            }
+            var DtoNext = new RegExp(regexD, `g`)
             var matchsD = pdfData.match(DtoNext);
-            questionsD.push(matchsD[0])
+            if(matchsD) {
+              questionsD.push(matchsD[0])
+            }
           }
 
           //catch enuncidated
-          for(let i = 1 ; i < 4; i = i + 1) {
-            var regex
+          for(let i = 1 ; i < questionsA.length; i = i + 1) {
             // cath algarisms with '0' ex: 01,02,03
+            var regexEnum
             if(i < 9){
-              regex = `0${i}(.*?)A\\)`
+              regexEnum = `0${i}(.*?)A\\)`
             }else{
-              regex = `${i}(.*?)A\\)`
+              regexEnum = `${i}(.*?)A\\)`
             }
-            var enun = new RegExp(regex, `g`)
+            var enun = new RegExp(regexEnum, `g`)
             var matchEnun = pdfData.match(enun);
 
             if(matchEnun) {
@@ -456,7 +465,7 @@ class QuestionController {
           }
 
           questionsA.forEach(function(a, i){
-            questionsInfo.push([enunciated, questionsA[i], questionsB[i], questionsC[i], questionsD[i]]);
+            questionsInfo.push([enunciated[i], questionsA[i], questionsB[i], questionsC[i], questionsD[i]]);
           })
 
           res.send({

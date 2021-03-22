@@ -16,7 +16,6 @@ import {
     Switch,
     Steps,
     Typography ,
-    onFieldsChange
 } from 'antd';
 import { SideNavbar, Navbar } from '../../components/Menu/';
 import '../../assets/css/home.css';
@@ -83,10 +82,12 @@ const RegisterQuestions = (props) => {
         qtdUploadQuestions,
         questions
     } = props
-    const ABCD = [ "A", "B", "C", "D"]
 
+    const ABCD = [ "A", "B", "C", "D"]
     const editor = useRef(null);
-    const viewSizeQuestion = 1;
+    const [questionInfo, setQuestionInfo] = useState([]);
+    const [indexQuestion, setIndexQuestion] = useState(0);
+
     // general info
     // const [office, setOffice] = useState();
     const [bankValue, setBankValue] = useState([]);
@@ -118,14 +119,10 @@ const RegisterQuestions = (props) => {
     ])
     const [toggle, setToggle] = useState(false); // mudar o stado do side bar
 
-    const [step, setStep] = useState();
 
     const [file, setFile] = useState(''); // storing the uploaded file
-    // storing the recived file from backend
-    // const [data, getFile] = useState({ name: "", path: "" });
     const [progress, setProgess] = useState(0); // progess bar
     const el = useRef(); // accesing input element
-    const [pagerCurrent, setPagerCurrent] = useState(0);
 
     useEffect(() => {
         getBank();
@@ -134,15 +131,15 @@ const RegisterQuestions = (props) => {
         getDicipline();
     }, [getBank, getInstitution, getOffice, getDicipline]);
 
-    useEffect(() => {
-        if(questions.length !== 0) {
-            setEnunciated(questions[0][0])
-            setAlternativeA(questions[0][1])
-            setAlternativeB(questions[0][2])
-            setAlternativeC(questions[0][3])
-            setAlternativeD(questions[0][4])
-        }
-    }, [questions]);
+    // useEffect(() => {
+    //     if(questions.length !== 0) {
+    //         setEnunciated(questions[0][0])
+    //         setAlternativeA(questions[0][1])
+    //         setAlternativeB(questions[0][2])
+    //         setAlternativeC(questions[0][3])
+    //         setAlternativeD(questions[0][4])
+    //     }
+    // }, [questions]);
 
     const changeRadio = ({ target }) => {
         const newRadioData = radioData.map((radio) => {
@@ -155,10 +152,6 @@ const RegisterQuestions = (props) => {
         setRadioData(newRadioData)
     }
 
-    const onChange = step => {
-        setStep(step);
-    };
-
     const handleChangeFile = (e) => {
         setProgess(0)
         const file = e.target.files[0]; // accesing file
@@ -166,9 +159,16 @@ const RegisterQuestions = (props) => {
         setFile(file); // storing file
     }
 
-    function onShowSizeChange(page) {
-        setPagerCurrent(page);
+    function renderQuestion(question, index) {
+        setIndexQuestion(index)
+        setEnunciated(question[0])
+        setAlternativeA(question[1])
+        setAlternativeB(question[2])
+        setAlternativeC(question[3])
+        setAlternativeD(question[4])
+        setQuestionInfo(question)
     }
+
 
     function handleSubmit(values) {
         // values.preventDefault()
@@ -259,20 +259,7 @@ const RegisterQuestions = (props) => {
                         </div>
                         <hr />
 
-                        {/*<>*/}
-                        {/*    <Steps*/}
-                        {/*        type="navigation"*/}
-                        {/*        current={step}*/}
-                        {/*        onChange={onChange}*/}
-                        {/*        className="site-navigation-steps"*/}
-                        {/*    >*/}
-                        {/*        <Step status="process"  title="Informações gerais" />*/}
-                        {/*        <Step status="process" title="Cadastro de questões" />*/}
-                        {/*    </Steps>*/}
-                        {/*</>*/}
-                        <Form  onFieldsChange={(_, allFields) => {
-                            onChange(allFields);
-                        }} initialValues={{ alternativeA: alternativeA }} layout="vertical" requiredMark={false} onFinish={handleSubmit}>
+                        <Form layout="vertical" requiredMark={false} onFinish={handleSubmit}>
 
                             <div id="generalInfo">
                                 <Row >
@@ -346,78 +333,59 @@ const RegisterQuestions = (props) => {
                                         </Form.Item>
                                     </Col>
 
-                                    <Col className="mt-3" xs={6} md={6}>
-                                        <Form.Item
-                                            name="institution"
-                                            label="Orgão"
-                                        >
-                                            <TreeSelect
-                                                treeData={institution}
-                                                value={institutionValue}
-                                                onChange={(value) => { setInstitutionValue(value) }}
-                                                placeholder="Orgão..."
-                                                className="filter-field"
-                                                showCheckedStrategy={SHOW_PARENT}
-                                                maxTagCount='responsive'
-                                                showSearch
-                                                treeNodeFilterProp='title'
-                                                allowClear
-                                                loading={loadingInstitution}
-                                            />
-                                        </Form.Item>
+
+                                </Row>
+                                <Row style={{marginBottom: '50px'}} >
+                                    <Col className="mt-3" xs={12} md={12}>
+                                        <Card type="inner" >
+                                            {questions.map((data, index) =>
+                                                <Button onClick={() => renderQuestion(data, index + 1)}>Questão {index + 1}</Button>
+                                            )}
+                                        </Card>
                                     </Col>
                                 </Row>
-
-                                <Row >
-                                    <Col className="mt-3" xs={6} md={6}>
-                                        <Form.Item
-                                            name="dicipline"
-                                            label="Matéria & Assunto"
-                                        >
-                                            <TreeSelect
-                                                treeDataSimpleMode
-                                                treeData={dicipline}
-                                                value={diciplineValue}
-                                                onChange={(value) => { setDiciplineValue(value) }}
-                                                placeholder="Matéria & Assunto..."
-                                                className="filter-field"
-                                                showCheckedStrategy={SHOW_PARENT}
-                                                maxTagCount='responsive'
-                                                showSearch
-                                                allowClear
-                                                loading={loadingDicipline}
-                                            />
-                                        </Form.Item>
-                                    </Col>
-
-                                    {/*<Col className="mt-3" xs={6} md={6}>*/}
-                                    {/*    <Form.Item*/}
-                                    {/*        name="prove"*/}
-                                    {/*        label="Prova"*/}
-                                    {/*    >*/}
-                                    {/*        <Input*/}
-                                    {/*            onChange={(e) => setProve(e.target.value)}*/}
-                                    {/*            placeholder="Prova"*/}
-                                    {/*            allowClear*/}
-                                    {/*            className="filter-select"*/}
-                                    {/*            enterButton*/}
-                                    {/*            value={prove}*/}
-                                    {/*        />*/}
-                                    {/*    </Form.Item>*/}
-                                    {/*</Col>*/}
-                                </Row>
-
-                                <div className="col-lg-10 col-md-12">
-                                    <Pagination
-                                        postsPerPage={viewSizeQuestion}
-                                        totalPosts={qtdUploadQuestions}
-                                        newPage={onShowSizeChange}
-                                        paginate={pagerCurrent}
-                                    />
-                                </div>
-
-                                {questions.slice(pagerCurrent, qtdUploadQuestions).map((data, index) =>
-                                    <Card type="inner"  title={`Questão ${pagerCurrent}`} >
+                                {questionInfo.length !== 0 && (
+                                    <Card type="inner"  title={`Questão ${indexQuestion}`} >
+                                        <Col className="mt-3" xs={6} md={6}>
+                                            <Form.Item
+                                                name="institution"
+                                                label="Orgão"
+                                            >
+                                                <TreeSelect
+                                                    treeData={institution}
+                                                    value={institutionValue}
+                                                    onChange={(value) => { setInstitutionValue(value) }}
+                                                    placeholder="Orgão..."
+                                                    className="filter-field"
+                                                    showCheckedStrategy={SHOW_PARENT}
+                                                    maxTagCount='responsive'
+                                                    showSearch
+                                                    treeNodeFilterProp='title'
+                                                    allowClear
+                                                    loading={loadingInstitution}
+                                                />
+                                            </Form.Item>
+                                        </Col>
+                                        <Col className="mt-3" xs={6} md={6}>
+                                            <Form.Item
+                                                name="dicipline"
+                                                label="Matéria & Assunto"
+                                            >
+                                                <TreeSelect
+                                                    treeDataSimpleMode
+                                                    treeData={dicipline}
+                                                    value={diciplineValue}
+                                                    onChange={(value) => { setDiciplineValue(value) }}
+                                                    placeholder="Matéria & Assunto..."
+                                                    className="filter-field"
+                                                    showCheckedStrategy={SHOW_PARENT}
+                                                    maxTagCount='responsive'
+                                                    showSearch
+                                                    allowClear
+                                                    loading={loadingDicipline}
+                                                />
+                                            </Form.Item>
+                                        </Col>
                                         <Card type="inner"  title={`Estrutura`} >
                                             <Row >
                                                 <Title level={3}>Enunciado</Title>
