@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 // import MenuNavbar from '../../components/MenuNavbar/index';
-import { Col, Container, Row } from "react-bootstrap";
+import {Col, Container, Row, Toast} from "react-bootstrap";
 import {
     Form,
     Input,
@@ -80,7 +80,12 @@ const RegisterQuestions = (props) => {
         loadingDicipline,
         dicipline,
         qtdUploadQuestions,
-        questions
+        questions,
+        toastShow,
+        toastStatus,
+        toastMessage,
+        toastDelay,
+        toastTilte
     } = props
 
     const ABCD = [ "A", "B", "C", "D"]
@@ -221,8 +226,17 @@ const RegisterQuestions = (props) => {
         props.uploadFile(formData)
     }
 
+
     return (
         <div className="B2M-page">
+            <Toast
+                show={toastShow}
+                status={toastStatus}
+                title={toastTilte}
+                message={toastMessage}
+                delay={toastDelay}
+            />
+
             <Navbar toggle={toggle} onToggle={(e) => setToggle(e)} /> {/* MAIN NAVBAR */}
             <div className="B2M-page-content">
                 <SideNavbar toggle={toggle} type="RegisterQuestions" /> {/* SIDEBAR */}
@@ -338,7 +352,7 @@ const RegisterQuestions = (props) => {
                                 <Row style={{marginBottom: '50px'}} >
                                     <Col className="mt-3" xs={12} md={12}>
                                         <Card type="inner" >
-                                            {questions.map((data, index) =>
+                                            {questions && questions.map((data, index) =>
                                                 <Button onClick={() => renderQuestion(data, index + 1)}>Questão {index + 1}</Button>
                                             )}
                                         </Card>
@@ -537,12 +551,18 @@ const mapStateToProps = state => ({
     dicipline: state.dicipline.dicipline,
     qtdUploadQuestions: state.registerQuestion.qtdUploadQuestions,
     questions: state.registerQuestion.questions,
-})
 
+    toastShow: state.toast.show,
+    toastStatus: state.toast.status,
+    toastMessage: state.toast.message,
+    toastDelay: state.toast.delay,
+    toastTilte: state.toast.title,
+})
 
 const mapDispatchToProps = {
     uploadFile: regusterQuestionsActions.uploadFile,
     store: regusterQuestionsActions.store,
+
 
     getBank: bankActions.getBank,
     getInstitution: institutionActions.getInstitution,
