@@ -14,7 +14,7 @@ import * as userAnswersQuestionActions from '../../actions/userAnswersQuestion.a
 import '../../assets/css/question.css';
 import 'antd/dist/antd.css';
 
-const viewSizeQuestion = 2;
+const viewSizeQuestion = 1;
 
 function Questions(props) {
 
@@ -134,7 +134,6 @@ function Questions(props) {
                                 <div class="row">
                                     <div class="col-12">
 
-                                        {!loading ? <>
                                             {dataQuestion.length !== 0 ? (<>
                                                 <div className="row">
                                                     <div className="col-lg-2 col-md-12 B2M-info-question-none">
@@ -163,18 +162,18 @@ function Questions(props) {
                                                         />
                                                     </div>
                                                 )}
-                                            </>) : <div className="center-Component"><Empty /></div>}
-                                        </> : <div class="B2M-loader"></div>}
+                                            </>) : loading ? <div class="B2M-loader"></div> : <div className="center-Component"><Empty /></div>}
 
-                                    </div>
+
+                                        </div>
                                 </div>
-                            </div>
+                                </div>
                         </section>
 
-                        <Footer />
+                            <Footer />
+                    </div>
                     </div>
                 </div>
-            </div>
 
         </>
     );
@@ -182,7 +181,7 @@ function Questions(props) {
 
 
 const mapStateToProps = (state) => ({
-    loadingQuestion: state.question.loading,
+                loadingQuestion: state.question.loading,
     question: state.question.question,
     qtdQuestion: state.question.qtdQuestion,
 
@@ -191,7 +190,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-    getQuestion: questionActions.getQuestion,
+                getQuestion: questionActions.getQuestion,
     getQtdQuestion: questionActions.getQtdQuestion,
 
     getAnswerQuestion: userAnswersQuestionActions.getAnswerQuestion,

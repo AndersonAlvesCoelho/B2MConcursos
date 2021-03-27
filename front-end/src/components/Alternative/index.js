@@ -47,7 +47,6 @@ function Alternative(props) {
             }
 
         })
-        setOption('');
         setCheckAnswer(answer);
         if (situation === 0) saveAnswer(answer);
     }
@@ -121,6 +120,8 @@ function Alternative(props) {
     }, [dataComment, newComment]);
 
 
+    console.log('option ', option);
+    console.log('checkAnswer.answer ', checkAnswer);
     return (
         <>
             <div className="B2M-card-header">
@@ -137,11 +138,16 @@ function Alternative(props) {
 
                 {/* OPTION  */}
 
-                <div className="B2M-alternative" onChange={(e) => setOption(e.target.value)}>
+                <div className="B2M-alternative" >
                     {data.alternative.map((e, x) => (
-                        <label className="B2M-option-alternative" key={x} >
+                        <label className="B2M-option-alternative" key={x} onChange={(e) => setOption(e.target.value)}>
                             {checkAnswer.length !== 0 ? !(checkAnswer.answer === x) ? e.name_alternative : (<b>{e.name_alternative}</b>) : e.name_alternative}
-                            <input type="radio" value={x} name="alternative" />
+                            {checkAnswer.length !== 0 && checkAnswer.answer === x ?
+                                <input type="radio" value={x} name="alternative" checked />
+                                :
+                                <input type="radio" value={x} name="alternative" />
+                            }
+
                             <span className="B2M-checkmark"></span>
                         </label>
                     ))}
