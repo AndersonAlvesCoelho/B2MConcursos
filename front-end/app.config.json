@@ -1,0 +1,10 @@
+{
+  "apps": [
+    {
+      "name": "B2M-frontend",
+      "script": "npx",
+      "interpreter": "none",
+      "args": "serve -p 8443 -T"
+    }
+  ]
+}
