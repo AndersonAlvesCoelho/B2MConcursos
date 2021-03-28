@@ -13,7 +13,6 @@ export const Navbar = (props) => {
         history.push('/login');
     }
 
-
     return (
         <>
             <header className="header">
@@ -81,7 +80,7 @@ export const SideNavbar = (props) => {
                 <ul className="list-unstyled">
                     <li className={props.type === "Home" && "active"}><a href="/"> <i className="B2M-menu-grid-r-icon"></i>Home </a></li>
                     <li className={props.type === "Questions" && "active"}><a href="/questoes"> <i className="B2M-file-document-icon"></i>Questões </a></li>
-                    {getUserCookie() &&
+                    {getUserCookie() && getUserCookie()[0].nivel === 2 &&
                         <li className={props.type === "RegisterQuestions" && "active"}>
                             <a href="/cadastrar-questoes"> <i className="B2M-play-list-add-icon"></i>Registrar questão </a>
                         </li>

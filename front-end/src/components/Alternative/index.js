@@ -27,7 +27,7 @@ function Alternative(props) {
 
     // estados auxiliar de escolha de alternativa
     const [checkAnswer, setCheckAnswer] = useState([]);
-    const [option, setOption] = useState();
+    const [option, setOption] = useState('');
 
     // estado auxiliar do registre do comnetario
     const [current, setCurrent] = useState();
@@ -47,7 +47,6 @@ function Alternative(props) {
             }
 
         })
-        setOption(opt);
         setCheckAnswer(answer);
         if (situation === 0) saveAnswer(answer);
     }
@@ -80,6 +79,7 @@ function Alternative(props) {
         setDataComment(data.comment);
     }, [data])
 
+    console.log('option ', option);
 
     // get new comment
     useEffect(() => {
@@ -89,7 +89,6 @@ function Alternative(props) {
             if (newComment.id_question) {
                 setLoadingComment(true);
                 setTimeout(() => {
-
                     aux.push({
                         comment: newComment.comment,
                         id_comment: newComment.id_comment,
@@ -102,7 +101,6 @@ function Alternative(props) {
             } else {
                 setTimeout(() => {
                     setLoadingCommentAnswer(true);
-
                     dataComment.map((e, i) => {
                         if (e.id_comment === newComment.id_comment) {
                             aux[i].comment_answer.push({
@@ -122,6 +120,8 @@ function Alternative(props) {
     }, [dataComment, newComment]);
 
 
+    console.log('option ', option);
+    console.log('checkAnswer.answer ', checkAnswer);
     return (
         <>
             <div className="B2M-card-header">
@@ -138,11 +138,16 @@ function Alternative(props) {
 
                 {/* OPTION  */}
 
-                <div className="B2M-alternative" onChange={(e) => setOption(e.target.value)}>
+                <div className="B2M-alternative" >
                     {data.alternative.map((e, x) => (
-                        <label className="B2M-option-alternative" key={x} >
+                        <label className="B2M-option-alternative" key={x} onChange={(e) => setOption(e.target.value)}>
                             {checkAnswer.length !== 0 ? !(checkAnswer.answer === x) ? e.name_alternative : (<b>{e.name_alternative}</b>) : e.name_alternative}
-                            <input type="radio" value={x} name="alternative" />
+                            {checkAnswer.length !== 0 && checkAnswer.answer === x ?
+                                <input type="radio" value={x} name="alternative" checked />
+                                :
+                                <input type="radio" value={x} name="alternative" />
+                            }
+
                             <span className="B2M-checkmark"></span>
                         </label>
                     ))}
