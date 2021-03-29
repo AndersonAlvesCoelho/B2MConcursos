@@ -2,9 +2,9 @@
   "apps": [
     {
       "name": "B2M-frontend",
-      "script": "npx",
+      "script": "nodemon",
       "interpreter": "none",
-      "args": "serve -p 3000 -T"
+      "args": "src/server.js -p 3000 -T"
     }
   ]
 }
