@@ -85,7 +85,9 @@ const RegisterQuestions = (props) => {
         toastStatus,
         toastMessage,
         toastDelay,
-        toastTilte
+        toastTilte,
+        loadingUpload,
+        loadingRegister
     } = props
 
     const ABCD = [ "A", "B", "C", "D"]
@@ -267,8 +269,8 @@ const RegisterQuestions = (props) => {
                             <div className="progessBar" style={{ width: progress }}>
                                 {progress}
                             </div>
-                            <Button onClick={uploadFileFunction} className="filter-btn">
-                                Upload
+                            <Button onClick={uploadFileFunction} disabled={loadingUpload} className="filter-btn">
+                                {!loadingUpload ? <>Fazer upload </> : <>Processando... </>}
                             </Button>
                         </div>
                         <hr />
@@ -515,10 +517,10 @@ const RegisterQuestions = (props) => {
                                                     />
                                                 </Col>
                                             </Row>
-                                            <Button htmlType="submit">
-                                                Cadastrar questão
-                                            </Button>
                                         </Card>
+                                        <Button htmlType="submit" disabled={loadingRegister}>
+                                            {!loadingRegister ? <>Cadastrar questão</> : <>Cadastrando...</>}
+                                        </Button>
                                     </Card>
                                 )}
 
@@ -551,6 +553,8 @@ const mapStateToProps = state => ({
     dicipline: state.dicipline.dicipline,
     qtdUploadQuestions: state.registerQuestion.qtdUploadQuestions,
     questions: state.registerQuestion.questions,
+    loadingUpload: state.registerQuestion.loadingUpload,
+    loadingRegister: state.registerQuestion.loadingRegister,
 
     toastShow: state.toast.show,
     toastStatus: state.toast.status,
@@ -562,7 +566,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
     uploadFile: regusterQuestionsActions.uploadFile,
     store: regusterQuestionsActions.store,
-
 
     getBank: bankActions.getBank,
     getInstitution: institutionActions.getInstitution,

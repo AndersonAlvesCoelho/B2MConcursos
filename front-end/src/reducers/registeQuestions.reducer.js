@@ -18,24 +18,24 @@ export default function registerQuestionsReducer(state = initialState, action) {
   switch (action.type) {
 
     case UPLOAD_PDF_REQUEST:
-      return { ...state, loading: true };
+      return { ...state, loadingUpload: true };
 
     case UPLOAD_PDF_SUCCESS: {
       const { qtdQuestion, questions } = action;
-      return { ...state, questions: questions, qtdUploadQuestions:  qtdQuestion, loading: false, };
+      return { ...state, questions: questions, qtdUploadQuestions:  qtdQuestion, loadingUpload: false, };
     }
     case UPLOAD_PDF_FAILURE:
-      return { ...state, loading: false };
+      return { ...state, loadingUpload: false };
 
 
     case REGISTER_QUESTIONS_REQUEST:
-      return { ...state, loading: true };
+      return { ...state, loadingRegister: true };
 
     case REGISTER_QUESTIONS_SUCCESS: {
-      return { ...state,  loading: false, };
+      return { ...state,  loadingRegister: false, };
     }
     case REGISTER_QUESTIONS_FAILURE:
-      return { ...state, loading: false };
+      return { ...state, loadingRegister: false };
 
     default:
       return state;
