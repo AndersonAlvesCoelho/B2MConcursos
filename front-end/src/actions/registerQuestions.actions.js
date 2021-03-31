@@ -24,7 +24,7 @@ export const uploadFile = (formData) => (dispatch) => {
             //     key: `0-${index}`,
             // }));
 
-            dispatch(show('success', 'ERRO', message, 5000));
+
             dispatch({ type: UPLOAD_PDF_SUCCESS, qtdQuestion, questions });
         })
         .catch((error) => {
@@ -39,15 +39,16 @@ export const store = (formValues) => (dispatch) => {
     dispatch({ type: REGISTER_QUESTIONS_REQUEST });
     api.post('/registerQuestions',  formValues  )
         .then((res) => {
-            const { data } = res;
+            const { data, message} = res;
 
             console.log('data ', data);
-
+            dispatch(show('success', 'SUCESSO', message, 5000));
             dispatch({ type: REGISTER_QUESTIONS_SUCCESS });
         })
         .catch((error) => {
             const { response: err } = error;
             const message = err && err.data ? err.data.message : 'Erro desconhecido';
+            dispatch(show('success', 'ERRO', 'ASD', 5000));
             dispatch({ type: REGISTER_QUESTIONS_FAILURE, message });
         });
 }

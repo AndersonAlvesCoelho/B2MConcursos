@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 // import MenuNavbar from '../../components/MenuNavbar/index';
-import {Col, Container, Row, Toast} from "react-bootstrap";
+import {Col, Container, Row} from "react-bootstrap";
+import Toast from '../../helpers/toast';
 import {
     Form,
     Input,
@@ -81,11 +82,6 @@ const RegisterQuestions = (props) => {
         dicipline,
         qtdUploadQuestions,
         questions,
-        toastShow,
-        toastStatus,
-        toastMessage,
-        toastDelay,
-        toastTilte,
         loadingUpload,
         loadingRegister
     } = props
@@ -230,312 +226,299 @@ const RegisterQuestions = (props) => {
 
 
     return (
-        <div className="B2M-page">
-            <Toast
-                show={toastShow}
-                status={toastStatus}
-                title={toastTilte}
-                message={toastMessage}
-                delay={toastDelay}
-            />
-
-            <Navbar toggle={toggle} onToggle={(e) => setToggle(e)} /> {/* MAIN NAVBAR */}
-            <div className="B2M-page-content">
-                <SideNavbar toggle={toggle} type="RegisterQuestions" /> {/* SIDEBAR */}
-                {/* Page Header */}
-                <div className={`B2M-content-inner side-navbar-active ${toggle ? 'active' : ''}`}>
-                    <header className="B2M-page-header">
-                        <h2>Registro de questões</h2>
-                    </header>
-                    {/* Breadcrumb */}
-                    <div class="breadcrumb-holder container-fluid B2M-bg">
-                        <ul class="B2M-breadcrumb">
-                            <li class="breadcrumb-item"><a href="/">Home</a></li>
-                            <li class="breadcrumb-item active B2M-text-color-primary">Registro de questões</li>
-                        </ul>
-                    </div>
-
-                    <Container className="filter-conatiner" >
-
-                        <Row >
-                            <span className="filter-titer mx-1 ml-2">Upload da prova:</span>
-                        </Row >
-
-                        <div className="file-upload">
-                            <input
-                                type="file" ref={el}
-                                onChange={handleChangeFile}
-                            />
-                            <div className="progessBar" style={{ width: progress }}>
-                                {progress}
-                            </div>
-                            <Button onClick={uploadFileFunction} disabled={loadingUpload} className="filter-btn">
-                                {!loadingUpload ? <>Fazer upload </> : <>Processando... </>}
-                            </Button>
+        <>
+            <div className="B2M-page">
+                <Navbar toggle={toggle} onToggle={(e) => setToggle(e)} /> {/* MAIN NAVBAR */}
+                <div className="B2M-page-content">
+                    <SideNavbar toggle={toggle} type="RegisterQuestions" /> {/* SIDEBAR */}
+                    {/* Page Header */}
+                    <div className={`B2M-content-inner side-navbar-active ${toggle ? 'active' : ''}`}>
+                        <header className="B2M-page-header">
+                            <h2>Registro de questões</h2>
+                        </header>
+                        {/* Breadcrumb */}
+                        <div class="breadcrumb-holder container-fluid B2M-bg">
+                            <ul class="B2M-breadcrumb">
+                                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                                <li class="breadcrumb-item active B2M-text-color-primary">Registro de questões</li>
+                            </ul>
                         </div>
-                        <hr />
 
-                        <Form layout="vertical" requiredMark={false} onFinish={handleSubmit}>
+                        <Container className="filter-conatiner" >
 
-                            <div id="generalInfo">
-                                <Row >
-                                    {/*<Col className="mt-3" xs={6} md={6}>*/}
-                                    <Col className="mt-3" xs={6} md={6}>
-                                        <Form.Item
-                                            name="year"
-                                            label="Ano da prova"
-                                        >
-                                            <TreeSelect
-                                                treeData={yearData}
-                                                value={yearValue}
-                                                maxLength={4}
-                                                onChange={(value) => { setYearValue(value) }}
-                                                placeholder="Ano..."
-                                                className="filter-field"
-                                                showCheckedStrategy={SHOW_PARENT}
-                                                maxTagCount='responsive'
-                                                showSearch
-                                                treeNodeFilterProp='title'
-                                                allowClear
-                                                loading={!yearData}
-                                            />
-                                        </Form.Item>
-                                    </Col>
+                            <Row >
+                                <span className="filter-titer mx-1 ml-2">Upload da prova:</span>
+                            </Row >
 
-                                    <Col className="mt-3" xs={6} md={6}>
-                                        <Form.Item
-                                            name="bank"
-                                            label="Banca"
-                                        >
-                                            <TreeSelect
-                                                treeData={bank}
-                                                value={bankValue}
-                                                onChange={(value) => { setBankValue(value) }}
+                            <div className="file-upload">
+                                <input
+                                    type="file" ref={el}
+                                    onChange={handleChangeFile}
+                                />
+                                <div className="progessBar" style={{ width: progress }}>
+                                    {progress}
+                                </div>
+                                <Button onClick={uploadFileFunction} disabled={loadingUpload} className="filter-btn">
+                                    {!loadingUpload ? <>Fazer upload </> : <>Processando... </>}
+                                </Button>
+                            </div>
+                            <hr />
 
-                                                placeholder="Banca..."
-                                                className="filter-field"
-                                                showCheckedStrategy={SHOW_PARENT}
-                                                maxTagCount='responsive'
-                                                allowClear
-                                                showSearch
-                                                treeNodeFilterProp='title'
-                                                loading={loadingBank}
-                                            />
-                                        </Form.Item>
+                            <Form layout="vertical" requiredMark={false} onFinish={handleSubmit}>
 
-                                        {/*</Col>*/}
-                                    </Col>
-                                </Row>
-
-                                <Row >
-                                    <Col className="mt-3" xs={6} md={6}>
-                                        <Form.Item
-                                            name="office"
-                                            label="Cargo"
-                                        >
-                                            <TreeSelect
-                                                showSearch
-                                                treeData={office}
-                                                value={officeValue}
-                                                allowClear
-                                                onChange={(value) => { setOfficeValue(value) }}
-                                                placeholder="Cargo..."
-                                                className="filter-field"
-                                                showCheckedStrategy={SHOW_ALL }
-                                                maxTagCount='responsive'
-                                                treeNodeFilterProp='title'
-                                                loading={loadingOffice}
-                                            />
-                                        </Form.Item>
-                                    </Col>
-
-
-                                </Row>
-                                <Row style={{marginBottom: '50px'}} >
-                                    <Col className="mt-3" xs={12} md={12}>
-                                        <Card type="inner" >
-                                            {questions && questions.map((data, index) =>
-                                                <Button onClick={() => renderQuestion(data, index + 1)}>Questão {index + 1}</Button>
-                                            )}
-                                        </Card>
-                                    </Col>
-                                </Row>
-                                {questionInfo.length !== 0 && (
-                                    <Card type="inner"  title={`Questão ${indexQuestion}`} >
+                                <div id="generalInfo">
+                                    <Row >
+                                        {/*<Col className="mt-3" xs={6} md={6}>*/}
                                         <Col className="mt-3" xs={6} md={6}>
                                             <Form.Item
-                                                name="institution"
-                                                label="Orgão"
+                                                name="year"
+                                                label="Ano da prova"
                                             >
                                                 <TreeSelect
-                                                    treeData={institution}
-                                                    value={institutionValue}
-                                                    onChange={(value) => { setInstitutionValue(value) }}
-                                                    placeholder="Orgão..."
+                                                    treeData={yearData}
+                                                    value={yearValue}
+                                                    maxLength={4}
+                                                    onChange={(value) => { setYearValue(value) }}
+                                                    placeholder="Ano..."
                                                     className="filter-field"
                                                     showCheckedStrategy={SHOW_PARENT}
                                                     maxTagCount='responsive'
                                                     showSearch
                                                     treeNodeFilterProp='title'
                                                     allowClear
-                                                    loading={loadingInstitution}
+                                                    loading={!yearData}
                                                 />
                                             </Form.Item>
                                         </Col>
+
                                         <Col className="mt-3" xs={6} md={6}>
                                             <Form.Item
-                                                name="dicipline"
-                                                label="Matéria & Assunto"
+                                                name="bank"
+                                                label="Banca"
                                             >
                                                 <TreeSelect
-                                                    treeDataSimpleMode
-                                                    treeData={dicipline}
-                                                    value={diciplineValue}
-                                                    onChange={(value) => { setDiciplineValue(value) }}
-                                                    placeholder="Matéria & Assunto..."
+                                                    treeData={bank}
+                                                    value={bankValue}
+                                                    onChange={(value) => { setBankValue(value) }}
+
+                                                    placeholder="Banca..."
                                                     className="filter-field"
                                                     showCheckedStrategy={SHOW_PARENT}
                                                     maxTagCount='responsive'
-                                                    showSearch
                                                     allowClear
-                                                    loading={loadingDicipline}
+                                                    showSearch
+                                                    treeNodeFilterProp='title'
+                                                    loading={loadingBank}
+                                                />
+                                            </Form.Item>
+
+                                            {/*</Col>*/}
+                                        </Col>
+                                    </Row>
+
+                                    <Row >
+                                        <Col className="mt-3" xs={6} md={6}>
+                                            <Form.Item
+                                                name="office"
+                                                label="Cargo"
+                                            >
+                                                <TreeSelect
+                                                    showSearch
+                                                    treeData={office}
+                                                    value={officeValue}
+                                                    allowClear
+                                                    onChange={(value) => { setOfficeValue(value) }}
+                                                    placeholder="Cargo..."
+                                                    className="filter-field"
+                                                    showCheckedStrategy={SHOW_ALL }
+                                                    maxTagCount='responsive'
+                                                    treeNodeFilterProp='title'
+                                                    loading={loadingOffice}
                                                 />
                                             </Form.Item>
                                         </Col>
-                                        <Card type="inner"  title={`Estrutura`} >
-                                            <Row >
-                                                <Title level={3}>Enunciado</Title>
-                                                <Col xs={12} md={12}>
-                                                    <JoditEditor
-                                                        ref={editor}
-                                                        value={enunciated}
-                                                        // config={config}
-                                                        tabIndex={0}
-                                                        onBlur={(newContent) => setEnunciated(newContent)}
-                                                        onChange={() => {}}
-                                                    />
-                                                </Col>
-                                            </Row>
 
-                                            <Row >
-                                                <Title level={3}>Alternativa A</Title>
-                                                <Col xs={12} md={12}>
-                                                    <JoditEditor
-                                                        ref={editor}
-                                                        value={alternativeA}
-                                                        // config={config}
-                                                        tabIndex={0}
-                                                        onBlur={(newContent) => setAlternativeA(newContent)}
-                                                        onChange={() => {}}
+                                    </Row>
+                                    <Row style={{marginBottom: '50px'}} >
+                                        <Col className="mt-3" xs={12} md={12}>
+                                            <Card type="inner" >
+                                                {questions && questions.map((data, index) =>
+                                                    <Button onClick={() => renderQuestion(data, index + 1)}>Questão {index + 1}</Button>
+                                                )}
+                                            </Card>
+                                        </Col>
+                                    </Row>
+                                    {questionInfo.length !== 0 && (
+                                        <Card type="inner"  title={`Questão ${indexQuestion}`} >
+                                            <Col className="mt-3" xs={6} md={6}>
+                                                <Form.Item
+                                                    name="institution"
+                                                    label="Orgão"
+                                                >
+                                                    <TreeSelect
+                                                        treeData={institution}
+                                                        value={institutionValue}
+                                                        onChange={(value) => { setInstitutionValue(value) }}
+                                                        placeholder="Orgão..."
+                                                        className="filter-field"
+                                                        showCheckedStrategy={SHOW_PARENT}
+                                                        maxTagCount='responsive'
+                                                        showSearch
+                                                        treeNodeFilterProp='title'
+                                                        allowClear
+                                                        loading={loadingInstitution}
                                                     />
-                                                </Col>
-                                            </Row>
-
-                                            <Row>
-                                                <Title level={3}>Alternativa B</Title>
-                                                <Col xs={12} md={12}>
-                                                    <JoditEditor
-                                                        ref={editor}
-                                                        value={alternativeB}
-                                                        // config={config}
-                                                        tabIndex={0}
-                                                        onBlur={(newContent) => setAlternativeB(newContent)}
-                                                        onChange={() => {}}
+                                                </Form.Item>
+                                            </Col>
+                                            <Col className="mt-3" xs={6} md={6}>
+                                                <Form.Item
+                                                    name="dicipline"
+                                                    label="Matéria & Assunto"
+                                                >
+                                                    <TreeSelect
+                                                        treeDataSimpleMode
+                                                        treeData={dicipline}
+                                                        value={diciplineValue}
+                                                        onChange={(value) => { setDiciplineValue(value) }}
+                                                        placeholder="Matéria & Assunto..."
+                                                        className="filter-field"
+                                                        showCheckedStrategy={SHOW_PARENT}
+                                                        maxTagCount='responsive'
+                                                        showSearch
+                                                        allowClear
+                                                        loading={loadingDicipline}
                                                     />
-                                                </Col>
-                                            </Row>
+                                                </Form.Item>
+                                            </Col>
+                                            <Card type="inner"  title={`Estrutura`} >
+                                                <Row >
+                                                    <Title level={3}>Enunciado</Title>
+                                                    <Col xs={12} md={12}>
+                                                        <JoditEditor
+                                                            ref={editor}
+                                                            value={enunciated}
+                                                            // config={config}
+                                                            tabIndex={0}
+                                                            onBlur={(newContent) => setEnunciated(newContent)}
+                                                            onChange={() => {}}
+                                                        />
+                                                    </Col>
+                                                </Row>
 
-                                            <Row>
-                                                <Title level={3}>Alternativa C</Title>
-                                                <Col xs={12} md={12}>
-                                                    <JoditEditor
-                                                        ref={editor}
-                                                        value={alternativeC}
-                                                        // config={config}
-                                                        tabIndex={0}
-                                                        onBlur={(newContent) => setAlternativeC(newContent)}
-                                                        onChange={() => {}}
-                                                    />
-                                                </Col>
-                                            </Row>
+                                                <Row >
+                                                    <Title level={3}>Alternativa A</Title>
+                                                    <Col xs={12} md={12}>
+                                                        <JoditEditor
+                                                            ref={editor}
+                                                            value={alternativeA}
+                                                            // config={config}
+                                                            tabIndex={0}
+                                                            onBlur={(newContent) => setAlternativeA(newContent)}
+                                                            onChange={() => {}}
+                                                        />
+                                                    </Col>
+                                                </Row>
 
-                                            <Row>
-                                                <Title level={3}>Alternativa D</Title>
-                                                <Col xs={12} md={12}>
-                                                    <JoditEditor
-                                                        ref={editor}
-                                                        value={alternativeD}
-                                                        // config={config}
-                                                        tabIndex={0}
-                                                        onBlur={(newContent) => setAlternativeD(newContent)}
-                                                        onChange={() => {}}
-                                                    />
-                                                </Col>
-                                            </Row>
+                                                <Row>
+                                                    <Title level={3}>Alternativa B</Title>
+                                                    <Col xs={12} md={12}>
+                                                        <JoditEditor
+                                                            ref={editor}
+                                                            value={alternativeB}
+                                                            // config={config}
+                                                            tabIndex={0}
+                                                            onBlur={(newContent) => setAlternativeB(newContent)}
+                                                            onChange={() => {}}
+                                                        />
+                                                    </Col>
+                                                </Row>
 
+                                                <Row>
+                                                    <Title level={3}>Alternativa C</Title>
+                                                    <Col xs={12} md={12}>
+                                                        <JoditEditor
+                                                            ref={editor}
+                                                            value={alternativeC}
+                                                            // config={config}
+                                                            tabIndex={0}
+                                                            onBlur={(newContent) => setAlternativeC(newContent)}
+                                                            onChange={() => {}}
+                                                        />
+                                                    </Col>
+                                                </Row>
+
+                                                <Row>
+                                                    <Title level={3}>Alternativa D</Title>
+                                                    <Col xs={12} md={12}>
+                                                        <JoditEditor
+                                                            ref={editor}
+                                                            value={alternativeD}
+                                                            // config={config}
+                                                            tabIndex={0}
+                                                            onBlur={(newContent) => setAlternativeD(newContent)}
+                                                            onChange={() => {}}
+                                                        />
+                                                    </Col>
+                                                </Row>
+
+                                            </Card>
+
+                                            <Card type="inner"  title={`Resolução`} >
+                                                <Row>
+                                                    <Title level={3}>Alternativa correta</Title>
+                                                    <Col xs={12} md={12}>
+                                                        <div style={answerStyleBox}>
+                                                            {
+                                                                radioData.map((lo, idx) => {
+                                                                    return <>
+                                                                        <div style={answerStyle}>
+                                                                            <input
+                                                                                key={idx}
+                                                                                type="radio"
+                                                                                name="answer"
+                                                                                value={lo.radioName}
+                                                                                checked={!!lo.selected}
+                                                                                onChange={changeRadio}
+                                                                            />
+                                                                        </div>
+
+                                                                        <div style={ABCDStyle}>
+                                                                            {ABCD[idx]}
+                                                                        </div>
+                                                                    </>
+                                                                })
+                                                            }
+                                                        </div>
+                                                    </Col>
+                                                </Row>
+
+                                                <Row >
+                                                    <Title level={3}>Resolução</Title>
+                                                    <Col xs={12} md={12}>
+                                                        <JoditEditor
+                                                            ref={editor}
+                                                            value={issueResolution}
+                                                            // config={config}
+                                                            tabIndex={0} // tabIndex of textarea
+                                                            onBlur={(newContent) => setIssueResolution(newContent)}
+                                                            onChange={() => {}}
+                                                        />
+                                                    </Col>
+                                                </Row>
+                                            </Card>
+                                            <Button htmlType="submit" disabled={loadingRegister}>
+                                                {!loadingRegister ? <>Cadastrar questão</> : <>Cadastrando...</>}
+                                            </Button>
                                         </Card>
-
-                                        <Card type="inner"  title={`Resolução`} >
-                                            <Row>
-                                                <Title level={3}>Alternativa correta</Title>
-                                                <Col xs={12} md={12}>
-                                                    <div style={answerStyleBox}>
-                                                        {
-                                                            radioData.map((lo, idx) => {
-                                                                return <>
-                                                                    <div style={answerStyle}>
-                                                                        <input
-                                                                            key={idx}
-                                                                            type="radio"
-                                                                            name="answer"
-                                                                            value={lo.radioName}
-                                                                            checked={!!lo.selected}
-                                                                            onChange={changeRadio}
-                                                                        />
-                                                                    </div>
-
-                                                                    <div style={ABCDStyle}>
-                                                                        {ABCD[idx]}
-                                                                    </div>
-                                                                </>
-                                                            })
-                                                        }
-                                                    </div>
-                                                </Col>
-                                            </Row>
-
-                                            <Row >
-                                                <Title level={3}>Resolução</Title>
-                                                <Col xs={12} md={12}>
-                                                    <JoditEditor
-                                                        ref={editor}
-                                                        value={issueResolution}
-                                                        // config={config}
-                                                        tabIndex={0} // tabIndex of textarea
-                                                        onBlur={(newContent) => setIssueResolution(newContent)}
-                                                        onChange={() => {}}
-                                                    />
-                                                </Col>
-                                            </Row>
-                                        </Card>
-                                        <Button htmlType="submit" disabled={loadingRegister}>
-                                            {!loadingRegister ? <>Cadastrar questão</> : <>Cadastrando...</>}
-                                        </Button>
-                                    </Card>
-                                )}
-
-                            </div>
-
-
-                        </Form>
-
-
-                    </Container>
-
-                    <Footer />
+                                    )}
+                                </div>
+                            </Form>
+                        </Container>
+                        <Footer />
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 }
 
@@ -555,12 +538,6 @@ const mapStateToProps = state => ({
     questions: state.registerQuestion.questions,
     loadingUpload: state.registerQuestion.loadingUpload,
     loadingRegister: state.registerQuestion.loadingRegister,
-
-    toastShow: state.toast.show,
-    toastStatus: state.toast.status,
-    toastMessage: state.toast.message,
-    toastDelay: state.toast.delay,
-    toastTilte: state.toast.title,
 })
 
 const mapDispatchToProps = {
