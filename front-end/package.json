@@ -13,10 +13,7 @@
     "axios": "^0.21.1",
     "bootstrap": "^4.5.3",
     "dinamicform": "^1.2.4",
-<<<<<<< HEAD
     "html-react-parser": "^1.2.4",
-=======
->>>>>>> 421e7313fad7e23beb563fe272a3b93998336e7a
     "jodit-react": "1.0.53",
     "js-cookie": "^2.2.1",
     "pdf-parse": "^1.1.1",
@@ -29,12 +26,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "redux": "^4.0.5",
-<<<<<<< HEAD
-    "web-vitals": "^0.2.4",
-    "yup": "^0.32.9"
-=======
     "web-vitals": "^0.2.4"
->>>>>>> 421e7313fad7e23beb563fe272a3b93998336e7a
   },
   "scripts": {
     "start": "react-scripts start",
