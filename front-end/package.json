@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.4.0",
+    "@commitlint/cli": "^12.0.1",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -12,10 +13,14 @@
     "axios": "^0.21.1",
     "bootstrap": "^4.5.3",
     "dinamicform": "^1.2.4",
+<<<<<<< HEAD
     "html-react-parser": "^1.2.4",
+=======
+>>>>>>> 421e7313fad7e23beb563fe272a3b93998336e7a
     "jodit-react": "1.0.53",
     "js-cookie": "^2.2.1",
     "pdf-parse": "^1.1.1",
+    "pm2": "^4.5.5",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.3",
     "react-dom": "^17.0.1",
@@ -24,11 +29,16 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "redux": "^4.0.5",
+<<<<<<< HEAD
     "web-vitals": "^0.2.4",
     "yup": "^0.32.9"
+=======
+    "web-vitals": "^0.2.4"
+>>>>>>> 421e7313fad7e23beb563fe272a3b93998336e7a
   },
   "scripts": {
     "start": "react-scripts start",
+    "dev": "SET NODE_ENV=development & pm2 start npm -- start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

@@ -9,6 +9,7 @@ import auth from './auth.reducer';
 import userAnswersQuestion from './userAnswersQuestion.reducer';
 import comment from './comment.reducer';
 import registerQuestion from './registeQuestions.reducer';
+import toast from './toast.reducer';
 
 const rootReducer = combineReducers({
     bank,
@@ -20,7 +21,8 @@ const rootReducer = combineReducers({
     auth,
     userAnswersQuestion,
     comment,
-    registerQuestion
+    registerQuestion,
+    toast,
 });
 
 export default rootReducer;

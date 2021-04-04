@@ -1,0 +1,10 @@
+{
+  "apps": [
+    {
+      "name": "B2M-frontend",
+      "script": "nodemon",
+      "interpreter": "none",
+      "args": "src/server.js -p 3000 -T"
+    }
+  ]
+}

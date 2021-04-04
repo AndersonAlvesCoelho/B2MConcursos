@@ -2,7 +2,7 @@ import {
     GET_INSTITUTION_REQUEST,
     GET_INSTITUTION_SUCCESS,
     GET_INSTITUTION_FAILURE,
-  } from '../constants/institution.constants';
+  } from '../constants';
   
   const initialInstitution = {
     loading: false,
