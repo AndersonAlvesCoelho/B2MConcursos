@@ -35,9 +35,8 @@ export const Navbar = (props) => {
                                 </a>
                             </div>
                             <ul className="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
-                                {/* <li className="nav-item d-flex align-items-center"><a id="search" href="#"><i className="B2M-search-icon"></i></a></li> */}
                                 <li className="nav-item">
-                                    {getUserCookie() ?
+                                    {getUserCookie()[0].name ?
                                         <a className="nav-link logout" onClick={logout}>
                                             <span className="d-none d-sm-inline">Sair</span><i className="B2M-log-in-icon"></i>
                                         </a>
@@ -58,12 +57,13 @@ export const Navbar = (props) => {
 
 export const SideNavbar = (props) => {
 
+    console.log('getUserCookie() ', getUserCookie())
     return (
         <>
             <nav className={`side-navbar  ${props.toggle ? "side-navbar-active shrinked" : ""}`} >
                 {/* <nav className="side-navbar ">; */}
 
-                {getUserCookie() && (<>
+                {getUserCookie()[0].name ? (<>
                     <div className="sidebar-header d-flex align-items-center">
                         <div className="avatar">
                             <a href="/dashboard/perfil"><img src="https://secure.gravatar.com/avatar/?s=56&d=mm&r=g" alt="avatar" className="img-fluid rounded-circle" /></a>
@@ -74,7 +74,7 @@ export const SideNavbar = (props) => {
                             {/* <a className="perfil" href="dashboard/perfil"><i className="B2M-eye-icon"></i> Perfil</a> */}
                         </div>
                     </div>
-                </>)}
+                </>) : null}
 
                 {/* <span className="heading">Principal</span> */}
                 <ul className="list-unstyled">
@@ -85,13 +85,7 @@ export const SideNavbar = (props) => {
                             <a href="/cadastrar-questoes"> <i className="B2M-play-list-add-icon"></i>Registrar questão </a>
                         </li>
                     }
-                    {/* <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i className="icon-interface-windows"></i>Example dropdown </a>
-                        <ul id="exampledropdownDropdown" className="collapse list-unstyled ">
-                            <li><a href="#">Page</a></li>
-                            <li><a href="#">Page</a></li>
-                            <li><a href="#">Page</a></li>
-                        </ul>
-                    </li> */}
+                    <li><a href="https://b2mconcursos.com.br/"> <i className="B2M-shopping-cart"></i>Produtos </a></li>
                 </ul>
             </nav>
 
