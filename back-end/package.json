@@ -5,7 +5,7 @@
   "main": "src/server.js",
   "scripts": {
     "dev": "SET NODE_ENV=development & nodemon src/server.js",
-    "devserv": "SET NODE_ENV=development & pm2 start npm --name back --node-args='dev --port=1234' ",
+    "devserv": "SET NODE_ENV=development & pm2 start npm --name back -- start ",
     "build": "sucrase ./src -d ./dist --transforms imports,jsx,flow",
     "debug": "nodemon --inspect src/server.js",
     "start": "pm2-runtime ./dist/server.js"

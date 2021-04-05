@@ -1,12 +1,11 @@
 const dev = {
-    BASE_URL: "http://localhost:3333"
+    BASE_URL: "http://162.214.198.80:3333"
 };
 
 const prod = {
     BASE_URL: "...",
 };
 
-const config = process.env.NODE_ENV === "development" ? dev : prod;
 
 export default {
     // Adicionar valores comuns aqui
