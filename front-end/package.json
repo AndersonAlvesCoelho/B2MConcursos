@@ -30,7 +30,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "dev": "SET NODE_ENV=development & pm2 start npm -- start",
+    "dev": "SET NODE_ENV=development & pm2 start npm --name front -- start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

@@ -1,10 +1,11 @@
+
 module.exports = {
   development: {
     dialect: "postgres",
     host: 'localhost',
-    database: 'b2mconcursos',
-    username: 'postgres',
-    password: '16798577',
+    database: 'wwb2mc_b2mconcursos',
+    username: 'wwb2mc_b2m',
+    password: 'LFT#@vD8Q&wB',
     define: {
       timestamps: false,
       underscored: true,
