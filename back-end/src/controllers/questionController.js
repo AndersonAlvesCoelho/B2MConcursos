@@ -17,50 +17,52 @@ class QuestionController {
 
   // Retornar o registro das questões
   async index(req, res) {
+
+    var enunciated = false;
+    var bank = false;
+    var institution = false;
+    var year = false;
+    var office = false;
+    var office01 = false;
+    var office02 = false;
+    var office03 = false;
+    var office04 = false;
+    var dicipline = false;
+    var dicipline00 = false;
+    var dicipline01 = false;
+    var dicipline02 = false;
+    var dicipline03 = false;
+    var gabaritoComentado = false;
+    var comentarios = false;
+
+    //pegando dados para filtragem
+    if (req.body.data) {
+      if (req.body.data.enunciated) enunciated = req.body.data.enunciated;
+      if (req.body.data.bank.length !== 0) bank = req.body.data.bank;
+      if (req.body.data.institution.length !== 0) institution = req.body.data.institution;
+      if (req.body.data.year.length !== 0) year = req.body.data.year;
+      if (req.body.data.office.length !== 0) office = req.body.data.office;
+      if (req.body.data.dicipline.length !== 0) dicipline = req.body.data.dicipline;
+      if (req.body.data.gabaritoComentado) gabaritoComentado = req.body.data.gabaritoComentado;
+      if (req.body.data.comentarios) comentarios = req.body.data.comentarios;
+    }
+
+    if (office) {
+      if (office[0].length !== 0) office01 = office[0];
+      if (office[1].length !== 0) office02 = office[1];
+      if (office[2].length !== 0) office03 = office[2];
+      if (office[3].length !== 0) office04 = office[3];
+    }
+
+    if (dicipline) {
+      if (dicipline[0].length !== 0) dicipline00 = dicipline[0];
+      if (dicipline[1].length !== 0) dicipline01 = dicipline[1];
+      if (dicipline[2].length !== 0) dicipline02 = dicipline[2];
+      if (dicipline[3].length !== 0) dicipline03 = dicipline[3];
+    }
+
     try {
 
-      var enunciated = false;
-      var bank = false;
-      var institution = false;
-      var year = false;
-      var office = false;
-      var office01 = false;
-      var office02 = false;
-      var office03 = false;
-      var office04 = false;
-      var dicipline = false;
-      var dicipline00 = false;
-      var dicipline01 = false;
-      var dicipline02 = false;
-      var dicipline03 = false;
-      var gabaritoComentado = false;
-      var comentarios = false;
-
-      //pegando dados para filtragem
-      if (req.body.data) {
-        if (req.body.data.enunciated) enunciated = req.body.data.enunciated;
-        if (req.body.data.bank.length !== 0) bank = req.body.data.bank;
-        if (req.body.data.institution.length !== 0) institution = req.body.data.institution;
-        if (req.body.data.year.length !== 0) year = req.body.data.year;
-        if (req.body.data.office.length !== 0) office = req.body.data.office;
-        if (req.body.data.dicipline.length !== 0) dicipline = req.body.data.dicipline;
-        if (req.body.data.gabaritoComentado) gabaritoComentado = req.body.data.gabaritoComentado;
-        if (req.body.data.comentarios) comentarios = req.body.data.comentarios;
-      }
-
-      if (office) {
-        if (office[0].length !== 0) office01 = office[0];
-        if (office[1].length !== 0) office02 = office[1];
-        if (office[2].length !== 0) office03 = office[2];
-        if (office[3].length !== 0) office04 = office[3];
-      }
-
-      if (dicipline) {
-        if (dicipline[0].length !== 0) dicipline00 = dicipline[0];
-        if (dicipline[1].length !== 0) dicipline01 = dicipline[1];
-        if (dicipline[2].length !== 0) dicipline02 = dicipline[2];
-        if (dicipline[3].length !== 0) dicipline03 = dicipline[3];
-      }
 
       const data = await Question.findAll({
         attributes: {
@@ -182,7 +184,7 @@ class QuestionController {
           },
         ],
 
-        offset: req.body.offset, limit: req.body.limit,
+        offset: req.body.offset, limit: req.body.LIMIT,
 
         where: {
           // id_question: { [Op.in]: [1, 3] },
@@ -195,14 +197,14 @@ class QuestionController {
         },
 
         order: [['id_question']]
-
-      });
-
-      return res.json(data);
+      })
+      return res.json({ data, count: data.length });
     } catch (error) {
       res.status(400).json({ message: `Erro ao retornar os dados. ${error}` });
     }
+
   }
+  
   // retornar somente a quantidade toda de registro na tabela question
   async qtdQuestions(req, res) {
 
@@ -277,8 +279,8 @@ class QuestionController {
         idUser,
       } = req.body
 
-      console.log('idOffice',idOffice)
-      console.log('idDicipline',idDicipline)
+      console.log('idOffice', idOffice)
+      console.log('idDicipline', idDicipline)
 
       //  const office = await Office.create({
       //   id_office: idOffice,
@@ -400,18 +402,18 @@ class QuestionController {
   upload(req, res) {
     try {
 
-      if(!req.files){
+      if (!req.files) {
         res.send({
           status: false,
           message: "No files"
         })
       } else {
-        const {file} = req.files
+        const { file } = req.files
 
         //TODO:TRANSFORMAR EM FUNCAO ESSA LOGICA DO PDF PARSER
         // const questions = regexPDF(file)
 
-        pdf(file).then(function (data){
+        pdf(file).then(function (data) {
 
           //regex
           const AtoB = new RegExp("A\\)(.*?)B\\)", "g")
@@ -432,39 +434,39 @@ class QuestionController {
 
 
           //catch question D (search everything between D) to number of question)
-          for(let i = 1 ; i < questionsA.length; i = i + 1) {
+          for (let i = 1; i < questionsA.length; i = i + 1) {
             // cath algarisms with '0' ex: 01,02,03
             var regexD
-            if(i < 9){
+            if (i < 9) {
               regexD = `D\\)(.*?)0${i}`
-            }else{
+            } else {
               regexD = `D\\)(.*?)${i}`
             }
             var DtoNext = new RegExp(regexD, `g`)
             var matchsD = pdfData.match(DtoNext);
-            if(matchsD) {
+            if (matchsD) {
               questionsD.push(matchsD[0])
             }
           }
 
           //catch enuncidated
-          for(let i = 1 ; i < questionsA.length; i = i + 1) {
+          for (let i = 1; i < questionsA.length; i = i + 1) {
             // cath algarisms with '0' ex: 01,02,03
             var regexEnum
-            if(i < 9){
+            if (i < 9) {
               regexEnum = `0${i}(.*?)A\\)`
-            }else{
+            } else {
               regexEnum = `${i}(.*?)A\\)`
             }
             var enun = new RegExp(regexEnum, `g`)
             var matchEnun = pdfData.match(enun);
 
-            if(matchEnun) {
+            if (matchEnun) {
               enunciated.push(matchEnun[0])
             }
           }
 
-          questionsA.forEach(function(a, i){
+          questionsA.forEach(function (a, i) {
             questionsInfo.push([enunciated[i], questionsA[i], questionsB[i], questionsC[i], questionsD[i]]);
           })
 

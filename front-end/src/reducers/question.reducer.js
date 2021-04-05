@@ -10,6 +10,7 @@ import {
 const questionInstitution = {
   loading: false,
   question: [],
+  countQuetion: 0,
   qtdQuestion: [],
   message: '',
 };
@@ -22,8 +23,8 @@ export default function questionReducer(state = questionInstitution, action) {
       return { ...state, loading: true };
 
     case GET_QUESTION_SUCCESS: {
-      const { data } = action;
-      return { ...state, question: data, loading: false, };
+      const { data, count } = action;
+      return { ...state, question: data, countQuetion: count,loading: false, };
     }
     case GET_QUESTION_FAILURE:
       return { ...state, loading: false };

@@ -80,3 +80,28 @@ section.B2M-pagination {
     margin-right: 50px;
   }
 }
+
+
+
+
+
+/* ---------------------------- */
+
+/* .pagination {
+  display: flex;
+  list-style: none;
+}
+
+.pagination li + li {
+  margin-left: 1rem;
+}
+
+.pagination__item--active {
+  background: none;
+  font-weight: bold;
+  border: none;
+}
+
+.pagination__item--active:focus {
+  outline: none;
+} */

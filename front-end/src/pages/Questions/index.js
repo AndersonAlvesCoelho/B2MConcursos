@@ -14,8 +14,7 @@ import * as userAnswersQuestionActions from '../../actions/userAnswersQuestion.a
 import '../../assets/css/question.css';
 import 'antd/dist/antd.css';
 
-const viewSizeQuestion = 1;
-
+const LIMIT = 1;
 function Questions(props) {
 
     const {
@@ -24,6 +23,7 @@ function Questions(props) {
 
         question,
         qtdQuestion,
+        countQuetion,
         answerQuestion,
 
         getQuestion,
@@ -34,21 +34,21 @@ function Questions(props) {
 
     const loading = loadingQuestion && loadingAnswerQuestion;
     const idUser = getUserCookie() ? getUserCookie()[0].id_user : false;
+    
+    const [offset, setOffset] = useState(0);
 
     const [toggle, setToggle] = useState(false); // mudar o stado do side bar
     const [visible, setVisible] = useState(false);
     const [dataFilter, setDataFilter] = useState([]);
     const [pagerCurrent, setPagerCurrent] = useState(1);
-    const [offset, setOffset] = useState(0);
-    const [limit, setLimit] = useState(viewSizeQuestion);
     const [checkAnswer, setCheckAnswer] = useState([]);
     const [dataQuestion, setDataQuestion] = useState([]);
 
     //get data questions
     useEffect(() => {
         let data = dataFilter.length !== 0 ? dataFilter : false;
-        getQuestion({ offset, limit, data });
-    }, [getQuestion, offset, limit, dataFilter]);
+        getQuestion({ offset, LIMIT, data });
+    }, [getQuestion, offset, dataFilter]);
 
     //get size data questions
     useEffect(() => {
@@ -81,7 +81,6 @@ function Questions(props) {
         }
     }, [getAnswerQuestion, question])
 
-
     // juntado resposta do usuario com a pergunta
     useEffect(() => {
         if (answerQuestion.length !== 0) {
@@ -106,8 +105,7 @@ function Questions(props) {
 
     function onShowSizeChange(page) {
         setPagerCurrent(page);
-        setLimit(viewSizeQuestion)
-        setOffset((page - 1) * viewSizeQuestion)
+        setOffset((page - 1) * LIMIT)
     }
 
     return (
@@ -145,10 +143,10 @@ function Questions(props) {
 
                                                     <div className="col-lg-10 col-md-12">
                                                         <Pagination
-                                                            postsPerPage={viewSizeQuestion}
-                                                            totalPosts={qtdQuestion}
-                                                            newPage={onShowSizeChange}
-                                                            paginate={pagerCurrent}
+                                                            limit={LIMIT}
+                                                            total={14}
+                                                            offset={offset}
+                                                            setOffset={setOffset}
                                                         />
                                                     </div>
                                                 </div>
@@ -161,7 +159,7 @@ function Questions(props) {
                                                     </div>
                                                 )}
                                             </>) : <div className="center-Component"><Empty /></div>}
-                                        </>) : <div class="B2M-loader"></div> }
+                                        </>) : <div class="B2M-loader"></div>}
 
                                     </div>
                                 </div>
@@ -181,6 +179,8 @@ function Questions(props) {
 const mapStateToProps = (state) => ({
     loadingQuestion: state.question.loading,
     question: state.question.question,
+    countQuetion: state.question.countQuetion,
+
     qtdQuestion: state.question.qtdQuestion,
 
     loadingAnswerQuestion: state.userAnswersQuestion.loading,

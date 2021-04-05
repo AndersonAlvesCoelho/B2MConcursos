@@ -57,7 +57,6 @@ export const Navbar = (props) => {
 
 export const SideNavbar = (props) => {
 
-    console.log('getUserCookie() ', getUserCookie())
     return (
         <>
             <nav className={`side-navbar  ${props.toggle ? "side-navbar-active shrinked" : ""}`} >

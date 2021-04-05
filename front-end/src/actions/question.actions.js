@@ -11,12 +11,15 @@ import api from '../services/api';
 
 //GET QUESTION
 export const getQuestion = (filter) => (dispatch) => {
+  console.log(filter);
+  
   dispatch({ type: GET_QUESTION_REQUEST });
   api.post('/questions', filter)
     .then((res) => {
-      const { data } = res;
+      const { data, count } = res.data;
+      console.log('res.data ', res);
 
-      dispatch({ type: GET_QUESTION_SUCCESS, data });
+      dispatch({ type: GET_QUESTION_SUCCESS, data, count });
     })
     .catch((error) => {
       const { response: err } = error;
