@@ -13,6 +13,7 @@
     "axios": "^0.21.1",
     "bootstrap": "^4.5.3",
     "dinamicform": "^1.2.4",
+    "html-react-parser": "^1.2.4",
     "jodit-react": "1.0.53",
     "js-cookie": "^2.2.1",
     "pdf-parse": "^1.1.1",

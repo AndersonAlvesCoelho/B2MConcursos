@@ -30,7 +30,7 @@ function Login(props) {
         email: '',
         password: '',
     })
-console.log('messageLogin', messageLogin)
+    console.log('messageLogin', messageLogin)
     const [classActive, setClassActive] = useState(false);
     const [validation, setValidation] = useState([]);
     const [nameAux, setNameAux] = useState();
@@ -84,18 +84,13 @@ console.log('messageLogin', messageLogin)
         };
     }, [messageStore]);
 
+    console.log('messageStore - ', messageStore);
+    console.log('validation - ', validation);
 
     return (
         <>
             <div >
-                <div
-                    style={{
-                        position: 'absolute',
-                        top: 0,
-                        right: 0,
-                        margin: 10
-                    }}
-                >
+                <div style={{ position: 'absolute', top: 0, right: 0, margin: 10 }}>
                     <Toast onClose={() => setShow(false)} show={show} delay={3000} autohide>
                         <Toast.Header>
                             <img

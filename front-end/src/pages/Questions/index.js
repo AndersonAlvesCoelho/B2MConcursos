@@ -133,7 +133,7 @@ function Questions(props) {
                             <div class="container-fluid">
                                 <div class="row">
                                     <div class="col-12">
-
+                                        {!loading ? (<>
                                             {dataQuestion.length !== 0 ? (<>
                                                 <div className="row">
                                                     <div className="col-lg-2 col-md-12 B2M-info-question-none">
@@ -151,29 +151,27 @@ function Questions(props) {
                                                             paginate={pagerCurrent}
                                                         />
                                                     </div>
-
                                                 </div>
                                                 {dataQuestion.map((data, index) =>
                                                     <div key={index} className="card">
                                                         <Alternative
                                                             data={data}
                                                             idUser={idUser}
-                                                        // answerUser={data.check !== undefined || data.check ? ({ check: data.check, answer: data.answer }) : []}
                                                         />
                                                     </div>
                                                 )}
-                                            </>) : loading ? <div class="B2M-loader"></div> : <div className="center-Component"><Empty /></div>}
+                                            </>) : <div className="center-Component"><Empty /></div>}
+                                        </>) : <div class="B2M-loader"></div> }
 
-
-                                        </div>
+                                    </div>
                                 </div>
-                                </div>
+                            </div>
                         </section>
 
-                            <Footer />
-                    </div>
+                        <Footer />
                     </div>
                 </div>
+            </div>
 
         </>
     );
@@ -181,7 +179,7 @@ function Questions(props) {
 
 
 const mapStateToProps = (state) => ({
-                loadingQuestion: state.question.loading,
+    loadingQuestion: state.question.loading,
     question: state.question.question,
     qtdQuestion: state.question.qtdQuestion,
 
@@ -190,7 +188,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-                getQuestion: questionActions.getQuestion,
+    getQuestion: questionActions.getQuestion,
     getQtdQuestion: questionActions.getQtdQuestion,
 
     getAnswerQuestion: userAnswersQuestionActions.getAnswerQuestion,

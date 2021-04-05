@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import parse from 'html-react-parser';
 
 import { dataFormatada } from '../../helpers/dataFormata';
 import * as userAnswersQuestionActions from '../../actions/userAnswersQuestion.actions';
@@ -9,7 +10,11 @@ import logo from '../../assets/img/svg/logo.svg';
 import erro from '../../assets/img/svg/erro.svg';
 import ok from '../../assets/img/svg/ok.svg';
 
+
 function Alternative(props) {
+
+
+
 
     const {
         data,
@@ -79,8 +84,6 @@ function Alternative(props) {
         setDataComment(data.comment);
     }, [data])
 
-    console.log('option ', option);
-
     // get new comment
     useEffect(() => {
         if (newComment.length !== 0) {
@@ -119,9 +122,6 @@ function Alternative(props) {
 
     }, [dataComment, newComment]);
 
-
-    console.log('option ', option);
-    console.log('checkAnswer.answer ', checkAnswer);
     return (
         <>
             <div className="B2M-card-header">
@@ -134,14 +134,14 @@ function Alternative(props) {
             </div>
 
             <div className="B2M-card-body">
-                <p>{data.enunciated}</p>
+                <p>{parse(data.enunciated)}</p>
 
                 {/* OPTION  */}
 
                 <div className="B2M-alternative" >
                     {data.alternative.map((e, x) => (
                         <label className="B2M-option-alternative" key={x} onChange={(e) => setOption(e.target.value)}>
-                            {checkAnswer.length !== 0 ? !(checkAnswer.answer === x) ? e.name_alternative : (<b>{e.name_alternative}</b>) : e.name_alternative}
+                            {checkAnswer.length !== 0 && !(checkAnswer.answer === x) ? parse(e.name_alternative) : (<b>{parse(e.name_alternative)}</b>) }
                             {checkAnswer.length !== 0 && checkAnswer.answer === x ?
                                 <input type="radio" value={x} name="alternative" checked />
                                 :
@@ -193,7 +193,7 @@ function Alternative(props) {
                                 </div>
                             </div>
                             <div class="B2M-comment">
-                                <small>{data.issue_resolution}</small>
+                                <small>{parse(data.issue_resolution)}</small>
                             </div>
                         </div>
                     </>) : <p className="mx-5 my-5">Sem comentário do professor</p>}
@@ -229,7 +229,7 @@ function Alternative(props) {
                             </div>
 
                             <div class="B2M-comment">
-                                <small>{commit.comment}</small>
+                                <small>{parse(commit.comment)}</small>
                             </div>
                             <hr />
                             {/* RESPOSTA DO COMENTARIO PRINCIPAL */}
@@ -248,7 +248,7 @@ function Alternative(props) {
 
                                     </div>
                                     <div class="B2M-comment">
-                                        <small>{ans.answer}</small>
+                                        <small>{parse(ans.answer)}</small>
                                     </div>
                                     <hr />
                                 </div>

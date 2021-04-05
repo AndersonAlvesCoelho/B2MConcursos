@@ -20,7 +20,8 @@ class UserController {
       } = req.body
 
       const emailExist = await User.findAll({ where: { email: email } });
-
+      
+      return res.status(201).send('auth/create-user');
 
       if (emailExist.length === 0) {
         await User.create({
