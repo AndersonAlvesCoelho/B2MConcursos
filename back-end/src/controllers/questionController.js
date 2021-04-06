@@ -198,6 +198,7 @@ class QuestionController {
 
         order: [['id_question']]
       })
+      console.log(data.length)
       return res.json({ data, count: data.length });
     } catch (error) {
       res.status(400).json({ message: `Erro ao retornar os dados. ${error}` });

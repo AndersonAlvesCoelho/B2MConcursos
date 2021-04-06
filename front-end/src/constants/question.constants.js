@@ -4,7 +4,3 @@ const prefix = 'question/';
 export const GET_QUESTION_REQUEST = `${prefix}GET_QUESTION_REQUEST`;
 export const GET_QUESTION_SUCCESS = `${prefix}GET_QUESTION_SUCCESS`;
 export const GET_QUESTION_FAILURE = `${prefix}GET_QUESTION_FAILURE`;
-//GET TOTAL QTD_QUESTION
-export const GET_QTD_QUESTION_REQUEST = `${prefix}GET_QTD_QUESTION_REQUEST`;
-export const GET_QTD_QUESTION_SUCCESS = `${prefix}GET_QTD_QUESTION_SUCCESS`;
-export const GET_QTD_QUESTION_FAILURE = `${prefix}GET_QTD_QUESTION_FAILURE`;

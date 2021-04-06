@@ -22,19 +22,17 @@ function Questions(props) {
         loadingAnswerQuestion,
 
         question,
-        qtdQuestion,
         countQuetion,
         answerQuestion,
 
         getQuestion,
-        getQtdQuestion,
         getAnswerQuestion,
 
     } = props;
 
     const loading = loadingQuestion && loadingAnswerQuestion;
     const idUser = getUserCookie() ? getUserCookie()[0].id_user : false;
-    
+
     const [offset, setOffset] = useState(0);
 
     const [toggle, setToggle] = useState(false); // mudar o stado do side bar
@@ -44,20 +42,12 @@ function Questions(props) {
     const [checkAnswer, setCheckAnswer] = useState([]);
     const [dataQuestion, setDataQuestion] = useState([]);
 
-    //get data questions
+    //GET DATA QUESTIONS
     useEffect(() => {
         let data = dataFilter.length !== 0 ? dataFilter : false;
         getQuestion({ offset, LIMIT, data });
     }, [getQuestion, offset, dataFilter]);
 
-    //get size data questions
-    useEffect(() => {
-        let data = dataFilter.length !== 0 ? dataFilter : false;
-        getQtdQuestion({ data });
-        setOffset(0);
-        setPagerCurrent(1);
-
-    }, [getQtdQuestion, dataFilter]);
 
     //get answer user question
     useEffect(() => {
@@ -103,11 +93,6 @@ function Questions(props) {
         }
     }, [answerQuestion, checkAnswer])
 
-    function onShowSizeChange(page) {
-        setPagerCurrent(page);
-        setOffset((page - 1) * LIMIT)
-    }
-
     return (
         <>
             <div className="B2M-page">
@@ -144,7 +129,7 @@ function Questions(props) {
                                                     <div className="col-lg-10 col-md-12">
                                                         <Pagination
                                                             limit={LIMIT}
-                                                            total={14}
+                                                            total={countQuetion}
                                                             offset={offset}
                                                             setOffset={setOffset}
                                                         />
@@ -152,10 +137,7 @@ function Questions(props) {
                                                 </div>
                                                 {dataQuestion.map((data, index) =>
                                                     <div key={index} className="card">
-                                                        <Alternative
-                                                            data={data}
-                                                            idUser={idUser}
-                                                        />
+                                                        <Alternative data={data} idUser={idUser} />
                                                     </div>
                                                 )}
                                             </>) : <div className="center-Component"><Empty /></div>}
@@ -181,15 +163,12 @@ const mapStateToProps = (state) => ({
     question: state.question.question,
     countQuetion: state.question.countQuetion,
 
-    qtdQuestion: state.question.qtdQuestion,
-
     loadingAnswerQuestion: state.userAnswersQuestion.loading,
     answerQuestion: state.userAnswersQuestion.answerQuestion,
 });
 
 const mapDispatchToProps = {
     getQuestion: questionActions.getQuestion,
-    getQtdQuestion: questionActions.getQtdQuestion,
 
     getAnswerQuestion: userAnswersQuestionActions.getAnswerQuestion,
     saveUserAnswersQuestion: userAnswersQuestionActions.saveUserAnswersQuestion
