@@ -12,14 +12,12 @@ section.B2M-pagination {
   padding: 10px 20px;
   margin: 5px;
   list-style-type: none;
-  align-self: center;
   font-size: 20px;
-  text-decoration: none;
   color: var(--black);
   text-decoration: none;
   cursor: pointer;
 }
-.B2M-pagination ul li:hover {
+/* .B2M-pagination ul li:hover {
   background-color: var(--main-primary);
   color: var(--white);
   font-size: 25px;
@@ -32,22 +30,20 @@ section.B2M-pagination {
 .B2M-pagination ul li.B2M-active:hover {
   text-decoration: none;
 }
-
-/* PAGINATION ICON COLOR AND HOVER ----------------------------------- */
 .B2M-pagination ul li:nth-child(-n + 2) {
   border-radius: 15px;
   font-size: 25px;
   color: var(--white);
   cursor: pointer;
-}
-.B2M-pagination ul li:nth-child(1) {
-  background-color: var(--darkGray);
+} */
+/* .B2M-pagination ul li:nth-child(1) {
+  background-color: var(--secondary);
 }
 .B2M-pagination ul li:nth-child(2) {
   background-color: var(--secondary);
-}
+} */
 
-.B2M-pagination ul li:hover:nth-child(-n + 2) {
+/* .B2M-pagination ul li:hover:nth-child(-n + 2) {
   background-color: transparent;
   color: var(--black);
 }
@@ -68,6 +64,30 @@ section.B2M-pagination {
 .B2M-pagination ul li:hover:nth-last-child(-n + 2) {
   background-color: transparent;
   color: var(--black);
+} */
+
+.B2M-pagination ul .B2M-item {
+  border-radius: 15px;
+  color: var(--white);
+  cursor: pointer;
+}
+.B2M-pagination ul .B2M-item:hover {
+  background-color: var(--main-primary);
+}
+
+.B2M-pagination ul li.B2M-active {
+  background-color: var(--main-primary);
+  color: var(--white);
+  font-size: 25px;
+}
+
+.B2M-pagination ul .B2M-next-prev-item {
+  background-color: var(--secondary);
+}
+
+.B2M-pagination ul .B2M-next-prev-item:hover {
+  background-color: transparent;
+  color: var(--black);
 }
 
 /* PAGINATION MEDIAQUERIES ----------------------------------- */
@@ -76,9 +96,7 @@ section.B2M-pagination {
   .B2M-pagination ul li:nth-child(n + 3):nth-last-child(n + 3) {
     display: none;
   }
-  .B2M-pagination  {
+  .B2M-pagination {
     margin-right: 50px;
   }
 }
-
-

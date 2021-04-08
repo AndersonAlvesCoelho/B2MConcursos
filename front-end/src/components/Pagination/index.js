@@ -20,16 +20,15 @@ const Pagination = ({ limit, offset, total, setOffset }) => {
     <>
       <section className="B2M-pagination">
         <ul>
-
-          {currentPage !== 1 && <li onClick={() => onPageChange(currentPage - 1)}><i className="B2M-chevron-left-icon"></i></li>}
+          {currentPage !== 1 && <li className="B2M-next-prev-item" onClick={() => onPageChange(currentPage - 1)}><i className="B2M-chevron-left-icon"></i></li>}
 
           {Array.from({ length: Math.min(MAX_ITEM, pages) })
             .map((_, index) => index + fisrt)
             .map((page) => (<>
-              {page <= pages && <li key={page} onClick={() => onPageChange(page)} className={page === currentPage && 'B2M-active'}>{page}</li>}
+              {page <= pages && <li key={page} onClick={() => onPageChange(page)} className={page !== currentPage ? 'B2M-item': 'B2M-item B2M-active'}>{page}</li>}
             </>))}
 
-          {currentPage !== pages && <li onClick={() => onPageChange(currentPage + 1)}><i className="B2M-chevron-right-icon"></i></li>}
+          {currentPage !== pages && <li className="B2M-next-prev-item" onClick={() => onPageChange(currentPage + 1)}><i className="B2M-chevron-right-icon"></i></li>}
 
         </ul>
       </section>

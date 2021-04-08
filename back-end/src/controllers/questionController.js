@@ -18,6 +18,8 @@ class QuestionController {
   // Retornar o registro das questões
   async index(req, res) {
 
+    console.log(req.body.offset, req.body.LIMIT);
+    
     var enunciated = false;
     var bank = false;
     var institution = false;
@@ -205,7 +207,7 @@ class QuestionController {
     }
 
   }
-  
+
   // retornar somente a quantidade toda de registro na tabela question
   async qtdQuestions(req, res) {
 
