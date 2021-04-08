@@ -15,6 +15,7 @@ import '../../assets/css/question.css';
 import 'antd/dist/antd.css';
 
 const LIMIT = 1;
+
 function Questions(props) {
 
     const {
@@ -24,7 +25,6 @@ function Questions(props) {
         question,
         countQuetion,
         answerQuestion,
-
         getQuestion,
         getAnswerQuestion,
 
@@ -38,7 +38,6 @@ function Questions(props) {
     const [toggle, setToggle] = useState(false); // mudar o stado do side bar
     const [visible, setVisible] = useState(false);
     const [dataFilter, setDataFilter] = useState([]);
-    const [pagerCurrent, setPagerCurrent] = useState(1);
     const [checkAnswer, setCheckAnswer] = useState([]);
     const [dataQuestion, setDataQuestion] = useState([]);
 
@@ -47,7 +46,6 @@ function Questions(props) {
         let data = dataFilter.length !== 0 ? dataFilter : false;
         getQuestion({ offset, LIMIT, data });
     }, [getQuestion, offset, dataFilter]);
-
 
     //get answer user question
     useEffect(() => {
@@ -116,32 +114,30 @@ function Questions(props) {
                             <div class="container-fluid">
                                 <div class="row">
                                     <div class="col-12">
-                                        {!loading ? (<>
-                                            {dataQuestion.length !== 0 ? (<>
-                                                <div className="row">
-                                                    <div className="col-lg-2 col-md-12 B2M-info-question-none">
-                                                        <div className="B2M-info-question">
-                                                            <FilterFixed visible={visible} onClose={() => setVisible(false)} changerFilter={(e) => { setDataFilter(e); }} />
-                                                            <a onClick={() => setVisible(true)}><i className="B2M-search-icon"></i></a>
-                                                        </div>
-                                                    </div>
-
-                                                    <div className="col-lg-10 col-md-12">
-                                                        <Pagination
-                                                            limit={LIMIT}
-                                                            total={countQuetion}
-                                                            offset={offset}
-                                                            setOffset={setOffset}
-                                                        />
+                                        {dataQuestion.length !== 0 ? (<>
+                                            <div className="row">
+                                                <div className="col-lg-2 col-md-12 B2M-info-question-none">
+                                                    <div className="B2M-info-question">
+                                                        <FilterFixed visible={visible} onClose={() => setVisible(false)} changerFilter={(e) => { setDataFilter(e); }} />
+                                                        <a onClick={() => setVisible(true)}><i className="B2M-search-icon"></i></a>
                                                     </div>
                                                 </div>
-                                                {dataQuestion.map((data, index) =>
-                                                    <div key={index} className="card">
-                                                        <Alternative data={data} idUser={idUser} />
-                                                    </div>
-                                                )}
-                                            </>) : <div className="center-Component"><Empty /></div>}
-                                        </>) : <div class="B2M-loader"></div>}
+
+                                                <div className="col-lg-10 col-md-12">
+                                                    <Pagination
+                                                        limit={LIMIT}
+                                                        total={countQuetion}
+                                                        offset={offset}
+                                                        setOffset={setOffset}
+                                                    />
+                                                </div>
+                                            </div>
+                                            {dataQuestion.map((data, index) =>
+                                                <div key={index} className="card">
+                                                    <Alternative data={data} idUser={idUser} />
+                                                </div>
+                                            )}
+                                        </>) : !loading ? <div className="center-Component"><Empty /></div> : <div class="B2M-loader"></div>}
 
                                     </div>
                                 </div>

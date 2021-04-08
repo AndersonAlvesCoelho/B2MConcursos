@@ -4,7 +4,7 @@ import { regexPDF } from "../functions/pdfParse"
 const pdf = require('pdf-parse')
 // import Office from "../models/Office";
 import Alternative from "../models/Alternative";
-import { Console } from "console";
+import { Console, count } from "console";
 import OfficeController from "./officeController";
 import dbConfig from "../config/database";
 import Bank from "../models/Bank";
@@ -19,7 +19,7 @@ class QuestionController {
   async index(req, res) {
 
     console.log(req.body.offset, req.body.LIMIT);
-    
+
     var enunciated = false;
     var bank = false;
     var institution = false;
@@ -199,63 +199,25 @@ class QuestionController {
         },
 
         order: [['id_question']]
-      })
-      console.log(data.length)
-      return res.json({ data, count: data.length });
-    } catch (error) {
-      res.status(400).json({ message: `Erro ao retornar os dados. ${error}` });
-    }
-
-  }
-
-  // retornar somente a quantidade toda de registro na tabela question
-  async qtdQuestions(req, res) {
-
-    var enunciated = false;
-    var bank = false;
-    var institution = false;
-    var year = false;
-    var office = false;
-    var dicipline = false;
-    var gabaritoComentado = false;
-
-    //pegando dados para filtragem
-    if (req.body.data) {
-      if (req.body.data.enunciated) enunciated = req.body.data.enunciated;
-      if (req.body.data.bank.length !== 0) bank = req.body.data.bank;
-      if (req.body.data.institution.length !== 0) institution = req.body.data.institution;
-      if (req.body.data.year.length !== 0) year = req.body.data.year;
-      // if (req.body.data.office.length !== 0) office = req.body.data.office;
-      // if (req.body.data.dicipline.length !== 0) dicipline = req.body.data.dicipline;
-      if (req.body.data.gabaritoComentado) gabaritoComentado = req.body.data.gabaritoComentado;
-    }
-
-    try {
-      const data = await Question.count({
-        attributes: {
-          exclude: [
-            // 'id_question',
-            'id_office',
-            'id_discipline_subject',
-            // 'id_bank',
-            // 'id_institution',
-            'id_user',
-            'createdAt',
-            // 'updated_at'
-          ]
-        },
-        where: {
-          ...(gabaritoComentado && { issue_resolution: { [Op.not]: null } }),
-          ...(enunciated && { enunciated: { [Op.like]: `%${enunciated}%` } }),
-          ...(bank && { id_bank: { [Op.in]: bank } }),
-          ...(institution && { id_institution: { [Op.in]: institution } }),
-          ...(year && { year: { [Op.in]: year } }),
-        },
+      }).then(async (data) => {
+        // retornar somente a quantidade toda de registro na tabela question
+        const count = await Question.count({
+          where: {
+            ...(gabaritoComentado && { issue_resolution: { [Op.not]: null } }),
+            ...(enunciated && { enunciated: { [Op.like]: `%${enunciated}%` } }),
+            ...(bank && { id_bank: { [Op.in]: bank } }),
+            ...(institution && { id_institution: { [Op.in]: institution } }),
+            ...(year && { year: { [Op.in]: year } }),
+          },
+        });
+        return res.json({ data, count: count });
       });
       return res.json(data);
+
     } catch (error) {
       res.status(400).json({ message: `Erro ao retornar os dados. ${error}` });
     }
+
   }
 
   async store(req, res) {

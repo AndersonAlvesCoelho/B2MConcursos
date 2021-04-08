@@ -20,7 +20,6 @@ routes.get(`${apiVersionV1}/offices`, OfficeController.index);
 routes.get(`${apiVersionV1}/institutions`, InstitutionController.index);
 routes.get(`${apiVersionV1}/subjects`, DiciplineController.index);
 routes.post(`${apiVersionV1}/questions`, QuestionController.index);
-routes.post(`${apiVersionV1}/qtdQuestions`, QuestionController.qtdQuestions);
 
 // --- ROTAS QUE NECESSITAM DE AUTENTICAÇÃO ---
 routes.post(`${apiVersionV1}/uploadQuestions`, QuestionController.upload);

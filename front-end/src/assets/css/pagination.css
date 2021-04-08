@@ -17,54 +17,6 @@ section.B2M-pagination {
   text-decoration: none;
   cursor: pointer;
 }
-/* .B2M-pagination ul li:hover {
-  background-color: var(--main-primary);
-  color: var(--white);
-  font-size: 25px;
-}
-.B2M-pagination ul li.B2M-active {
-  background-color: var(--main-primary);
-  color: var(--white);
-  font-size: 25px;
-}
-.B2M-pagination ul li.B2M-active:hover {
-  text-decoration: none;
-}
-.B2M-pagination ul li:nth-child(-n + 2) {
-  border-radius: 15px;
-  font-size: 25px;
-  color: var(--white);
-  cursor: pointer;
-} */
-/* .B2M-pagination ul li:nth-child(1) {
-  background-color: var(--secondary);
-}
-.B2M-pagination ul li:nth-child(2) {
-  background-color: var(--secondary);
-} */
-
-/* .B2M-pagination ul li:hover:nth-child(-n + 2) {
-  background-color: transparent;
-  color: var(--black);
-}
-
-.B2M-pagination ul li:nth-last-child(-n + 2) {
-  border-radius: 15px;
-  font-size: 25px;
-  color: var(--white);
-  cursor: pointer;
-}
-.B2M-pagination ul li:nth-last-child(1) {
-  background-color: var(--darkGray);
-}
-.B2M-pagination ul li:nth-last-child(2) {
-  background-color: var(--secondary);
-}
-
-.B2M-pagination ul li:hover:nth-last-child(-n + 2) {
-  background-color: transparent;
-  color: var(--black);
-} */
 
 .B2M-pagination ul .B2M-item {
   border-radius: 15px;
@@ -92,8 +44,8 @@ section.B2M-pagination {
 
 /* PAGINATION MEDIAQUERIES ----------------------------------- */
 
-@media (max-width: 1700px) {
-  .B2M-pagination ul li:nth-child(n + 3):nth-last-child(n + 3) {
+@media (max-width: 900px) {
+  .B2M-pagination ul .B2M-item {
     display: none;
   }
   .B2M-pagination {
