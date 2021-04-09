@@ -14,12 +14,12 @@ export const login = (data) => (dispatch) => {
     dispatch({ type: LOGIN_REQUEST });
     const { email, password } = data;
 
+
     return new Promise((resolve, reject) => {
         api.post('/login', { email, password })
             .then((res) => {
-                const { data } = res;
-                const { user, message } = data;
-
+                const { user, message } = res.data;
+          
                 dispatch({ type: LOGIN_SUCCESS, message: successMessage[message], user: user });
                 setUserCookie(user);
                 resolve(user);
@@ -27,11 +27,7 @@ export const login = (data) => (dispatch) => {
             .catch((error) => {
                 const { response: err } = error;
 
-
-                console.log(err)
-                console.log(data)
                 const message = err && err.data ? errorsMessage[err.data.message] : errorsMessage['all/erro'];
-                console.log(message)
                 dispatch({ type: LOGIN_FAILURE, message });
                 reject(error);
             });

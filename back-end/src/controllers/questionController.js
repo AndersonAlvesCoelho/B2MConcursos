@@ -18,8 +18,6 @@ class QuestionController {
   // Retornar o registro das questões
   async index(req, res) {
 
-    console.log(req.body.offset, req.body.LIMIT);
-
     var enunciated = false;
     var bank = false;
     var institution = false;

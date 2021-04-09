@@ -42,6 +42,9 @@ section.B2M-pagination {
   color: var(--black);
 }
 
+.B2M-pagination ul .B2M-next-prev-item i {
+  vertical-align: middle;
+}
 /* PAGINATION MEDIAQUERIES ----------------------------------- */
 
 @media (max-width: 900px) {

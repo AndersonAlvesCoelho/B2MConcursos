@@ -13,6 +13,8 @@ export const Navbar = (props) => {
         history.push('/login');
     }
 
+    console.log("getUserCookie ", getUserCookie());
+    
     return (
         <>
             <header className="header">
@@ -27,7 +29,7 @@ export const Navbar = (props) => {
                     <div className="container-fluid">
                         <div className="navbar-holder d-flex align-items-center justify-content-between">
                             <div className="navbar-header">
-                                <a href="/" className="navbar-brand d-none d-sm-inline-block">
+                                <a href="/bq" className="navbar-brand d-none d-sm-inline-block">
                                     <div className="brand-text d-none d-lg-inline-block"><span>B2M </span><strong>Concursos</strong></div>
                                     <div className="brand-text d-none d-sm-inline-block d-lg-none"><strong>B2M</strong></div>
                                 </a>
@@ -36,7 +38,7 @@ export const Navbar = (props) => {
                             </div>
                             <ul className="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
                                 <li className="nav-item">
-                                    {getUserCookie()[0].name ?
+                                    {getUserCookie() && getUserCookie()[0].name ?
                                         <a className="nav-link logout" onClick={logout}>
                                             <span className="d-none d-sm-inline">Sair</span><i className="B2M-log-in-icon"></i>
                                         </a>
@@ -62,7 +64,7 @@ export const SideNavbar = (props) => {
             <nav className={`side-navbar  ${props.toggle ? "side-navbar-active shrinked" : ""}`} >
                 {/* <nav className="side-navbar ">; */}
 
-                {getUserCookie()[0].name ? (<>
+                {getUserCookie() && getUserCookie()[0].name ? (<>
                     <div className="sidebar-header d-flex align-items-center">
                         <div className="avatar">
                             <a href="/dashboard/perfil"><img src="https://secure.gravatar.com/avatar/?s=56&d=mm&r=g" alt="avatar" className="img-fluid rounded-circle" /></a>

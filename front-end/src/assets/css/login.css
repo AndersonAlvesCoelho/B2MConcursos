@@ -224,14 +224,14 @@
 .B2M-validate-login li {
   font-size: 15px;
 }
-.B2M-validate-login  {
+.B2M-validate-login {
   list-style: none;
-  text-align:left;
+  text-align: left;
 }
 .B2M-validate-login li::before {
   content: "\2022";
   color: var(--danger);
   display: inline-block;
   margin: 5px;
-  
 }
+

@@ -12,12 +12,10 @@ const Pagination = ({ limit, offset, total, setOffset }) => {
   const pages = Math.ceil(total / limit);
   const fisrt = Math.max(currentPage - MAX_LEFT, 1)
 
-
   function onPageChange(page) {
     setOffset((page - 1) * limit);
   }
 
-  console.log("MAX_ITEMS, pages", MAX_ITEMS, pages);
   return (
     <>
       <section className="B2M-pagination">
