@@ -13,6 +13,8 @@ export const Navbar = (props) => {
         history.push('/login');
     }
 
+    console.log("getUserCookie ", getUserCookie());
+    
     return (
         <>
             <header className="header">
@@ -57,7 +59,6 @@ export const Navbar = (props) => {
 
 export const SideNavbar = (props) => {
 
-    console.log('getUserCookie() ', getUserCookie())
     return (
         <>
             <nav className={`side-navbar  ${props.toggle ? "side-navbar-active shrinked" : ""}`} >

@@ -13,9 +13,6 @@ import ok from '../../assets/img/svg/ok.svg';
 
 function Alternative(props) {
 
-
-
-
     const {
         data,
         idUser,

@@ -9,9 +9,7 @@ import * as Auth from "../../actions/auth.actions";
 import { validationRegister, validationLogin } from '../../helpers/validationForm';
 import '../../assets/css/login.css';
 
-
 function Login(props) {
-
 
     const {
         store,
@@ -30,7 +28,7 @@ function Login(props) {
         email: '',
         password: '',
     })
-    console.log('messageLogin', messageLogin)
+
     const [classActive, setClassActive] = useState(false);
     const [validation, setValidation] = useState([]);
     const [nameAux, setNameAux] = useState();
@@ -46,9 +44,11 @@ function Login(props) {
     //REGISTRAR USUÁRIO
     function handleSubmitStore(event) {
         event.preventDefault();
-        setValidation(validationRegister(requestAccess));
 
-        if (validation.success) {
+        const result = validationRegister(requestAccess);
+        setValidation(result);
+
+        if (validationRegister(requestAccess).success) {
             store(requestAccess);
             setNameAux(requestAccess.name);
         };
@@ -59,13 +59,14 @@ function Login(props) {
         event.preventDefault();
         setValidation(validationLogin(requestAccess));
 
-        if (validation.success) {
+        if (validationLogin(requestAccess).success) {
             login(requestAccess).then(() => {
                 history.push('/');
             });
         }
     }
 
+    // LIMPANOD A BUNDA 
     function clearInput() {
         setShow(true);
         requestAccess.name = '';
@@ -84,8 +85,6 @@ function Login(props) {
         };
     }, [messageStore]);
 
-    console.log('messageStore - ', messageStore);
-    console.log('validation - ', validation);
 
     return (
         <>
