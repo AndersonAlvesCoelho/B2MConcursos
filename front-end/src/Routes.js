@@ -21,7 +21,7 @@ const Routes = (props) => (
         <BrowserRouter>
             <Switch>
                 {/* ROTAS SEM AUTENTICAÇÃO */}
-                <Route path="/bq" exact component={Home} />
+                <Route path="/" exact component={Home} />
                 <Route path="/questoes" exact component={Questions} />
                 <Route path="/login" exact component={Login} />
 

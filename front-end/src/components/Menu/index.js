@@ -29,7 +29,7 @@ export const Navbar = (props) => {
                     <div className="container-fluid">
                         <div className="navbar-holder d-flex align-items-center justify-content-between">
                             <div className="navbar-header">
-                                <a href="/bq" className="navbar-brand d-none d-sm-inline-block">
+                                <a href="/" className="navbar-brand d-none d-sm-inline-block">
                                     <div className="brand-text d-none d-lg-inline-block"><span>B2M </span><strong>Concursos</strong></div>
                                     <div className="brand-text d-none d-sm-inline-block d-lg-none"><strong>B2M</strong></div>
                                 </a>
