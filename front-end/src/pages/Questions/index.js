@@ -119,7 +119,9 @@ function Questions(props) {
                                                 <div className="col-lg-2 col-md-12 B2M-info-question-none">
                                                     <div className="B2M-info-question">
                                                         <FilterFixed visible={visible} onClose={() => setVisible(false)} changerFilter={(e) => { setDataFilter(e); }} />
-                                                        <a onClick={() => setVisible(true)}><i className="B2M-search-icon"></i></a>
+                                                        <button onClick={() => setVisible(true)}>
+                                                            <span>Filtrar questões </span>
+                                                        </button>
                                                     </div>
                                                 </div>
 

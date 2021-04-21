@@ -18,9 +18,11 @@ export const store = (formData) => (dispatch) => {
             const message = successMessage[data];
             dispatch({ type: REGISTER_USER_SUCCESS, message });
             // dispatch(show('danger', 'ERRO', message, 5000));
+            console.log(res);
         })
         .catch((error) => {
             const { response: err } = error;
+            console.log(error);
             const message = err && err.data ? errorsMessage[err.data] : 'Erro desconhecido';
             // dispatch(show('danger', 'ERRO', message, 5000));
             dispatch({ type: REGISTER_USER_FAILURE, message });

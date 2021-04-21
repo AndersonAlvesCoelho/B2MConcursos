@@ -13,8 +13,6 @@ export const Navbar = (props) => {
         history.push('/login');
     }
 
-    console.log("getUserCookie ", getUserCookie());
-    
     return (
         <>
             <header className="header">
@@ -86,7 +84,6 @@ export const SideNavbar = (props) => {
                             <a href="/cadastrar-questoes"> <i className="B2M-play-list-add-icon"></i>Registrar questão </a>
                         </li>
                     }
-                    <li><a href="https://b2mconcursos.com.br/"> <i className="B2M-shopping-cart"></i>Produtos </a></li>
                 </ul>
             </nav>
 

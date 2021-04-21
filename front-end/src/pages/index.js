@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import { SideNavbar, Navbar } from '../components/Menu/';
+import { getUserCookie } from '../services/session';
 import Footer from '../components/Footer';
 
 import '../assets/css/home.css';
@@ -26,10 +27,11 @@ function Home() {
                                 <small>CONCURSO</small>
                                 <h1>Seja aprovado e mude de vida</h1>
                                 <p>Prepare-se com a ferramenta preferida dos aprovados nos concursos e exames mais concorridos do País</p>
-                                <button className="B2M-btn-primary"><a href="/login">CRIE SUA CONTA</a></button>
+                                {!(getUserCookie() && getUserCookie()[0].name) &&
+                                    <button className="B2M-btn-primary"><a href="/login">CRIE SUA CONTA</a></button>
+                                }
                             </div>
                         </div>
-
                         <Footer />
                     </div>
                 </div>

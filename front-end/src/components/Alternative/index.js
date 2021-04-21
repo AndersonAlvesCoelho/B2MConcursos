@@ -17,7 +17,6 @@ function Alternative(props) {
         data,
         idUser,
         // answerUser,
-
         saveUserAnswersQuestion,
         saveComment,
         loading,
@@ -30,6 +29,7 @@ function Alternative(props) {
     // estados auxiliar de escolha de alternativa
     const [checkAnswer, setCheckAnswer] = useState([]);
     const [option, setOption] = useState('');
+    const [answerLatters, setAnswerLatters] = useState('');
 
     // estado auxiliar do registre do comnetario
     const [current, setCurrent] = useState();
@@ -79,6 +79,16 @@ function Alternative(props) {
     useEffect(() => {
         keyAnswer(data.answer, 1);
         setDataComment(data.comment);
+
+        let letters = ['A', 'B', 'C', 'D'];
+
+        if (data.alternative) {
+            data.alternative.map((e, index) => {
+                if (e.answer) {
+                    setAnswerLatters(letters[index]);
+                }
+            })
+        }
     }, [data])
 
     // get new comment
@@ -124,7 +134,7 @@ function Alternative(props) {
             <div className="B2M-card-header">
                 <div className="B2M-card-title">
                     <img src={logo} atl="LOGO" />
-                    <p>{data.bank.name_bank} - {data.year} - {data.institution.name_institution} - {data.discipline_subject.dicipline.name_dicipline}</p>
+                    <p>{data.bank.name_bank} - {data.year} - {data.institution.name_institution} - {data.office.office_niv_1.name_office}</p>
                 </div>
                 <span>Nº {data.id_question}</span>
 
@@ -138,13 +148,12 @@ function Alternative(props) {
                 <div className="B2M-alternative" >
                     {data.alternative.map((e, x) => (
                         <label className="B2M-option-alternative" key={x} onChange={(e) => setOption(e.target.value)}>
-                            {checkAnswer.length !== 0 && !(checkAnswer.answer === x) ? parse(e.name_alternative) : (<b>{parse(e.name_alternative)}</b>) }
+                            {checkAnswer.length !== 0 && !(checkAnswer.answer === x) ? parse(e.name_alternative) : (<b>{parse(e.name_alternative)}</b>)}
                             {checkAnswer.length !== 0 && checkAnswer.answer === x ?
                                 <input type="radio" value={x} name="alternative" checked />
                                 :
                                 <input type="radio" value={x} name="alternative" />
                             }
-
                             <span className="B2M-checkmark"></span>
                         </label>
                     ))}
@@ -162,6 +171,13 @@ function Alternative(props) {
                                 <img src={erro} alt="erro" />
                                 <span>Você errou!</span>
                             </> : null}
+                        <br />
+
+                        {(checkAnswer.length !== 0) && !(checkAnswer.check) &&
+                            <>
+                                <p>A opção correta é:  <span>{answerLatters}</span></p>
+                            </>
+                        }
                     </div>
 
                     <button type="button" disabled={!option} onClick={() => keyAnswer(option, 0)}>Visualizar Resposta</button>

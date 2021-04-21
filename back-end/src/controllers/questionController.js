@@ -5,76 +5,45 @@ const pdf = require('pdf-parse')
 // import Office from "../models/Office";
 import Alternative from "../models/Alternative";
 import { Console, count } from "console";
-import OfficeController from "./officeController";
 import dbConfig from "../config/database";
 import Bank from "../models/Bank";
+import officeController from "./officeController";
 const fs = require('fs');
 const pdfFile = fs.readFileSync('src/PDF/TJ MG.pdf');
 const { QueryTypes } = require('sequelize');
 var Sequelize = require('sequelize');
 var sequelize = new Sequelize(dbConfig["development"]);
+
 class QuestionController {
 
   // Retornar o registro das questões
   async index(req, res) {
 
-    var enunciated = false;
     var bank = false;
     var institution = false;
     var year = false;
     var office = false;
     var office01 = false;
-    var office02 = false;
-    var office03 = false;
-    var office04 = false;
-    var dicipline = false;
-    var dicipline00 = false;
-    var dicipline01 = false;
-    var dicipline02 = false;
-    var dicipline03 = false;
-    var gabaritoComentado = false;
-    var comentarios = false;
 
     //pegando dados para filtragem
     if (req.body.data) {
-      if (req.body.data.enunciated) enunciated = req.body.data.enunciated;
       if (req.body.data.bank.length !== 0) bank = req.body.data.bank;
       if (req.body.data.institution.length !== 0) institution = req.body.data.institution;
       if (req.body.data.year.length !== 0) year = req.body.data.year;
       if (req.body.data.office.length !== 0) office = req.body.data.office;
-      if (req.body.data.dicipline.length !== 0) dicipline = req.body.data.dicipline;
-      if (req.body.data.gabaritoComentado) gabaritoComentado = req.body.data.gabaritoComentado;
-      if (req.body.data.comentarios) comentarios = req.body.data.comentarios;
     }
-
-    if (office) {
-      if (office[0].length !== 0) office01 = office[0];
-      if (office[1].length !== 0) office02 = office[1];
-      if (office[2].length !== 0) office03 = office[2];
-      if (office[3].length !== 0) office04 = office[3];
-    }
-
-    if (dicipline) {
-      if (dicipline[0].length !== 0) dicipline00 = dicipline[0];
-      if (dicipline[1].length !== 0) dicipline01 = dicipline[1];
-      if (dicipline[2].length !== 0) dicipline02 = dicipline[2];
-      if (dicipline[3].length !== 0) dicipline03 = dicipline[3];
-    }
-
+    if (office) { if (office[0].length !== 0) office01 = office[0]; }
+    
     try {
-
 
       const data = await Question.findAll({
         attributes: {
           exclude: [
-            // 'id_question',
             'id_office',
             'id_discipline_subject',
-            // 'id_bank',
-            // 'id_institution',
             'id_user',
             'createdAt',
-            // 'updated_at'
+            'updatedAt',
           ]
         },
 
@@ -86,81 +55,32 @@ class QuestionController {
             * conforme os ids que contem na tabela office
             */
             association: "office",
-            // attributes: { exclude: ['id_office', 'createdAt', 'updated_at'] },
-            // where: {
-            //   //   // ...(office01 && { id_office_niv_1: { [Op.in]: office01 } }),
-            //   //   //   // ...(office02 && { id_office_niv_2: { [Op.in]: office02 } }),
-            //   //   //   // ...(office03 && { id_office_niv_3: { [Op.in]: office03 } }),
-            //   //   //   // ...(office04 && { id_office_niv_4: { [Op.in]: office04 } }),
+            attributes: { exclude: ['createdAt', 'updatedAt'] },
+            where: {
+              ...(office01 && { id_office: { [Op.in]: office01 } }),
+            },
 
-            // id_office: 1
-            // },
-            include: [
-              {
-                association: "office_niv_1",
-                attributes: { exclude: ['id_office_niv_1', 'createdAt', 'updated_at'] },
-              },
-              {
-                association: "office_niv_2",
-                attributes: { exclude: ['id_office_niv_1', 'id_office_niv_2', 'createdAt', 'updated_at'] },
-              },
-              {
-                association: "office_niv_3",
-                attributes: { exclude: ['id_office_niv_2', 'id_office_niv_3', 'createdAt', 'updated_at'] },
-              },
-              {
-                association: "office_niv_4",
-                attributes: { exclude: ['id_office_niv_3', 'id_office_niv_4', 'createdAt', 'updated_at'] },
-              }
-            ],
-          },
-          {
-            // A mesma coisa que acontece para os dados office aocntece para os dados de subject
-            association: "discipline_subject",
-            attributes: { exclude: ['id_subject_niv_4', 'id_subject_niv_5', 'id_subject_niv_6', 'id_subject_niv_7', 'createdAt', 'updated_at'] },
+            include: {
+              association: "office_niv_1",
+              attributes: { exclude: ['createdAt', 'updatedAt'] },
 
-            // where: {
-            // ...(dicipline00 && { id_dicipline: { [Op.in]: dicipline00 } }),
-            // ...(dicipline01 && { id_subject_niv_1: { [Op.in]: dicipline01 } }),
-            // ...(dicipline02 && { id_subject_niv_2: { [Op.in]: dicipline02 } }),
-            // ...(dicipline03 && { id_subject_niv_3: { [Op.in]: dicipline03 } }),
-            // },
-
-            include: [
-              {
-                association: "dicipline",
-                attributes: { exclude: ['id_dicipline', 'createdAt', 'updated_at'] },
-              },
-              {
-                association: "subject_niv_1",
-                attributes: { exclude: ['id_dicipline', 'id_subject_niv_1', 'createdAt', 'updated_at'] },
-              },
-              {
-                association: "subject_niv_2",
-                attributes: { exclude: ['id_subject_niv_1', 'id_subject_niv_2', 'createdAt', 'updated_at'] },
-              },
-              {
-                association: "subject_niv_3",
-                attributes: { exclude: ['id_subject_niv_2', 'id_subject_niv_3', 'createdAt', 'updated_at'] },
-              },
-
-            ],
+            },
           },
           {
             association: "bank",
-            attributes: { exclude: ['id_bank', 'createdAt', 'updated_at'] },
+            attributes: { exclude: ['id_bank', 'createdAt', 'updatedAt'] },
           },
           {
             association: "institution",
-            attributes: { exclude: ['id_institution', 'createdAt', 'updated_at'] },
+            attributes: { exclude: ['id_institution', 'createdAt', 'updatedAt'] },
           },
-          {
-            association: "user",
-            attributes: { exclude: ['id_user', 'password', 'nivel', 'createdAt', 'updated_at'] },
-          },
+          // {
+          //   association: "user",
+          //   attributes: { exclude: ['id_user', 'password', 'nivel', 'createdAt', 'updatedAt'] },
+          // },
           {
             association: "alternative",
-            attributes: { exclude: ['id_alternative', 'id_question', 'createdAt', 'updated_at'] },
+            attributes: { exclude: ['id_alternative', 'id_question', 'createdAt', 'updatedAt'] },
           },
           {
             association: "comment",
@@ -172,13 +92,13 @@ class QuestionController {
                 include: [
                   {
                     association: "user",
-                    attributes: { exclude: ['id_user', 'password', 'email', 'nivel', 'createdAt', 'updated_at'] },
+                    attributes: { exclude: ['id_user', 'password', 'email', 'nivel', 'createdAt', 'updatedAt'] },
                   },
                 ],
               },
               {
                 association: "user",
-                attributes: { exclude: ['id_user', 'password', 'email', 'nivel', 'createdAt', 'updated_at'] },
+                attributes: { exclude: ['id_user', 'password', 'email', 'nivel', 'createdAt', 'updatedAt'] },
               },
             ],
           },
@@ -187,22 +107,23 @@ class QuestionController {
         offset: req.body.offset, limit: req.body.LIMIT,
 
         where: {
-          // id_question: { [Op.in]: [1, 3] },
-          ...(enunciated && { enunciated: { [Op.like]: `%${enunciated}%` } }),
           ...(bank && { id_bank: { [Op.in]: bank } }),
           ...(institution && { id_institution: { [Op.in]: institution } }),
           ...(year && { year: { [Op.in]: year } }),
-          ...(gabaritoComentado && { issue_resolution: { [Op.not]: null } }),
-          // ...(comentarios && { comment: { [Op.not]: null } }),
         },
 
         order: [['id_question']]
       }).then(async (data) => {
         // retornar somente a quantidade toda de registro na tabela question
         const count = await Question.count({
+
+          include: [
+            {
+              association: "office",
+              where: { ...(office01 && { id_office: { [Op.in]: office01 } }), },
+            },
+          ],
           where: {
-            ...(gabaritoComentado && { issue_resolution: { [Op.not]: null } }),
-            ...(enunciated && { enunciated: { [Op.like]: `%${enunciated}%` } }),
             ...(bank && { id_bank: { [Op.in]: bank } }),
             ...(institution && { id_institution: { [Op.in]: institution } }),
             ...(year && { year: { [Op.in]: year } }),

@@ -38,7 +38,6 @@ function FilterFixed(props) {
         loadingBank,
         loadingInstitution,
         loadingOffice,
-        loadingDicipline,
 
         // estado data actions
         bank,
@@ -53,15 +52,10 @@ function FilterFixed(props) {
 
 
     // set  valores selecionados nos campos
-    const [questionSearch, setQuestionSearch] = useState('');
     const [bankValue, setBankValue] = useState([]);
     const [institutionValue, setInstitutionValue] = useState([]);
     const [officeValue, setOfficeValue] = useState([]);
     const [yearValue, setYearValue] = useState([]);
-    const [diciplineValue, setDiciplineValue] = useState([]);
-
-    //set controllers 
-    const [checkedList, setCheckedList] = useState();
 
     // get action return dados filter
     useEffect(() => {
@@ -78,21 +72,6 @@ function FilterFixed(props) {
         const idInstitution = formataInstitution(values.institution, institution);
         const year = formataYear(values.year, yearData);
         const idOffice = formataOffice(values.office, office);
-        const idDicipline = formataDicipline(values.dicipline, dicipline);
-        // var gabaritoComentado = false;
-        // var comentarios = false;
-
-        // checkedList.map((list) => {
-        //     switch (list) {
-        //         case 'Gabarito comentado':
-        //             gabaritoComentado = true;
-        //             break;
-        //         case 'Comentarios':
-        //             comentarios = true;
-        //             break;
-        //         default:
-        //     }
-        // })
 
         let data = {
             enunciated: values.enunciated,
@@ -100,11 +79,10 @@ function FilterFixed(props) {
             institution: idInstitution,
             office: idOffice,
             year: year,
-            dicipline: idDicipline,
-            // gabaritoComentado,
-            // comentarios
-        };
+        };  
 
+        console.log(data);
+        
 
         onClose();
         return changerFilter(data);
@@ -129,19 +107,6 @@ function FilterFixed(props) {
             >
                 <Form layout="vertical" requiredMark={false} onFinish={filter} >
                     <Row>
-                        <Col md="12">
-                            <Form.Item
-                                name="enunciated"
-                                label="Pesquisar por enunciado"
-                            >
-
-                                <Input
-                                    placeholder="Pesquisar..."
-                                    onChange={(value) => { setQuestionSearch(value.nativeEvent.data ? true : false) }}
-                                    allowClear
-                                />
-                            </Form.Item>
-                        </Col>
 
                         <Col md="12">
                             <Form.Item
@@ -173,7 +138,6 @@ function FilterFixed(props) {
                                 <TreeSelect
                                     treeData={institution}
                                     value={institutionValue}
-
                                     onChange={(value) => { setInstitutionValue(value) }}
                                     treeCheckable={true}
                                     placeholder="Orgão..."
@@ -233,59 +197,27 @@ function FilterFixed(props) {
                                 />
                             </Form.Item>
                         </Col>
-
-                        <Col md="12">
-                            <Form.Item
-                                name="dicipline"
-                                label="Matéria & Assunto"
-                            >
-                                <TreeSelect
-                                    treeData={dicipline}
-                                    value={diciplineValue}
-
-                                    onChange={(value) => { setDiciplineValue(value) }}
-                                    treeCheckable={true}
-                                    placeholder="Matéria & Assunto..."
-                                    className="filter-field"
-                                    showCheckedStrategy={SHOW_PARENT}
-                                    maxTagCount='responsive'
-                                    showSearch
-                                    treeNodeFilterProp='title'
-                                    allowClear
-                                    loading={loadingDicipline}
-                                />
-                            </Form.Item>
-                        </Col>
                     </Row>
 
                     <Row >
-
-                        {/* <Col sm={12}>
-                            <span className="mr-1">Questões com:</span>
-                            <span> <CheckboxGroup options={plainOptions} value={checkedList} onChange={(list) => setCheckedList(list)} /></span>
-                        </Col> */}
 
                         <Col sm={12}>
                             <hr className="filter-line" />
 
                             <div style={{ textAlign: 'right', }}>
                                 <Button className="B2M-btn mr-2" onClick={clearFilter}
-                                    disabled={questionSearch ||
-                                        bankValue.length !== 0 ||
+                                    disabled={bankValue.length !== 0 ||
                                         institutionValue.length !== 0 ||
                                         officeValue.length !== 0 ||
                                         yearValue.length !== 0 ||
-                                        diciplineValue.length !== 0 ||
                                         plainOptions.length !== 0
                                         ? false : true}
                                 > <FaUndo className="mr-2" /> Limpar</Button>
                                 <Button className="B2M-btn B2M-btn-winter" type="primary" htmlType="submit"
-                                    disabled={questionSearch ||
-                                        bankValue.length !== 0 ||
+                                    disabled={bankValue.length !== 0 ||
                                         institutionValue.length !== 0 ||
                                         officeValue.length !== 0 ||
                                         yearValue.length !== 0 ||
-                                        diciplineValue.length !== 0 ||
                                         plainOptions.length !== 0
                                         ? false : true}
                                 > <FaFilter className="mr-2" />Filtrar</Button>
@@ -309,7 +241,6 @@ const mapStateToProps = (state) => ({
     loadingOffice: state.office.loading,
     office: state.office.office,
 
-    loadingDicipline: state.dicipline.loading,
     dicipline: state.dicipline.dicipline,
 
 });
