@@ -85,6 +85,7 @@ function Login(props) {
         };
     }, [messageStore]);
 
+    console.log('messageStore ', messageStore);
 
     return (
         <>
@@ -117,7 +118,7 @@ function Login(props) {
                                     {validation.erroName && (<li>{validation.erroName}</li>)}
                                     {validation.erroEmail && (<li>{validation.erroEmail}</li>)}
                                     {validation.erroPassowrd && (<li>{validation.erroPassowrd}</li>)}
-                                    {messageStore.status === 401 && (<li>{messageStore.message}</li>)}
+                                    {/* {messageStore.status === 401 && (<li>{messageStore.message}</li>)} */}
                                 </>)}
                             </ul>
                             <input disabled={loadingStore} type="text" id="name" name="name" placeholder="Nome" onChange={handleChange} />

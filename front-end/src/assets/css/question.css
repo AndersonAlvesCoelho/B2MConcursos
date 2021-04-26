@@ -39,9 +39,9 @@ section.B2M-questions {
   width: 50px;
   margin-right: 10px;
 }
-.B2M-card-header .B2M-card-info ul{
+.B2M-card-header .B2M-card-info ul {
   display: flex;
-  justify-content:space-evenly;
+  justify-content: space-evenly;
 }
 /* CARD BODY ----------------------------------- */
 .B2M-card-body {
@@ -52,7 +52,6 @@ section.B2M-questions {
 
 .B2M-card-body p {
   font-size: 25px;
-  font-weight: bolder;
 }
 
 .B2M-alternative {
@@ -129,6 +128,9 @@ section.B2M-questions {
   display: inline-block;
   padding: 5px;
   height: 50px;
+}
+.B2M-answer-msg p {
+  font-size: 20px;
 }
 .B2M-answer-msg button:disabled,
 button[disabled] {
@@ -247,6 +249,23 @@ button[disabled] {
 .B2M-comment-first {
   padding: 20px;
 }
+
+.B2M-info-question button {
+  background-color: var(--main-primary);
+  border: none;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  font-size: 16px;
+  margin: 4px 2px;
+  opacity: 0.6;
+  transition: 0.3s;
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.B2M-info-question button:hover {opacity: 1}
 
 /* QUESTION MEDIAQUERIES ----------------------------------- */
 @media (max-width: 992px) {

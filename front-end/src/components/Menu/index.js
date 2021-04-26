@@ -13,8 +13,6 @@ export const Navbar = (props) => {
         history.push('/login');
     }
 
-    console.log("getUserCookie ", getUserCookie());
-    
     return (
         <>
             <header className="header">
@@ -61,7 +59,7 @@ export const SideNavbar = (props) => {
 
     return (
         <>
-            <nav className={`side-navbar  ${props.toggle ? "side-navbar-active shrinked" : ""}`} >
+            <nav className={props.toggle ? "side-navbar  side-navbar-active shrinked" : "side-navbar  "} >
                 {/* <nav className="side-navbar ">; */}
 
                 {getUserCookie() && getUserCookie()[0].name ? (<>
@@ -79,14 +77,13 @@ export const SideNavbar = (props) => {
 
                 {/* <span className="heading">Principal</span> */}
                 <ul className="list-unstyled">
-                    <li className={props.type === "Home" && "active"}><a href="/"> <i className="B2M-menu-grid-r-icon"></i>Home </a></li>
-                    <li className={props.type === "Questions" && "active"}><a href="/questoes"> <i className="B2M-file-document-icon"></i>Questões </a></li>
+                    <li className={props.type === "Home" ? "active" : ""}><a href="/"> <i className="B2M-menu-grid-r-icon"></i>Home </a></li>
+                    <li className={props.type === "Questions" ? "active" : ""}><a href="/questoes"> <i className="B2M-file-document-icon"></i>Questões </a></li>
                     {getUserCookie() && getUserCookie()[0].nivel === 2 &&
-                        <li className={props.type === "RegisterQuestions" && "active"}>
+                        <li className={props.type === "RegisterQuestions" ? "active" : ""}>
                             <a href="/cadastrar-questoes"> <i className="B2M-play-list-add-icon"></i>Registrar questão </a>
                         </li>
                     }
-                    <li><a href="https://b2mconcursos.com.br/"> <i className="B2M-shopping-cart"></i>Produtos </a></li>
                 </ul>
             </nav>
 

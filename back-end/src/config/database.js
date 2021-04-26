@@ -13,6 +13,7 @@ module.exports = {
   //   },
   //   omitNull: true,
   // },
+  
   // # CONEXÃO INTERNA B.D
   development: {
     dialect: "postgres",

@@ -237,10 +237,10 @@ const RegisterQuestions = (props) => {
                             <h2>Registro de questões</h2>
                         </header>
                         {/* Breadcrumb */}
-                        <div class="breadcrumb-holder container-fluid B2M-bg">
-                            <ul class="B2M-breadcrumb">
-                                <li class="breadcrumb-item"><a href="/">Home</a></li>
-                                <li class="breadcrumb-item active B2M-text-color-primary">Registro de questões</li>
+                        <div className="breadcrumb-holder container-fluid B2M-bg">
+                            <ul className="B2M-breadcrumb">
+                                <li className="breadcrumb-item"><a href="/">Home</a></li>
+                                <li className="breadcrumb-item active B2M-text-color-primary">Registro de questões</li>
                             </ul>
                         </div>
 

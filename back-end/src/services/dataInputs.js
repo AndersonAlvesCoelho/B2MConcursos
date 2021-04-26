@@ -103,6 +103,9 @@ export const yearData = [
     { title: '2016', key: '0-15', value: '0-15' },
     { title: '2017', key: '0-16', value: '0-16' },
     { title: '2018', key: '0-17', value: '0-17' },
+    { title: '2019', key: '0-18', value: '0-18' },
+    { title: '2020', key: '0-19', value: '0-19' },
+    { title: '2021', key: '0-20', value: '0-20' },
 ]
 
 export const diciplineData = [

@@ -17,7 +17,6 @@ function Alternative(props) {
         data,
         idUser,
         // answerUser,
-
         saveUserAnswersQuestion,
         saveComment,
         loading,
@@ -30,6 +29,7 @@ function Alternative(props) {
     // estados auxiliar de escolha de alternativa
     const [checkAnswer, setCheckAnswer] = useState([]);
     const [option, setOption] = useState('');
+    const [answerLatters, setAnswerLatters] = useState('');
 
     // estado auxiliar do registre do comnetario
     const [current, setCurrent] = useState();
@@ -79,6 +79,16 @@ function Alternative(props) {
     useEffect(() => {
         keyAnswer(data.answer, 1);
         setDataComment(data.comment);
+
+        let letters = ['A', 'B', 'C', 'D'];
+
+        if (data.alternative) {
+            data.alternative.map((e, index) => {
+                if (e.answer) {
+                    setAnswerLatters(letters[index]);
+                }
+            })
+        }
     }, [data])
 
     // get new comment
@@ -124,27 +134,34 @@ function Alternative(props) {
             <div className="B2M-card-header">
                 <div className="B2M-card-title">
                     <img src={logo} atl="LOGO" />
-                    <p>{data.bank.name_bank} - {data.year} - {data.institution.name_institution} - {data.discipline_subject.dicipline.name_dicipline}</p>
+                    <p>{data.bank.name_bank} - {data.year} - {data.institution.name_institution} - {data.office.office_niv_1.name_office}</p>
                 </div>
                 <span>Nº {data.id_question}</span>
 
             </div>
 
             <div className="B2M-card-body">
-                <p>{parse(data.enunciated)}</p>
+
+                <div dangerouslySetInnerHTML={{ __html: data.enunciated }} />
+                {/* {parse(data.enunciated)} */}
 
                 {/* OPTION  */}
-
                 <div className="B2M-alternative" >
                     {data.alternative.map((e, x) => (
                         <label className="B2M-option-alternative" key={x} onChange={(e) => setOption(e.target.value)}>
-                            {checkAnswer.length !== 0 && !(checkAnswer.answer === x) ? parse(e.name_alternative) : (<b>{parse(e.name_alternative)}</b>) }
+                            {checkAnswer?.answer === x ?
+                                checkAnswer?.check ?
+                                    (<p style={{ backgroundColor: '#28a745' }}>{parse(e.name_alternative)}</p>)
+                                    : (<b>{parse(e.name_alternative)}</b>)
+                                : (<p>{parse(e.name_alternative)}</p>)
+                            }
+
+
                             {checkAnswer.length !== 0 && checkAnswer.answer === x ?
                                 <input type="radio" value={x} name="alternative" checked />
                                 :
                                 <input type="radio" value={x} name="alternative" />
                             }
-
                             <span className="B2M-checkmark"></span>
                         </label>
                     ))}
@@ -162,6 +179,13 @@ function Alternative(props) {
                                 <img src={erro} alt="erro" />
                                 <span>Você errou!</span>
                             </> : null}
+                        <br />
+
+                        {(checkAnswer.length !== 0) && !(checkAnswer.check) &&
+                            <>
+                                <p>A opção correta é:  <span>{answerLatters}</span></p>
+                            </>
+                        }
                     </div>
 
                     <button type="button" disabled={!option} onClick={() => keyAnswer(option, 0)}>Visualizar Resposta</button>
@@ -177,19 +201,19 @@ function Alternative(props) {
                 {/* CONETARIO DO PROFESSOR */}
                 {current === "teacher" && <>
                     {data.issue_resolution ? (<>
-                        <div class="B2M-comment-teacher">
-                            <div class="feed d-flex justify-content-between">
-                                <div class="feed-body d-flex justify-content-between">
-                                    <a href="#" class="feed-profile"><img src="https://secure.gravatar.com/avatar/?s=56&d=mm&r=g" alt="avatar" class="img-fluid rounded-circle" /></a>
-                                    <div class="B2M-comment-content">
+                        <div className="B2M-comment-teacher">
+                            <div className="feed d-flex justify-content-between">
+                                <div className="feed-body d-flex justify-content-between">
+                                    <a href="#" className="feed-profile"><img src="https://secure.gravatar.com/avatar/?s=56&d=mm&r=g" alt="avatar" className="img-fluid rounded-circle" /></a>
+                                    <div className="B2M-comment-content">
                                         <h5>{data.user.name}</h5>
-                                        <div class="full-date">
+                                        <div className="full-date">
                                             <small>{dataFormatada(data.updatedAt)}</small>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="B2M-comment">
+                            <div className="B2M-comment">
                                 <small>{parse(data.issue_resolution)}</small>
                             </div>
                         </div>
@@ -200,19 +224,19 @@ function Alternative(props) {
                 {current === "comment" && (<>
                     {/* COMENTARIO PRINCIPAL */}
                     {dataComment.length !== 0 ? dataComment.map((commit, x) => <>
-                        <div class="B2M-comment-user">
-                            <div class="feed d-flex justify-content-between" key={x}>
-                                <div class="feed-body d-flex justify-content-between">
-                                    <a href="#" class="feed-profile"><img src="https://secure.gravatar.com/avatar/?s=56&d=mm&r=g" alt="avatar" class="img-fluid rounded-circle" /></a>
-                                    <div class="B2M-comment-content">
+                        <div className="B2M-comment-user">
+                            <div className="feed d-flex justify-content-between" key={x}>
+                                <div className="feed-body d-flex justify-content-between">
+                                    <a href="#" className="feed-profile"><img src="https://secure.gravatar.com/avatar/?s=56&d=mm&r=g" alt="avatar" className="img-fluid rounded-circle" /></a>
+                                    <div className="B2M-comment-content">
                                         <h5>{commit.user.name}</h5>
-                                        <div class="full-date">
+                                        <div className="full-date">
                                             <small>{dataFormatada(commit.updatedAt)}</small>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="B2M-comment-answer-btn text-right">
+                                <div className="B2M-comment-answer-btn text-right">
                                     <a
                                         href="/questoes#comment"
                                         onClick={() => {
@@ -225,26 +249,26 @@ function Alternative(props) {
                                 </div>
                             </div>
 
-                            <div class="B2M-comment">
+                            <div className="B2M-comment">
                                 <small>{parse(commit.comment)}</small>
                             </div>
                             <hr />
                             {/* RESPOSTA DO COMENTARIO PRINCIPAL */}
                             {commit.comment_answer.map((ans, y) => <>
-                                <div class="B2M-comment-user-answer" key={y}>
-                                    <div class="feed d-flex justify-content-between">
-                                        <div class="feed-body d-flex justify-content-between">
-                                            <a href="#" class="feed-profile"><img src="https://secure.gravatar.com/avatar/?s=56&d=mm&r=g" alt="avatar" class="img-fluid rounded-circle" /></a>
-                                            <div class="B2M-comment-content">
+                                <div className="B2M-comment-user-answer" key={y}>
+                                    <div className="feed d-flex justify-content-between">
+                                        <div className="feed-body d-flex justify-content-between">
+                                            <a href="#" className="feed-profile"><img src="https://secure.gravatar.com/avatar/?s=56&d=mm&r=g" alt="avatar" className="img-fluid rounded-circle" /></a>
+                                            <div className="B2M-comment-content">
                                                 <h5>{ans.user.name}</h5>
-                                                <div class="full-date">
+                                                <div className="full-date">
                                                     <small>{dataFormatada(ans.updatedAt)}</small>
                                                 </div>
                                             </div>
                                         </div>
 
                                     </div>
-                                    <div class="B2M-comment">
+                                    <div className="B2M-comment">
                                         <small>{parse(ans.answer)}</small>
                                     </div>
                                     <hr />
@@ -270,7 +294,7 @@ function Alternative(props) {
                                         >
                                             <i className="B2M-comment-icon mr-2"></i>Enviar</button>
                                     </div>
-                                </>) : <div class="B2M-loader mb-5"></div>}
+                                </>) : <div className="B2M-loader mb-5"></div>}
                             </>) : null}
                         </div>
                     </>) : null}
@@ -292,7 +316,7 @@ function Alternative(props) {
                             >
                                 <i className="B2M-comment-icon mr-2"></i>Enviar</button>
                         </div>
-                    </>) : <div class="B2M-loader mb-5"></div>}
+                    </>) : <div className="B2M-loader mb-5"></div>}
 
                 </>)}
             </>)}

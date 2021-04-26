@@ -1,4 +1,7 @@
+import { Op } from "sequelize";
+
 import OfficeNiv01 from "../models/office/OfficeNiv01";
+import Question from "../models/Question";
 
 class OfficeController {
     async index(req, res) {
