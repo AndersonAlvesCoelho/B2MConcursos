@@ -31,7 +31,7 @@ class UserController {
           if (result) {
             return res.status(201).send('auth/create-user');
           } else {
-            return res.status(400).send('auth/erro-register-user')
+            return res.status(401).send('auth/erro-register-user')
           }
         })
 
