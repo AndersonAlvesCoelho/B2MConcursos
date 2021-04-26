@@ -88,7 +88,7 @@ function Perfil(props) {
                                                             <div className="col-4"><strong className="B2M-client-info-acts">0</strong><br /><small>questões errdas</small></div>
                                                         </div>
                                                     </>}
-                                                </>) : <div class="B2M-loader mb-5"></div>}
+                                                </>) : <div className="B2M-loader mb-5"></div>}
                                             </div>
                                         </div>
                                     </div>

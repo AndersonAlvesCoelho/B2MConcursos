@@ -103,28 +103,28 @@ function Questions(props) {
                             <h2>Questões</h2>
                         </header>
                         {/* Breadcrumb */}
-                        <div class="breadcrumb-holder container-fluid B2M-bg">
-                            <ul class="B2M-breadcrumb">
-                                <li class="breadcrumb-item"><a href="/">Home</a></li>
-                                <li class="breadcrumb-item active B2M-text-color-primary">Questões</li>
+                        <div className="breadcrumb-holder container-fluid B2M-bg">
+                            <ul className="B2M-breadcrumb">
+                                <li className="breadcrumb-item"><a href="/">Home</a></li>
+                                <li className="breadcrumb-item active B2M-text-color-primary">Questões</li>
                             </ul>
                         </div>
 
-                        <section class="B2M-questions">
-                            <div class="container-fluid">
-                                <div class="row">
-                                    <div class="col-12">
-                                        {dataQuestion.length !== 0 ? (<>
-                                            <div className="row">
-                                                <div className="col-lg-2 col-md-12 B2M-info-question-none">
-                                                    <div className="B2M-info-question">
-                                                        <FilterFixed visible={visible} onClose={() => setVisible(false)} changerFilter={(e) => { setDataFilter(e); }} />
-                                                        <button onClick={() => setVisible(true)}>
-                                                            <span>Filtrar questões </span>
-                                                        </button>
-                                                    </div>
+                        <section className="B2M-questions">
+                            <div className="container-fluid">
+                                <div className="row">
+                                    <div className="col-12">
+                                        <div className="row">
+                                            <div className="col-lg-2 col-md-12 B2M-info-question-none">
+                                                <div className="B2M-info-question">
+                                                    <FilterFixed visible={visible} onClose={() => setVisible(false)} changerFilter={(e) => { setDataFilter(e); }} />
+                                                    <button onClick={() => setVisible(true)}>
+                                                        <span>Filtrar questões </span>
+                                                    </button>
                                                 </div>
+                                            </div>
 
+                                            {(question.length !== 0 && dataQuestion.length !== 0) && (<>
                                                 <div className="col-lg-10 col-md-12">
                                                     <Pagination
                                                         limit={LIMIT}
@@ -133,13 +133,16 @@ function Questions(props) {
                                                         setOffset={setOffset}
                                                     />
                                                 </div>
-                                            </div>
+                                            </>)}
+                                        </div>
+                                        
+                                        {(question.length !== 0 && dataQuestion.length !== 0) ? (<>
                                             {dataQuestion.map((data, index) =>
                                                 <div key={index} className="card">
                                                     <Alternative data={data} idUser={idUser} />
                                                 </div>
                                             )}
-                                        </>) : !loading ? <div className="center-Component"><Empty /></div> : <div class="B2M-loader"></div>}
+                                        </>) : !loading ? <div className="center-Component"><Empty /></div> : <div className="B2M-loader"></div>}
 
                                     </div>
                                 </div>
