@@ -18,6 +18,9 @@ export const yearData = [
     { title: 2016, value: '0-15' },
     { title: 2017, value: '0-16' },
     { title: 2018, value: '0-17' },
+    { title: 2019, value: '0-18' },
+    { title: 2020, value: '0-19' },
+    { title: 2021, value: '0-20' },
 ]
 // Dado não sendo ultilizado
 export const bankData = [
