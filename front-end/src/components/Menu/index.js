@@ -68,7 +68,7 @@ export const SideNavbar = (props) => {
                             <a href="/dashboard/perfil"><img src="https://secure.gravatar.com/avatar/?s=56&d=mm&r=g" alt="avatar" className="img-fluid rounded-circle" /></a>
                         </div>
                         <div className="title">
-                            <h5 className="h4">{getUserCookie()[0].name}</h5>
+                            <h5 className="h4">{getUserCookie() && getUserCookie()[0].name}</h5>
                             {/* <p>Concurseiro</p> */}
                             {/* <a className="perfil" href="dashboard/perfil"><i className="B2M-eye-icon"></i> Perfil</a> */}
                         </div>
