@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 // import MenuNavbar from '../../components/MenuNavbar/index';
-import {Col, Container, Row} from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import Toast from '../../helpers/toast';
 import {
     Form,
@@ -16,7 +16,7 @@ import {
     TreeSelect,
     Switch,
     Steps,
-    Typography ,
+    Typography,
 } from 'antd';
 import { SideNavbar, Navbar } from '../../components/Menu/';
 import '../../assets/css/home.css';
@@ -86,7 +86,7 @@ const RegisterQuestions = (props) => {
         loadingRegister
     } = props
 
-    const ABCD = [ "A", "B", "C", "D"]
+    const ABCD = ["A", "B", "C", "D"]
     const editor = useRef(null);
     const [questionInfo, setQuestionInfo] = useState([]);
     const [indexQuestion, setIndexQuestion] = useState(0);
@@ -97,7 +97,7 @@ const RegisterQuestions = (props) => {
     const [institutionValue, setInstitutionValue] = useState([]);
     const [officeValue, setOfficeValue] = useState([]);
     const [yearValue, setYearValue] = useState([]);
-    const [diciplineValue, setDiciplineValue] = useState([]);
+    // const [diciplineValue, setDiciplineValue] = useState([]);
 
     // questions info
     const [issueResolution, setIssueResolution] = useState();
@@ -185,8 +185,7 @@ const RegisterQuestions = (props) => {
         console.log(officeValue)
         // const idOffice = formataOffice(officeValue, office);
         const idOffice = '0-0';
-        console.log(diciplineValue)
-        // const idDicipline = formataDicipline(diciplineValue, dicipline);
+
         const idDicipline = '0-1';
 
         const nameAlternative = [
@@ -330,7 +329,7 @@ const RegisterQuestions = (props) => {
                                                     onChange={(value) => { setOfficeValue(value) }}
                                                     placeholder="Cargo..."
                                                     className="filter-field"
-                                                    showCheckedStrategy={SHOW_ALL }
+                                                    showCheckedStrategy={SHOW_ALL}
                                                     maxTagCount='responsive'
                                                     treeNodeFilterProp='title'
                                                     loading={loadingOffice}
@@ -338,8 +337,28 @@ const RegisterQuestions = (props) => {
                                             </Form.Item>
                                         </Col>
 
+                                        <Col className="mt-3" xs={6} md={6}>
+                                            <Form.Item
+                                                name="institution"
+                                                label="Orgão"
+                                            >
+                                                <TreeSelect
+                                                    treeData={institution}
+                                                    value={institutionValue}
+                                                    onChange={(value) => { setInstitutionValue(value) }}
+                                                    placeholder="Orgão..."
+                                                    className="filter-field"
+                                                    showCheckedStrategy={SHOW_PARENT}
+                                                    maxTagCount='responsive'
+                                                    showSearch
+                                                    treeNodeFilterProp='title'
+                                                    allowClear
+                                                    loading={loadingInstitution}
+                                                />
+                                            </Form.Item>
+                                        </Col>
                                     </Row>
-                                    <Row style={{marginBottom: '50px'}} >
+                                    <Row style={{ marginBottom: '50px' }} >
                                         <Col className="mt-3" xs={12} md={12}>
                                             <Card type="inner" >
                                                 {questions && questions.map((data, index) =>
@@ -349,8 +368,8 @@ const RegisterQuestions = (props) => {
                                         </Col>
                                     </Row>
                                     {questionInfo.length !== 0 && (
-                                        <Card type="inner"  title={`Questão ${indexQuestion}`} >
-                                            <Col className="mt-3" xs={6} md={6}>
+                                        <Card type="inner" title={`Questão ${indexQuestion}`} >
+                                            {/* <Col className="mt-3" xs={6} md={6}>
                                                 <Form.Item
                                                     name="institution"
                                                     label="Orgão"
@@ -369,8 +388,8 @@ const RegisterQuestions = (props) => {
                                                         loading={loadingInstitution}
                                                     />
                                                 </Form.Item>
-                                            </Col>
-                                            <Col className="mt-3" xs={6} md={6}>
+                                            </Col> */}
+                                            {/* <Col className="mt-3" xs={6} md={6}>
                                                 <Form.Item
                                                     name="dicipline"
                                                     label="Matéria & Assunto"
@@ -389,8 +408,8 @@ const RegisterQuestions = (props) => {
                                                         loading={loadingDicipline}
                                                     />
                                                 </Form.Item>
-                                            </Col>
-                                            <Card type="inner"  title={`Estrutura`} >
+                                            </Col> */}
+                                            <Card type="inner" title={`Estrutura`} >
                                                 <Row >
                                                     <Title level={3}>Enunciado</Title>
                                                     <Col xs={12} md={12}>
@@ -400,7 +419,7 @@ const RegisterQuestions = (props) => {
                                                             // config={config}
                                                             tabIndex={0}
                                                             onBlur={(newContent) => setEnunciated(newContent)}
-                                                            onChange={() => {}}
+                                                            onChange={() => { }}
                                                         />
                                                     </Col>
                                                 </Row>
@@ -414,7 +433,7 @@ const RegisterQuestions = (props) => {
                                                             // config={config}
                                                             tabIndex={0}
                                                             onBlur={(newContent) => setAlternativeA(newContent)}
-                                                            onChange={() => {}}
+                                                            onChange={() => { }}
                                                         />
                                                     </Col>
                                                 </Row>
@@ -428,7 +447,7 @@ const RegisterQuestions = (props) => {
                                                             // config={config}
                                                             tabIndex={0}
                                                             onBlur={(newContent) => setAlternativeB(newContent)}
-                                                            onChange={() => {}}
+                                                            onChange={() => { }}
                                                         />
                                                     </Col>
                                                 </Row>
@@ -442,7 +461,7 @@ const RegisterQuestions = (props) => {
                                                             // config={config}
                                                             tabIndex={0}
                                                             onBlur={(newContent) => setAlternativeC(newContent)}
-                                                            onChange={() => {}}
+                                                            onChange={() => { }}
                                                         />
                                                     </Col>
                                                 </Row>
@@ -456,14 +475,14 @@ const RegisterQuestions = (props) => {
                                                             // config={config}
                                                             tabIndex={0}
                                                             onBlur={(newContent) => setAlternativeD(newContent)}
-                                                            onChange={() => {}}
+                                                            onChange={() => { }}
                                                         />
                                                     </Col>
                                                 </Row>
 
                                             </Card>
 
-                                            <Card type="inner"  title={`Resolução`} >
+                                            <Card type="inner" title={`Resolução`} >
                                                 <Row>
                                                     <Title level={3}>Alternativa correta</Title>
                                                     <Col xs={12} md={12}>
@@ -501,7 +520,7 @@ const RegisterQuestions = (props) => {
                                                             // config={config}
                                                             tabIndex={0} // tabIndex of textarea
                                                             onBlur={(newContent) => setIssueResolution(newContent)}
-                                                            onChange={() => {}}
+                                                            onChange={() => { }}
                                                         />
                                                     </Col>
                                                 </Row>
