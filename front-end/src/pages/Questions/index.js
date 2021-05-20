@@ -60,14 +60,15 @@ function Questions(props) {
                 const keys = Object.keys(localStorage)
                 // get alll localStorages answer
                 let auxStorage = []
-                keys.map((id) => {
+                keys.map(id => {
                     let aux = JSON.parse(localStorage.getItem(parseInt(id)))
-                    auxStorage.push({ id_question: parseInt(id), check: aux.check, answer: aux.answer });
+                    if (aux) return auxStorage.push({ id_question: parseInt(id), check: aux.check, answer: aux.answer });
+                    return auxStorage = [];
                 })
                 setCheckAnswer(auxStorage);
             }
         }
-    }, [getAnswerQuestion, question])
+    }, [getAnswerQuestion, question, idUser])
 
     // juntado resposta do usuario com a pergunta
     useEffect(() => {
@@ -89,7 +90,7 @@ function Questions(props) {
                 setDataQuestion(auxNewData);
             }
         }
-    }, [answerQuestion, checkAnswer])
+    }, [answerQuestion, checkAnswer, question])
 
     return (
         <>
@@ -102,6 +103,7 @@ function Questions(props) {
                         <header className="B2M-page-header">
                             <h2>Questões</h2>
                         </header>
+                        
                         {/* Breadcrumb */}
                         <div className="breadcrumb-holder container-fluid B2M-bg">
                             <ul className="B2M-breadcrumb">
@@ -135,7 +137,7 @@ function Questions(props) {
                                                 </div>
                                             </>)}
                                         </div>
-                                        
+
                                         {(question.length !== 0 && dataQuestion.length !== 0) ? (<>
                                             {dataQuestion.map((data, index) =>
                                                 <div key={index} className="card">

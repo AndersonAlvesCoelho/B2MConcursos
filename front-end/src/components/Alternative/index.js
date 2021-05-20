@@ -35,7 +35,7 @@ function Alternative(props) {
     const [current, setCurrent] = useState();
     const [comment, setComment] = useState('');
     const [commentAnswer, setCommentAnswer] = useState('');
-    const [idComment, setIdComment] = useState(0);
+    const [idComment, setIdComment] = useState('');
     const [dataComment, setDataComment] = useState([]);
     const [openComment, setOpenComment] = useState(false);
     const [openIndex, setOpenIndex] = useState(false);
@@ -126,15 +126,19 @@ function Alternative(props) {
             }
         }
 
-
     }, [dataComment, newComment]);
+
+    useEffect(() => {
+        setOption('');
+        if (checkAnswer.length !== 0) setOption(checkAnswer?.answer);
+    }, [checkAnswer]);
+
 
     return (
         <>
             <div className="B2M-card-header">
                 <div className="B2M-card-title">
-                    <img src={logo} atl="LOGO" />
-                    <p>{data.bank.name_bank} - {data.year} - {data.institution.name_institution} - {data.office.office_niv_1.name_office}</p>
+                    <p>{data.bank.name_bank} - {data.institution.name_institution} - {data.office.office_niv_1.name_office} - {data.year} </p>
                 </div>
                 <span>Nº {data.id_question}</span>
 
@@ -148,21 +152,25 @@ function Alternative(props) {
                 {/* OPTION  */}
                 <div className="B2M-alternative" >
                     {data.alternative.map((e, x) => (
-                        <label className="B2M-option-alternative" key={x} onChange={(e) => setOption(e.target.value)}>
-                            {checkAnswer?.answer === x ?
-                                checkAnswer?.check ?
-                                    (<p style={{ backgroundColor: '#28a745' }}>{parse(e.name_alternative)}</p>)
-                                    : (<b>{parse(e.name_alternative)}</b>)
-                                : (<p>{parse(e.name_alternative)}</p>)
+                        <label
+                            className="B2M-option-alternative"
+                            key={x}
+                            onChange={(e) => setOption(e.target.value)}
+                        >
+                            { option === x ?
+                                <input type="radio" value={x} className="B2M-answer-question" name={`answer-question-${data.id_question}`} checked />
+                                : <input type="radio" value={x} className="B2M-answer-question" name={`answer-question-${data.id_question}`} />
                             }
+                            <span class="B2M-checkmark"></span>
 
-
-                            {checkAnswer.length !== 0 && checkAnswer.answer === x ?
-                                <input type="radio" value={x} name="alternative" checked />
-                                :
-                                <input type="radio" value={x} name="alternative" />
-                            }
-                            <span className="B2M-checkmark"></span>
+                            <div class="B2M-alternative-description">
+                                {checkAnswer?.check ?
+                                    checkAnswer?.answer !== x ?
+                                        <p style={{ color: '#cecece' }}>{parse(e.name_alternative)}</p>
+                                        : <b>{parse(e.name_alternative)}</b>
+                                    : <p>{parse(e.name_alternative)}</p>
+                                }
+                            </div>
                         </label>
                     ))}
                 </div>
@@ -171,21 +179,15 @@ function Alternative(props) {
                 {/* MENSSAGEM DE REPOSTA DA OPTION  */}
                 <div className="B2M-answer-option">
                     <div className="B2M-answer-msg">
-                        {checkAnswer.length !== 0 ? checkAnswer.check ?
+                        {(checkAnswer.length !== 0 && !checkAnswer?.check) &&
                             <>
-                                <img src={ok} alt="ok" />
-                                <span>Alternativa correta, parabéns!</span>
-                            </> : <>
                                 <img src={erro} alt="erro" />
                                 <span>Você errou!</span>
-                            </> : null}
-                        <br />
 
-                        {(checkAnswer.length !== 0) && !(checkAnswer.check) &&
-                            <>
                                 <p>A opção correta é:  <span>{answerLatters}</span></p>
-                            </>
-                        }
+                            </>}
+
+
                     </div>
 
                     <button type="button" disabled={!option} onClick={() => keyAnswer(option, 0)}>Visualizar Resposta</button>
@@ -227,7 +229,9 @@ function Alternative(props) {
                         <div className="B2M-comment-user">
                             <div className="feed d-flex justify-content-between" key={x}>
                                 <div className="feed-body d-flex justify-content-between">
-                                    <a href="#" className="feed-profile"><img src="https://secure.gravatar.com/avatar/?s=56&d=mm&r=g" alt="avatar" className="img-fluid rounded-circle" /></a>
+                                    <a href="#" className="feed-profile">
+                                        <img src="https://secure.gravatar.com/avatar/?s=56&d=mm&r=g" alt="avatar" className="img-fluid rounded-circle" />
+                                    </a>
                                     <div className="B2M-comment-content">
                                         <h5>{commit.user.name}</h5>
                                         <div className="full-date">
@@ -258,7 +262,10 @@ function Alternative(props) {
                                 <div className="B2M-comment-user-answer" key={y}>
                                     <div className="feed d-flex justify-content-between">
                                         <div className="feed-body d-flex justify-content-between">
-                                            <a href="#" className="feed-profile"><img src="https://secure.gravatar.com/avatar/?s=56&d=mm&r=g" alt="avatar" className="img-fluid rounded-circle" /></a>
+                                            <a href="#" className="feed-profile">
+                                                <img src="https://secure.gravatar.com/avatar/?s=56&d=mm&r=g"
+                                                    alt="avatar" className="img-fluid rounded-circle" />
+                                            </a>
                                             <div className="B2M-comment-content">
                                                 <h5>{ans.user.name}</h5>
                                                 <div className="full-date">

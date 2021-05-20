@@ -43,7 +43,6 @@ function FilterFixed(props) {
         bank,
         institution,
         office,
-        dicipline,
 
         changerFilter,
         visible,
