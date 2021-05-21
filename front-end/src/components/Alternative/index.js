@@ -39,6 +39,8 @@ function Alternative(props) {
     const [dataComment, setDataComment] = useState([]);
     const [openComment, setOpenComment] = useState(false);
     const [openIndex, setOpenIndex] = useState(false);
+    const letters = ['A', 'B', 'C', 'D'];
+
 
     //verificar se a questão marcada está correta 
     function keyAnswer(opt, situation) {
@@ -79,8 +81,6 @@ function Alternative(props) {
     useEffect(() => {
         keyAnswer(data.answer, 1);
         setDataComment(data.comment);
-
-        let letters = ['A', 'B', 'C', 'D'];
 
         if (data.alternative) {
             data.alternative.map((e, index) => {
@@ -161,7 +161,7 @@ function Alternative(props) {
                                 <input type="radio" value={x} className="B2M-answer-question" name={`answer-question-${data.id_question}`} checked />
                                 : <input type="radio" value={x} className="B2M-answer-question" name={`answer-question-${data.id_question}`} />
                             }
-                            <span class="B2M-checkmark"></span>
+                            <span class="B2M-checkmark">{letters[x]}</span>
 
                             <div class="B2M-alternative-description">
                                 {checkAnswer?.check ?
@@ -179,14 +179,21 @@ function Alternative(props) {
                 {/* MENSSAGEM DE REPOSTA DA OPTION  */}
                 <div className="B2M-answer-option">
                     <div className="B2M-answer-msg">
-                        {(checkAnswer.length !== 0 && !checkAnswer?.check) &&
+                        {checkAnswer.length !== 0 ? checkAnswer.check ?
                             <>
+                                <img src={ok} alt="ok" />
+                                <span>Alternativa correta, parabéns!</span>
+                            </> : <>
                                 <img src={erro} alt="erro" />
                                 <span>Você errou!</span>
+                            </> : null}
+                        <br />
 
+                        {(checkAnswer.length !== 0) && !(checkAnswer.check) &&
+                            <>
                                 <p>A opção correta é:  <span>{answerLatters}</span></p>
-                            </>}
-
+                            </>
+                        }
 
                     </div>
 
