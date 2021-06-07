@@ -39,7 +39,9 @@ a:hover {
   color: #000000;
   text-decoration: underline;
 }
-
+ol li {
+  font-size: 1.3rem;
+}
 .B2M-active {
   color: #000000;
   text-decoration: underline;
@@ -99,11 +101,10 @@ a:hover {
   .B2M-content-inner {
     width: 100%;
   }
-  .B2M-content-inner.side-navbar-active{
+  .B2M-content-inner.side-navbar-active {
     width: 100%;
   }
 }
-
 
 /*
 * ==========================================================
