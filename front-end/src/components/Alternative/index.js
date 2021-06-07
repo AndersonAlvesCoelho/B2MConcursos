@@ -182,7 +182,7 @@ function Alternative(props) {
                         {checkAnswer.length !== 0 ? checkAnswer.check ?
                             <>
                                 <img src={ok} alt="ok" />
-                                <span>Alternativa correta, parabéns!</span>
+                                <span>Parabéns!</span>
                             </> : <>
                                 <img src={erro} alt="erro" />
                                 <span>Você errou!</span>
