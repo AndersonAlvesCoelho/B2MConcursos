@@ -299,7 +299,6 @@ const RegisterQuestions = (props) => {
                                                     treeData={bank}
                                                     value={bankValue}
                                                     onChange={(value) => { setBankValue(value) }}
-
                                                     placeholder="Banca..."
                                                     className="filter-field"
                                                     showCheckedStrategy={SHOW_PARENT}
@@ -389,6 +388,7 @@ const RegisterQuestions = (props) => {
                                                     />
                                                 </Form.Item>
                                             </Col> */}
+                                            
                                             {/* <Col className="mt-3" xs={6} md={6}>
                                                 <Form.Item
                                                     name="dicipline"
